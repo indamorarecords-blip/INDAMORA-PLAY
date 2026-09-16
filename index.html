@@ -1,0 +1,1034 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#075985">
+  <meta name="description" content="INDAMORA PLAY - La plateforme des musiques d'Afrique centrale">
+  <title>INDAMORA PLAY 🇨🇫</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      background: #f5faff;
+      color: #082f49;
+      line-height: 1.5;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    button,
+    input,
+    select,
+    textarea {
+      font: inherit;
+    }
+
+    /* NAVIGATION */
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      background: white;
+      border-bottom: 1px solid #dbeafe;
+    }
+
+    .nav {
+      max-width: 1150px;
+      margin: auto;
+      min-height: 68px;
+      padding: 12px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+    }
+
+    .logo {
+      font-size: 22px;
+      font-weight: 900;
+      color: #075985;
+    }
+
+    .logo span {
+      color: #0ea5e9;
+    }
+
+    nav {
+      display: flex;
+      gap: 18px;
+      flex-wrap: wrap;
+    }
+
+    nav a {
+      font-weight: bold;
+      font-size: 14px;
+      color: #334155;
+    }
+
+    nav a:hover {
+      color: #0284c7;
+    }
+
+    /* HERO */
+    .hero {
+      background: linear-gradient(135deg, #e0f2fe, white, #cffafe);
+      padding: 70px 20px;
+    }
+
+    .hero-container {
+      max-width: 1150px;
+      margin: auto;
+      display: grid;
+      grid-template-columns: 1.2fr .8fr;
+      gap: 40px;
+      align-items: center;
+    }
+
+    .badge {
+      display: inline-block;
+      background: #bae6fd;
+      color: #075985;
+      padding: 8px 14px;
+      border-radius: 50px;
+      font-weight: bold;
+      font-size: 14px;
+      margin-bottom: 18px;
+    }
+
+    .hero h1 {
+      font-size: clamp(45px, 8vw, 82px);
+      line-height: .95;
+      margin-bottom: 20px;
+    }
+
+    .blue {
+      color: #0ea5e9;
+    }
+
+    .hero p {
+      max-width: 650px;
+      color: #475569;
+      font-size: 18px;
+      margin-bottom: 25px;
+    }
+
+    .buttons {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      display: inline-block;
+      border: none;
+      cursor: pointer;
+      padding: 14px 20px;
+      border-radius: 12px;
+      background: #075985;
+      color: white;
+      font-weight: bold;
+    }
+
+    .btn:hover {
+      background: #0369a1;
+    }
+
+    .btn-light {
+      background: white;
+      color: #075985;
+      border: 1px solid #bae6fd;
+    }
+
+    /* PLAYER */
+    .player-card {
+      background: white;
+      border: 1px solid #dbeafe;
+      border-radius: 24px;
+      padding: 20px;
+      box-shadow: 0 15px 40px rgba(7, 89, 133, .12);
+    }
+
+    .cover {
+      height: 270px;
+      border-radius: 18px;
+      background: linear-gradient(135deg, #0369a1, #38bdf8);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      color: white;
+      font-size: 32px;
+      font-weight: 900;
+    }
+
+    .player {
+      margin-top: 18px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .play {
+      width: 48px;
+      height: 48px;
+      border: none;
+      border-radius: 50%;
+      background: #075985;
+      color: white;
+      cursor: pointer;
+    }
+
+    .progress {
+      flex: 1;
+      height: 6px;
+      background: #e2e8f0;
+      border-radius: 20px;
+      overflow: hidden;
+    }
+
+    .progress span {
+      display: block;
+      width: 35%;
+      height: 100%;
+      background: #0ea5e9;
+    }
+
+    /* SECTIONS */
+    section {
+      padding: 60px 20px;
+    }
+
+    .container {
+      max-width: 1150px;
+      margin: auto;
+    }
+
+    .section-title {
+      margin-bottom: 25px;
+    }
+
+    .section-title h2 {
+      font-size: 32px;
+      margin-bottom: 6px;
+    }
+
+    .section-title p {
+      color: #64748b;
+    }
+
+    /* FILTRES */
+    .filters {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+      margin-bottom: 25px;
+    }
+
+    select,
+    input,
+    textarea {
+      width: 100%;
+      border: 1px solid #cbd5e1;
+      background: white;
+      border-radius: 10px;
+      padding: 13px;
+      outline: none;
+    }
+
+    select:focus,
+    input:focus,
+    textarea:focus {
+      border-color: #0ea5e9;
+    }
+
+    /* CARTES */
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 18px;
+    }
+
+    .card {
+      background: white;
+      border: 1px solid #dbeafe;
+      border-radius: 17px;
+      overflow: hidden;
+    }
+
+    .card-image {
+      height: 160px;
+      background: linear-gradient(135deg, #bae6fd, #e0f2fe);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 48px;
+    }
+
+    .card-body {
+      padding: 15px;
+    }
+
+    .card-body h3 {
+      font-size: 17px;
+      margin-bottom: 5px;
+    }
+
+    .card-body p {
+      color: #64748b;
+      font-size: 14px;
+    }
+
+    .tag {
+      display: inline-block;
+      margin-top: 10px;
+      padding: 5px 8px;
+      border-radius: 20px;
+      background: #e0f2fe;
+      color: #0369a1;
+      font-size: 12px;
+      font-weight: bold;
+    }
+
+    /* CLASSEMENT */
+    .ranking {
+      display: grid;
+      gap: 12px;
+    }
+
+    .rank {
+      background: white;
+      border: 1px solid #dbeafe;
+      border-radius: 14px;
+      padding: 14px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .number {
+      width: 35px;
+      font-weight: 900;
+      color: #075985;
+    }
+
+    .avatar {
+      width: 45px;
+      height: 45px;
+      border-radius: 50%;
+      background: #e0f2fe;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .rank-info {
+      flex: 1;
+    }
+
+    .rank-info strong {
+      display: block;
+    }
+
+    .rank-info small {
+      color: #64748b;
+    }
+
+    /* DEUX COLONNES */
+    .two-columns {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 25px;
+    }
+
+    .panel {
+      background: white;
+      border: 1px solid #dbeafe;
+      border-radius: 18px;
+      padding: 25px;
+    }
+
+    .panel h3 {
+      margin-bottom: 12px;
+    }
+
+    .panel p {
+      color: #64748b;
+    }
+
+    /* FORMULAIRE */
+    .form {
+      display: grid;
+      gap: 13px;
+    }
+
+    textarea {
+      min-height: 120px;
+      resize: vertical;
+    }
+
+    .success {
+      display: none;
+      padding: 13px;
+      background: #f0fdf4;
+      color: #166534;
+      border: 1px solid #bbf7d0;
+      border-radius: 10px;
+    }
+
+    /* FOOTER */
+    footer {
+      background: #082f49;
+      color: #dbeafe;
+      padding: 45px 20px 25px;
+    }
+
+    .footer-grid {
+      max-width: 1150px;
+      margin: auto;
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr;
+      gap: 30px;
+    }
+
+    footer h3 {
+      color: white;
+      margin-bottom: 12px;
+    }
+
+    footer p,
+    footer a {
+      color: #bae6fd;
+      font-size: 14px;
+    }
+
+    .copyright {
+      max-width: 1150px;
+      margin: 30px auto 0;
+      padding-top: 20px;
+      border-top: 1px solid rgba(255,255,255,.15);
+      font-size: 13px;
+    }
+
+    /* MOBILE */
+    @media (max-width: 850px) {
+      .hero-container,
+      .two-columns {
+        grid-template-columns: 1fr;
+      }
+
+      .grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .filters {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      nav {
+        display: none;
+      }
+    }
+
+    @media (max-width: 520px) {
+      .hero {
+        padding: 45px 16px;
+      }
+
+      section {
+        padding: 45px 16px;
+      }
+
+      .grid,
+      .filters {
+        grid-template-columns: 1fr;
+      }
+
+      .hero h1 {
+        font-size: 52px;
+      }
+
+      .buttons {
+        flex-direction: column;
+      }
+
+      .btn {
+        width: 100%;
+        text-align: center;
+      }
+
+      .cover {
+        height: 210px;
+      }
+
+      .footer-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+<!-- NAVIGATION -->
+<header>
+  <div class="nav">
+    <a href="#" class="logo">
+      INDAMORA <span>PLAY</span>
+    </a>
+
+    <nav>
+      <a href="#musique">Musique</a>
+      <a href="#artistes">Artistes</a>
+      <a href="#clips">Clips</a>
+      <a href="#podcasts">Podcasts</a>
+      <a href="#classement">Classement</a>
+      <a href="#soumettre">Soumettre</a>
+    </nav>
+  </div>
+</header>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-container">
+
+    <div>
+      <span class="badge">🇨🇫 MUSIQUE D'AFRIQUE CENTRALE</span>
+
+      <h1>
+        INDAMORA<br>
+        <span class="blue">PLAY</span>
+      </h1>
+
+      <p>
+        Découvrez les artistes, musiques, clips, podcasts,
+        radios et nouveaux talents d'Afrique centrale.
+      </p>
+
+      <div class="buttons">
+        <a href="#musique" class="btn">
+          🎧 Découvrir la musique
+        </a>
+
+        <a href="#soumettre" class="btn btn-light">
+          📤 Soumettre ma musique
+        </a>
+      </div>
+    </div>
+
+    <div class="player-card">
+      <div class="cover">
+        INDAMORA<br>PLAY 🇨🇫
+      </div>
+
+      <div class="player">
+        <button class="play" onclick="playDemo()">▶</button>
+
+        <div style="flex:1">
+          <strong id="songName">
+            Sélection INDAMORA
+          </strong>
+
+          <div class="progress">
+            <span id="progressBar"></span>
+          </div>
+        </div>
+
+        🎵
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- MUSIQUE -->
+<section id="musique">
+  <div class="container">
+
+    <div class="section-title">
+      <h2>🎧 Musique</h2>
+      <p>Explorez les sons et les talents d'Afrique centrale.</p>
+    </div>
+
+    <div class="filters">
+
+      <select>
+        <option>Toutes les villes</option>
+        <option>Bangui</option>
+        <option>Bimbo</option>
+        <option>Berbérati</option>
+      </select>
+
+      <select>
+        <option>Toutes les régions</option>
+        <option>Bangui</option>
+        <option>Ombella-M'Poko</option>
+        <option>Mambéré-Kadéï</option>
+      </select>
+
+      <select>
+        <option>Toutes les langues</option>
+        <option>Sango</option>
+        <option>Français</option>
+        <option>Autres langues</option>
+      </select>
+
+      <select>
+        <option>Tous les genres</option>
+        <option>Afrobeat</option>
+        <option>Afropop</option>
+        <option>Hip-hop</option>
+        <option>Gospel</option>
+      </select>
+
+    </div>
+
+    <div class="grid">
+
+      <div class="card">
+        <div class="card-image">🎵</div>
+        <div class="card-body">
+          <h3>Nouveau son</h3>
+          <p>Artiste à venir</p>
+          <span class="tag">Exemple</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-image">🎶</div>
+        <div class="card-body">
+          <h3>Découverte</h3>
+          <p>Artiste à venir</p>
+          <span class="tag">Afropop</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-image">🎼</div>
+        <div class="card-body">
+          <h3>La sélection</h3>
+          <p>Artiste à venir</p>
+          <span class="tag">Afrobeat</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-image">🎤</div>
+        <div class="card-body">
+          <h3>Talent central</h3>
+          <p>Artiste à venir</p>
+          <span class="tag">Gospel</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ARTISTES -->
+<section id="artistes" style="background:#f0f9ff">
+  <div class="container">
+
+    <div class="section-title">
+      <h2>👤 Artistes</h2>
+      <p>Découvrez les profils des artistes référencés.</p>
+    </div>
+
+    <div class="grid">
+
+      <div class="card">
+        <div class="card-image">👤</div>
+        <div class="card-body">
+          <h3>Artiste à venir</h3>
+          <p>Bangui 🇨🇫</p>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-image">👤</div>
+        <div class="card-body">
+          <h3>Artiste à venir</h3>
+          <p>Région 🇨🇫</p>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-image">👤</div>
+        <div class="card-body">
+          <h3>Artiste à venir</h3>
+          <p>Bangui 🇨🇫</p>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-image">👤</div>
+        <div class="card-body">
+          <h3>Artiste à venir</h3>
+          <p>Région 🇨🇫</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- CLASSEMENT -->
+<section id="classement">
+  <div class="container">
+
+    <div class="section-title">
+      <h2>🔥 Classement</h2>
+      <p>Classement de démonstration — les vraies données seront connectées plus tard.</p>
+    </div>
+
+    <div class="two-columns">
+
+      <div class="ranking">
+
+        <div class="rank">
+          <div class="number">01</div>
+          <div class="avatar">🎤</div>
+          <div class="rank-info">
+            <strong>Artiste à venir</strong>
+            <small>Titre à venir</small>
+          </div>
+        </div>
+
+        <div class="rank">
+          <div class="number">02</div>
+          <div class="avatar">🎵</div>
+          <div class="rank-info">
+            <strong>Artiste à venir</strong>
+            <small>Titre à venir</small>
+          </div>
+        </div>
+
+        <div class="rank">
+          <div class="number">03</div>
+          <div class="avatar">🎶</div>
+          <div class="rank-info">
+            <strong>Artiste à venir</strong>
+            <small>Titre à venir</small>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="panel">
+        <h3>📊 Espace artiste</h3>
+
+        <p>
+          L'espace artiste permettra de consulter les écoutes,
+          les fans, les contenus et les revenus.
+        </p>
+
+        <br>
+
+        <p>
+          💰 La monétisation sera ajoutée progressivement
+          lorsque le système de paiement sera connecté.
+        </p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- CLIPS -->
+<section id="clips" style="background:#f0f9ff">
+  <div class="container">
+
+    <div class="section-title">
+      <h2>🎬 Clips & vidéos</h2>
+      <p>Les productions audiovisuelles des artistes.</p>
+    </div>
+
+    <div class="grid">
+
+      <div class="card">
+        <div class="card-image">▶️</div>
+        <div class="card-body">
+          <h3>Clip à venir</h3>
+          <p>Artiste à venir</p>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-image">▶️</div>
+        <div class="card-body">
+          <h3>Session live</h3>
+          <p>Artiste à venir</p>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-image">▶️</div>
+        <div class="card-body">
+          <h3>Nouveauté vidéo</h3>
+          <p>Artiste à venir</p>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-image">▶️</div>
+        <div class="card-body">
+          <h3>À découvrir</h3>
+          <p>Artiste à venir</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- PODCASTS -->
+<section id="podcasts">
+  <div class="container">
+
+    <div class="section-title">
+      <h2>🎙️ Podcasts & interviews</h2>
+      <p>Les histoires et parcours des acteurs de la musique.</p>
+    </div>
+
+    <div class="two-columns">
+
+      <div class="panel">
+        <h3>🎙️ Podcast à venir</h3>
+        <p>
+          Une série d'entretiens consacrés aux artistes,
+          producteurs et acteurs de la musique centrafricaine.
+        </p>
+      </div>
+
+      <div class="panel">
+        <h3>📻 Radios & playlists</h3>
+        <p>
+          Les radios et playlists seront intégrées
+          dans les prochaines versions.
+        </p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- SOUMETTRE -->
+<section id="soumettre" style="background:#e0f2fe">
+  <div class="container">
+
+    <div class="two-columns">
+
+      <div>
+        <div class="section-title">
+          <h2>📤 Soumettre ma musique</h2>
+        </div>
+
+        <p>
+          Artistes, producteurs et labels :
+          présentez votre musique à INDAMORA PLAY.
+        </p>
+
+        <br>
+
+        <p>
+          Votre candidature sera connectée à une vraie
+          base de données dans la prochaine étape.
+        </p>
+      </div>
+
+      <form class="panel form" onsubmit="sendForm(event)">
+
+        <input
+          type="text"
+          placeholder="Nom de l'artiste"
+          required
+        >
+
+        <input
+          type="text"
+          placeholder="Titre du morceau"
+          required
+        >
+
+        <select>
+          <option>Type de contenu</option>
+          <option>Single</option>
+          <option>EP</option>
+          <option>Album</option>
+          <option>Clip</option>
+          <option>Podcast</option>
+        </select>
+
+        <select>
+          <option>Genre musical</option>
+          <option>Afrobeat</option>
+          <option>Afropop</option>
+          <option>Hip-hop</option>
+          <option>Gospel</option>
+          <option>Autre</option>
+        </select>
+
+        <input
+          type="text"
+          placeholder="Ville / région"
+        >
+
+        <input
+          type="text"
+          placeholder="Langue"
+        >
+
+        <input
+          type="email"
+          placeholder="E-mail"
+          required
+        >
+
+        <input
+          type="text"
+          placeholder="Téléphone / WhatsApp"
+        >
+
+        <textarea
+          placeholder="Description de votre projet"
+        ></textarea>
+
+        <button class="btn" type="submit">
+          Envoyer ma candidature
+        </button>
+
+        <div class="success" id="success">
+          ✅ Merci ! Votre candidature est enregistrée
+          en mode démonstration.
+        </div>
+
+      </form>
+
+    </div>
+  </div>
+</section>
+
+<!-- A PROPOS -->
+<section>
+  <div class="container">
+
+    <div class="panel">
+      <h2>🤝 À propos d'INDAMORA PLAY</h2>
+
+      <br>
+
+      <p>
+        INDAMORA PLAY est un projet porté par le label
+        associatif INDAMORA.
+      </p>
+
+      <br>
+
+      <p>
+        Notre objectif est de valoriser les artistes,
+        les musiques et les créations d'Afrique centrale
+        et de leur offrir une plateforme dédiée.
+      </p>
+
+      <br>
+
+      <p>
+        🎧 Streaming · 👤 Artistes · 🎬 Clips · 🎙️ Podcasts ·
+        📻 Radios · 🏆 Classements · 💰 Monétisation
+      </p>
+
+    </div>
+
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+
+  <div class="footer-grid">
+
+    <div>
+      <h3>INDAMORA PLAY 🇨🇫</h3>
+
+      <p>
+        La plateforme dédiée aux musiques
+        d'Afrique centrale.
+      </p>
+    </div>
+
+    <div>
+      <h3>Navigation</h3>
+
+      <p>
+        <a href="#musique">Musique</a><br>
+        <a href="#artistes">Artistes</a><br>
+        <a href="#clips">Clips</a><br>
+        <a href="#podcasts">Podcasts</a>
+      </p>
+    </div>
+
+    <div>
+      <h3>Artistes</h3>
+
+      <p>
+        <a href="#soumettre">Soumettre ma musique</a><br>
+        <a href="#classement">Classement</a>
+      </p>
+    </div>
+
+  </div>
+
+  <div class="copyright">
+    © 2026 INDAMORA PLAY — Projet INDAMORA 🇨🇫
+  </div>
+
+</footer>
+
+<script>
+
+  function playDemo() {
+
+    const bar = document.getElementById("progressBar");
+    const name = document.getElementById("songName");
+
+    if (bar.style.width === "75%") {
+
+      bar.style.width = "35%";
+      name.textContent = "Sélection INDAMORA";
+
+    } else {
+
+      bar.style.width = "75%";
+      name.textContent = "Lecture — INDAMORA PLAY";
+
+    }
+  }
+
+
+  function sendForm(event) {
+
+    event.preventDefault();
+
+    document.getElementById("success").style.display = "block";
+
+    event.target.reset();
+
+  }
+
+</script>
+
+</body>
+</html>
