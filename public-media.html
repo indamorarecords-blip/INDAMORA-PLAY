@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Clips & Podcasts — INDAMORA PLAY</title>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      background: #f5f9ff;
+      color: #102a43;
+    }
+    header {
+      background: #0757b8;
+      color: white;
+      padding: 16px 20px;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+    .header-inner {
+      max-width: 1100px;
+      margin: auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 15px;
+    }
+    .logo {
+      font-size: 22px;
+      font-weight: bold;
+    }
+    .back {
+      color: white;
+      text-decoration: none;
+      font-weight: bold;
+    }
+    main {
+      max-width: 1100px;
+      margin: 30px auto;
+      padding: 0 18px;
+    }
+    h1 {
+      color: #073b7a;
+      margin-bottom: 8px;
+    }
+    .intro {
+      color: #627d98;
+      margin-bottom: 30px;
+    }
+    .filters {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 25px;
+    }
+    .filter {
+      border: 0;
+      background: white;
+      color: #0757b8;
+      border-radius: 22px;
+      padding: 10px 16px;
+      font-weight: bold;
+      cursor: pointer;
+      box-shadow: 0 3px 12px rgba(0, 70, 140, 0.08);
+    }
+    .filter.active {
+      background: #0757b8;
+      color: white;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 20px;
+    }
+    .card {
+      background: white;
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 4px 16px rgba(0, 70, 140, 0.08);
+    }
+    .visual {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      background: #e7f0fb;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+    .visual img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .visual-icon {
+      font-size: 60px;
+    }
+    .card-body {
+      padding: 18px;
+    }
+    .type {
+      display: inline-block;
+      background: #e7f0fb;
+      color: #0757b8;
+      padding: 6px 10px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+    .title {
+      color: #073b7a;
+      font-size: 19px;
+      font-weight: bold;
+      margin-bottom: 8px;
+    }
+    .artist {
+      color: #486581;
+      margin-bottom: 10px;
+    }
+    .description {
+      color: #627d98;
+      font-size: 14px;
+      line-height: 1.6;
+      margin-bottom: 15px;
+    }
+    .button {
+      display: inline-block;
+      background: #0757b8;
+      color: white;
+      text-decoration: none;
+      padding: 10px 14px;
+      border-radius: 9px;
+      font-weight: bold;
+      font-size: 14px;
+    }
+    .notice {
+      background: white;
+      border-radius: 14px;
+      padding: 20px;
+      color: #627d98;
+      grid-column: 1 / -1;
+    }
+    footer {
+      text-align: center;
+      color: #627d98;
+      padding: 40px 20px;
+    }
+  </style>
+</head>
+<body>
+<header>
+  <div class="header-inner">
+    <div class="logo">🎧 INDAMORA PLAY</div>
+    <a class="back" href="index.html">← Accueil</a>
+  </div>
+</header>
+<main>
+  <h1>🎬 Clips, Podcasts & Radios</h1>
+  <div class="intro">
+    Retrouvez les contenus vidéo et audio publiés par les artistes
+    sur INDAMORA PLAY.
+  </div>
+  <div class="filters">
+    <button class="filter active" data-type="all">
+      Tous
+    </button>
+<button class="filter" data-type="clip">
+  🎬 Clips
+</button>
+<button class="filter" data-type="podcast">
+  🎙️ Podcasts
+</button>
+<button class="filter" data-type="radio">
+  📻 Radios
+</button>
+  </div>
+  <div id="mediaGrid" class="grid">
+    <div class="notice">
+      Chargement des contenus...
+    </div>
+  </div>
+</main>
+<footer>
+  <strong>INDAMORA PLAY</strong><br>
+  INDAMORA RECORDS — Musique d’Afrique centrale 🇨🇫
+</footer>
+<script>
+  const SUPABASE_URL =
+    "https://adqsdnqkbitplbhbihiv.supabase.co";
+  const SUPABASE_KEY =
+    "sb_publishable_dpjfWOYeNQRmP2nJq5FoMA_8NUuD0HF";
+  const db = window.supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_KEY
+  );
+  let allMedia = [];
+  let currentType = "all";
+  const mediaGrid =
+    document.getElementById("mediaGrid");
+  function typeLabel(type) {
+    if (type === "clip") return "🎬 CLIP";
+    if (type === "podcast") return "🎙️ PODCAST";
+    if (type === "radio") return "📻 RADIO";
+    return "🎬 MEDIA";
+  }
+  function iconForType(type) {
+    if (type === "clip") return "🎬";
+    if (type === "podcast") return "🎙️";
+    if (type === "radio") return "📻";
+    return "🎧";
+  }
+  function renderMedia() {
+    const filtered =
+      currentType === "all"
+        ? allMedia
+        : allMedia.filter(
+            item => item.type === currentType
+          );
+    mediaGrid.innerHTML = "";
+    if (filtered.length === 0) {
+      const notice =
+        document.createElement("div");
+      notice.className = "notice";
+      notice.textContent =
+        currentType === "all"
+          ? "Aucun contenu publié pour le moment."
+          : "Aucun contenu de ce type n’est publié pour le moment.";
+      mediaGrid.appendChild(notice);
+      return;
+    }
+    filtered.forEach(item => {
+      const card =
+        document.createElement("article");
+      card.className = "card";
+      const visual =
+        document.createElement("div");
+      visual.className = "visual";
+      if (item.media_url) {
+        const lower =
+          item.media_url.toLowerCase();
+        const isImage =
+          /\.(jpg|jpeg|png|webp|gif)$/i.test(lower);
+        if (isImage) {
+          const img =
+            document.createElement("img");
+          img.src = item.media_url;
+          img.alt = item.title || "Media";
+          visual.appendChild(img);
+        } else {
+          const iframe =
+            document.createElement("iframe");
+          iframe.src = item.media_url;
+          iframe.width = "100%";
+          iframe.height = "100%";
+          iframe.style.border = "0";
+          iframe.allow =
+            "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share";
+          iframe.allowFullscreen = true;
+          visual.appendChild(iframe);
+        }
+      } else {
+        const icon =
+          document.createElement("div");
+        icon.className = "visual-icon";
+        icon.textContent =
+          iconForType(item.type);
+        visual.appendChild(icon);
+      }
+      card.appendChild(visual);
+      const body =
+        document.createElement("div");
+      body.className = "card-body";
+      const type =
+        document.createElement("div");
+      type.className = "type";
+      type.textContent =
+        typeLabel(item.type);
+      body.appendChild(type);
+      const title =
+        document.createElement("div");
+      title.className = "title";
+      title.textContent =
+        item.title || "Sans titre";
+      body.appendChild(title);
+      if (item.artists?.name) {
+        const artist =
+          document.createElement("div");
+        artist.className = "artist";
+        artist.textContent =
+          "Par " + item.artists.name;
+        body.appendChild(artist);
+      }
+      if (item.description) {
+        const description =
+          document.createElement("div");
+        description.className = "description";
+        description.textContent =
+          item.description;
+        body.appendChild(description);
+      }
+      if (item.media_url) {
+        const link =
+          document.createElement("a");
+        link.className = "button";
+        link.href =
+          item.media_url;
+        link.target = "_blank";
+        link.rel = "noopener noreferrer";
+        link.textContent =
+          item.type === "clip"
+            ? "▶ Voir le clip"
+            : item.type === "podcast"
+              ? "▶ Écouter"
+              : "▶ Ouvrir la radio";
+        body.appendChild(link);
+      } else {
+        const notice =
+          document.createElement("div");
+        notice.className = "description";
+        notice.textContent =
+          "Contenu en préparation.";
+        body.appendChild(notice);
+      }
+      card.appendChild(body);
+      mediaGrid.appendChild(card);
+    });
+  }
+  async function loadMedia() {
+    const { data, error } = await db
+      .from("media")
+      .select(`
+        id,
+        title,
+        type,
+        media_url,
+        description,
+        artist_id,
+        artists (
+          id,
+          name,
+          status
+        )
+      `)
+      .eq("status", "published")
+      .order("created_at", {
+        ascending: false
+      });
+    if (error) {
+      console.error(error);
+      mediaGrid.innerHTML =
+        '<div class="notice">Impossible de charger les contenus.</div>';
+      return;
+    }
+    allMedia =
+      (data || []).filter(item =>
+        item.artists &&
+        item.artists.status === "published"
+      );
+    renderMedia();
+  }
+  document
+    .querySelectorAll(".filter")
+    .forEach(button => {
+      button.addEventListener("click", () => {
+        document
+          .querySelectorAll(".filter")
+          .forEach(btn =>
+            btn.classList.remove("active")
+          );
+        button.classList.add("active");
+        currentType =
+          button.dataset.type;
+        renderMedia();
+      });
+    });
+  loadMedia();
+</script>
+</body>
+</html>
