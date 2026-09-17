@@ -1,0 +1,641 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Artiste — INDAMORA PLAY</title>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      background: #ffffff;
+      color: #123;
+    }
+    header {
+      background: #0757b8;
+      color: white;
+      padding: 18px 20px;
+    }
+    .header-inner {
+      max-width: 1100px;
+      margin: auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 15px;
+      flex-wrap: wrap;
+    }
+    .logo {
+      font-size: 23px;
+      font-weight: 800;
+    }
+    .logo small {
+      display: block;
+      font-size: 11px;
+      margin-top: 3px;
+      opacity: .9;
+    }
+    header a {
+      color: white;
+      text-decoration: none;
+      font-weight: 700;
+    }
+    .hero {
+      background: linear-gradient(135deg, #0757b8, #0b82e6);
+      color: white;
+      padding: 55px 20px;
+    }
+    .hero-inner {
+      max-width: 1100px;
+      margin: auto;
+      display: flex;
+      align-items: center;
+      gap: 30px;
+      flex-wrap: wrap;
+    }
+    .avatar {
+      width: 170px;
+      height: 170px;
+      border-radius: 50%;
+      object-fit: cover;
+      background: #edf4fb;
+      border: 5px solid white;
+    }
+    .hero h1 {
+      font-size: clamp(35px, 7vw, 60px);
+      margin-bottom: 12px;
+    }
+    .hero p {
+      font-size: 17px;
+      line-height: 1.6;
+      max-width: 700px;
+    }
+    .verified {
+      display: inline-block;
+      background: white;
+      color: #0757b8;
+      padding: 6px 10px;
+      border-radius: 20px;
+      font-size: 13px;
+      font-weight: 700;
+      margin-top: 12px;
+    }
+    main {
+      max-width: 1100px;
+      margin: auto;
+      padding: 35px 20px 80px;
+    }
+    section {
+      margin-bottom: 45px;
+    }
+    h2 {
+      color: #0757b8;
+      margin-bottom: 20px;
+      font-size: 28px;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+      gap: 18px;
+    }
+    .card {
+      border: 1px solid #dce6f2;
+      border-radius: 14px;
+      padding: 18px;
+      background: white;
+      box-shadow: 0 4px 14px rgba(0,0,0,.05);
+    }
+    .card h3 {
+      color: #0757b8;
+      margin-bottom: 8px;
+    }
+    .meta {
+      color: #60758d;
+      font-size: 13px;
+      line-height: 1.6;
+      margin-bottom: 12px;
+    }
+    .cover {
+      width: 100%;
+      aspect-ratio: 1 / 1;
+      object-fit: cover;
+      border-radius: 10px;
+      background: #edf4fb;
+      margin-bottom: 14px;
+    }
+    .button {
+      display: inline-block;
+      border: none;
+      background: #0757b8;
+      color: white;
+      padding: 11px 15px;
+      border-radius: 9px;
+      text-decoration: none;
+      font-weight: 700;
+      cursor: pointer;
+    }
+    .button:hover {
+      background: #064895;
+    }
+    .notice {
+      padding: 18px;
+      border-radius: 12px;
+      background: #edf5ff;
+      border: 1px solid #cfe2f8;
+      color: #174c83;
+    }
+    .empty {
+      padding: 25px;
+      border: 1px dashed #bfd0e4;
+      border-radius: 12px;
+      text-align: center;
+      color: #60758d;
+    }
+    .loading {
+      text-align: center;
+      padding: 50px 20px;
+      color: #60758d;
+    }
+    footer {
+      background: #0757b8;
+      color: white;
+      text-align: center;
+      padding: 30px 20px;
+    }
+    footer p {
+      margin: 6px 0;
+    }
+    @media (max-width: 650px) {
+      .hero-inner {
+        text-align: center;
+        justify-content: center;
+      }
+      .avatar {
+        width: 135px;
+        height: 135px;
+      }
+    }
+  </style>
+</head>
+<body>
+<header>
+  <div class="header-inner">
+    <div class="logo">
+      🎧 INDAMORA PLAY
+      <small>INDAMORA RECORDS</small>
+    </div>
+    <a href="index.html">
+      ← Retour à INDAMORA PLAY
+    </a>
+  </div>
+</header>
+<div id="app">
+  <div class="loading">
+    Chargement du profil artiste...
+  </div>
+</div>
+<footer>
+  <p><strong>INDAMORA PLAY</strong></p>
+  <p>La musique d'Afrique centrale 🇨🇫</p>
+  <p>© INDAMORA RECORDS</p>
+</footer>
+<script>
+const SUPABASE_URL =
+  "https://adqsdnqkbitplbhbihiv.supabase.co";
+const SUPABASE_PUBLISHABLE_KEY =
+  "sb_publishable_dpjfWOYeNQRmP2nJq5FoMA_8NUuD0HF";
+const { createClient } = supabase;
+const db = createClient(
+  SUPABASE_URL,
+  SUPABASE_PUBLISHABLE_KEY
+);
+const app = document.getElementById("app");
+function escapeHtml(value) {
+  if (value === null || value === undefined) {
+    return "";
+  }
+  return String(value)
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#039;");
+}
+function publicImage(url) {
+  if (url) {
+    return url;
+  }
+  return "data:image/svg+xml;charset=UTF-8," +
+    encodeURIComponent(`
+      <svg xmlns="http://www.w3.org/2000/svg"
+           width="600"
+           height="600"
+           viewBox="0 0 600 600">
+        <rect width="600" height="600" fill="#edf4fb"/>
+        <text x="300"
+              y="330"
+              text-anchor="middle"
+              font-family="Arial"
+              font-size="100"
+              fill="#0757b8">
+          🎤
+        </text>
+      </svg>
+    `);
+}
+function getArtistId() {
+  const params = new URLSearchParams(
+    window.location.search
+  );
+  return params.get("id");
+}
+function getArtistSlug() {
+  const params = new URLSearchParams(
+    window.location.search
+  );
+  return params.get("slug");
+}
+async function loadArtist() {
+  const artistId = getArtistId();
+  const artistSlug = getArtistSlug();
+  if (!artistId && !artistSlug) {
+    app.innerHTML = `
+      <main>
+        <div class="notice">
+          Aucun artiste sélectionné.
+          <br><br>
+          <a class="button" href="index.html">
+            Retour à INDAMORA PLAY
+          </a>
+        </div>
+      </main>
+    `;
+    return;
+  }
+  let query = db
+    .from("artists")
+    .select("*")
+    .eq("status", "published")
+    .limit(1);
+  if (artistId) {
+    query = query.eq("id", artistId);
+  } else {
+    query = query.eq("slug", artistSlug);
+  }
+  const {
+    data: artists,
+    error: artistError
+  } = await query;
+  if (artistError) {
+    console.error(artistError);
+    app.innerHTML = `
+      <main>
+        <div class="notice">
+          Impossible de charger ce profil artiste.
+        </div>
+      </main>
+    `;
+    return;
+  }
+  const artist = artists && artists[0];
+  if (!artist) {
+    app.innerHTML = `
+      <main>
+        <div class="notice">
+          Artiste introuvable ou non publié.
+          <br><br>
+          <a class="button" href="index.html">
+            Retour à INDAMORA PLAY
+          </a>
+        </div>
+      </main>
+    `;
+    return;
+  }
+  document.title =
+    `${artist.name} — INDAMORA PLAY`;
+  const [
+    tracksResponse,
+    albumsResponse,
+    mediaResponse
+  ] = await Promise.all([
+    db
+      .from("tracks")
+      .select("*")
+      .eq("artist_id", artist.id)
+      .eq("status", "published")
+      .order("created_at", {
+        ascending: false
+      }),
+    db
+      .from("albums")
+      .select("*")
+      .eq("artist_id", artist.id)
+      .eq("status", "published")
+      .order("release_date", {
+        ascending: false
+      }),
+    db
+      .from("media")
+      .select("*")
+      .eq("artist_id", artist.id)
+      .eq("status", "published")
+      .order("created_at", {
+        ascending: false
+      })
+  ]);
+  const tracks =
+    tracksResponse.data || [];
+  const albums =
+    albumsResponse.data || [];
+  const media =
+    mediaResponse.data || [];
+  renderArtist(
+    artist,
+    tracks,
+    albums,
+    media
+  );
+}
+function renderArtist(
+  artist,
+  tracks,
+  albums,
+  media
+) {
+  const location = [
+    artist.city,
+    artist.region
+  ]
+    .filter(Boolean)
+    .join(" · ");
+  const details = [
+    location,
+    artist.genre,
+    artist.language
+  ]
+    .filter(Boolean)
+    .join(" · ");
+  app.innerHTML = `
+    <section class="hero">
+      <div class="hero-inner">
+        <img
+          class="avatar"
+          src="${publicImage(
+            artist.avatar_url
+          )}"
+          alt="Photo de ${escapeHtml(
+            artist.name
+          )}"
+        >
+        <div>
+          <h1>
+            ${escapeHtml(
+              artist.name
+            )}
+          </h1>
+          <p>
+            ${escapeHtml(
+              artist.bio ||
+              "Bienvenue sur le profil officiel de cet artiste."
+            )}
+          </p>
+          ${
+            details
+              ? `
+                <p style="margin-top:12px;">
+                  ${escapeHtml(details)}
+                </p>
+              `
+              : ""
+          }
+          ${
+            artist.verified
+              ? `
+                <span class="verified">
+                  ✓ Artiste vérifié
+                </span>
+              `
+              : ""
+          }
+        </div>
+      </div>
+    </section>
+    <main>
+      <section>
+        <h2>🎵 Musiques</h2>
+        <div id="tracksGrid"
+             class="grid">
+        </div>
+      </section>
+      <section>
+        <h2>💿 Albums & projets</h2>
+        <div id="albumsGrid"
+             class="grid">
+        </div>
+      </section>
+      <section>
+        <h2>🎬 Clips & podcasts</h2>
+        <div id="mediaGrid"
+             class="grid">
+        </div>
+      </section>
+    </main>
+  `;
+  renderTracks(tracks);
+  renderAlbums(albums);
+  renderMedia(media);
+}
+function renderTracks(tracks) {
+  const container =
+    document.getElementById(
+      "tracksGrid"
+    );
+  if (!tracks.length) {
+    container.innerHTML = `
+      <div class="empty">
+        Aucun morceau publié pour le moment.
+      </div>
+    `;
+    return;
+  }
+  container.innerHTML =
+    tracks.map(track => `
+      <div class="card">
+        <h3>
+          ${escapeHtml(
+            track.title
+          )}
+        </h3>
+        <div class="meta">
+          ${escapeHtml(
+            track.genre || ""
+          )}
+          ${
+            track.language
+              ? " · " +
+                escapeHtml(
+                  track.language
+                )
+              : ""
+          }
+          <br>
+          ${Number(
+            track.play_count || 0
+          )} écoute(s)
+        </div>
+        ${
+          track.audio_url
+            ? `
+              <audio
+                controls
+                preload="none"
+                style="width:100%;"
+                src="${escapeHtml(
+                  track.audio_url
+                )}">
+              </audio>
+            `
+            : `
+              <div class="notice">
+                Audio disponible après
+                publication du fichier.
+              </div>
+            `
+        }
+      </div>
+    `).join("");
+}
+function renderAlbums(albums) {
+  const container =
+    document.getElementById(
+      "albumsGrid"
+    );
+  if (!albums.length) {
+    container.innerHTML = `
+      <div class="empty">
+        Aucun album ou projet publié
+        pour le moment.
+      </div>
+    `;
+    return;
+  }
+  container.innerHTML =
+    albums.map(album => `
+      <div class="card">
+        <img
+          class="cover"
+          src="${publicImage(
+            album.cover_url
+          )}"
+          alt="Pochette ${escapeHtml(
+            album.title
+          )}"
+        >
+        <h3>
+          ${escapeHtml(
+            album.title
+          )}
+        </h3>
+        <div class="meta">
+          ${escapeHtml(
+            String(album.type || "")
+              .toUpperCase()
+          )}
+          ${
+            album.release_date
+              ? `
+                <br>
+                Sortie :
+                ${escapeHtml(
+                  album.release_date
+                )}
+              `
+              : ""
+          }
+        </div>
+        ${
+          album.description
+            ? `
+              <p class="meta">
+                ${escapeHtml(
+                  album.description
+                )}
+              </p>
+            `
+            : ""
+        }
+      </div>
+    `).join("");
+}
+function renderMedia(media) {
+  const container =
+    document.getElementById(
+      "mediaGrid"
+    );
+  if (!media.length) {
+    container.innerHTML = `
+      <div class="empty">
+        Aucun clip ou podcast publié
+        pour le moment.
+      </div>
+    `;
+    return;
+  }
+  container.innerHTML =
+    media.map(item => `
+      <div class="card">
+        <h3>
+          ${escapeHtml(
+            item.title
+          )}
+        </h3>
+        <div class="meta">
+          ${escapeHtml(
+            String(item.type || "")
+              .toUpperCase()
+          )}
+        </div>
+        ${
+          item.description
+            ? `
+              <p class="meta">
+                ${escapeHtml(
+                  item.description
+                )}
+              </p>
+            `
+            : ""
+        }
+        ${
+          item.media_url
+            ? `
+              <a
+                class="button"
+                href="${escapeHtml(
+                  item.media_url
+                )}"
+                target="_blank"
+                rel="noopener"
+              >
+                ▶ Ouvrir le média
+              </a>
+            `
+            : `
+              <div class="notice">
+                Média en attente de son lien.
+              </div>
+            `
+        }
+      </div>
+    `).join("");
+}
+loadArtist();
+</script>
+</body>
+</html>
