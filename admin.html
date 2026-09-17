@@ -3,11 +3,23 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
   <title>Administration — INDAMORA PLAY</title>
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
   <style>
+    :root {
+      --blue: #1565c0;
+      --blue-dark: #0d47a1;
+      --blue-light: #eaf3ff;
+      --text: #172033;
+      --muted: #64748b;
+      --border: #dbe5f0;
+      --white: #ffffff;
+      --bg: #f5f8fc;
+    }
+
     * {
       box-sizing: border-box;
       margin: 0;
@@ -16,8 +28,8 @@
 
     body {
       font-family: Arial, Helvetica, sans-serif;
-      background: #0b0b0f;
-      color: #fff;
+      background: var(--bg);
+      color: var(--text);
       min-height: 100vh;
     }
 
@@ -25,39 +37,55 @@
       display: none !important;
     }
 
+    /* CONNEXION */
+
     .login-page {
       min-height: 100vh;
       display: flex;
       align-items: center;
       justify-content: center;
       padding: 20px;
+      background:
+        linear-gradient(180deg, #eaf3ff 0%, #ffffff 70%);
     }
 
     .login-box {
       width: 100%;
       max-width: 430px;
-      background: #15151d;
-      border: 1px solid #2c2c38;
+      background: white;
+      border: 1px solid var(--border);
       border-radius: 18px;
-      padding: 30px;
-      box-shadow: 0 20px 60px rgba(0,0,0,.35);
+      padding: 32px;
+      box-shadow: 0 15px 50px rgba(21, 101, 192, .12);
     }
 
     .logo {
       text-align: center;
-      font-size: 27px;
-      font-weight: 800;
+      font-size: 28px;
+      font-weight: 900;
+      color: var(--blue-dark);
       margin-bottom: 8px;
     }
 
     .logo span {
-      color: #ffcc00;
+      color: var(--blue);
     }
 
     .subtitle {
       text-align: center;
-      color: #92929e;
+      color: var(--muted);
       margin-bottom: 28px;
+    }
+
+    .lock {
+      width: 64px;
+      height: 64px;
+      margin: 0 auto 18px;
+      border-radius: 50%;
+      background: var(--blue-light);
+      display: grid;
+      place-items: center;
+      font-size: 28px;
     }
 
     label {
@@ -65,6 +93,7 @@
       margin-bottom: 7px;
       font-weight: 700;
       font-size: 14px;
+      color: #334155;
     }
 
     input,
@@ -73,17 +102,19 @@
       width: 100%;
       padding: 12px 13px;
       border-radius: 9px;
-      border: 1px solid #353541;
-      background: #0f0f15;
-      color: #fff;
+      border: 1px solid #cbd8e6;
+      background: white;
+      color: var(--text);
       outline: none;
       margin-bottom: 16px;
+      font-family: inherit;
     }
 
     input:focus,
     select:focus,
     textarea:focus {
-      border-color: #ffcc00;
+      border-color: var(--blue);
+      box-shadow: 0 0 0 3px rgba(21, 101, 192, .08);
     }
 
     button {
@@ -92,43 +123,53 @@
       border-radius: 9px;
       padding: 12px 17px;
       font-weight: 700;
+      font-family: inherit;
+    }
+
+    button:disabled {
+      opacity: .6;
+      cursor: not-allowed;
     }
 
     .primary {
       width: 100%;
-      background: #ffcc00;
-      color: #111;
+      background: var(--blue);
+      color: white;
     }
 
     .primary:hover {
-      opacity: .9;
+      background: var(--blue-dark);
     }
 
     .message {
       margin-top: 15px;
       padding: 11px;
       border-radius: 8px;
-      background: #20202a;
-      color: #ddd;
+      background: var(--blue-light);
+      color: var(--blue-dark);
       font-size: 14px;
       display: none;
     }
 
     .message.error {
       display: block;
-      border: 1px solid #6b3030;
-      color: #ffb4b4;
+      background: #fff1f2;
+      border: 1px solid #fecdd3;
+      color: #be123c;
     }
 
     .message.success {
       display: block;
-      border: 1px solid #315c3d;
-      color: #b9f1c5;
+      background: #effcf6;
+      border: 1px solid #bbf7d0;
+      color: #166534;
     }
 
+    /* ADMIN */
+
     header {
-      border-bottom: 1px solid #292934;
-      background: #101016;
+      border-bottom: 1px solid var(--border);
+      background: white;
       position: sticky;
       top: 0;
       z-index: 10;
@@ -146,23 +187,28 @@
 
     .brand {
       font-size: 20px;
-      font-weight: 800;
+      font-weight: 900;
+      color: var(--blue-dark);
     }
 
     .brand span {
-      color: #ffcc00;
+      color: var(--blue);
     }
 
     .user-info {
-      color: #9999a5;
+      color: var(--muted);
       font-size: 13px;
       text-align: right;
     }
 
     .logout {
-      background: #272731;
-      color: #fff;
+      background: #edf2f7;
+      color: #334155;
       margin-left: 10px;
+    }
+
+    .logout:hover {
+      background: #e2e8f0;
     }
 
     main {
@@ -176,12 +222,13 @@
     }
 
     .welcome h1 {
+      color: #102a43;
       font-size: 30px;
       margin-bottom: 6px;
     }
 
     .welcome p {
-      color: #9999a5;
+      color: var(--muted);
     }
 
     .stats {
@@ -192,33 +239,36 @@
     }
 
     .stat {
-      background: #15151d;
-      border: 1px solid #292934;
+      background: white;
+      border: 1px solid var(--border);
       border-radius: 13px;
       padding: 18px;
+      box-shadow: 0 5px 18px rgba(21, 101, 192, .05);
     }
 
     .stat-number {
       font-size: 28px;
-      font-weight: 800;
-      color: #ffcc00;
+      font-weight: 900;
+      color: var(--blue);
     }
 
     .stat-label {
-      color: #9999a5;
+      color: var(--muted);
       font-size: 13px;
       margin-top: 4px;
     }
 
     .panel {
-      background: #15151d;
-      border: 1px solid #292934;
+      background: white;
+      border: 1px solid var(--border);
       border-radius: 15px;
       padding: 22px;
       margin-bottom: 22px;
+      box-shadow: 0 5px 18px rgba(21, 101, 192, .04);
     }
 
     .panel h2 {
+      color: #102a43;
       font-size: 21px;
       margin-bottom: 18px;
     }
@@ -235,14 +285,8 @@
       flex-wrap: wrap;
     }
 
-    .secondary {
-      background: #272731;
-      color: #fff;
-    }
-
-    .danger {
-      background: #612d2d;
-      color: #fff;
+    .panel .primary {
+      width: auto;
     }
 
     table {
@@ -253,22 +297,18 @@
     th,
     td {
       padding: 11px 8px;
-      border-bottom: 1px solid #292934;
+      border-bottom: 1px solid var(--border);
       text-align: left;
       font-size: 14px;
     }
 
     th {
-      color: #ffcc00;
+      color: var(--blue-dark);
     }
 
-    .empty {
-      color: #888894;
-      padding: 15px 0;
-    }
-
+    .empty,
     .loading {
-      color: #aaaab5;
+      color: var(--muted);
       padding: 15px 0;
     }
 
@@ -309,13 +349,13 @@
 
 <body>
 
-<!-- =========================
-     CONNEXION
-========================= -->
+<!-- CONNEXION -->
 
 <div id="loginPage" class="login-page">
 
   <div class="login-box">
+
+    <div class="lock">🔐</div>
 
     <div class="logo">
       INDAMORA <span>PLAY</span>
@@ -327,7 +367,10 @@
 
     <form id="loginForm">
 
-      <label for="email">Adresse e-mail</label>
+      <label for="email">
+        Adresse e-mail
+      </label>
+
       <input
         id="email"
         type="email"
@@ -336,7 +379,10 @@
         placeholder="Votre adresse e-mail"
       >
 
-      <label for="password">Mot de passe</label>
+      <label for="password">
+        Mot de passe
+      </label>
+
       <input
         id="password"
         type="password"
@@ -358,10 +404,7 @@
 </div>
 
 
-<!-- =========================
-     ADMINISTRATION
-     INVISIBLE AVANT CONNEXION
-========================= -->
+<!-- APPLICATION ADMINISTRATEUR -->
 
 <div id="adminApp" class="hidden">
 
@@ -405,8 +448,6 @@
     </div>
 
 
-    <!-- STATISTIQUES -->
-
     <section class="stats">
 
       <div class="stat">
@@ -436,8 +477,6 @@
 
     </section>
 
-
-    <!-- AJOUT ARTISTE -->
 
     <section class="panel">
 
@@ -480,15 +519,15 @@
         </div>
 
         <label>Biographie</label>
-        <textarea id="artistBio" rows="4"></textarea>
 
-        <div class="form-actions">
+        <textarea
+          id="artistBio"
+          rows="4"
+        ></textarea>
 
-          <button class="primary" type="submit">
-            Ajouter l'artiste
-          </button>
-
-        </div>
+        <button class="primary" type="submit">
+          Ajouter l'artiste
+        </button>
 
       </form>
 
@@ -496,8 +535,6 @@
 
     </section>
 
-
-    <!-- AJOUT ALBUM -->
 
     <section class="panel">
 
@@ -509,8 +546,11 @@
 
           <div>
             <label>Artiste</label>
+
             <select id="albumArtist" required>
-              <option value="">Choisir un artiste</option>
+              <option value="">
+                Choisir un artiste
+              </option>
             </select>
           </div>
 
@@ -521,6 +561,7 @@
 
           <div>
             <label>Type</label>
+
             <select id="albumType">
               <option value="album">Album</option>
               <option value="ep">EP</option>
@@ -530,18 +571,28 @@
 
           <div>
             <label>Date de sortie</label>
-            <input id="albumReleaseDate" type="date">
+            <input
+              id="albumReleaseDate"
+              type="date"
+            >
           </div>
 
           <div>
             <label>Cover URL</label>
-            <input id="albumCover" type="url">
+            <input
+              id="albumCover"
+              type="url"
+            >
           </div>
 
         </div>
 
         <label>Description</label>
-        <textarea id="albumDescription" rows="3"></textarea>
+
+        <textarea
+          id="albumDescription"
+          rows="3"
+        ></textarea>
 
         <button class="primary" type="submit">
           Ajouter
@@ -554,8 +605,6 @@
     </section>
 
 
-    <!-- AJOUT MUSIQUE -->
-
     <section class="panel">
 
       <h2>🎵 Ajouter une musique</h2>
@@ -566,15 +615,21 @@
 
           <div>
             <label>Artiste</label>
+
             <select id="trackArtist" required>
-              <option value="">Choisir un artiste</option>
+              <option value="">
+                Choisir un artiste
+              </option>
             </select>
           </div>
 
           <div>
             <label>Album / EP</label>
+
             <select id="trackAlbum">
-              <option value="">Aucun album</option>
+              <option value="">
+                Aucun album
+              </option>
             </select>
           </div>
 
@@ -585,12 +640,20 @@
 
           <div>
             <label>URL du fichier audio</label>
-            <input id="trackAudio" type="url" required>
+            <input
+              id="trackAudio"
+              type="url"
+              required
+            >
           </div>
 
           <div>
             <label>Durée en secondes</label>
-            <input id="trackDuration" type="number" min="0">
+            <input
+              id="trackDuration"
+              type="number"
+              min="0"
+            >
           </div>
 
           <div>
@@ -626,8 +689,6 @@
     </section>
 
 
-    <!-- AJOUT MEDIA -->
-
     <section class="panel">
 
       <h2>🎬 Ajouter un clip / podcast / média</h2>
@@ -638,8 +699,11 @@
 
           <div>
             <label>Artiste</label>
+
             <select id="mediaArtist">
-              <option value="">Aucun artiste</option>
+              <option value="">
+                Aucun artiste
+              </option>
             </select>
           </div>
 
@@ -650,6 +714,7 @@
 
           <div>
             <label>Type</label>
+
             <select id="mediaType">
               <option value="clip">Clip</option>
               <option value="podcast">Podcast</option>
@@ -660,13 +725,21 @@
 
           <div>
             <label>URL média</label>
-            <input id="mediaUrl" type="url" required>
+            <input
+              id="mediaUrl"
+              type="url"
+              required
+            >
           </div>
 
         </div>
 
         <label>Description</label>
-        <textarea id="mediaDescription" rows="3"></textarea>
+
+        <textarea
+          id="mediaDescription"
+          rows="3"
+        ></textarea>
 
         <button class="primary" type="submit">
           Ajouter
@@ -679,8 +752,6 @@
     </section>
 
 
-    <!-- ARTISTES -->
-
     <section class="panel">
 
       <h2>👤 Artistes enregistrés</h2>
@@ -692,8 +763,6 @@
     </section>
 
 
-    <!-- MUSIQUES -->
-
     <section class="panel">
 
       <h2>🎵 Musiques enregistrées</h2>
@@ -704,8 +773,6 @@
 
     </section>
 
-
-    <!-- CANDIDATURES -->
 
     <section class="panel">
 
@@ -723,15 +790,16 @@
 
 
 <script>
+
   /* =========================================
-     CONFIGURATION SUPABASE
+     SUPABASE
   ========================================= */
 
   const SUPABASE_URL =
     "https://adqsdnqkbitplbhbihiv.supabase.co";
 
   const SUPABASE_PUBLISHABLE_KEY =
-    "TA_CLE_PUBLISHABLE";
+    "sb_publishable_hHq8n88Rjhb8VaEVyenaVg_RsNoKkbJ";
 
   const supabaseClient =
     window.supabase.createClient(
@@ -761,47 +829,32 @@
 
 
   /* =========================================
-     MESSAGE
-  ========================================= */
-
-  function showMessage(element, text, type = "error") {
-
-    element.textContent = text;
-
-    element.className =
-      "message " + type;
-
-  }
-
-
-  function clearMessage(element) {
-
-    element.textContent = "";
-
-    element.className = "message";
-
-  }
-
-
-  /* =========================================
      AFFICHAGE
   ========================================= */
 
   function showLogin() {
-
     loginPage.classList.remove("hidden");
-
     adminApp.classList.add("hidden");
+  }
 
+  function showAdmin() {
+    loginPage.classList.add("hidden");
+    adminApp.classList.remove("hidden");
   }
 
 
-  function showAdmin() {
+  /* =========================================
+     MESSAGES
+  ========================================= */
 
-    loginPage.classList.add("hidden");
+  function showMessage(element, text, type = "error") {
+    element.textContent = text;
+    element.className = "message " + type;
+  }
 
-    adminApp.classList.remove("hidden");
-
+  function clearMessage(element) {
+    element.textContent = "";
+    element.className = "message";
   }
 
 
@@ -823,11 +876,8 @@
       }
 
       if (!user) {
-
         showLogin();
-
         return false;
-
       }
 
 
@@ -855,7 +905,6 @@
         );
 
         return false;
-
       }
 
 
@@ -871,7 +920,6 @@
         );
 
         return false;
-
       }
 
 
@@ -900,9 +948,7 @@
       );
 
       return false;
-
     }
-
   }
 
 
@@ -910,104 +956,95 @@
      CONNEXION
   ========================================= */
 
-  loginForm.addEventListener("submit", async function(event) {
+  loginForm.addEventListener(
+    "submit",
+    async function(event) {
 
-    event.preventDefault();
+      event.preventDefault();
 
-    clearMessage(loginMessage);
+      clearMessage(loginMessage);
 
-    const email =
-      document.getElementById("email").value.trim();
+      const email =
+        document.getElementById("email")
+          .value
+          .trim();
 
-    const password =
-      document.getElementById("password").value;
-
-
-    if (!email || !password) {
-
-      showMessage(
-        loginMessage,
-        "Veuillez saisir votre e-mail et votre mot de passe."
-      );
-
-      return;
-
-    }
+      const password =
+        document.getElementById("password")
+          .value;
 
 
-    const button =
-      loginForm.querySelector("button");
+      const button =
+        loginForm.querySelector("button");
 
-    button.disabled = true;
+      button.disabled = true;
 
-    button.textContent = "Connexion...";
-
-
-    try {
-
-      const {
-        data,
-        error
-      } = await supabaseClient.auth.signInWithPassword({
-        email,
-        password
-      });
+      button.textContent = "Connexion...";
 
 
-      if (error) {
-        throw error;
-      }
+      try {
+
+        const {
+          data,
+          error
+        } = await supabaseClient.auth.signInWithPassword({
+          email,
+          password
+        });
 
 
-      if (!data.user) {
+        if (error) {
+          throw error;
+        }
 
-        throw new Error(
-          "Utilisateur introuvable."
+
+        if (!data.user) {
+          throw new Error("Utilisateur introuvable.");
+        }
+
+
+        await checkAdmin();
+
+      } catch (error) {
+
+        console.error(error);
+
+        showMessage(
+          loginMessage,
+          error.message ||
+          "Connexion impossible."
         );
 
+      } finally {
+
+        button.disabled = false;
+
+        button.textContent =
+          "🔐 Se connecter";
       }
 
-
-      await checkAdmin();
-
-
-    } catch (error) {
-
-      console.error(error);
-
-      showMessage(
-        loginMessage,
-        error.message ||
-        "Connexion impossible."
-      );
-
-    } finally {
-
-      button.disabled = false;
-
-      button.textContent =
-        "🔐 Se connecter";
-
     }
-
-  });
+  );
 
 
   /* =========================================
      DECONNEXION
   ========================================= */
 
-  logoutButton.addEventListener("click", async function() {
+  logoutButton.addEventListener(
+    "click",
+    async function() {
 
-    await supabaseClient.auth.signOut();
+      await supabaseClient.auth.signOut();
 
-    showLogin();
+      showLogin();
 
-    loginForm.reset();
+      loginForm.reset();
 
-    clearMessage(loginMessage);
+      clearMessage(loginMessage);
 
-  });
+    }
+  );
 
 
   /* =========================================
@@ -1078,7 +1115,6 @@
       console.error(error);
 
     }
-
   }
 
 
@@ -1101,7 +1137,7 @@
 
 
   /* =========================================
-     ECHAPPEMENT HTML
+     HTML SECURITY
   ========================================= */
 
   function escapeHtml(value) {
@@ -1129,13 +1165,18 @@
     const container =
       document.getElementById("artistsList");
 
+
     const {
       data,
       error
     } = await supabaseClient
       .from("artists")
-      .select("id,name,city,region,genre,verified")
-      .order("created_at", { ascending: false });
+      .select(
+        "id,name,city,region,genre,verified"
+      )
+      .order("created_at", {
+        ascending: false
+      });
 
 
     if (error) {
@@ -1144,7 +1185,6 @@
         '<div class="empty">Erreur de chargement.</div>';
 
       return;
-
     }
 
 
@@ -1154,7 +1194,6 @@
         '<div class="empty">Aucun artiste pour le moment.</div>';
 
       return;
-
     }
 
 
@@ -1208,13 +1247,18 @@
     const container =
       document.getElementById("tracksList");
 
+
     const {
       data,
       error
     } = await supabaseClient
       .from("tracks")
-      .select("id,title,status,play_count,artists(name)")
-      .order("created_at", { ascending: false });
+      .select(
+        "id,title,status,play_count,artists(name)"
+      )
+      .order("created_at", {
+        ascending: false
+      });
 
 
     if (error) {
@@ -1223,7 +1267,6 @@
         '<div class="empty">Erreur de chargement.</div>';
 
       return;
-
     }
 
 
@@ -1233,7 +1276,6 @@
         '<div class="empty">Aucune musique pour le moment.</div>';
 
       return;
-
     }
 
 
@@ -1285,6 +1327,7 @@
     const container =
       document.getElementById("submissionsList");
 
+
     const {
       data,
       error
@@ -1293,7 +1336,9 @@
       .select(
         "id,artist_name,title,content_type,genre,status,created_at"
       )
-      .order("created_at", { ascending: false });
+      .order("created_at", {
+        ascending: false
+      });
 
 
     if (error) {
@@ -1302,7 +1347,6 @@
         '<div class="empty">Erreur de chargement.</div>';
 
       return;
-
     }
 
 
@@ -1312,7 +1356,6 @@
         '<div class="empty">Aucune candidature.</div>';
 
       return;
-
     }
 
 
@@ -1393,14 +1436,17 @@
 
       select.appendChild(first);
 
+
       data.forEach(artist => {
 
         const option =
           document.createElement("option");
 
-        option.value = artist.id;
+        option.value =
+          artist.id;
 
-        option.textContent = artist.name;
+        option.textContent =
+          artist.name;
 
         select.appendChild(option);
 
@@ -1419,6 +1465,7 @@
 
     const select =
       document.getElementById("trackAlbum");
+
 
     const {
       data,
@@ -1443,9 +1490,11 @@
       const option =
         document.createElement("option");
 
-      option.value = album.id;
+      option.value =
+        album.id;
 
-      option.textContent = album.title;
+      option.textContent =
+        album.title;
 
       select.appendChild(option);
 
@@ -1460,86 +1509,112 @@
 
   document
     .getElementById("artistForm")
-    .addEventListener("submit", async function(event) {
+    .addEventListener(
+      "submit",
+      async function(event) {
 
-      event.preventDefault();
+        event.preventDefault();
 
-      const message =
-        document.getElementById("artistMessage");
+        const message =
+          document.getElementById("artistMessage");
 
-      clearMessage(message);
-
-
-      const name =
-        document.getElementById("artistName")
-          .value.trim();
+        clearMessage(message);
 
 
-      const {
-        error
-      } = await supabaseClient
-        .from("artists")
-        .insert({
-
-          owner_id: (
-            await supabaseClient.auth.getUser()
-          ).data.user.id,
-
-          name,
-
-          slug: createSlug(name),
-
-          bio:
-            document.getElementById("artistBio")
-              .value.trim(),
-
-          city:
-            document.getElementById("artistCity")
-              .value.trim(),
-
-          region:
-            document.getElementById("artistRegion")
-              .value.trim(),
-
-          language:
-            document.getElementById("artistLanguage")
-              .value.trim(),
-
-          genre:
-            document.getElementById("artistGenre")
-              .value.trim(),
-
-          avatar_url:
-            document.getElementById("artistAvatar")
-              .value.trim()
-
-        });
+        const {
+          data: {
+            user
+          }
+        } =
+          await supabaseClient.auth.getUser();
 
 
-      if (error) {
+        if (!user) {
+
+          showMessage(
+            message,
+            "Session expirée. Reconnectez-vous."
+          );
+
+          return;
+        }
+
+
+        const name =
+          document.getElementById("artistName")
+            .value
+            .trim();
+
+
+        const {
+          error
+        } = await supabaseClient
+          .from("artists")
+          .insert({
+
+            owner_id: user.id,
+
+            name,
+
+            slug: createSlug(name),
+
+            bio:
+              document.getElementById("artistBio")
+                .value
+                .trim(),
+
+            city:
+              document.getElementById("artistCity")
+                .value
+                .trim(),
+
+            region:
+              document.getElementById("artistRegion")
+                .value
+                .trim(),
+
+            language:
+              document.getElementById("artistLanguage")
+                .value
+                .trim(),
+
+            genre:
+              document.getElementById("artistGenre")
+                .value
+                .trim(),
+
+            avatar_url:
+              document.getElementById("artistAvatar")
+                .value
+                .trim()
+
+          });
+
+
+        if (error) {
+
+          showMessage(
+            message,
+            error.message
+          );
+
+          return;
+        }
+
 
         showMessage(
           message,
-          error.message
+          "Artiste ajouté avec succès.",
+          "success"
         );
 
-        return;
+
+        this.reset();
+
+        await loadDashboard();
 
       }
-
-
-      showMessage(
-        message,
-        "Artiste ajouté avec succès.",
-        "success"
-      );
-
-
-      this.reset();
-
-      await loadDashboard();
-
-    });
+    );
 
 
   /* =========================================
@@ -1548,75 +1623,89 @@
 
   document
     .getElementById("albumForm")
-    .addEventListener("submit", async function(event) {
+    .addEventListener(
+      "submit",
+      async function(event) {
 
-      event.preventDefault();
+        event.preventDefault();
 
-      const message =
-        document.getElementById("albumMessage");
+        const message =
+          document.getElementById("albumMessage");
 
-      clearMessage(message);
-
-
-      const title =
-        document.getElementById("albumTitle")
-          .value.trim();
+        clearMessage(message);
 
 
-      const {
-        error
-      } = await supabaseClient
-        .from("albums")
-        .insert({
-
-          artist_id:
-            document.getElementById("albumArtist").value,
-
-          title,
-
-          slug: createSlug(title),
-
-          type:
-            document.getElementById("albumType").value,
-
-          cover_url:
-            document.getElementById("albumCover").value.trim(),
-
-          release_date:
-            document.getElementById("albumReleaseDate").value ||
-            null,
-
-          description:
-            document.getElementById("albumDescription")
-              .value.trim()
-
-        });
+        const title =
+          document.getElementById("albumTitle")
+            .value
+            .trim();
 
 
-      if (error) {
+        const {
+          error
+        } = await supabaseClient
+          .from("albums")
+          .insert({
+
+            artist_id:
+              document.getElementById(
+                "albumArtist"
+              ).value,
+
+            title,
+
+            slug:
+              createSlug(title),
+
+            type:
+              document.getElementById(
+                "albumType"
+              ).value,
+
+            cover_url:
+              document.getElementById(
+                "albumCover"
+              ).value
+              .trim(),
+
+            release_date:
+              document.getElementById(
+                "albumReleaseDate"
+              ).value || null,
+
+            description:
+              document.getElementById(
+                "albumDescription"
+              ).value
+              .trim()
+
+          });
+
+
+        if (error) {
+
+          showMessage(
+            message,
+            error.message
+          );
+
+          return;
+        }
+
 
         showMessage(
           message,
-          error.message
+          "Album / EP / single ajouté.",
+          "success"
         );
 
-        return;
+
+        this.reset();
+
+        await loadDashboard();
 
       }
-
-
-      showMessage(
-        message,
-        "Album / EP / single ajouté.",
-        "success"
-      );
-
-
-      this.reset();
-
-      await loadDashboard();
-
-    });
+    );
 
 
   /* =========================================
@@ -1625,90 +1714,111 @@
 
   document
     .getElementById("trackForm")
-    .addEventListener("submit", async function(event) {
+    .addEventListener(
+      "submit",
+      async function(event) {
 
-      event.preventDefault();
+        event.preventDefault();
 
-      const message =
-        document.getElementById("trackMessage");
+        const message =
+          document.getElementById("trackMessage");
 
-      clearMessage(message);
-
-
-      const title =
-        document.getElementById("trackTitle")
-          .value.trim();
+        clearMessage(message);
 
 
-      const {
-        error
-      } = await supabaseClient
-        .from("tracks")
-        .insert({
-
-          artist_id:
-            document.getElementById("trackArtist").value,
-
-          album_id:
-            document.getElementById("trackAlbum").value || null,
-
-          title,
-
-          slug: createSlug(title),
-
-          audio_url:
-            document.getElementById("trackAudio").value.trim(),
-
-          duration_seconds:
-            Number(
-              document.getElementById("trackDuration").value
-            ) || null,
-
-          genre:
-            document.getElementById("trackGenre")
-              .value.trim(),
-
-          language:
-            document.getElementById("trackLanguage")
-              .value.trim(),
-
-          city:
-            document.getElementById("trackCity")
-              .value.trim(),
-
-          region:
-            document.getElementById("trackRegion")
-              .value.trim(),
-
-          status: "draft"
-
-        });
+        const title =
+          document.getElementById("trackTitle")
+            .value
+            .trim();
 
 
-      if (error) {
+        const {
+          error
+        } = await supabaseClient
+          .from("tracks")
+          .insert({
+
+            artist_id:
+              document.getElementById(
+                "trackArtist"
+              ).value,
+
+            album_id:
+              document.getElementById(
+                "trackAlbum"
+              ).value || null,
+
+            title,
+
+            slug:
+              createSlug(title),
+
+            audio_url:
+              document.getElementById(
+                "trackAudio"
+              ).value
+              .trim(),
+
+            duration_seconds:
+              Number(
+                document.getElementById(
+                  "trackDuration"
+                ).value
+              ) || null,
+
+            genre:
+              document.getElementById(
+                "trackGenre"
+              ).value
+              .trim(),
+
+            language:
+              document.getElementById(
+                "trackLanguage"
+              ).value
+              .trim(),
+
+            city:
+              document.getElementById(
+                "trackCity"
+              ).value
+              .trim(),
+
+            region:
+              document.getElementById(
+                "trackRegion"
+              ).value
+              .trim(),
+
+            status: "draft"
+
+          });
+
+
+        if (error) {
+
+          showMessage(
+            message,
+            error.message
+          );
+
+          return;
+        }
+
 
         showMessage(
           message,
-          error.message
+          "Musique ajoutée avec succès.",
+          "success"
         );
 
-        return;
+
+        this.reset();
+
+        await loadDashboard();
 
       }
-
-
-      showMessage(
-        message,
-        "Musique ajoutée avec succès.",
-        "success"
-      );
-
-
-      this.reset();
-
-      await loadDashboard();
-
-    });
+    );
 
 
   /* =========================================
@@ -1717,73 +1827,85 @@
 
   document
     .getElementById("mediaForm")
-    .addEventListener("submit", async function(event) {
+    .addEventListener(
+      "submit",
+      async function(event) {
 
-      event.preventDefault();
+        event.preventDefault();
 
-      const message =
-        document.getElementById("mediaMessage");
+        const message =
+          document.getElementById("mediaMessage");
 
-      clearMessage(message);
-
-
-      const {
-        error
-      } = await supabaseClient
-        .from("media")
-        .insert({
-
-          artist_id:
-            document.getElementById("mediaArtist").value || null,
-
-          title:
-            document.getElementById("mediaTitle")
-              .value.trim(),
-
-          type:
-            document.getElementById("mediaType").value,
-
-          media_url:
-            document.getElementById("mediaUrl")
-              .value.trim(),
-
-          description:
-            document.getElementById("mediaDescription")
-              .value.trim(),
-
-          status: "draft"
-
-        });
+        clearMessage(message);
 
 
-      if (error) {
+        const {
+          error
+        } = await supabaseClient
+          .from("media")
+          .insert({
+
+            artist_id:
+              document.getElementById(
+                "mediaArtist"
+              ).value || null,
+
+            title:
+              document.getElementById(
+                "mediaTitle"
+              ).value
+              .trim(),
+
+            type:
+              document.getElementById(
+                "mediaType"
+              ).value,
+
+            media_url:
+              document.getElementById(
+                "mediaUrl"
+              ).value
+              .trim(),
+
+            description:
+              document.getElementById(
+                "mediaDescription"
+              ).value
+              .trim(),
+
+            status: "draft"
+
+          });
+
+
+        if (error) {
+
+          showMessage(
+            message,
+            error.message
+          );
+
+          return;
+        }
+
 
         showMessage(
           message,
-          error.message
+          "Média ajouté avec succès.",
+          "success"
         );
 
-        return;
+
+        this.reset();
+
+        await loadDashboard();
 
       }
-
-
-      showMessage(
-        message,
-        "Média ajouté avec succès.",
-        "success"
-      );
-
-
-      this.reset();
-
-      await loadDashboard();
-
-    });
+    );
 
 
   /* =========================================
-     SURVEILLANCE SESSION
+     SESSION
   ========================================= */
 
   supabaseClient.auth.onAuthStateChange(
