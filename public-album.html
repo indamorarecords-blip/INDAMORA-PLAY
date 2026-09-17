@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Album — INDAMORA PLAY</title>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      background: #f5f9ff;
+      color: #102a43;
+    }
+    header {
+      background: #0757b8;
+      color: white;
+      padding: 16px 20px;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+    .header-inner {
+      max-width: 1100px;
+      margin: auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 15px;
+    }
+    .logo {
+      font-size: 22px;
+      font-weight: bold;
+    }
+    .back {
+      color: white;
+      text-decoration: none;
+      font-weight: bold;
+    }
+    main {
+      max-width: 1100px;
+      margin: 30px auto;
+      padding: 0 18px;
+    }
+    .album-card {
+      background: white;
+      border-radius: 18px;
+      padding: 25px;
+      box-shadow: 0 5px 20px rgba(0, 70, 140, 0.08);
+      margin-bottom: 25px;
+    }
+    .album-header {
+      display: grid;
+      grid-template-columns: 260px 1fr;
+      gap: 28px;
+      align-items: center;
+    }
+    .cover {
+      width: 100%;
+      aspect-ratio: 1 / 1;
+      border-radius: 16px;
+      object-fit: cover;
+      background: #e7f0fb;
+    }
+    .cover-placeholder {
+      width: 100%;
+      aspect-ratio: 1 / 1;
+      border-radius: 16px;
+      background: #e7f0fb;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 70px;
+    }
+    h1 {
+      margin: 0 0 10px;
+      font-size: 38px;
+      color: #073b7a;
+    }
+    .artist {
+      font-size: 20px;
+      margin-bottom: 15px;
+    }
+    .artist a {
+      color: #0757b8;
+      text-decoration: none;
+      font-weight: bold;
+    }
+    .badge {
+      display: inline-block;
+      background: #e7f0fb;
+      color: #0757b8;
+      border-radius: 20px;
+      padding: 7px 12px;
+      margin: 3px;
+      font-size: 14px;
+      font-weight: bold;
+    }
+    .description {
+      line-height: 1.7;
+      color: #486581;
+      margin-top: 18px;
+    }
+    .section-title {
+      font-size: 26px;
+      color: #073b7a;
+      margin: 30px 0 15px;
+    }
+    .track {
+      background: white;
+      border-radius: 14px;
+      padding: 17px;
+      margin-bottom: 12px;
+      box-shadow: 0 3px 12px rgba(0, 70, 140, 0.06);
+    }
+    .track-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 15px;
+    }
+    .track-title {
+      font-size: 18px;
+      font-weight: bold;
+      color: #073b7a;
+    }
+    .plays {
+      color: #627d98;
+      font-size: 13px;
+      white-space: nowrap;
+    }
+    audio {
+      width: 100%;
+      margin-top: 12px;
+    }
+    .notice {
+      background: #eef5fc;
+      color: #486581;
+      border-radius: 12px;
+      padding: 15px;
+      margin-top: 12px;
+    }
+    .loading,
+    .error {
+      text-align: center;
+      padding: 50px 20px;
+      background: white;
+      border-radius: 18px;
+    }
+    .error {
+      color: #b42318;
+    }
+    footer {
+      text-align: center;
+      color: #627d98;
+      padding: 40px 20px;
+    }
+    @media (max-width: 700px) {
+      .album-header {
+        grid-template-columns: 1fr;
+      }
+      h1 {
+        font-size: 30px;
+      }
+    }
+  </style>
+</head>
+<body>
+<header>
+  <div class="header-inner">
+    <div class="logo">🎧 INDAMORA PLAY</div>
+    <a class="back" href="index.html">← Accueil</a>
+  </div>
+</header>
+<main>
+  <div id="loading" class="loading">
+    Chargement de l’album...
+  </div>
+  <div id="error" class="error" style="display:none;"></div>
+  <section id="content" style="display:none;">
+<div class="album-card">
+  <div class="album-header">
+    <div id="coverContainer"></div>
+    <div>
+      <h1 id="albumTitle"></h1>
+      <div class="artist">
+        Par
+        <a id="artistLink" href="#"></a>
+      </div>
+      <div id="badges"></div>
+      <div id="releaseDate"></div>
+      <div id="description" class="description"></div>
+    </div>
+  </div>
+</div>
+<h2 class="section-title">🎵 Titres de l’album</h2>
+<div id="tracks"></div>
+  </section>
+</main>
+<footer>
+  <strong>INDAMORA PLAY</strong><br>
+  INDAMORA RECORDS — Musique d’Afrique centrale 🇨🇫
+</footer>
+<script>
+  const SUPABASE_URL = "https://adqsdnqkbitplbhbihiv.supabase.co";
+  const SUPABASE_KEY = "sb_publishable_dpjfWOYeNQRmP2nJq5FoMA_8NUuD0HF";
+  const db = window.supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_KEY
+  );
+  const params = new URLSearchParams(window.location.search);
+  const albumId = params.get("id");
+  const albumSlug = params.get("slug");
+  const loading = document.getElementById("loading");
+  const errorBox = document.getElementById("error");
+  const content = document.getElementById("content");
+  function showError(message) {
+    loading.style.display = "none";
+    content.style.display = "none";
+    errorBox.textContent = message;
+    errorBox.style.display = "block";
+  }
+  function formatDate(date) {
+    if (!date) return "";
+    try {
+      return new Date(date).toLocaleDateString("fr-FR", {
+        day: "numeric",
+        month: "long",
+        year: "numeric"
+      });
+    } catch {
+      return date;
+    }
+  }
+  async function loadAlbum() {
+    if (!albumId && !albumSlug) {
+      showError("Album introuvable.");
+      return;
+    }
+    let query = db
+      .from("albums")
+      .select(`
+        id,
+        title,
+        slug,
+        type,
+        cover_url,
+        release_date,
+        description,
+        artist_id,
+        artists (
+          id,
+          name,
+          slug,
+          city,
+          region,
+          language,
+          genre,
+          avatar_url,
+          verified,
+          status
+        )
+      `)
+      .eq("status", "published")
+      .limit(1);
+    if (albumId) {
+      query = query.eq("id", albumId);
+    } else {
+      query = query.eq("slug", albumSlug);
+    }
+    const { data: album, error } = await query.maybeSingle();
+    if (error) {
+      console.error(error);
+      showError("Impossible de charger cet album.");
+      return;
+    }
+    if (!album) {
+      showError("Cet album n’est pas disponible.");
+      return;
+    }
+    const artist = album.artists;
+    if (!artist || artist.status !== "published") {
+      showError("L’artiste associé à cet album n’est pas disponible.");
+      return;
+    }
+    document.title = album.title + " — INDAMORA PLAY";
+    document.getElementById("albumTitle").textContent =
+      album.title || "Album";
+    const artistLink = document.getElementById("artistLink");
+    artistLink.textContent = artist.name || "Artiste";
+    artistLink.href =
+      "public-artist.html?id=" +
+      encodeURIComponent(artist.id);
+    const coverContainer =
+      document.getElementById("coverContainer");
+    if (album.cover_url) {
+      const img = document.createElement("img");
+      img.className = "cover";
+      img.src = album.cover_url;
+      img.alt = "Pochette de " + album.title;
+      coverContainer.appendChild(img);
+    } else {
+      coverContainer.innerHTML =
+        '<div class="cover-placeholder">💿</div>';
+    }
+    const badges = document.getElementById("badges");
+    if (album.type) {
+      const type = document.createElement("span");
+      type.className = "badge";
+      type.textContent = album.type.toUpperCase();
+      badges.appendChild(type);
+    }
+    if (artist.genre) {
+      const genre = document.createElement("span");
+      genre.className = "badge";
+      genre.textContent = artist.genre;
+      badges.appendChild(genre);
+    }
+    if (artist.language) {
+      const language = document.createElement("span");
+      language.className = "badge";
+      language.textContent = artist.language;
+      badges.appendChild(language);
+    }
+    if (album.release_date) {
+      document.getElementById("releaseDate").innerHTML =
+        "<strong>Sortie :</strong> " +
+        formatDate(album.release_date);
+    }
+    if (album.description) {
+      document.getElementById("description").textContent =
+        album.description;
+    } else {
+      document.getElementById("description").textContent =
+        "Album publié sur INDAMORA PLAY.";
+    }
+    await loadTracks(album.id);
+    loading.style.display = "none";
+    content.style.display = "block";
+  }
+  async function loadTracks(albumId) {
+    const tracksContainer =
+      document.getElementById("tracks");
+    const { data: tracks, error } = await db
+      .from("tracks")
+      .select(`
+        id,
+        title,
+        audio_url,
+        duration_seconds,
+        play_count,
+        created_at,
+        artist_id
+      `)
+      .eq("album_id", albumId)
+      .eq("status", "published")
+      .order("created_at", {
+        ascending: true
+      });
+    if (error) {
+      console.error(error);
+      tracksContainer.innerHTML =
+        '<div class="notice">Impossible de charger les titres.</div>';
+      return;
+    }
+    if (!tracks || tracks.length === 0) {
+      tracksContainer.innerHTML =
+        '<div class="notice">Aucun titre publié dans cet album pour le moment.</div>';
+      return;
+    }
+    tracksContainer.innerHTML = "";
+    tracks.forEach((track, index) => {
+      const box = document.createElement("div");
+      box.className = "track";
+      const top = document.createElement("div");
+      top.className = "track-top";
+      const title = document.createElement("div");
+      title.className = "track-title";
+      title.textContent =
+        (index + 1) + ". " + (track.title || "Titre");
+      const plays = document.createElement("div");
+      plays.className = "plays";
+      plays.textContent =
+        (track.play_count || 0) + " écoute(s)";
+      top.appendChild(title);
+      top.appendChild(plays);
+      box.appendChild(top);
+      if (track.audio_url) {
+        const audio = document.createElement("audio");
+        audio.controls = true;
+        audio.preload = "none";
+        audio.src = track.audio_url;
+        box.appendChild(audio);
+      } else {
+        const notice = document.createElement("div");
+        notice.className = "notice";
+        notice.textContent =
+          "🎵 Le fichier audio sera disponible après publication du fichier.";
+        box.appendChild(notice);
+      }
+      tracksContainer.appendChild(box);
+    });
+  }
+  loadAlbum();
+</script>
+</body>
+</html>
