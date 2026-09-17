@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>INDAMORA PLAY — Abonnements test</title>
+<style>
+body{
+  margin:0;
+  font-family:Arial,sans-serif;
+  background:#f5f9ff;
+  color:#123;
+}
+header{
+  background:#0b63ce;
+  color:white;
+  padding:18px;
+  text-align:center;
+}
+main{
+  max-width:900px;
+  margin:30px auto;
+  padding:20px;
+}
+.card{
+  background:white;
+  border-radius:16px;
+  padding:25px;
+  margin-bottom:20px;
+  box-shadow:0 4px 18px rgba(0,0,0,.08);
+}
+h1,h2{color:#0b63ce}
+.price{
+  font-size:30px;
+  font-weight:bold;
+  color:#0b63ce;
+}
+button{
+  width:100%;
+  padding:14px;
+  border:0;
+  border-radius:10px;
+  background:#0b63ce;
+  color:white;
+  font-size:16px;
+  cursor:pointer;
+}
+button:hover{background:#084f9f}
+.notice{
+  background:#eef6ff;
+  border-left:5px solid #0b63ce;
+  padding:15px;
+  border-radius:8px;
+}
+a{
+  color:#0b63ce;
+  text-decoration:none;
+  font-weight:bold;
+}
+</style>
+</head>
+<body>
+<header>
+  <h1>🎧 INDAMORA PLAY</h1>
+  <p>INDAMORA RECORDS</p>
+  <strong>ENVIRONNEMENT DE TEST</strong>
+</header>
+<main>
+  <div class="card">
+    <h2>Abonnement Afrique</h2>
+    <div class="price">500 FCFA / mois</div>
+    <p>
+      Soutenez le développement de la plateforme depuis l'Afrique.
+    </p>
+<button onclick="notReady()">
+  Tester l'abonnement 500 FCFA
+</button>
+  </div>
+  <div class="card">
+    <h2>Abonnement hors Afrique</h2>
+    <div class="price">5 € / mois</div>
+    <p>
+      Soutenez le développement d'INDAMORA PLAY depuis l'étranger.
+    </p>
+<button onclick="notReady()">
+  Tester l'abonnement 5 €
+</button>
+  </div>
+  <div class="card">
+    <h2>❤️ Faire un don</h2>
+    <p>
+      Un don libre permet de soutenir l'association, la plateforme
+      et de préparer plus tard des gestes de soutien aux artistes.
+    </p>
+<button onclick="notReady()">
+  Tester un don
+</button>
+  </div>
+  <div class="card">
+    <div class="notice">
+      <strong>Mode test Stripe</strong><br><br>
+      Les boutons seront reliés aux liens Stripe de test dès que
+      le compte Stripe de l'association sera disponible en mode test.
+      Aucun paiement réel n'est effectué depuis cette page.
+    </div>
+  </div>
+  <p>
+    <a href="index.html">← Retour à INDAMORA PLAY</a>
+  </p>
+</main>
+<script>
+function notReady(){
+  alert(
+    "Les paiements Stripe de test ne sont pas encore connectés. " +
+    "Cette page est prête à recevoir les liens de test."
+  );
+}
+</script>
+</body>
+</html>
