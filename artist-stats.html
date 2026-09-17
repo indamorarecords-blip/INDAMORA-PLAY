@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Statistiques artiste — INDAMORA PLAY</title>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      background: #f5f9ff;
+      color: #102a43;
+    }
+    header {
+      background: #0757b8;
+      color: white;
+      padding: 16px 20px;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+    .header-inner {
+      max-width: 1100px;
+      margin: auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 15px;
+    }
+    .logo {
+      font-size: 21px;
+      font-weight: bold;
+    }
+    .back {
+      color: white;
+      text-decoration: none;
+      font-weight: bold;
+    }
+    main {
+      max-width: 1100px;
+      margin: 30px auto;
+      padding: 0 18px;
+    }
+    h1 {
+      color: #073b7a;
+      margin-bottom: 5px;
+    }
+    .subtitle {
+      color: #627d98;
+      margin-bottom: 28px;
+    }
+    .status {
+      background: white;
+      border-radius: 14px;
+      padding: 16px;
+      margin-bottom: 20px;
+      box-shadow: 0 4px 15px rgba(0,70,140,.07);
+    }
+    .success {
+      color: #087443;
+    }
+    .error {
+      color: #b42318;
+    }
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+      gap: 16px;
+      margin-bottom: 30px;
+    }
+    .card {
+      background: white;
+      border-radius: 16px;
+      padding: 20px;
+      box-shadow: 0 4px 15px rgba(0,70,140,.07);
+    }
+    .label {
+      color: #627d98;
+      font-size: 14px;
+      margin-bottom: 8px;
+    }
+    .value {
+      color: #0757b8;
+      font-size: 30px;
+      font-weight: bold;
+    }
+    .section {
+      background: white;
+      border-radius: 16px;
+      padding: 20px;
+      margin-bottom: 22px;
+      box-shadow: 0 4px 15px rgba(0,70,140,.07);
+    }
+    .section h2 {
+      margin-top: 0;
+      color: #073b7a;
+    }
+    .artist-box {
+      padding: 15px;
+      border-radius: 12px;
+      background: #eef5fc;
+      margin-bottom: 12px;
+    }
+    .artist-name {
+      font-size: 20px;
+      font-weight: bold;
+      color: #073b7a;
+    }
+    .verified {
+      color: #087443;
+      font-size: 13px;
+      font-weight: bold;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    th,
+    td {
+      text-align: left;
+      padding: 12px 8px;
+      border-bottom: 1px solid #e6eef7;
+    }
+    th {
+      color: #0757b8;
+      font-size: 14px;
+    }
+    td {
+      color: #486581;
+    }
+    .empty {
+      color: #627d98;
+      padding: 15px 0;
+    }
+    .refresh {
+      border: 0;
+      background: #0757b8;
+      color: white;
+      padding: 10px 15px;
+      border-radius: 9px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+    .logout {
+      border: 0;
+      background: #e7f0fb;
+      color: #0757b8;
+      padding: 10px 15px;
+      border-radius: 9px;
+      cursor: pointer;
+      font-weight: bold;
+      margin-left: 8px;
+    }
+    @media (max-width: 700px) {
+      table {
+        font-size: 13px;
+      }
+      th:nth-child(3),
+      td:nth-child(3) {
+        display: none;
+      }
+    }
+  </style>
+</head>
+<body>
+<header>
+  <div class="header-inner">
+    <div class="logo">🎧 INDAMORA PLAY — Espace artiste</div>
+    <a class="back" href="artist.html">← Dashboard</a>
+  </div>
+</header>
+<main>
+  <h1>📊 Statistiques & revenus</h1>
+  <div class="subtitle">
+    Suivez vos écoutes et vos revenus générés sur INDAMORA PLAY.
+  </div>
+  <div id="status" class="status">
+    Vérification de votre session...
+  </div>
+  <div id="actions" style="display:none; margin-bottom:20px;">
+    <button id="refresh" class="refresh">
+      ↻ Actualiser
+    </button>
+<button id="logout" class="logout">
+  Déconnexion
+</button>
+  </div>
+  <div id="content" style="display:none;">
+<div class="cards">
+  <div class="card">
+    <div class="label">🎤 Artistes</div>
+    <div id="artistsCount" class="value">0</div>
+  </div>
+  <div class="card">
+    <div class="label">🎵 Musiques</div>
+    <div id="tracksCount" class="value">0</div>
+  </div>
+  <div class="card">
+    <div class="label">💿 Albums</div>
+    <div id="albumsCount" class="value">0</div>
+  </div>
+  <div class="card">
+    <div class="label">▶️ Écoutes</div>
+    <div id="playsCount" class="value">0</div>
+  </div>
+  <div class="card">
+    <div class="label">💰 Revenus</div>
+    <div id="earnings" class="value">0 XAF</div>
+  </div>
+</div>
+<section class="section">
+  <h2>🎤 Mes artistes</h2>
+  <div id="artists"></div>
+</section>
+<section class="section">
+  <h2>🔥 Mes musiques</h2>
+  <div id="tracks"></div>
+</section>
+<section class="section">
+  <h2>💰 Historique des revenus</h2>
+  <div id="earningsTable"></div>
+</section>
+  </div>
+</main>
+<script>
+  const SUPABASE_URL =
+    "https://adqsdnqkbitplbhbihiv.supabase.co";
+  const SUPABASE_KEY =
+    "sb_publishable_dpjfWOYeNQRmP2nJq5FoMA_8NUuD0HF";
+  const db = window.supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_KEY
+  );
+  const statusBox =
+    document.getElementById("status");
+  const actions =
+    document.getElementById("actions");
+  const content =
+    document.getElementById("content");
+  async function loadStats() {
+    statusBox.className = "status";
+    statusBox.textContent =
+      "Chargement de vos statistiques...";
+    const {
+      data: sessionData
+    } = await db.auth.getSession();
+    const session =
+      sessionData?.session;
+    if (!session) {
+      statusBox.className =
+        "status error";
+      statusBox.textContent =
+        "Vous devez être connecté pour accéder à cette page.";
+      setTimeout(() => {
+        window.location.href =
+          "artist.html";
+      }, 1500);
+      return;
+    }
+    const response =
+      await fetch(
+        SUPABASE_URL +
+        "/functions/v1/artist-dashboard",
+        {
+          method: "GET",
+          headers: {
+            "Authorization":
+              "Bearer " + session.access_token,
+            "apikey":
+              SUPABASE_KEY
+          }
+        }
+      );
+    const data =
+      await response.json();
+    if (!response.ok) {
+      console.error(data);
+      statusBox.className =
+        "status error";
+      statusBox.textContent =
+        data.error ||
+        "Impossible de charger les statistiques.";
+      return;
+    }
+    renderStats(data);
+    statusBox.className =
+      "status success";
+    statusBox.textContent =
+      "✓ Statistiques chargées.";
+    actions.style.display =
+      "block";
+    content.style.display =
+      "block";
+  }
+  function renderStats(data) {
+    const summary =
+      data.summary || {};
+    document.getElementById(
+      "artistsCount"
+    ).textContent =
+      summary.artists || 0;
+    document.getElementById(
+      "tracksCount"
+    ).textContent =
+      summary.tracks || 0;
+    document.getElementById(
+      "albumsCount"
+    ).textContent =
+      summary.albums || 0;
+    document.getElementById(
+      "playsCount"
+    ).textContent =
+      Number(summary.plays || 0)
+        .toLocaleString("fr-FR");
+    const earningsCents =
+      Number(summary.earnings_cents || 0);
+    const earningsAmount =
+      earningsCents / 100;
+    document.getElementById(
+      "earnings"
+    ).textContent =
+      earningsAmount.toLocaleString(
+        "fr-FR"
+      ) +
+      " " +
+      (summary.currency || "XAF");
+    renderArtists(
+      data.artists || []
+    );
+    renderTracks(
+      data.tracks || []
+    );
+    renderEarnings(
+      data.earnings || []
+    );
+  }
+  function renderArtists(artists) {
+    const container =
+      document.getElementById("artists");
+    container.innerHTML = "";
+    if (!artists.length) {
+      container.innerHTML =
+        '<div class="empty">Aucun artiste associé à ce compte.</div>';
+      return;
+    }
+    artists.forEach(artist => {
+      const box =
+        document.createElement("div");
+      box.className =
+        "artist-box";
+      const name =
+        document.createElement("div");
+      name.className =
+        "artist-name";
+      name.textContent =
+        artist.name || "Artiste";
+      box.appendChild(name);
+      if (artist.verified) {
+        const verified =
+          document.createElement("div");
+        verified.className =
+          "verified";
+        verified.textContent =
+          "✓ Artiste vérifié";
+        box.appendChild(verified);
+      }
+      const details =
+        document.createElement("div");
+      details.style.marginTop =
+        "7px";
+      details.style.color =
+        "#627d98";
+      const parts = [];
+      if (artist.city)
+        parts.push(artist.city);
+      if (artist.region)
+        parts.push(artist.region);
+      if (artist.genre)
+        parts.push(artist.genre);
+      details.textContent =
+        parts.join(" · ");
+      box.appendChild(details);
+      container.appendChild(box);
+    });
+  }
+  function renderTracks(tracks) {
+    const container =
+      document.getElementById("tracks");
+    if (!tracks.length) {
+      container.innerHTML =
+        '<div class="empty">Aucune musique pour le moment.</div>';
+      return;
+    }
+    const table =
+      document.createElement("table");
+    table.innerHTML = `
+      <thead>
+        <tr>
+          <th>Titre</th>
+          <th>Statut</th>
+          <th>Écoutes</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    `;
+    const tbody =
+      table.querySelector("tbody");
+    tracks.forEach(track => {
+      const row =
+        document.createElement("tr");
+      row.innerHTML =
+        "<td>" +
+        escapeHtml(
+          track.title || "Sans titre"
+        ) +
+        "</td>" +
+        "<td>" +
+        escapeHtml(
+          track.status || ""
+        ) +
+        "</td>" +
+        "<td>" +
+        Number(
+          track.play_count || 0
+        ).toLocaleString("fr-FR") +
+        "</td>";
+      tbody.appendChild(row);
+    });
+    container.innerHTML = "";
+    container.appendChild(table);
+  }
+  function renderEarnings(earnings) {
+    const container =
+      document.getElementById(
+        "earningsTable"
+      );
+    if (!earnings.length) {
+      container.innerHTML =
+        '<div class="empty">Aucun revenu enregistré pour le moment.</div>';
+      return;
+    }
+    const table =
+      document.createElement("table");
+    table.innerHTML = `
+      <thead>
+        <tr>
+          <th>Période</th>
+          <th>Écoutes</th>
+          <th>Montant</th>
+          <th>Statut</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    `;
+    const tbody =
+      table.querySelector("tbody");
+    earnings.forEach(item => {
+      const row =
+        document.createElement("tr");
+      const amount =
+        Number(
+          item.amount_cents || 0
+        ) / 100;
+      const period =
+        (item.period_start || "") +
+        " → " +
+        (item.period_end || "");
+      row.innerHTML =
+        "<td>" +
+        escapeHtml(period) +
+        "</td>" +
+        "<td>" +
+        Number(
+          item.plays || 0
+        ).toLocaleString("fr-FR") +
+        "</td>" +
+        "<td>" +
+        amount.toLocaleString("fr-FR") +
+        " " +
+        escapeHtml(
+          item.currency || "XAF"
+        ) +
+        "</td>" +
+        "<td>" +
+        escapeHtml(
+          item.status || ""
+        ) +
+        "</td>";
+      tbody.appendChild(row);
+    });
+    container.innerHTML = "";
+    container.appendChild(table);
+  }
+  function escapeHtml(value) {
+    return String(value)
+      .replaceAll("&", "&amp;")
+      .replaceAll("<", "&lt;")
+      .replaceAll(">", "&gt;")
+      .replaceAll('"', "&quot;")
+      .replaceAll("'", "&#039;");
+  }
+  document
+    .getElementById("refresh")
+    .addEventListener(
+      "click",
+      loadStats
+    );
+  document
+    .getElementById("logout")
+    .addEventListener(
+      "click",
+      async () => {
+        await db.auth.signOut();
+        window.location.href =
+          "artist.html";
+      }
+    );
+  loadStats();
+</script>
+</body>
+</html>
