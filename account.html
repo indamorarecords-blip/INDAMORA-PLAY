@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>INDAMORA PLAY — Mon compte</title>
+<style>
+body{
+  margin:0;
+  font-family:Arial,sans-serif;
+  background:#f5f9ff;
+  color:#123;
+}
+header{
+  background:#0b63ce;
+  color:white;
+  padding:20px;
+  text-align:center;
+}
+header h1{
+  color:white;
+}
+main{
+  max-width:600px;
+  margin:30px auto;
+  padding:20px;
+}
+.card{
+  background:white;
+  border-radius:16px;
+  padding:25px;
+  margin-bottom:20px;
+  box-shadow:0 4px 18px rgba(0,0,0,.08);
+}
+h2{
+  color:#0b63ce;
+}
+input{
+  width:100%;
+  box-sizing:border-box;
+  padding:13px;
+  margin:8px 0 14px;
+  border:1px solid #ccd8e8;
+  border-radius:9px;
+}
+button{
+  width:100%;
+  padding:14px;
+  border:0;
+  border-radius:10px;
+  background:#0b63ce;
+  color:white;
+  font-size:16px;
+  cursor:pointer;
+  margin-top:8px;
+}
+button:hover{
+  background:#084f9f;
+}
+.secondary{
+  background:white;
+  color:#0b63ce;
+  border:2px solid #0b63ce;
+}
+.message{
+  margin-top:15px;
+  padding:13px;
+  border-radius:9px;
+  background:#eef6ff;
+}
+.error{
+  background:#fff0f0;
+  color:#a00000;
+}
+.hidden{
+  display:none;
+}
+a{
+  color:#0b63ce;
+  text-decoration:none;
+  font-weight:bold;
+}
+</style>
+</head>
+<body>
+<header>
+  <h1>🎧 INDAMORA PLAY</h1>
+  <p>INDAMORA RECORDS</p>
+</header>
+<main>
+  <div class="card" id="loginCard">
+<h2>👤 Mon compte visiteur</h2>
+<p>
+  Créez votre compte pour pouvoir vous abonner
+  et soutenir INDAMORA PLAY.
+</p>
+<label>Email</label>
+<input
+  id="email"
+  type="email"
+  autocomplete="email"
+  placeholder="Votre adresse email"
+>
+<label>Mot de passe</label>
+<input
+  id="password"
+  type="password"
+  autocomplete="new-password"
+  placeholder="Minimum 6 caractères"
+>
+<button id="createButton">
+  📝 Créer mon compte
+</button>
+<button id="loginButton" class="secondary">
+  🔐 Se connecter
+</button>
+<div id="message" class="message hidden"></div>
+  </div>
+  <div class="card hidden" id="loggedCard">
+<h2>✅ Compte connecté</h2>
+<p id="loggedEmail"></p>
+<button id="subscriptionButton">
+  💳 Voir les abonnements et les dons
+</button>
+<button id="logoutButton" class="secondary">
+  Déconnexion
+</button>
+  </div>
+  <p>
+    <a href="index.html">← Retour à INDAMORA PLAY</a>
+  </p>
+</main>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+const SUPABASE_URL =
+  "https://adqsdnqkbitplbhbihiv.supabase.co";
+const SUPABASE_KEY =
+  "sb_publishable_dpjfWOYeNQRmP2nJq5FoMA_8NUuD0HF";
+const db = window.supabase.createClient(
+  SUPABASE_URL,
+  SUPABASE_KEY
+);
+const emailInput =
+  document.getElementById("email");
+const passwordInput =
+  document.getElementById("password");
+const message =
+  document.getElementById("message");
+function showMessage(text, error = false){
+  message.textContent = text;
+  message.classList.remove("hidden");
+  if(error){
+    message.classList.add("error");
+  }else{
+    message.classList.remove("error");
+  }
+}
+function hideMessage(){
+  message.classList.add("hidden");
+}
+async function createAccount(){
+  hideMessage();
+  const email =
+    emailInput.value.trim();
+  const password =
+    passwordInput.value;
+  if(!email || !password){
+    showMessage(
+      "Veuillez renseigner votre email et votre mot de passe.",
+      true
+    );
+    return;
+  }
+  if(password.length < 6){
+    showMessage(
+      "Le mot de passe doit contenir au moins 6 caractères.",
+      true
+    );
+    return;
+  }
+  const { data, error } =
+    await db.auth.signUp({
+      email: email,
+      password: password,
+      options:{
+        data:{
+          display_name:
+            email.split("@")[0]
+        },
+        emailRedirectTo:
+          "https://indamorarecords-blip.github.io/INDAMORA-PLAY/account.html"
+      }
+    });
+  if(error){
+    showMessage(
+      error.message,
+      true
+    );
+    return;
+  }
+  if(data.session){
+    window.location.href =
+      "subscription-test.html";
+    return;
+  }
+  showMessage(
+    "Compte créé. Consultez votre email pour confirmer votre adresse, puis revenez vous connecter."
+  );
+}
+async function login(){
+  hideMessage();
+  const email =
+    emailInput.value.trim();
+  const password =
+    passwordInput.value;
+  if(!email || !password){
+    showMessage(
+      "Veuillez renseigner votre email et votre mot de passe.",
+      true
+    );
+    return;
+  }
+  const { error } =
+    await db.auth.signInWithPassword({
+      email: email,
+      password: password
+    });
+  if(error){
+    showMessage(
+      error.message,
+      true
+    );
+    return;
+  }
+  window.location.href =
+    "subscription-test.html";
+}
+async function logout(){
+  await db.auth.signOut();
+  window.location.reload();
+}
+async function checkSession(){
+  const { data, error } =
+    await db.auth.getSession();
+  if(error){
+    showMessage(
+      error.message,
+      true
+    );
+    return;
+  }
+  if(data.session){
+    document
+      .getElementById("loginCard")
+      .classList.add("hidden");
+    document
+      .getElementById("loggedCard")
+      .classList.remove("hidden");
+    document
+      .getElementById("loggedEmail")
+      .textContent =
+      "Connecté avec : " +
+      (data.session.user.email || "");
+  }
+}
+document
+  .getElementById("createButton")
+  .addEventListener(
+    "click",
+    createAccount
+  );
+document
+  .getElementById("loginButton")
+  .addEventListener(
+    "click",
+    login
+  );
+document
+  .getElementById("logoutButton")
+  .addEventListener(
+    "click",
+    logout
+  );
+document
+  .getElementById("subscriptionButton")
+  .addEventListener(
+    "click",
+    function(){
+      window.location.href =
+        "subscription-test.html";
+    }
+  );
+checkSession();
+</script>
+</body>
+</html>
