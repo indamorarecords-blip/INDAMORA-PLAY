@@ -1,0 +1,1572 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Espace artiste — INDAMORA PLAY</title>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <style>
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family:Arial,Helvetica,sans-serif;
+      background:#f4f8ff;
+      color:#102a43;
+    }
+    header{
+      background:#0757c9;
+      color:#fff;
+      padding:18px 24px;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:15px;
+      flex-wrap:wrap;
+    }
+    header h1{
+      margin:0;
+      font-size:22px;
+    }
+    header span{
+      display:block;
+      margin-top:5px;
+      font-size:13px;
+      opacity:.9;
+    }
+    .container{
+      max-width:1200px;
+      margin:auto;
+      padding:24px 18px 60px;
+    }
+    #artistApp{
+      display:none;
+    }
+    .login-box{
+      max-width:430px;
+      margin:70px auto;
+      background:#fff;
+      border-radius:18px;
+      padding:30px;
+      box-shadow:0 8px 30px rgba(7,87,201,.12);
+    }
+    .logo{
+      text-align:center;
+      color:#0757c9;
+      font-size:28px;
+      font-weight:900;
+      margin-bottom:8px;
+    }
+    .subtitle{
+      text-align:center;
+      color:#607d9a;
+      margin-bottom:25px;
+    }
+    label{
+      display:block;
+      font-weight:bold;
+      margin:14px 0 7px;
+      font-size:14px;
+    }
+    input,textarea,select{
+      width:100%;
+      border:1px solid #c8d8eb;
+      border-radius:10px;
+      padding:12px;
+      background:#fff;
+      color:#102a43;
+    }
+    input:focus,textarea:focus,select:focus{
+      outline:none;
+      border-color:#0757c9;
+      box-shadow:0 0 0 3px rgba(7,87,201,.10);
+    }
+    textarea{
+      min-height:120px;
+      resize:vertical;
+    }
+    button{
+      border:0;
+      border-radius:9px;
+      padding:11px 15px;
+      cursor:pointer;
+      font-weight:bold;
+    }
+    button:disabled{
+      opacity:.6;
+      cursor:not-allowed;
+    }
+    .primary{
+      background:#0757c9;
+      color:#fff;
+    }
+    .primary:hover{
+      background:#043b8c;
+    }
+    .secondary{
+      background:#e8f1ff;
+      color:#0757c9;
+    }
+    .success{
+      background:#e5f8ee;
+      color:#16794c;
+    }
+    .danger{
+      background:#ffe8e8;
+      color:#b42318;
+    }
+    .gray{
+      background:#edf1f5;
+      color:#455a64;
+    }
+    .full{
+      width:100%;
+      margin-top:20px;
+    }
+    .error,.message{
+      padding:12px;
+      border-radius:9px;
+      margin-top:15px;
+      font-size:14px;
+      display:none;
+    }
+    .error{
+      background:#ffe8e8;
+      color:#a61b1b;
+      border:1px solid #ffcaca;
+    }
+    .message{
+      background:#e5f8ee;
+      color:#16794c;
+    }
+    .info{
+      background:#eef6ff;
+      color:#315a80;
+      border-left:4px solid #0757c9;
+      padding:13px;
+      border-radius:7px;
+      margin-bottom:18px;
+      font-size:13px;
+    }
+    .artist-card{
+      background:#fff;
+      border-radius:16px;
+      padding:22px;
+      margin-bottom:22px;
+      box-shadow:0 5px 20px rgba(20,60,110,.07);
+      display:flex;
+      align-items:center;
+      gap:20px;
+    }
+    .artist-avatar{
+      width:90px;
+      height:90px;
+      border-radius:50%;
+      object-fit:cover;
+      background:#e8f1ff;
+      border:4px solid #e8f1ff;
+      flex-shrink:0;
+    }
+    .artist-avatar-placeholder{
+      width:90px;
+      height:90px;
+      border-radius:50%;
+      background:#e8f1ff;
+      color:#0757c9;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-size:34px;
+      font-weight:bold;
+      flex-shrink:0;
+    }
+    .artist-card h2{
+      margin:0 0 6px;
+      color:#0757c9;
+    }
+    .artist-card p{
+      margin:4px 0;
+      color:#607d9a;
+      font-size:14px;
+    }
+    .verified{
+      display:inline-block;
+      background:#e5f8ee;
+      color:#16794c;
+      border-radius:999px;
+      padding:4px 9px;
+      font-size:11px;
+      font-weight:bold;
+      margin-left:5px;
+    }
+    .stats{
+      display:grid;
+      grid-template-columns:repeat(5,1fr);
+      gap:14px;
+      margin-bottom:25px;
+    }
+    .stat{
+      background:#fff;
+      border-radius:13px;
+      padding:18px;
+      box-shadow:0 5px 20px rgba(20,60,110,.08);
+    }
+    .stat strong{
+      display:block;
+      color:#0757c9;
+      font-size:27px;
+      margin-bottom:5px;
+    }
+    .stat span{
+      color:#607d9a;
+      font-size:13px;
+    }
+    .section{
+      background:#fff;
+      border-radius:15px;
+      padding:22px;
+      margin-bottom:22px;
+      box-shadow:0 5px 20px rgba(20,60,110,.07);
+    }
+    .section h2{
+      margin-top:0;
+      color:#0757c9;
+      font-size:20px;
+    }
+    .form-grid{
+      display:grid;
+      grid-template-columns:repeat(2,1fr);
+      gap:5px 18px;
+    }
+    .full-width{
+      grid-column:1/-1;
+    }
+    .table-wrapper{
+      overflow-x:auto;
+    }
+    table{
+      width:100%;
+      border-collapse:collapse;
+      min-width:700px;
+    }
+    th,td{
+      padding:11px 9px;
+      border-bottom:1px solid #e4edf6;
+      text-align:left;
+      font-size:13px;
+      vertical-align:middle;
+    }
+    th{
+      color:#41627e;
+      background:#f6f9fd;
+    }
+    .status{
+      display:inline-block;
+      padding:5px 9px;
+      border-radius:999px;
+      font-size:11px;
+      font-weight:bold;
+    }
+    .status-published{
+      background:#e4f8ed;
+      color:#147a4b;
+    }
+    .status-pending{
+      background:#fff3d6;
+      color:#956300;
+    }
+    .status-draft{
+      background:#edf1f5;
+      color:#536575;
+    }
+    .status-rejected{
+      background:#ffe8e8;
+      color:#ad2525;
+    }
+    .status-unknown{
+      background:#edf1f5;
+      color:#536575;
+    }
+    .actions{
+      display:flex;
+      gap:6px;
+      flex-wrap:wrap;
+    }
+    .actions button{
+      padding:7px 9px;
+      font-size:11px;
+    }
+    .empty{
+      text-align:center;
+      color:#7890a6;
+      padding:25px;
+    }
+    .mini{
+      font-size:12px;
+      color:#607d9a;
+    }
+    .money{
+      font-size:28px;
+      font-weight:900;
+      color:#0757c9;
+    }
+    .logout-zone{
+      margin-top:30px;
+      text-align:center;
+    }
+    @media(max-width:1000px){
+      .stats{
+        grid-template-columns:repeat(3,1fr);
+      }
+    }
+    @media(max-width:650px){
+      .stats{
+        grid-template-columns:repeat(2,1fr);
+      }
+      .form-grid{
+        grid-template-columns:1fr;
+      }
+      .full-width{
+        grid-column:auto;
+      }
+      .artist-card{
+        align-items:flex-start;
+      }
+      header{
+        align-items:flex-start;
+        flex-direction:column;
+      }
+    }
+  </style>
+</head>
+<body>
+<!-- =====================================================
+     CONNEXION
+===================================================== -->
+<div id="loginScreen">
+  <div class="login-box">
+<div class="logo">
+  INDAMORA PLAY
+</div>
+<div class="subtitle">
+  Espace artiste
+</div>
+<form id="loginForm">
+  <label for="email">
+    Adresse e-mail
+  </label>
+  <input
+    id="email"
+    type="email"
+    autocomplete="email"
+    required
+  >
+  <label for="password">
+    Mot de passe
+  </label>
+  <input
+    id="password"
+    type="password"
+    autocomplete="current-password"
+    required
+  >
+  <button
+    id="loginButton"
+    class="primary full"
+    type="submit"
+  >
+    Se connecter
+  </button>
+</form>
+<div id="loginError" class="error"></div>
+  </div>
+</div>
+<!-- =====================================================
+     ESPACE ARTISTE
+===================================================== -->
+<div id="artistApp">
+  <header>
+<div>
+  <h1>
+    INDAMORA PLAY — Espace artiste
+  </h1>
+  <span id="artistIdentity">
+    Artiste
+  </span>
+</div>
+<div style="display:flex;gap:10px;flex-wrap:wrap">
+  <button
+    class="secondary"
+    onclick="loadDashboard()"
+  >
+    Actualiser
+  </button>
+  <button
+    class="secondary"
+    onclick="logout()"
+  >
+    Déconnexion
+  </button>
+</div>
+  </header>
+  <main class="container">
+<div id="globalMessage" class="message"></div>
+<!-- PROFIL -->
+<div class="artist-card">
+  <div id="artistAvatarContainer"></div>
+  <div>
+    <h2 id="artistNameDisplay">
+      Artiste
+    </h2>
+    <p id="artistLocationDisplay">
+      —
+    </p>
+    <p id="artistGenreDisplay">
+      —
+    </p>
+    <p id="artistStatusDisplay">
+      —
+    </p>
+  </div>
+</div>
+<!-- STATISTIQUES -->
+<div class="stats">
+  <div class="stat">
+    <strong id="countTracks">
+      0
+    </strong>
+    <span>
+      Musiques
+    </span>
+  </div>
+  <div class="stat">
+    <strong id="countAlbums">
+      0
+    </strong>
+    <span>
+      Albums
+    </span>
+  </div>
+  <div class="stat">
+    <strong id="countMedia">
+      0
+    </strong>
+    <span>
+      Médias
+    </span>
+  </div>
+  <div class="stat">
+    <strong id="countPlays">
+      0
+    </strong>
+    <span>
+      Écoutes
+    </span>
+  </div>
+  <div class="stat">
+    <strong id="countEarnings">
+      0
+    </strong>
+    <span>
+      Revenus XAF
+    </span>
+  </div>
+</div>
+<!-- INFORMATIONS -->
+<section class="section">
+  <h2>
+    📌 Fonctionnement
+  </h2>
+  <div class="info">
+    Cet espace est réservé à votre compte artiste.
+    Vous ne pouvez consulter que les contenus associés
+    à votre profil artiste.
+  </div>
+</section>
+<!-- PROFIL -->
+<section class="section">
+  <h2>
+    👤 Mon profil artiste
+  </h2>
+  <form id="profileForm">
+    <div class="form-grid">
+      <div>
+        <label>
+          Nom
+        </label>
+        <input
+          id="profileName"
+          required
+        >
+      </div>
+      <div>
+        <label>
+          Ville
+        </label>
+        <input
+          id="profileCity"
+        >
+      </div>
+      <div>
+        <label>
+          Région
+        </label>
+        <input
+          id="profileRegion"
+        >
+      </div>
+      <div>
+        <label>
+          Langue
+        </label>
+        <input
+          id="profileLanguage"
+        >
+      </div>
+      <div>
+        <label>
+          Genre musical
+        </label>
+        <input
+          id="profileGenre"
+        >
+      </div>
+      <div class="full-width">
+        <label>
+          Biographie
+        </label>
+        <textarea id="profileBio"></textarea>
+      </div>
+    </div>
+    <button
+      class="primary"
+      type="submit"
+    >
+      Enregistrer mon profil
+    </button>
+  </form>
+</section>
+<!-- MUSIQUES -->
+<section class="section">
+  <h2>
+    🎵 Mes musiques
+  </h2>
+  <div class="table-wrapper">
+    <table>
+      <thead>
+        <tr>
+          <th>Titre</th>
+          <th>Album</th>
+          <th>Écoutes</th>
+          <th>Statut</th>
+          <th>Date</th>
+        </tr>
+      </thead>
+      <tbody id="tracksTable"></tbody>
+    </table>
+  </div>
+</section>
+<!-- ALBUMS -->
+<section class="section">
+  <h2>
+    💿 Mes albums
+  </h2>
+  <div class="table-wrapper">
+    <table>
+      <thead>
+        <tr>
+          <th>Titre</th>
+          <th>Type</th>
+          <th>Statut</th>
+          <th>Date</th>
+        </tr>
+      </thead>
+      <tbody id="albumsTable"></tbody>
+    </table>
+  </div>
+</section>
+<!-- MEDIA -->
+<section class="section">
+  <h2>
+    🎬 Mes médias
+  </h2>
+  <div class="table-wrapper">
+    <table>
+      <thead>
+        <tr>
+          <th>Titre</th>
+          <th>Type</th>
+          <th>Statut</th>
+          <th>Date</th>
+        </tr>
+      </thead>
+      <tbody id="mediaTable"></tbody>
+    </table>
+  </div>
+</section>
+<!-- REVENUS -->
+<section class="section">
+  <h2>
+    💰 Mes revenus
+  </h2>
+  <div class="info">
+    Les revenus affichés correspondent uniquement
+    aux enregistrements associés à votre artiste.
+  </div>
+  <div class="money" id="earningsTotal">
+    0 XAF
+  </div>
+  <p class="mini">
+    Total des revenus enregistrés.
+  </p>
+  <div class="table-wrapper">
+    <table>
+      <thead>
+        <tr>
+          <th>Période</th>
+          <th>Écoutes</th>
+          <th>Montant</th>
+          <th>Devise</th>
+          <th>Statut</th>
+        </tr>
+      </thead>
+      <tbody id="earningsTable"></tbody>
+    </table>
+  </div>
+</section>
+<!-- SECURITE -->
+<section class="section">
+  <h2>
+    🔐 Sécurité
+  </h2>
+  <p class="mini">
+    Votre compte utilise Supabase Auth.
+    Les données sont protégées par les règles RLS.
+    Un artiste ne peut pas consulter les données privées
+    d'un autre artiste.
+  </p>
+  <p class="mini">
+    La clé secrète Supabase ne doit jamais être placée
+    dans cette page.
+  </p>
+</section>
+<div class="logout-zone">
+  <button
+    class="danger"
+    onclick="logout()"
+  >
+    Se déconnecter
+  </button>
+</div>
+  </main>
+</div>
+<script>
+/* =====================================================
+   SUPABASE
+===================================================== */
+const SUPABASE_URL =
+  "https://adqsdnqkbitplbhbihiv.supabase.co";
+/*
+  IMPORTANT :
+  Conserve ici ta vraie Publishable key Supabase.
+  Ne mets JAMAIS une clé sb_secret_... ici.
+*/
+const SUPABASE_PUBLISHABLE_KEY =
+  "sb_publishable_dpjfWOYeNQRmP2nJq5FoMA_8NUuD0HF";
+const db =
+  window.supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_PUBLISHABLE_KEY
+  );
+/* =====================================================
+   ETAT
+===================================================== */
+let currentUser = null;
+let currentArtist = null;
+/* =====================================================
+   OUTILS
+===================================================== */
+function escapeHtml(value){
+  if(value === null || value === undefined){
+    return "";
+  }
+  return String(value)
+    .replace(/&/g,"&amp;")
+    .replace(/</g,"&lt;")
+    .replace(/>/g,"&gt;")
+    .replace(/"/g,"&quot;")
+    .replace(/'/g,"&#039;");
+}
+function formatDate(value){
+  if(!value){
+    return "—";
+  }
+  return new Date(value).toLocaleDateString(
+    "fr-FR",
+    {
+      day:"2-digit",
+      month:"2-digit",
+      year:"numeric"
+    }
+  );
+}
+function statusLabel(status){
+  const labels = {
+    published:"Publié",
+    pending:"En attente",
+    draft:"Brouillon",
+    rejected:"Refusé"
+  };
+  return labels[status] ||
+    status ||
+    "—";
+}
+function statusHtml(status){
+  const safeStatus =
+    [
+      "published",
+      "pending",
+      "draft",
+      "rejected"
+    ].includes(status)
+      ? status
+      : "unknown";
+  return `
+    <span class="status status-${safeStatus}">
+      ${escapeHtml(statusLabel(status))}
+    </span>
+  `;
+}
+function showLoginError(message){
+  const box =
+    document.getElementById("loginError");
+  box.textContent = message;
+  box.style.display = "block";
+}
+function clearLoginError(){
+  const box =
+    document.getElementById("loginError");
+  box.textContent = "";
+  box.style.display = "none";
+}
+function showMessage(message){
+  const box =
+    document.getElementById("globalMessage");
+  box.textContent = message;
+  box.style.display = "block";
+  setTimeout(() => {
+    box.style.display = "none";
+  },5000);
+}
+/* =====================================================
+   AUTHENTIFICATION
+===================================================== */
+async function login(){
+  clearLoginError();
+  const email =
+    document.getElementById("email")
+      .value
+      .trim();
+  const password =
+    document.getElementById("password")
+      .value;
+  const button =
+    document.getElementById("loginButton");
+  button.disabled = true;
+  button.textContent = "Connexion...";
+  const {
+    data,
+    error
+  } =
+    await db.auth.signInWithPassword({
+      email,
+      password
+    });
+  if(error){
+    showLoginError(
+      error.message ||
+      "Connexion impossible."
+    );
+    button.disabled = false;
+    button.textContent = "Se connecter";
+    return;
+  }
+  if(!data.user){
+    showLoginError(
+      "Aucun utilisateur retourné."
+    );
+    button.disabled = false;
+    button.textContent = "Se connecter";
+    return;
+  }
+  currentUser =
+    data.user;
+  const ok =
+    await loadArtistAccount();
+  button.disabled = false;
+  button.textContent = "Se connecter";
+  if(!ok){
+    await db.auth.signOut();
+  }
+}
+document
+  .getElementById("loginForm")
+  .addEventListener(
+    "submit",
+    async function(event){
+      event.preventDefault();
+      await login();
+    }
+  );
+async function logout(){
+  await db.auth.signOut();
+  currentUser = null;
+  currentArtist = null;
+  document.getElementById(
+    "artistApp"
+  ).style.display = "none";
+  document.getElementById(
+    "loginScreen"
+  ).style.display = "block";
+  document.getElementById(
+    "password"
+  ).value = "";
+  clearLoginError();
+}
+/* =====================================================
+   COMPTE ARTISTE
+===================================================== */
+async function loadArtistAccount(){
+  if(!currentUser){
+    return false;
+  }
+  const {
+    data:profile,
+    error:profileError
+  } =
+    await db
+      .from("profiles")
+      .select(
+        "id,display_name,role"
+      )
+      .eq("id",currentUser.id)
+      .maybeSingle();
+  if(profileError){
+    showLoginError(
+      "Impossible de vérifier le compte : " +
+      profileError.message
+    );
+    return false;
+  }
+  if(
+    !profile ||
+    ![
+      "artist",
+      "admin"
+    ].includes(profile.role)
+  ){
+    showLoginError(
+      "Ce compte ne possède pas d'espace artiste."
+    );
+    return false;
+  }
+  const {
+    data:artists,
+    error:artistError
+  } =
+    await db
+      .from("artists")
+      .select(`
+        id,
+        owner_id,
+        name,
+        bio,
+        city,
+        region,
+        language,
+        genre,
+        avatar_url,
+        verified,
+        status,
+        created_at
+      `)
+      .eq(
+        "owner_id",
+        currentUser.id
+      )
+      .order(
+        "created_at",
+        {
+          ascending:false
+        }
+      )
+      .limit(1);
+  if(artistError){
+    showLoginError(
+      "Impossible de charger le profil artiste : " +
+      artistError.message
+    );
+    return false;
+  }
+  if(!artists || !artists.length){
+    showLoginError(
+      "Aucun profil artiste n'est encore associé à ce compte. Contacte l'administration INDAMORA RECORDS."
+    );
+    return false;
+  }
+  currentArtist =
+    artists[0];
+  document.getElementById(
+    "loginScreen"
+  ).style.display = "none";
+  document.getElementById(
+    "artistApp"
+  ).style.display = "block";
+  document.getElementById(
+    "artistIdentity"
+  ).textContent =
+    currentArtist.name ||
+    profile.display_name ||
+    currentUser.email;
+  await loadDashboard();
+  return true;
+}
+/* =====================================================
+   DASHBOARD
+===================================================== */
+async function loadDashboard(){
+  if(!currentArtist){
+    const ok =
+      await loadArtistAccount();
+    if(!ok){
+      return;
+    }
+    return;
+  }
+  await loadArtistProfile();
+  await Promise.all([
+    loadTracks(),
+    loadAlbums(),
+    loadMedia(),
+    loadEarnings()
+  ]);
+}
+/* =====================================================
+   PROFIL
+===================================================== */
+async function loadArtistProfile(){
+  const artist =
+    currentArtist;
+  document.getElementById(
+    "artistNameDisplay"
+  ).textContent =
+    artist.name ||
+    "Artiste";
+  document.getElementById(
+    "artistLocationDisplay"
+  ).textContent =
+    [
+      artist.city,
+      artist.region
+    ]
+      .filter(Boolean)
+      .join(" · ") ||
+    "Localisation non renseignée";
+  document.getElementById(
+    "artistGenreDisplay"
+  ).textContent =
+    [
+      artist.genre,
+      artist.language
+    ]
+      .filter(Boolean)
+      .join(" · ") ||
+    "Genre / langue non renseigné";
+  document.getElementById(
+    "artistStatusDisplay"
+  ).innerHTML =
+    statusHtml(artist.status) +
+    (
+      artist.verified
+        ? '<span class="verified">✓ Artiste vérifié</span>'
+        : ""
+    );
+  const avatar =
+    document.getElementById(
+      "artistAvatarContainer"
+    );
+  if(artist.avatar_url){
+    avatar.innerHTML = `
+      <img
+        class="artist-avatar"
+        src="${escapeHtml(artist.avatar_url)}"
+        alt="Photo de ${escapeHtml(artist.name)}"
+      >
+    `;
+  }else{
+    const letter =
+      String(
+        artist.name || "A"
+      )
+        .trim()
+        .charAt(0)
+        .toUpperCase();
+    avatar.innerHTML = `
+      <div class="artist-avatar-placeholder">
+        ${escapeHtml(letter)}
+      </div>
+    `;
+  }
+  document.getElementById(
+    "profileName"
+  ).value =
+    artist.name || "";
+  document.getElementById(
+    "profileCity"
+  ).value =
+    artist.city || "";
+  document.getElementById(
+    "profileRegion"
+  ).value =
+    artist.region || "";
+  document.getElementById(
+    "profileLanguage"
+  ).value =
+    artist.language || "";
+  document.getElementById(
+    "profileGenre"
+  ).value =
+    artist.genre || "";
+  document.getElementById(
+    "profileBio"
+  ).value =
+    artist.bio || "";
+}
+/* =====================================================
+   MODIFICATION PROFIL
+===================================================== */
+document
+  .getElementById("profileForm")
+  .addEventListener(
+    "submit",
+    async function(event){
+      event.preventDefault();
+      if(!currentArtist){
+        return;
+      }
+      const name =
+        document.getElementById(
+          "profileName"
+        ).value.trim();
+      if(!name){
+        showMessage(
+          "Le nom de l'artiste est obligatoire."
+        );
+        return;
+      }
+      const city =
+        document.getElementById(
+          "profileCity"
+        ).value.trim();
+      const region =
+        document.getElementById(
+          "profileRegion"
+        ).value.trim();
+      const language =
+        document.getElementById(
+          "profileLanguage"
+        ).value.trim();
+      const genre =
+        document.getElementById(
+          "profileGenre"
+        ).value.trim();
+      const bio =
+        document.getElementById(
+          "profileBio"
+        ).value.trim();
+      const {
+        data,
+        error
+      } =
+        await db
+          .from("artists")
+          .update({
+            name,
+            city,
+            region,
+            language,
+            genre,
+            bio,
+            updated_at:new Date().toISOString()
+          })
+          .eq(
+            "id",
+            currentArtist.id
+          )
+          .select()
+          .single();
+      if(error){
+        showMessage(
+          "Erreur : " +
+          error.message
+        );
+        return;
+      }
+      currentArtist =
+        data;
+      showMessage(
+        "Profil artiste mis à jour."
+      );
+      await loadArtistProfile();
+    }
+  );
+/* =====================================================
+   MUSIQUES
+===================================================== */
+async function loadTracks(){
+  const {
+    data,
+    error
+  } =
+    await db
+      .from("tracks")
+      .select(`
+        id,
+        title,
+        status,
+        play_count,
+        created_at,
+        albums(title)
+      `)
+      .eq(
+        "artist_id",
+        currentArtist.id
+      )
+      .order(
+        "created_at",
+        {
+          ascending:false
+        }
+      );
+  if(error){
+    document.getElementById(
+      "tracksTable"
+    ).innerHTML =
+      `<tr><td colspan="5">
+        Erreur : ${escapeHtml(error.message)}
+      </td></tr>`;
+    return;
+  }
+  const tbody =
+    document.getElementById(
+      "tracksTable"
+    );
+  const tracks =
+    data || [];
+  const totalPlays =
+    tracks.reduce(
+      (total,track) =>
+        total +
+        Number(
+          track.play_count || 0
+        ),
+      0
+    );
+  document.getElementById(
+    "countTracks"
+  ).textContent =
+    tracks.length;
+  document.getElementById(
+    "countPlays"
+  ).textContent =
+    totalPlays;
+  if(!tracks.length){
+    tbody.innerHTML =
+      `<tr>
+        <td colspan="5" class="empty">
+          Aucune musique.
+        </td>
+      </tr>`;
+    return;
+  }
+  tbody.innerHTML =
+    tracks.map(track => {
+      return `
+        <tr>
+          <td>
+            <strong>
+              ${escapeHtml(track.title)}
+            </strong>
+          </td>
+          <td>
+            ${escapeHtml(
+              track.albums?.title || "—"
+            )}
+          </td>
+          <td>
+            ${Number(
+              track.play_count || 0
+            )}
+          </td>
+          <td>
+            ${statusHtml(track.status)}
+          </td>
+          <td>
+            ${formatDate(
+              track.created_at
+            )}
+          </td>
+        </tr>
+      `;
+    }).join("");
+}
+/* =====================================================
+   ALBUMS
+===================================================== */
+async function loadAlbums(){
+  const {
+    data,
+    error
+  } =
+    await db
+      .from("albums")
+      .select(`
+        id,
+        title,
+        type,
+        status,
+        release_date,
+        created_at
+      `)
+      .eq(
+        "artist_id",
+        currentArtist.id
+      )
+      .order(
+        "created_at",
+        {
+          ascending:false
+        }
+      );
+  if(error){
+    document.getElementById(
+      "albumsTable"
+    ).innerHTML =
+      `<tr>
+        <td colspan="4">
+          Erreur : ${escapeHtml(error.message)}
+        </td>
+      </tr>`;
+    return;
+  }
+  const albums =
+    data || [];
+  document.getElementById(
+    "countAlbums"
+  ).textContent =
+    albums.length;
+  const tbody =
+    document.getElementById(
+      "albumsTable"
+    );
+  if(!albums.length){
+    tbody.innerHTML =
+      `<tr>
+        <td colspan="4" class="empty">
+          Aucun album.
+        </td>
+      </tr>`;
+    return;
+  }
+  tbody.innerHTML =
+    albums.map(album => {
+      return `
+        <tr>
+          <td>
+            <strong>
+              ${escapeHtml(album.title)}
+            </strong>
+          </td>
+          <td>
+            ${escapeHtml(
+              album.type || "album"
+            )}
+          </td>
+          <td>
+            ${statusHtml(album.status)}
+          </td>
+          <td>
+            ${formatDate(
+              album.release_date ||
+              album.created_at
+            )}
+          </td>
+        </tr>
+      `;
+    }).join("");
+}
+/* =====================================================
+   MEDIA
+===================================================== */
+async function loadMedia(){
+  const {
+    data,
+    error
+  } =
+    await db
+      .from("media")
+      .select(`
+        id,
+        title,
+        type,
+        status,
+        created_at
+      `)
+      .eq(
+        "artist_id",
+        currentArtist.id
+      )
+      .order(
+        "created_at",
+        {
+          ascending:false
+        }
+      );
+  if(error){
+    document.getElementById(
+      "mediaTable"
+    ).innerHTML =
+      `<tr>
+        <td colspan="4">
+          Erreur : ${escapeHtml(error.message)}
+        </td>
+      </tr>`;
+    return;
+  }
+  const media =
+    data || [];
+  document.getElementById(
+    "countMedia"
+  ).textContent =
+    media.length;
+  const tbody =
+    document.getElementById(
+      "mediaTable"
+    );
+  if(!media.length){
+    tbody.innerHTML =
+      `<tr>
+        <td colspan="4" class="empty">
+          Aucun média.
+        </td>
+      </tr>`;
+    return;
+  }
+  tbody.innerHTML =
+    media.map(item => {
+      return `
+        <tr>
+          <td>
+            <strong>
+              ${escapeHtml(item.title)}
+            </strong>
+          </td>
+          <td>
+            ${escapeHtml(
+              item.type || "—"
+            )}
+          </td>
+          <td>
+            ${statusHtml(item.status)}
+          </td>
+          <td>
+            ${formatDate(
+              item.created_at
+            )}
+          </td>
+        </tr>
+      `;
+    }).join("");
+}
+/* =====================================================
+   REVENUS
+===================================================== */
+async function loadEarnings(){
+  const {
+    data,
+    error
+  } =
+    await db
+      .from("artist_earnings")
+      .select(`
+        id,
+        artist_id,
+        period_start,
+        period_end,
+        amount,
+        currency,
+        plays_count,
+        status,
+        created_at
+      `)
+      .eq(
+        "artist_id",
+        currentArtist.id
+      )
+      .order(
+        "period_start",
+        {
+          ascending:false
+        }
+      );
+  if(error){
+    document.getElementById(
+      "earningsTable"
+    ).innerHTML =
+      `<tr>
+        <td colspan="5">
+          Erreur : ${escapeHtml(error.message)}
+        </td>
+      </tr>`;
+    return;
+  }
+  const earnings =
+    data || [];
+  const total =
+    earnings.reduce(
+      (sum,item) =>
+        sum +
+        Number(
+          item.amount || 0
+        ),
+      0
+    );
+  document.getElementById(
+    "countEarnings"
+  ).textContent =
+    Math.round(total).toLocaleString(
+      "fr-FR"
+    );
+  document.getElementById(
+    "earningsTotal"
+  ).textContent =
+    Math.round(total).toLocaleString(
+      "fr-FR"
+    ) +
+    " XAF";
+  const tbody =
+    document.getElementById(
+      "earningsTable"
+    );
+  if(!earnings.length){
+    tbody.innerHTML =
+      `<tr>
+        <td colspan="5" class="empty">
+          Aucun revenu enregistré pour le moment.
+        </td>
+      </tr>`;
+    return;
+  }
+  tbody.innerHTML =
+    earnings.map(item => {
+      const period =
+        [
+          item.period_start
+            ? formatDate(
+                item.period_start
+              )
+            : "—",
+          item.period_end
+            ? formatDate(
+                item.period_end
+              )
+            : "—"
+        ].join(" → ");
+      return `
+        <tr>
+          <td>
+            ${escapeHtml(period)}
+          </td>
+          <td>
+            ${Number(
+              item.plays_count || 0
+            )}
+          </td>
+          <td>
+            <strong>
+              ${Number(
+                item.amount || 0
+              ).toLocaleString(
+                "fr-FR"
+              )}
+            </strong>
+          </td>
+          <td>
+            ${escapeHtml(
+              item.currency || "XAF"
+            )}
+          </td>
+          <td>
+            ${statusHtml(
+              item.status
+            )}
+          </td>
+        </tr>
+      `;
+    }).join("");
+}
+/* =====================================================
+   SESSION
+===================================================== */
+db.auth.onAuthStateChange(
+  async function(event,session){
+    if(event === "SIGNED_OUT"){
+      currentUser = null;
+      currentArtist = null;
+      document.getElementById(
+        "artistApp"
+      ).style.display = "none";
+      document.getElementById(
+        "loginScreen"
+      ).style.display = "block";
+      return;
+    }
+    if(
+      session &&
+      (
+        event === "SIGNED_IN" ||
+        event === "INITIAL_SESSION" ||
+        event === "TOKEN_REFRESHED"
+      )
+    ){
+      if(!currentUser){
+        currentUser =
+          session.user;
+        await loadArtistAccount();
+      }
+    }
+  }
+);
+/* =====================================================
+   DEMARRAGE
+===================================================== */
+(async function(){
+  const {
+    data
+  } =
+    await db.auth.getSession();
+  if(data.session){
+    currentUser =
+      data.session.user;
+    await loadArtistAccount();
+  }else{
+    document.getElementById(
+      "loginScreen"
+    ).style.display = "block";
+    document.getElementById(
+      "artistApp"
+    ).style.display = "none";
+  }
+})();
+</script>
+</body>
+</html>
