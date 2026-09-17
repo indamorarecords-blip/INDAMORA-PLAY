@@ -3,21 +3,38 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="theme-color" content="#0b0b0f">
+  <meta name="theme-color" content="#1565c0">
+  <meta name="description" content="INDAMORA PLAY — plateforme musicale d'Afrique centrale">
   <title>INDAMORA PLAY — INDAMORA RECORDS</title>
 
   <style>
+    :root {
+      --blue: #1565c0;
+      --blue-dark: #0d47a1;
+      --blue-light: #eaf3ff;
+      --blue-soft: #f4f8ff;
+      --text: #172033;
+      --muted: #64748b;
+      --border: #dbe5f0;
+      --white: #ffffff;
+      --shadow: 0 8px 25px rgba(21, 101, 192, 0.08);
+    }
+
     * {
       box-sizing: border-box;
       margin: 0;
       padding: 0;
     }
 
+    html {
+      scroll-behavior: smooth;
+    }
+
     body {
       font-family: Arial, Helvetica, sans-serif;
-      background: #0b0b0f;
-      color: #fff;
-      line-height: 1.5;
+      background: var(--white);
+      color: var(--text);
+      line-height: 1.6;
     }
 
     a {
@@ -29,8 +46,8 @@
       position: sticky;
       top: 0;
       z-index: 100;
-      background: rgba(11, 11, 15, 0.96);
-      border-bottom: 1px solid #262631;
+      background: rgba(255, 255, 255, 0.96);
+      border-bottom: 1px solid var(--border);
       backdrop-filter: blur(10px);
     }
 
@@ -45,13 +62,15 @@
     }
 
     .logo {
+      color: var(--blue-dark);
       font-size: 22px;
-      font-weight: 800;
+      font-weight: 900;
       white-space: nowrap;
+      letter-spacing: -0.5px;
     }
 
     .logo span {
-      color: #ffcc00;
+      color: var(--blue);
     }
 
     nav {
@@ -63,48 +82,60 @@
     }
 
     nav a {
-      color: #ddd;
+      color: #334155;
       font-size: 14px;
+      font-weight: 600;
     }
 
     nav a:hover {
-      color: #ffcc00;
-    }
-
-    .admin-link {
-      background: #ffcc00;
-      color: #111 !important;
-      padding: 9px 14px;
-      border-radius: 8px;
-      font-weight: 700;
+      color: var(--blue);
     }
 
     .hero {
+      background:
+        linear-gradient(180deg, #f4f8ff 0%, #ffffff 100%);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .hero-inner {
       max-width: 1200px;
       margin: auto;
-      padding: 80px 20px 60px;
+      padding: 95px 20px 85px;
       text-align: center;
     }
 
-    .hero h1 {
-      font-size: clamp(42px, 8vw, 80px);
-      line-height: 1;
+    .badge {
+      display: inline-block;
+      padding: 8px 14px;
+      border-radius: 999px;
+      background: var(--blue-light);
+      color: var(--blue-dark);
+      font-size: 13px;
+      font-weight: 800;
       margin-bottom: 20px;
     }
 
+    .hero h1 {
+      font-size: clamp(44px, 8vw, 82px);
+      line-height: 1;
+      letter-spacing: -2px;
+      margin-bottom: 22px;
+      color: #102a43;
+    }
+
     .hero h1 span {
-      color: #ffcc00;
+      color: var(--blue);
     }
 
     .hero p {
-      max-width: 700px;
+      max-width: 720px;
       margin: auto;
-      color: #b9b9c3;
+      color: var(--muted);
       font-size: 18px;
     }
 
     .hero-buttons {
-      margin-top: 30px;
+      margin-top: 32px;
       display: flex;
       justify-content: center;
       gap: 12px;
@@ -113,43 +144,55 @@
 
     .btn {
       display: inline-block;
-      padding: 13px 20px;
+      padding: 13px 21px;
       border-radius: 10px;
-      font-weight: 700;
-      background: #ffcc00;
-      color: #111;
+      font-weight: 800;
+      background: var(--blue);
+      color: white;
+      box-shadow: 0 6px 15px rgba(21, 101, 192, 0.18);
+    }
+
+    .btn:hover {
+      background: var(--blue-dark);
     }
 
     .btn.secondary {
-      background: #20202a;
-      color: #fff;
-      border: 1px solid #333340;
+      background: white;
+      color: var(--blue-dark);
+      border: 1px solid #bcd2ec;
+      box-shadow: none;
+    }
+
+    .btn.secondary:hover {
+      background: var(--blue-soft);
     }
 
     section {
       max-width: 1200px;
       margin: auto;
-      padding: 55px 20px;
+      padding: 65px 20px;
     }
 
     .section-title {
-      margin-bottom: 25px;
+      margin-bottom: 28px;
     }
 
     .section-title h2 {
+      color: #102a43;
       font-size: 30px;
     }
 
     .section-title p {
-      color: #9999a6;
+      color: var(--muted);
       margin-top: 6px;
     }
 
     .player {
-      background: #15151d;
-      border: 1px solid #2b2b36;
+      background: white;
+      border: 1px solid var(--border);
       border-radius: 16px;
       padding: 22px;
+      box-shadow: var(--shadow);
     }
 
     .player-top {
@@ -162,21 +205,22 @@
       width: 80px;
       height: 80px;
       border-radius: 12px;
-      background: linear-gradient(135deg, #ffcc00, #ff7a00);
+      background: linear-gradient(135deg, #1565c0, #42a5f5);
       display: grid;
       place-items: center;
-      color: #111;
+      color: white;
       font-size: 30px;
       font-weight: 900;
       flex-shrink: 0;
     }
 
     .track-info h3 {
+      color: #102a43;
       margin-bottom: 5px;
     }
 
     .track-info p {
-      color: #9999a6;
+      color: var(--muted);
     }
 
     audio {
@@ -192,17 +236,19 @@
     }
 
     .filter {
-      background: #171720;
-      border: 1px solid #30303b;
-      color: #ddd;
+      background: white;
+      border: 1px solid #cbd8e6;
+      color: #334155;
       border-radius: 999px;
       padding: 9px 14px;
       cursor: pointer;
+      font-weight: 600;
     }
 
     .filter:hover {
-      border-color: #ffcc00;
-      color: #ffcc00;
+      border-color: var(--blue);
+      color: var(--blue);
+      background: var(--blue-soft);
     }
 
     .grid {
@@ -212,18 +258,26 @@
     }
 
     .card {
-      background: #15151d;
-      border: 1px solid #2a2a35;
+      background: white;
+      border: 1px solid var(--border);
       border-radius: 14px;
       overflow: hidden;
+      box-shadow: var(--shadow);
+      transition: transform .2s ease, box-shadow .2s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 12px 30px rgba(21, 101, 192, .12);
     }
 
     .card-image {
       aspect-ratio: 1 / 1;
-      background: linear-gradient(135deg, #272733, #111118);
+      background: var(--blue-soft);
       display: grid;
       place-items: center;
       font-size: 42px;
+      color: var(--blue);
     }
 
     .card-content {
@@ -231,11 +285,12 @@
     }
 
     .card-content h3 {
+      color: #102a43;
       margin-bottom: 5px;
     }
 
     .card-content p {
-      color: #9999a6;
+      color: var(--muted);
       font-size: 14px;
     }
 
@@ -249,20 +304,21 @@
       grid-template-columns: 45px 1fr auto;
       align-items: center;
       gap: 12px;
-      background: #15151d;
-      border: 1px solid #292934;
+      background: white;
+      border: 1px solid var(--border);
       padding: 13px;
       border-radius: 10px;
+      box-shadow: var(--shadow);
     }
 
     .rank-number {
       font-size: 22px;
-      font-weight: 800;
-      color: #ffcc00;
+      font-weight: 900;
+      color: var(--blue);
     }
 
     .rank small {
-      color: #888894;
+      color: var(--muted);
     }
 
     .feature-grid {
@@ -273,9 +329,10 @@
 
     .feature {
       padding: 25px;
-      background: #15151d;
-      border: 1px solid #292934;
+      background: white;
+      border: 1px solid var(--border);
       border-radius: 14px;
+      box-shadow: var(--shadow);
     }
 
     .feature-icon {
@@ -283,26 +340,35 @@
       margin-bottom: 10px;
     }
 
+    .feature h3 {
+      color: #102a43;
+    }
+
     .feature p {
-      color: #9999a6;
+      color: var(--muted);
       margin-top: 8px;
     }
 
     .submit-box {
-      background: linear-gradient(135deg, #181820, #111118);
-      border: 1px solid #33333e;
+      background: var(--blue-soft);
+      border: 1px solid #cfe0f5;
       border-radius: 16px;
-      padding: 30px;
+      padding: 32px;
+    }
+
+    .submit-box h2 {
+      color: var(--blue-dark);
     }
 
     .submit-box p {
-      color: #aaaab5;
-      margin: 10px 0 20px;
+      color: var(--muted);
+      margin: 10px 0 22px;
     }
 
     footer {
-      border-top: 1px solid #292934;
+      border-top: 1px solid var(--border);
       margin-top: 40px;
+      background: #f8fafc;
     }
 
     .footer-inner {
@@ -313,17 +379,13 @@
       justify-content: space-between;
       gap: 20px;
       flex-wrap: wrap;
-      color: #888894;
+      color: var(--muted);
       font-size: 14px;
     }
 
-    .empty {
-      padding: 30px;
-      text-align: center;
-      background: #15151d;
-      border: 1px dashed #33333e;
-      border-radius: 14px;
-      color: #888894;
+    .footer-brand {
+      color: var(--blue-dark);
+      font-weight: 800;
     }
 
     @media (max-width: 900px) {
@@ -350,8 +412,8 @@
         grid-template-columns: 1fr;
       }
 
-      .hero {
-        padding-top: 55px;
+      .hero-inner {
+        padding-top: 60px;
       }
 
       .hero p {
@@ -369,6 +431,7 @@
 
 <header>
   <div class="nav">
+
     <a href="index.html" class="logo">
       INDAMORA <span>PLAY</span>
     </a>
@@ -379,29 +442,43 @@
       <a href="#classement">Classement</a>
       <a href="#medias">Clips & Podcasts</a>
       <a href="#radios">Radios</a>
-      <a href="#proposer">Proposer</a>
-
-      <!-- ADMINISTRATION -->
-      <a href="admin.html" class="admin-link">🔐 Administration</a>
+      <a href="#proposer">Artistes</a>
     </nav>
+
   </div>
 </header>
 
+
 <main>
 
-  <section class="hero">
-    <h1>INDAMORA <span>PLAY</span></h1>
+  <div class="hero">
 
-    <p>
-      La plateforme musicale dédiée aux artistes et aux musiques
-      d'Afrique centrale 🇨🇫
-    </p>
+    <div class="hero-inner">
 
-    <div class="hero-buttons">
-      <a href="#musique" class="btn">🎧 Écouter</a>
-      <a href="#artistes" class="btn secondary">🎤 Découvrir les artistes</a>
+      <div class="badge">
+        🇨🇫 La musique d'Afrique centrale
+      </div>
+
+      <h1>
+        INDAMORA <span>PLAY</span>
+      </h1>
+
+      <p>
+        Découvrez les artistes, les musiques, les clips,
+        les podcasts et les nouvelles sonorités d'Afrique centrale.
+      </p>
+
+      <div class="hero-buttons">
+        <a href="#musique" class="btn">🎧 Écouter</a>
+        <a href="#artistes" class="btn secondary">
+          🎤 Découvrir les artistes
+        </a>
+      </div>
+
     </div>
-  </section>
+
+  </div>
+
 
   <section id="musique">
 
@@ -428,8 +505,10 @@
         <div class="cover">▶</div>
 
         <div class="track-info">
-          <h3>INDAMORA PLAY — Démo</h3>
-          <p>Lecteur musical — prêt pour les futurs titres</p>
+          <h3>INDAMORA PLAY</h3>
+          <p>
+            Votre plateforme musicale d'Afrique centrale
+          </p>
         </div>
 
       </div>
@@ -443,11 +522,12 @@
 
   </section>
 
+
   <section id="artistes">
 
     <div class="section-title">
       <h2>🎤 Artistes</h2>
-      <p>Les artistes présents sur INDAMORA PLAY.</p>
+      <p>Découvrez les artistes présents sur INDAMORA PLAY.</p>
     </div>
 
     <div class="grid">
@@ -488,11 +568,12 @@
 
   </section>
 
+
   <section id="classement">
 
     <div class="section-title">
       <h2>🔥 Classement</h2>
-      <p>Les titres les plus écoutés.</p>
+      <p>Les titres les plus écoutés sur la plateforme.</p>
     </div>
 
     <div class="ranking">
@@ -527,6 +608,7 @@
     </div>
 
   </section>
+
 
   <section id="medias">
 
@@ -565,11 +647,14 @@
 
   </section>
 
+
   <section id="radios">
 
     <div class="section-title">
       <h2>📻 Radios & Playlists</h2>
-      <p>Des sélections musicales pour découvrir de nouveaux artistes.</p>
+      <p>
+        Des sélections musicales pour découvrir de nouveaux artistes.
+      </p>
     </div>
 
     <div class="grid">
@@ -610,6 +695,7 @@
 
   </section>
 
+
   <section id="proposer">
 
     <div class="submit-box">
@@ -617,13 +703,13 @@
       <h2>🎤 Tu es artiste ?</h2>
 
       <p>
-        Tu peux proposer ta musique à INDAMORA PLAY.
-        Les artistes pourront bientôt envoyer leurs titres,
-        clips et informations directement à la plateforme.
+        Tu es artiste, producteur ou créateur ?
+        INDAMORA PLAY est destiné à mettre en valeur
+        les talents d'Afrique centrale.
       </p>
 
-      <a href="admin.html" class="btn">
-        🔐 Espace administration
+      <a href="#musique" class="btn">
+        Découvrir la plateforme
       </a>
 
     </div>
@@ -632,12 +718,13 @@
 
 </main>
 
+
 <footer>
 
   <div class="footer-inner">
 
-    <div>
-      © 2026 INDAMORA PLAY — INDAMORA RECORDS
+    <div class="footer-brand">
+      INDAMORA PLAY — INDAMORA RECORDS
     </div>
 
     <div>
@@ -645,7 +732,7 @@
     </div>
 
     <div>
-      <a href="admin.html">Administration</a>
+      © 2026 INDAMORA PLAY
     </div>
 
   </div>
