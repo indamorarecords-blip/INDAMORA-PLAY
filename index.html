@@ -59,6 +59,13 @@
     nav a:hover {
       background: rgba(255,255,255,.15);
     }
+    .artist-link {
+      background: white;
+      color: #0757b8 !important;
+    }
+    .artist-link:hover {
+      background: #edf5ff !important;
+    }
     .hero {
       background: linear-gradient(135deg, #0757b8, #0b82e6);
       color: white;
@@ -249,26 +256,28 @@
 <body>
 <header>
   <div class="header-inner">
-    <div class="logo">
-      🎧 INDAMORA PLAY
-      <small>INDAMORA RECORDS</small>
-    </div>
-    <nav>
-      <a href="#musiques">Musiques</a>
-      <a href="#artistes">Artistes</a>
-      <a href="#classement">Classement</a>
-      <a href="#albums">Albums</a>
-      <a href="#medias">Clips & Podcasts</a>
-    </nav>
+<div class="logo">
+  🎧 INDAMORA PLAY
+  <small>INDAMORA RECORDS</small>
+</div>
+<nav>
+  <a href="#musiques">Musiques</a>
+  <a href="#artistes">Artistes</a>
+  <a href="#classement">Classement</a>
+  <a href="#albums">Albums</a>
+  <a href="#medias">Clips & Podcasts</a>
+  <a href="artist.html" class="artist-link">🎤 Espace artiste</a>
+  <a href="register.html">📝 Créer un compte</a>
+</nav>
   </div>
 </header>
 <section class="hero">
   <div class="hero-inner">
     <h1>La musique d'Afrique centrale 🇨🇫</h1>
-    <p>
-      Découvrez les artistes, morceaux, albums, clips et podcasts
-      d'Afrique centrale sur INDAMORA PLAY.
-    </p>
+<p>
+  Découvrez les artistes, morceaux, albums, clips et podcasts
+  d'Afrique centrale sur INDAMORA PLAY.
+</p>
   </div>
 </section>
 <main class="container">
@@ -277,20 +286,20 @@
   </div>
   <section id="musiques">
     <h2>🎧 Musiques</h2>
-    <div class="search-box">
-      <input
-        id="search"
-        type="search"
-        placeholder="Rechercher un artiste, un morceau..."
-      >
-      <select id="genreFilter">
-        <option value="">Tous les genres</option>
-      </select>
-      <select id="cityFilter">
-        <option value="">Toutes les villes</option>
-      </select>
-    </div>
-    <div id="tracks" class="grid"></div>
+<div class="search-box">
+  <input
+    id="search"
+    type="search"
+    placeholder="Rechercher un artiste, un morceau..."
+  >
+  <select id="genreFilter">
+    <option value="">Tous les genres</option>
+  </select>
+  <select id="cityFilter">
+    <option value="">Toutes les villes</option>
+  </select>
+</div>
+<div id="tracks" class="grid"></div>
   </section>
   <section id="artistes">
     <h2>👤 Artistes</h2>
@@ -310,219 +319,313 @@
   </section>
   <section>
     <h2>📻 Radios</h2>
-    <div class="empty">
-      Les radios INDAMORA PLAY seront ajoutées prochainement.
-    </div>
+<div class="empty">
+  Les radios INDAMORA PLAY seront ajoutées prochainement.
+</div>
   </section>
   <section>
     <h2>🎤 Proposer sa musique</h2>
-    <div class="notice">
-      Les artistes et créateurs pourront prochainement proposer leurs
-      morceaux directement à INDAMORA PLAY pour validation.
-    </div>
+<div class="notice">
+  Les artistes et créateurs peuvent maintenant rejoindre
+  leur espace artiste et proposer leurs contenus pour validation.
+  <br><br>
+  <a
+    href="register.html"
+    style="
+      display:inline-block;
+      background:#0757b8;
+      color:white;
+      padding:11px 16px;
+      border-radius:9px;
+      text-decoration:none;
+      font-weight:700;
+    "
+  >
+    📝 Créer un compte artiste
+  </a>
+</div>
   </section>
 </main>
 <div class="player">
   <div class="player-inner">
-    <div class="now-playing">
-      <strong id="nowTitle">Aucun morceau</strong>
-      <span id="nowArtist">Sélectionnez un morceau pour commencer.</span>
-    </div>
-    <audio id="audioPlayer" controls preload="none"></audio>
+<div class="now-playing">
+  <strong id="nowTitle">
+    Aucun morceau
+  </strong>
+  <span id="nowArtist">
+    Sélectionnez un morceau pour commencer.
+  </span>
+</div>
+<audio
+  id="audioPlayer"
+  controls
+  preload="none"
+></audio>
   </div>
 </div>
 <footer>
-  <p><strong>INDAMORA PLAY</strong></p>
-  <p>Une plateforme dédiée aux musiques d'Afrique centrale 🇨🇫</p>
-  <p>© INDAMORA RECORDS</p>
+  <p>
+    <strong>INDAMORA PLAY</strong>
+  </p>
+  <p>
+    Une plateforme dédiée aux musiques d'Afrique centrale 🇨🇫
+  </p>
+  <p>
+    © INDAMORA RECORDS
+  </p>
 </footer>
 <script>
-  const SUPABASE_URL = "https://adqsdnqkbitplbhbihiv.supabase.co";
-  /*
-    IMPORTANT :
-    Conserve ici ta clé Publishable actuelle.
-    N'utilise jamais une clé sb_secret_ dans ce fichier public.
-  */
-  const SUPABASE_PUBLISHABLE_KEY = "sb_publishable_dpjfWOYeNQRmP2nJq5FoMA_8NUuD0HF";
-  const { createClient } = supabase;
-  const db = createClient(
-    SUPABASE_URL,
-    SUPABASE_PUBLISHABLE_KEY
-  );
-  const tracksContainer = document.getElementById("tracks");
-  const artistsContainer = document.getElementById("artists");
-  const rankingContainer = document.getElementById("ranking");
-  const albumsContainer = document.getElementById("albumsGrid");
-  const mediaContainer = document.getElementById("mediaGrid");
-  const globalStatus = document.getElementById("globalStatus");
-  const searchInput = document.getElementById("search");
-  const genreFilter = document.getElementById("genreFilter");
-  const cityFilter = document.getElementById("cityFilter");
-  const audioPlayer = document.getElementById("audioPlayer");
-  const nowTitle = document.getElementById("nowTitle");
-  const nowArtist = document.getElementById("nowArtist");
-  let allTracks = [];
-  let allArtists = [];
-  let allAlbums = [];
-  let allMedia = [];
-  /*
-    Empêche plusieurs enregistrements d'écoute pour
-    le même morceau pendant une même lecture.
-  */
-  let countedTrackId = null;
-  function escapeHtml(value) {
-    if (value === null || value === undefined) return "";
-    return String(value)
-      .replace(/&/g, "&amp;")
-      .replace(/</g, "&lt;")
-      .replace(/>/g, "&gt;")
-      .replace(/"/g, "&quot;")
-      .replace(/'/g, "&#039;");
+const SUPABASE_URL =
+  "https://adqsdnqkbitplbhbihiv.supabase.co";
+const SUPABASE_PUBLISHABLE_KEY =
+  "sb_publishable_dpjfWOYeNQRmP2nJq5FoMA_8NUuD0HF";
+const { createClient } = supabase;
+const db = createClient(
+  SUPABASE_URL,
+  SUPABASE_PUBLISHABLE_KEY
+);
+const tracksContainer =
+  document.getElementById("tracks");
+const artistsContainer =
+  document.getElementById("artists");
+const rankingContainer =
+  document.getElementById("ranking");
+const albumsContainer =
+  document.getElementById("albumsGrid");
+const mediaContainer =
+  document.getElementById("mediaGrid");
+const globalStatus =
+  document.getElementById("globalStatus");
+const searchInput =
+  document.getElementById("search");
+const genreFilter =
+  document.getElementById("genreFilter");
+const cityFilter =
+  document.getElementById("cityFilter");
+const audioPlayer =
+  document.getElementById("audioPlayer");
+const nowTitle =
+  document.getElementById("nowTitle");
+const nowArtist =
+  document.getElementById("nowArtist");
+let allTracks = [];
+let allArtists = [];
+let allAlbums = [];
+let allMedia = [];
+let countedTrackId = null;
+function escapeHtml(value) {
+  if (
+    value === null ||
+    value === undefined
+  ) {
+    return "";
   }
-  function publicImage(url) {
-    if (!url) {
-      return "data:image/svg+xml;charset=UTF-8," +
-        encodeURIComponent(`
-          <svg xmlns="http://www.w3.org/2000/svg"
-               width="600"
-               height="600"
-               viewBox="0 0 600 600">
-            <rect width="600" height="600" fill="#edf4fb"/>
-            <text x="300" y="315"
-                  text-anchor="middle"
-                  font-family="Arial"
-                  font-size="70"
-                  fill="#0757b8">🎵</text>
-          </svg>
-        `);
-    }
-    return url;
+  return String(value)
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#039;");
+}
+function publicImage(url) {
+  if (!url) {
+    return "data:image/svg+xml;charset=UTF-8," +
+      encodeURIComponent(`
+        <svg xmlns="http://www.w3.org/2000/svg"
+             width="600"
+             height="600"
+             viewBox="0 0 600 600">
+          <rect
+            width="600"
+            height="600"
+            fill="#edf4fb"
+          />
+          <text
+            x="300"
+            y="315"
+            text-anchor="middle"
+            font-family="Arial"
+            font-size="70"
+            fill="#0757b8"
+          >
+            🎵
+          </text>
+        </svg>
+      `);
   }
-  async function loadCatalog() {
-    globalStatus.textContent = "Chargement du catalogue...";
-    const [
-      artistsResponse,
-      tracksResponse,
-      albumsResponse,
-      mediaResponse
-    ] = await Promise.all([
-      db
-        .from("artists")
-        .select("*")
-        .eq("status", "published")
-        .order("name"),
-      db
-        .from("tracks")
-        .select("*")
-        .eq("status", "published")
-        .order("created_at", { ascending: false }),
-      db
-        .from("albums")
-        .select("*")
-        .eq("status", "published")
-        .order("release_date", { ascending: false }),
-      db
-        .from("media")
-        .select("*")
-        .eq("status", "published")
-        .order("created_at", { ascending: false })
-    ]);
-    if (artistsResponse.error) {
-      console.error(artistsResponse.error);
-      globalStatus.textContent =
-        "Erreur lors du chargement des artistes.";
-      return;
-    }
-    if (tracksResponse.error) {
-      console.error(tracksResponse.error);
-      globalStatus.textContent =
-        "Erreur lors du chargement des morceaux.";
-      return;
-    }
-    allArtists = artistsResponse.data || [];
-    allTracks = tracksResponse.data || [];
-    allAlbums = albumsResponse.data || [];
-    allMedia = mediaResponse.data || [];
-    populateFilters();
-    renderAll();
-    if (
-      allTracks.length === 0 &&
-      allArtists.length === 0
-    ) {
-      globalStatus.textContent =
-        "Le catalogue est encore vide. Les premiers contenus apparaîtront ici après publication.";
-    } else {
-      globalStatus.textContent =
-        "Catalogue INDAMORA PLAY chargé.";
-    }
-  }
-  function populateFilters() {
-    const genres = [
-      ...new Set(
-        allTracks
-          .map(track => track.genre)
-          .filter(Boolean)
+  return url;
+}
+async function loadCatalog() {
+  globalStatus.textContent =
+    "Chargement du catalogue...";
+  const [
+    artistsResponse,
+    tracksResponse,
+    albumsResponse,
+    mediaResponse
+  ] = await Promise.all([
+    db
+      .from("artists")
+      .select("*")
+      .eq("status", "published")
+      .order("name"),
+    db
+      .from("tracks")
+      .select("*")
+      .eq("status", "published")
+      .order(
+        "created_at",
+        {
+          ascending: false
+        }
+      ),
+    db
+      .from("albums")
+      .select("*")
+      .eq("status", "published")
+      .order(
+        "release_date",
+        {
+          ascending: false
+        }
+      ),
+    db
+      .from("media")
+      .select("*")
+      .eq("status", "published")
+      .order(
+        "created_at",
+        {
+          ascending: false
+        }
       )
-    ].sort();
-    const cities = [
-      ...new Set(
-        [
-          ...allTracks.map(track => track.city),
-          ...allArtists.map(artist => artist.city)
-        ].filter(Boolean)
-      )
-    ].sort();
-    genreFilter.innerHTML =
-      '<option value="">Tous les genres</option>' +
-      genres
-        .map(
-          genre =>
-            `<option value="${escapeHtml(genre)}">${escapeHtml(genre)}</option>`
-        )
-        .join("");
-    cityFilter.innerHTML =
-      '<option value="">Toutes les villes</option>' +
-      cities
-        .map(
-          city =>
-            `<option value="${escapeHtml(city)}">${escapeHtml(city)}</option>`
-        )
-        .join("");
-  }
-  function getArtistName(artistId) {
-    const artist = allArtists.find(
-      item => item.id === artistId
+  ]);
+  if (artistsResponse.error) {
+    console.error(
+      artistsResponse.error
     );
-    return artist ? artist.name : "Artiste";
+    globalStatus.textContent =
+      "Erreur lors du chargement des artistes.";
+    return;
   }
-  function renderAll() {
-    renderTracks();
-    renderArtists();
-    renderRanking();
-    renderAlbums();
-    renderMedia();
+  if (tracksResponse.error) {
+    console.error(
+      tracksResponse.error
+    );
+    globalStatus.textContent =
+      "Erreur lors du chargement des morceaux.";
+    return;
   }
-  function filteredTracks() {
-    const search = searchInput.value
+  allArtists =
+    artistsResponse.data || [];
+  allTracks =
+    tracksResponse.data || [];
+  allAlbums =
+    albumsResponse.data || [];
+  allMedia =
+    mediaResponse.data || [];
+  populateFilters();
+  renderAll();
+  if (
+    allTracks.length === 0 &&
+    allArtists.length === 0
+  ) {
+    globalStatus.textContent =
+      "Le catalogue est encore vide. Les premiers contenus apparaîtront ici après publication.";
+  } else {
+    globalStatus.textContent =
+      "Catalogue INDAMORA PLAY chargé.";
+  }
+}
+function populateFilters() {
+  const genres = [
+    ...new Set(
+      allTracks
+        .map(
+          track => track.genre
+        )
+        .filter(Boolean)
+    )
+  ].sort();
+  const cities = [
+    ...new Set(
+      [
+        ...allTracks.map(
+          track => track.city
+        ),
+        ...allArtists.map(
+          artist => artist.city
+        )
+      ].filter(Boolean)
+    )
+  ].sort();
+  genreFilter.innerHTML =
+    '<option value="">Tous les genres</option>' +
+    genres
+      .map(
+        genre =>
+          `<option value="${escapeHtml(genre)}">${escapeHtml(genre)}</option>`
+      )
+      .join("");
+  cityFilter.innerHTML =
+    '<option value="">Toutes les villes</option>' +
+    cities
+      .map(
+        city =>
+          `<option value="${escapeHtml(city)}">${escapeHtml(city)}</option>`
+      )
+      .join("");
+}
+function getArtistName(artistId) {
+  const artist =
+    allArtists.find(
+      item =>
+        item.id === artistId
+    );
+  return artist
+    ? artist.name
+    : "Artiste";
+}
+function renderAll() {
+  renderTracks();
+  renderArtists();
+  renderRanking();
+  renderAlbums();
+  renderMedia();
+}
+function filteredTracks() {
+  const search =
+    searchInput.value
       .trim()
       .toLowerCase();
-    const genre = genreFilter.value;
-    const city = cityFilter.value;
-    return allTracks.filter(track => {
+  const genre =
+    genreFilter.value;
+  const city =
+    cityFilter.value;
+  return allTracks.filter(
+    track => {
       const artistName =
-        getArtistName(track.artist_id).toLowerCase();
+        getArtistName(
+          track.artist_id
+        ).toLowerCase();
       const matchesSearch =
         !search ||
-        track.title.toLowerCase().includes(search) ||
+        String(
+          track.title || ""
+        )
+          .toLowerCase()
+          .includes(search) ||
         artistName.includes(search);
       const matchesGenre =
-        !genre || track.genre === genre;
+        !genre ||
+        track.genre === genre;
       const matchesCity =
         !city ||
         track.city === city ||
         allArtists.some(
           artist =>
-            artist.id === track.artist_id &&
+            artist.id ===
+              track.artist_id &&
             artist.city === city
         );
       return (
@@ -530,322 +633,497 @@
         matchesGenre &&
         matchesCity
       );
-    });
-  }
-  function renderTracks() {
-    const tracks = filteredTracks();
-    if (!tracks.length) {
-      tracksContainer.innerHTML =
-        '<div class="empty">Aucun morceau ne correspond à votre recherche.</div>';
-      return;
     }
-    tracksContainer.innerHTML = tracks
-      .map(track => {
-        const artistName =
-          getArtistName(track.artist_id);
-        return `
-          <article class="card">
-            <h3>${escapeHtml(track.title)}</h3>
-            <div class="meta">
-              👤 ${escapeHtml(artistName)}<br>
-              ${track.genre ? "🎵 " + escapeHtml(track.genre) + "<br>" : ""}
-              ${track.language ? "🌍 " + escapeHtml(track.language) + "<br>" : ""}
-              ${track.city ? "📍 " + escapeHtml(track.city) + "<br>" : ""}
-              ▶️ ${Number(track.play_count || 0)} écoute(s)
-            </div>
-            <button
-              class="play-button"
-              onclick="playTrack('${track.id}')"
-            >
-              ▶️ Écouter
-            </button>
-          </article>
-        `;
-      })
-      .join("");
+  );
+}
+function renderTracks() {
+  const tracks =
+    filteredTracks();
+  if (!tracks.length) {
+    tracksContainer.innerHTML =
+      '<div class="empty">Aucun morceau ne correspond à votre recherche.</div>';
+    return;
   }
-  function renderArtists() {
-    if (!allArtists.length) {
-      artistsContainer.innerHTML =
-        '<div class="empty">Aucun artiste publié pour le moment.</div>';
-      return;
-    }
-    artistsContainer.innerHTML = allArtists
-      .map(artist => {
-        return `
-          <article class="card">
-            <img
-              class="artist-avatar"
-              src="${escapeHtml(publicImage(artist.avatar_url))}"
-              alt="${escapeHtml(artist.name)}"
-            >
-            <h3>${escapeHtml(artist.name)}</h3>
-            <div class="meta">
-              ${artist.city ? "📍 " + escapeHtml(artist.city) + "<br>" : ""}
-              ${artist.region ? "🗺️ " + escapeHtml(artist.region) + "<br>" : ""}
-              ${artist.language ? "🌍 " + escapeHtml(artist.language) + "<br>" : ""}
-              ${artist.genre ? "🎵 " + escapeHtml(artist.genre) : ""}
-            </div>
-          </article>
-        `;
-      })
+  tracksContainer.innerHTML =
+    tracks
+      .map(
+        track => {
+          const artistName =
+            getArtistName(
+              track.artist_id
+            );
+          return `
+            <article class="card">
+              <h3>
+                ${escapeHtml(track.title)}
+              </h3>
+              <div class="meta">
+                👤 ${escapeHtml(artistName)}
+                <br>
+                ${
+                  track.genre
+                    ? "🎵 " +
+                      escapeHtml(
+                        track.genre
+                      ) +
+                      "<br>"
+                    : ""
+                }
+                ${
+                  track.language
+                    ? "🌍 " +
+                      escapeHtml(
+                        track.language
+                      ) +
+                      "<br>"
+                    : ""
+                }
+                ${
+                  track.city
+                    ? "📍 " +
+                      escapeHtml(
+                        track.city
+                      ) +
+                      "<br>"
+                    : ""
+                }
+                ▶️ ${
+                  Number(
+                    track.play_count || 0
+                  )
+                } écoute(s)
+              </div>
+              <button
+                class="play-button"
+                onclick="playTrack('${track.id}')"
+              >
+                ▶️ Écouter
+              </button>
+            </article>
+          `;
+        }
+      )
       .join("");
+}
+function renderArtists() {
+  if (!allArtists.length) {
+    artistsContainer.innerHTML =
+      '<div class="empty">Aucun artiste publié pour le moment.</div>';
+    return;
   }
-  function renderRanking() {
-    const ranking = [...allTracks]
+  artistsContainer.innerHTML =
+    allArtists
+      .map(
+        artist => {
+          return `
+            <article class="card">
+              <img
+                class="artist-avatar"
+                src="${escapeHtml(
+                  publicImage(
+                    artist.avatar_url
+                  )
+                )}"
+                alt="${escapeHtml(
+                  artist.name
+                )}"
+              >
+              <h3>
+                ${escapeHtml(
+                  artist.name
+                )}
+              </h3>
+              <div class="meta">
+                ${
+                  artist.city
+                    ? "📍 " +
+                      escapeHtml(
+                        artist.city
+                      ) +
+                      "<br>"
+                    : ""
+                }
+                ${
+                  artist.region
+                    ? "🗺️ " +
+                      escapeHtml(
+                        artist.region
+                      ) +
+                      "<br>"
+                    : ""
+                }
+                ${
+                  artist.language
+                    ? "🌍 " +
+                      escapeHtml(
+                        artist.language
+                      ) +
+                      "<br>"
+                    : ""
+                }
+                ${
+                  artist.genre
+                    ? "🎵 " +
+                      escapeHtml(
+                        artist.genre
+                      )
+                    : ""
+                }
+              </div>
+            </article>
+          `;
+        }
+      )
+      .join("");
+}
+function renderRanking() {
+  const ranking =
+    [...allTracks]
       .sort(
         (a, b) =>
-          Number(b.play_count || 0) -
-          Number(a.play_count || 0)
+          Number(
+            b.play_count || 0
+          ) -
+          Number(
+            a.play_count || 0
+          )
       )
       .slice(0, 10);
-    if (!ranking.length) {
-      rankingContainer.innerHTML =
-        '<div class="empty">Le classement apparaîtra avec les premiers morceaux publiés.</div>';
-      return;
-    }
-    rankingContainer.innerHTML = ranking
-      .map((track, index) => {
-        return `
-          <article class="card">
-            <h3>#${index + 1} — ${escapeHtml(track.title)}</h3>
-            <div class="meta">
-              👤 ${escapeHtml(getArtistName(track.artist_id))}<br>
-              🔥 ${Number(track.play_count || 0)} écoute(s)
-            </div>
-            <button
-              class="play-button"
-              onclick="playTrack('${track.id}')"
-            >
-              ▶️ Écouter
-            </button>
-          </article>
-        `;
-      })
-      .join("");
+  if (!ranking.length) {
+    rankingContainer.innerHTML =
+      '<div class="empty">Le classement apparaîtra avec les premiers morceaux publiés.</div>';
+    return;
   }
-  function renderAlbums() {
-    if (!allAlbums.length) {
-      albumsContainer.innerHTML =
-        '<div class="empty">Aucun album ou projet publié pour le moment.</div>';
-      return;
-    }
-    albumsContainer.innerHTML = allAlbums
-      .map(album => {
-        return `
-          <article class="card">
-            <img
-              class="cover"
-              src="${escapeHtml(publicImage(album.cover_url))}"
-              alt="${escapeHtml(album.title)}"
-            >
-            <h3>${escapeHtml(album.title)}</h3>
-            <div class="meta">
-              👤 ${escapeHtml(getArtistName(album.artist_id))}<br>
-              ${album.type ? "💿 " + escapeHtml(album.type) + "<br>" : ""}
-              ${album.release_date ? "📅 " + escapeHtml(album.release_date) : ""}
-            </div>
-          </article>
-        `;
-      })
+  rankingContainer.innerHTML =
+    ranking
+      .map(
+        (track, index) => {
+          return `
+            <article class="card">
+              <h3>
+                #${index + 1}
+                —
+                ${escapeHtml(
+                  track.title
+                )}
+              </h3>
+              <div class="meta">
+                👤 ${escapeHtml(
+                  getArtistName(
+                    track.artist_id
+                  )
+                )}
+                <br>
+                🔥 ${
+                  Number(
+                    track.play_count || 0
+                  )
+                } écoute(s)
+              </div>
+              <button
+                class="play-button"
+                onclick="playTrack('${track.id}')"
+              >
+                ▶️ Écouter
+              </button>
+            </article>
+          `;
+        }
+      )
       .join("");
+}
+function renderAlbums() {
+  if (!allAlbums.length) {
+    albumsContainer.innerHTML =
+      '<div class="empty">Aucun album ou projet publié pour le moment.</div>';
+    return;
   }
-  function renderMedia() {
-    if (!allMedia.length) {
-      mediaContainer.innerHTML =
-        '<div class="empty">Aucun clip ou podcast publié pour le moment.</div>';
-      return;
-    }
-    mediaContainer.innerHTML = allMedia
-      .map(item => {
-        const typeLabel =
-          item.type === "video"
-            ? "🎬 Clip"
-            : item.type === "podcast"
-            ? "🎙️ Podcast"
-            : item.type === "interview"
-            ? "🎤 Interview"
-            : "📺 Média";
-            <a href="artist.html">Espace artiste</a>
-        return `
-          <article class="card">
-            <h3>${escapeHtml(item.title)}</h3>
-            <div class="meta">
-              ${typeLabel}<br>
-              👤 ${escapeHtml(getArtistName(item.artist_id))}
-            </div>
-            ${
-              item.media_url
-                ? `
-                  <a
-                    href="${escapeHtml(item.media_url)}"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    class="play-button"
-                    style="display:block;text-align:center;text-decoration:none;"
-                  >
-                    Ouvrir le média
-                  </a>
-                `
-                : ""
-            }
-          </article>
-        `;
-      })
+  albumsContainer.innerHTML =
+    allAlbums
+      .map(
+        album => {
+          return `
+            <article class="card">
+              <img
+                class="cover"
+                src="${escapeHtml(
+                  publicImage(
+                    album.cover_url
+                  )
+                )}"
+                alt="${escapeHtml(
+                  album.title
+                )}"
+              >
+              <h3>
+                ${escapeHtml(
+                  album.title
+                )}
+              </h3>
+              <div class="meta">
+                👤 ${escapeHtml(
+                  getArtistName(
+                    album.artist_id
+                  )
+                )}
+                <br>
+                ${
+                  album.type
+                    ? "💿 " +
+                      escapeHtml(
+                        album.type
+                      ) +
+                      "<br>"
+                    : ""
+                }
+                ${
+                  album.release_date
+                    ? "📅 " +
+                      escapeHtml(
+                        album.release_date
+                      )
+                    : ""
+                }
+              </div>
+            </article>
+          `;
+        }
+      )
       .join("");
+}
+function renderMedia() {
+  if (!allMedia.length) {
+    mediaContainer.innerHTML =
+      '<div class="empty">Aucun clip ou podcast publié pour le moment.</div>';
+    return;
   }
-  /*
-    Récupère une URL signée depuis l'Edge Function
-    play-track, sans rendre le bucket audio public.
-  */
-  async function getSignedAudioUrl(trackId) {
-    const response = await fetch(
+  mediaContainer.innerHTML =
+    allMedia
+      .map(
+        item => {
+          const typeLabel =
+            item.type === "video"
+              ? "🎬 Clip"
+              : item.type === "podcast"
+              ? "🎙️ Podcast"
+              : item.type === "interview"
+              ? "🎤 Interview"
+              : "📺 Média";
+          return `
+            <article class="card">
+              <h3>
+                ${escapeHtml(
+                  item.title
+                )}
+              </h3>
+              <div class="meta">
+                ${typeLabel}
+                <br>
+                👤 ${escapeHtml(
+                  getArtistName(
+                    item.artist_id
+                  )
+                )}
+              </div>
+              ${
+                item.media_url
+                  ? `
+                    <a
+                      href="${escapeHtml(
+                        item.media_url
+                      )}"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      class="play-button"
+                      style="
+                        display:block;
+                        text-align:center;
+                        text-decoration:none;
+                      "
+                    >
+                      Ouvrir le média
+                    </a>
+                  `
+                  : ""
+              }
+            </article>
+          `;
+        }
+      )
+      .join("");
+}
+async function getSignedAudioUrl(
+  trackId
+) {
+  const response =
+    await fetch(
       `${SUPABASE_URL}/functions/v1/play-track`,
       {
         method: "POST",
         headers: {
-          "Content-Type": "application/json",
-          "apikey": SUPABASE_PUBLISHABLE_KEY
+          "Content-Type":
+            "application/json",
+          "apikey":
+            SUPABASE_PUBLISHABLE_KEY
         },
         body: JSON.stringify({
           track_id: trackId
         })
       }
     );
-    let data = {};
-    try {
-      data = await response.json();
-    } catch (error) {
-      throw new Error(
-        "Réponse invalide du serveur audio."
-      );
-    }
-    if (!response.ok || !data.signed_url) {
-      throw new Error(
-        data.error ||
-        "Morceau indisponible."
-      );
-    }
-    return data.signed_url;
+  let data = {};
+  try {
+    data =
+      await response.json();
+  } catch (error) {
+    throw new Error(
+      "Réponse invalide du serveur audio."
+    );
   }
-  /*
-    Enregistre UNE écoute pour la lecture courante.
-    La fonction SQL vérifie elle-même que le morceau
-    et son artiste sont publiés.
-  */
-  async function recordPlay(trackId) {
-    if (countedTrackId === trackId) {
-      return;
+  if (
+    !response.ok ||
+    !data.signed_url
+  ) {
+    throw new Error(
+      data.error ||
+      "Morceau indisponible."
+    );
+  }
+  return data.signed_url;
+}
+async function recordPlay(
+  trackId
+) {
+  if (
+    countedTrackId === trackId
+  ) {
+    return;
+  }
+  const {
+    data,
+    error
+  } = await db.rpc(
+    "record_track_play",
+    {
+      p_track_id: trackId
     }
-    const { data, error } = await db.rpc(
-      "record_track_play",
-      {
-        p_track_id: trackId
+  );
+  if (error) {
+    console.error(
+      "Erreur compteur d'écoute :",
+      error
+    );
+    return;
+  }
+  countedTrackId =
+    trackId;
+  const track =
+    allTracks.find(
+      item =>
+        item.id === trackId
+    );
+  if (
+    track &&
+    data &&
+    data.play_count !== undefined
+  ) {
+    track.play_count =
+      Number(
+        data.play_count
+      );
+  }
+  renderTracks();
+  renderRanking();
+}
+async function playTrack(
+  trackId
+) {
+  const track =
+    allTracks.find(
+      item =>
+        item.id === trackId
+    );
+  if (!track) {
+    alert(
+      "Morceau introuvable."
+    );
+    return;
+  }
+  const buttons =
+    document.querySelectorAll(
+      ".play-button"
+    );
+  buttons.forEach(
+    button => {
+      button.disabled = true;
+    }
+  );
+  nowTitle.textContent =
+    track.title;
+  nowArtist.textContent =
+    getArtistName(
+      track.artist_id
+    );
+  try {
+    const signedUrl =
+      await getSignedAudioUrl(
+        trackId
+      );
+    audioPlayer.src =
+      signedUrl;
+    audioPlayer.onplay =
+      async () => {
+        await recordPlay(
+          trackId
+        );
+      };
+    await audioPlayer.play();
+  } catch (error) {
+    console.error(error);
+    alert(
+      error.message ||
+      "Morceau indisponible."
+    );
+  } finally {
+    buttons.forEach(
+      button => {
+        button.disabled = false;
       }
     );
-    if (error) {
-      console.error(
-        "Erreur compteur d'écoute :",
-        error
-      );
-      return;
-    }
-    countedTrackId = trackId;
-    /*
-      Met à jour immédiatement le compteur local
-      sans recharger toute la page.
-    */
-    const track = allTracks.find(
-      item => item.id === trackId
-    );
-    if (track && data && data.play_count !== undefined) {
-      track.play_count =
-        Number(data.play_count);
-    }
-    renderTracks();
-    renderRanking();
   }
-  /*
-    Lance un morceau.
-  */
-  async function playTrack(trackId) {
-    const track = allTracks.find(
-      item => item.id === trackId
-    );
-    if (!track) {
-      alert("Morceau introuvable.");
-      return;
-    }
-    const buttons =
-      document.querySelectorAll(".play-button");
-    buttons.forEach(button => {
-      button.disabled = true;
-    });
-    nowTitle.textContent = track.title;
-    nowArtist.textContent =
-      getArtistName(track.artist_id);
-    try {
-      const signedUrl =
-        await getSignedAudioUrl(trackId);
-      audioPlayer.src = signedUrl;
-      /*
-        L'écoute est enregistrée au moment où
-        la lecture démarre réellement.
-      */
-      audioPlayer.onplay = async () => {
-        await recordPlay(trackId);
-      };
-      await audioPlayer.play();
-    } catch (error) {
-      console.error(error);
-      alert(
-        error.message ||
-        "Morceau indisponible."
-      );
-    } finally {
-      buttons.forEach(button => {
-        button.disabled = false;
-      });
-    }
+}
+audioPlayer.addEventListener(
+  "ended",
+  () => {
+    countedTrackId = null;
   }
-  /*
-    Quand l'utilisateur arrête puis lance un autre morceau,
-    le prochain morceau peut être compté.
-  */
-  audioPlayer.addEventListener(
-    "ended",
-    () => {
-      countedTrackId = null;
-    }
-  );
-  searchInput.addEventListener(
-    "input",
-    renderTracks
-  );
-  genreFilter.addEventListener(
-    "change",
-    renderTracks
-  );
-  cityFilter.addEventListener(
-    "change",
-    renderTracks
-  );
-  /*
-    Si l'utilisateur change manuellement de source,
-    on permet au morceau suivant d'être comptabilisé.
-  */
-  audioPlayer.addEventListener(
-    "emptied",
-    () => {
-      countedTrackId = null;
-    }
-  );
-  loadCatalog().catch(error => {
+);
+audioPlayer.addEventListener(
+  "emptied",
+  () => {
+    countedTrackId = null;
+  }
+);
+searchInput.addEventListener(
+  "input",
+  renderTracks
+);
+genreFilter.addEventListener(
+  "change",
+  renderTracks
+);
+cityFilter.addEventListener(
+  "change",
+  renderTracks
+);
+loadCatalog()
+  .catch(error => {
     console.error(error);
     globalStatus.textContent =
       "Impossible de charger le catalogue. Vérifiez la connexion et la configuration Supabase.";
   });
-  window.playTrack = playTrack;
+window.playTrack =
+  playTrack;
 </script>
 </body>
 </html>
