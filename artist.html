@@ -1,1251 +1,579 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Espace artiste — INDAMORA PLAY</title>
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <style>
-    * {
-      box-sizing: border-box;
-    }
-    body {
-      margin: 0;
-      font-family: Arial, Helvetica, sans-serif;
-      background: #f5f9ff;
-      color: #123;
-    }
-    header {
-      background: #ffffff;
-      border-bottom: 1px solid #dce8f5;
-      padding: 18px 22px;
-      position: sticky;
-      top: 0;
-      z-index: 10;
-    }
-    .header-inner {
-      max-width: 1100px;
-      margin: auto;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 15px;
-    }
-    .logo {
-      font-size: 22px;
-      font-weight: 800;
-      color: #0866c6;
-    }
-    .logo span {
-      color: #222;
-    }
-    .container {
-      max-width: 1100px;
-      margin: 35px auto;
-      padding: 0 18px;
-    }
-    .card {
-      background: white;
-      border: 1px solid #dce8f5;
-      border-radius: 16px;
-      padding: 22px;
-      margin-bottom: 20px;
-      box-shadow: 0 5px 20px rgba(0, 70, 140, 0.05);
-    }
-    h1, h2, h3 {
-      margin-top: 0;
-    }
-    h1 {
-      color: #0866c6;
-    }
-    button {
-      border: 0;
-      border-radius: 10px;
-      padding: 12px 17px;
-      background: #0866c6;
-      color: white;
-      font-weight: 700;
-      cursor: pointer;
-    }
-    button:hover {
-      background: #0756a5;
-    }
-    button.secondary {
-      background: #eaf3ff;
-      color: #0866c6;
-    }
-    button.danger {
-      background: #d93025;
-    }
-    input,
-    textarea,
-    select {
-      width: 100%;
-      padding: 12px;
-      border: 1px solid #cbd9e8;
-      border-radius: 10px;
-      margin-top: 6px;
-      margin-bottom: 14px;
-      font: inherit;
-    }
-    textarea {
-      min-height: 100px;
-      resize: vertical;
-    }
-    label {
-      display: block;
-      font-weight: 700;
-      margin-top: 8px;
-    }
-    .hidden {
-      display: none !important;
-    }
-    .tabs {
-      display: flex;
-      gap: 10px;
-      margin-bottom: 20px;
-      flex-wrap: wrap;
-    }
-    .tab {
-      background: #eaf3ff;
-      color: #0866c6;
-    }
-    .tab.active {
-      background: #0866c6;
-      color: white;
-    }
-    .message {
-      padding: 12px;
-      border-radius: 10px;
-      margin: 12px 0;
-      background: #eef6ff;
-      color: #0756a5;
-    }
-    .error {
-      background: #fff0ef;
-      color: #b42318;
-    }
-    .success {
-      background: #edf9f0;
-      color: #16733a;
-    }
-    .stats {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 14px;
-      margin-bottom: 20px;
-    }
-    .stat {
-      background: white;
-      border: 1px solid #dce8f5;
-      border-radius: 14px;
-      padding: 18px;
-    }
-    .stat strong {
-      display: block;
-      font-size: 28px;
-      color: #0866c6;
-      margin-top: 6px;
-    }
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 20px;
-    }
-    .row {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 12px;
-      flex-wrap: wrap;
-    }
-    .badge {
-      display: inline-block;
-      padding: 5px 9px;
-      border-radius: 20px;
-      background: #eaf3ff;
-      color: #0866c6;
-      font-size: 13px;
-      font-weight: 700;
-    }
-    .small {
-      font-size: 13px;
-      color: #61758a;
-    }
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      margin-top: 15px;
-    }
-    th,
-    td {
-      text-align: left;
-      padding: 11px 8px;
-      border-bottom: 1px solid #e4edf6;
-      vertical-align: top;
-    }
-    th {
-      color: #0866c6;
-    }
-    .auth-box {
-      max-width: 520px;
-      margin: 50px auto;
-    }
-    footer {
-      text-align: center;
-      color: #718096;
-      padding: 30px;
-      font-size: 13px;
-    }
-    @media (max-width: 800px) {
-      .stats,
-      .grid {
-        grid-template-columns: 1fr 1fr;
-      }
-    }
-    @media (max-width: 560px) {
-      .stats,
-      .grid {
-        grid-template-columns: 1fr;
-      }
-      .header-inner {
-        align-items: flex-start;
-        flex-direction: column;
-      }
-      table {
-        font-size: 13px;
-      }
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Espace artiste — INDAMORA PLAY</title>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<style>
+*{box-sizing:border-box}body{margin:0;font-family:Arial,Helvetica,sans-serif;background:#f5f9ff;color:#123}header{background:#fff;border-bottom:1px solid #dce8f5;padding:18px 22px;position:sticky;top:0;z-index:10}.header-inner{max-width:1100px;margin:auto;display:flex;justify-content:space-between;align-items:center;gap:15px}.logo{font-size:22px;font-weight:800;color:#0866c6}.logo span{color:#222}.container{max-width:1100px;margin:35px auto;padding:0 18px}.card{background:#fff;border:1px solid #dce8f5;border-radius:16px;padding:22px;margin-bottom:20px;box-shadow:0 5px 20px rgba(0,70,140,.05)}h1,h2,h3{margin-top:0}h1{color:#0866c6}button{border:0;border-radius:10px;padding:12px 17px;background:#0866c6;color:#fff;font-weight:700;cursor:pointer}button:hover{background:#0756a5}button.secondary{background:#eaf3ff;color:#0866c6}input,textarea,select{width:100%;padding:12px;border:1px solid #cbd9e8;border-radius:10px;margin-top:6px;margin-bottom:14px;font:inherit}textarea{min-height:100px;resize:vertical}label{display:block;font-weight:700;margin-top:8px}.hidden{display:none!important}.tabs{display:flex;gap:10px;margin-bottom:20px;flex-wrap:wrap}.tab{background:#eaf3ff;color:#0866c6}.tab.active{background:#0866c6;color:#fff}.message{padding:12px;border-radius:10px;margin:12px 0;background:#eef6ff;color:#0756a5}.error{background:#fff0ef;color:#b42318}.success{background:#edf9f0;color:#16733a}.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:20px}.stat{background:#fff;border:1px solid #dce8f5;border-radius:14px;padding:18px}.stat strong{display:block;font-size:28px;color:#0866c6;margin-top:6px}.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:20px}.row{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}.badge{display:inline-block;padding:5px 9px;border-radius:20px;background:#eaf3ff;color:#0866c6;font-size:13px;font-weight:700}.small{font-size:13px;color:#61758a}table{width:100%;border-collapse:collapse;margin-top:15px}th,td{text-align:left;padding:11px 8px;border-bottom:1px solid #e4edf6;vertical-align:top}th{color:#0866c6}.auth-box{max-width:520px;margin:50px auto}.upload-box{padding:15px;border:1px dashed #9ebbd9;border-radius:12px;background:#f8fbff}.progress{height:8px;background:#e5eef8;border-radius:10px;overflow:hidden;margin:10px 0}.progress span{display:block;height:100%;width:0;background:#0866c6}.file-name{font-weight:700;color:#0866c6;margin:6px 0 12px}footer{text-align:center;color:#718096;padding:30px;font-size:13px}@media(max-width:800px){.stats,.grid{grid-template-columns:1fr 1fr}}@media(max-width:560px){.stats,.grid{grid-template-columns:1fr}.header-inner{align-items:flex-start;flex-direction:column}table{font-size:13px}}
+</style>
 </head>
 <body>
-<header>
-  <div class="header-inner">
-    <div class="logo">
-      INDAMORA <span>PLAY</span>
-    </div>
-<div id="headerActions" class="hidden">
-  <button class="secondary" onclick="logout()">Déconnexion</button>
-</div>
-  </div>
-</header>
+<header><div class="header-inner"><div class="logo">INDAMORA <span>PLAY</span></div><div id="headerActions" class="hidden"><button class="secondary" onclick="logout()">Déconnexion</button></div></div></header>
 <div class="container">
-  <!-- AUTHENTIFICATION -->
-  <section id="authSection" class="card auth-box">
+<section id="authSection" class="card auth-box">
 <h1>Espace artiste</h1>
-<p>
-  Rejoins INDAMORA PLAY et propose ta musique, tes albums,
-  tes clips, podcasts et autres contenus.
-</p>
+<p>Rejoins INDAMORA PLAY et propose ta musique, tes albums, tes clips, podcasts et autres contenus.</p>
 <div class="tabs">
-  <button id="loginTab" class="tab active" onclick="showAuthTab('login')">
-    Connexion
-  </button>
-  <button id="registerTab" class="tab" onclick="showAuthTab('register')">
-    Devenir artiste
-  </button>
+<button id="loginTab" class="tab active" onclick="showAuthTab('login')">Connexion</button>
+<button id="registerTab" class="tab" onclick="showAuthTab('register')">Devenir artiste</button>
 </div>
-<!-- CONNEXION -->
 <div id="loginBox">
-  <label>E-mail</label>
-  <input id="loginEmail" type="email" placeholder="ton@email.com">
-  <label>Mot de passe</label>
-  <input id="loginPassword" type="password" placeholder="Mot de passe">
-  <button onclick="login()">
-    Se connecter
-  </button>
+<label>E-mail</label>
+<input id="loginEmail" type="email" placeholder="ton@email.com">
+<label>Mot de passe</label>
+<input id="loginPassword" type="password" placeholder="Mot de passe">
+<button onclick="login()">Se connecter</button>
 </div>
-<!-- INSCRIPTION -->
 <div id="registerBox" class="hidden">
-  <label>E-mail</label>
-  <input id="registerEmail" type="email" placeholder="ton@email.com">
-  <label>Mot de passe</label>
-  <input id="registerPassword" type="password" placeholder="Minimum 6 caractères">
-  <label>Confirmation du mot de passe</label>
-  <input id="registerPasswordConfirm" type="password" placeholder="Retape ton mot de passe">
-  <button onclick="registerArtist()">
-    Créer mon compte artiste
-  </button>
-  <p class="small">
-    Après l'inscription, ton profil artiste pourra être soumis à validation.
-  </p>
+<label>E-mail</label>
+<input id="registerEmail" type="email" placeholder="ton@email.com">
+<label>Mot de passe</label>
+<input id="registerPassword" type="password" placeholder="Minimum 6 caractères">
+<label>Confirmation du mot de passe</label>
+<input id="registerPasswordConfirm" type="password" placeholder="Retape ton mot de passe">
+<button onclick="registerArtist()">Créer mon compte artiste</button>
+<p class="small">Après l'inscription, ton profil artiste pourra être soumis à validation.</p>
 </div>
 <div id="authMessage"></div>
-  </section>
-  <!-- APPLICATION ARTISTE -->
-  <section id="appSection" class="hidden">
+</section>
+<section id="appSection" class="hidden">
 <div class="card">
-  <div class="row">
-    <div>
-      <h1>Espace artiste</h1>
-      <div id="userEmail" class="small"></div>
-    </div>
-    <span id="artistStatus" class="badge">
-      Profil
-    </span>
-  </div>
+<div class="row">
+<div>
+<h1>Espace artiste</h1>
+<div id="userEmail" class="small"></div>
 </div>
-<!-- STATS -->
+<span id="artistStatus" class="badge">Profil</span>
+</div>
+</div>
 <div class="stats">
-  <div class="stat">
-    Artistes
-    <strong id="statArtists">0</strong>
-  </div>
-  <div class="stat">
-    Musiques
-    <strong id="statTracks">0</strong>
-  </div>
-  <div class="stat">
-    Albums
-    <strong id="statAlbums">0</strong>
-  </div>
-  <div class="stat">
-    Écoutes
-    <strong id="statPlays">0</strong>
-  </div>
+<div class="stat">Artistes<strong id="statArtists">0</strong></div>
+<div class="stat">Musiques<strong id="statTracks">0</strong></div>
+<div class="stat">Albums<strong id="statAlbums">0</strong></div>
+<div class="stat">Écoutes<strong id="statPlays">0</strong></div>
 </div>
-<!-- PROFIL ARTISTE -->
 <div class="card">
-  <h2>Mon profil artiste</h2>
-  <div id="profileMessage"></div>
-  <label>Nom de l'artiste</label>
-  <input id="artistName" placeholder="Exemple : AMOS SAMBA">
-  <label>Biographie</label>
-  <textarea id="artistBio" placeholder="Présente ton parcours..."></textarea>
-  <div class="grid">
-    <div>
-      <label>Ville</label>
-      <input id="artistCity" placeholder="Bangui">
-    </div>
-    <div>
-      <label>Région</label>
-      <input id="artistRegion" placeholder="Région">
-    </div>
-    <div>
-      <label>Langue</label>
-      <input id="artistLanguage" placeholder="Sango, français...">
-    </div>
-    <div>
-      <label>Genre musical</label>
-      <input id="artistGenre" placeholder="Afrobeat, gospel, rap...">
-    </div>
-  </div>
-  <label>Lien vers la photo de profil</label>
-  <input id="artistAvatar" type="url" placeholder="https://...">
-  <button onclick="createOrUpdateArtist()">
-    Enregistrer mon profil
-  </button>
+<h2>Mon profil artiste</h2>
+<div id="profileMessage"></div>
+
+Nom de l’artiste
+Biographie
+
+<textarea id="artistBio" placeholder="Présente ton parcours..."></textarea>
+<div class="grid">
+<div><label>Ville</label><input id="artistCity" placeholder="Bangui"></div>
+<div><label>Région</label><input id="artistRegion" placeholder="Région"></div>
+<div><label>Langue</label><input id="artistLanguage" placeholder="Sango, français..."></div>
+<div><label>Genre musical</label><input id="artistGenre" placeholder="Afrobeat, gospel, rap..."></div>
 </div>
-<!-- SOUMISSIONS -->
+
+Lien vers la photo de profil
+Enregistrer mon profil
+
+</div>
 <div class="card">
-  <h2>Proposer un contenu</h2>
-  <div class="tabs">
-    <button id="albumTab" class="tab active" onclick="showSubmissionTab('album')">
-      Album / EP / Single
-    </button>
-    <button id="trackTab" class="tab" onclick="showSubmissionTab('track')">
-      Musique
-    </button>
-    <button id="mediaTab" class="tab" onclick="showSubmissionTab('media')">
-      Clip / Podcast / Radio
-    </button>
-  </div>
-  <!-- ALBUM -->
-  <div id="albumBox">
-    <label>Titre</label>
-    <input id="albumTitle" placeholder="Nom de l'album">
-    <label>Type</label>
-    <select id="albumType">
-      <option value="album">Album</option>
-      <option value="ep">EP</option>
-      <option value="single">Single</option>
-    </select>
-    <label>Date de sortie</label>
-    <input id="albumDate" type="date">
-    <label>URL de la pochette</label>
-    <input id="albumCover" type="url" placeholder="https://...">
-    <label>Description</label>
-    <textarea id="albumDescription"></textarea>
-    <button onclick="submitAlbum()">
-      Soumettre l'album
-    </button>
-  </div>
-  <!-- TRACK -->
-  <div id="trackBox" class="hidden">
-    <label>Titre de la musique</label>
-    <input id="trackTitle" placeholder="Titre">
-    <label>Album associé</label>
-    <select id="trackAlbum">
-      <option value="">Aucun album</option>
-    </select>
-    <label>Lien vers le fichier audio</label>
-    <input id="trackAudio" type="url" placeholder="https://...">
-    <p class="small">
-      Le fichier audio peut être hébergé sur une plateforme externe
-      puis son lien peut être fourni ici.
-    </p>
-    <label>Durée en secondes</label>
-    <input id="trackDuration" type="number" min="0" placeholder="180">
-    <div class="grid">
-      <div>
-        <label>Genre</label>
-        <input id="trackGenre" placeholder="Afrobeat">
-      </div>
-      <div>
-        <label>Langue</label>
-        <input id="trackLanguage" placeholder="Sango">
-      </div>
-      <div>
-        <label>Ville</label>
-        <input id="trackCity" placeholder="Bangui">
-      </div>
-      <div>
-        <label>Région</label>
-        <input id="trackRegion" placeholder="Région">
-      </div>
-    </div>
-    <button onclick="submitTrack()">
-      Soumettre la musique
-    </button>
-  </div>
-  <!-- MEDIA -->
-  <div id="mediaBox" class="hidden">
-    <label>Titre</label>
-    <input id="mediaTitle" placeholder="Titre du contenu">
-    <label>Type</label>
-    <select id="mediaType">
-      <option value="clip">Clip</option>
-      <option value="podcast">Podcast</option>
-      <option value="radio">Radio</option>
-    </select>
-    <label>Lien du contenu</label>
-    <input id="mediaUrl" type="url" placeholder="https://...">
-    <label>Description</label>
-    <textarea id="mediaDescription"></textarea>
-    <button onclick="submitMedia()">
-      Soumettre le contenu
-    </button>
-  </div>
-  <div id="submissionMessage"></div>
+<h2>Proposer un contenu</h2>
+<div class="tabs">
+<button id="albumTab" class="tab active" onclick="showSubmissionTab('album')">Album / EP / Single</button>
+<button id="trackTab" class="tab" onclick="showSubmissionTab('track')">Musique</button>
+<button id="mediaTab" class="tab" onclick="showSubmissionTab('media')">Clip / Podcast / Radio</button>
 </div>
-<!-- ALBUMS -->
-<div class="card">
-  <h2>Mes albums</h2>
-  <div id="albumsTable">
-    Chargement...
-  </div>
+<div id="albumBox">
+<label>Titre</label>
+<input id="albumTitle" placeholder="Nom de l'album">
+
+Type
+<option value="album">Album</option>
+<option value="ep">EP</option>
+<option value="single">Single</option>
+</select>
+
+Date de sortie
+URL de la pochette
+Description
+
+<textarea id="albumDescription"></textarea>
+
+Soumettre l’album
+
 </div>
-<!-- MUSIQUES -->
-<div class="card">
-  <h2>Mes musiques</h2>
-  <div id="tracksTable">
-    Chargement...
-  </div>
+<div id="trackBox" class="hidden">
+
+Titre de la musique
+Album associé
+<option value="">Aucun album</option>
+</select>
+
+Fichier audio MP3
+
+<div class="upload-box">
+<input id="trackFile" type="file" accept="audio/mpeg,.mp3" onchange="prepareTrackFile()">
+<div id="trackFileName" class="file-name">
+Aucun fichier sélectionné
 </div>
-<!-- MEDIA -->
-<div class="card">
-  <h2>Mes contenus</h2>
-  <div id="mediaTable">
-    Chargement...
-  </div>
+<div class="small">
+MP3 uniquement · maximum 50 Mo · le fichier sera envoyé directement sur INDAMORA PLAY.
 </div>
-<!-- REVENUS -->
-<div class="card">
-  <h2>Mes revenus</h2>
-  <div id="earningsTable">
-    Chargement...
-  </div>
+<div class="progress">
+<span id="trackProgress"></span>
 </div>
-  </section>
 </div>
-<footer>
-  © INDAMORA RECORDS — INDAMORA PLAY 🇨🇫
-</footer>
+
+Durée en secondes
+<div class="grid">
+<div><label>Genre</label><input id="trackGenre" placeholder="Afrobeat"></div>
+<div><label>Langue</label><input id="trackLanguage" placeholder="Sango"></div>
+<div><label>Ville</label><input id="trackCity" placeholder="Bangui"></div>
+<div><label>Région</label><input id="trackRegion" placeholder="Région"></div>
+</div>
+<button id="trackSubmitButton" onclick="submitTrack()">
+Envoyer le MP3 et soumettre la musique
+</button>
+</div>
+<div id="mediaBox" class="hidden">
+<label>Titre</label>
+<input id="mediaTitle" placeholder="Titre du contenu">
+
+Type
+<option value="clip">Clip</option>
+<option value="podcast">Podcast</option>
+<option value="radio">Radio</option>
+</select>
+
+Lien du contenu
+Description
+
+<textarea id="mediaDescription"></textarea>
+
+Soumettre le contenu
+
+</div>
+<div id="submissionMessage"></div>
+</div>
+<div class="card"><h2>Mes albums</h2><div id="albumsTable">Chargement...</div></div>
+<div class="card"><h2>Mes musiques</h2><div id="tracksTable">Chargement...</div></div>
+<div class="card"><h2>Mes contenus</h2><div id="mediaTable">Chargement...</div></div>
+<div class="card"><h2>Mes revenus</h2><div id="earningsTable">Chargement...</div></div>
+</section>
+</div>
+<footer>© INDAMORA RECORDS — INDAMORA PLAY 🇨🇫</footer>
 <script>
-  const SUPABASE_URL =
-    "https://adqsdnqkbitplbhbihiv.supabase.co";
-  const SUPABASE_KEY =
-   "sb_publishable_dpjfWOYeNQRmP2nJq5FoMA_8NUuD0HF";
-  const client =
-    window.supabase.createClient(
-      SUPABASE_URL,
-      SUPABASE_KEY
-    );
-  let currentUser = null;
-  let currentArtist = null;
-  function showMessage(elementId, text, type = "") {
-    const element = document.getElementById(elementId);
-    if (!element) return;
-    element.innerHTML =
-      '<div class="message ' + type + '">' +
-      escapeHtml(text) +
-      '</div>';
-  }
-  function escapeHtml(value) {
-    if (value === null || value === undefined) {
-      return "";
-    }
-    return String(value)
-      .replaceAll("&", "&amp;")
-      .replaceAll("<", "&lt;")
-      .replaceAll(">", "&gt;")
-      .replaceAll('"', "&quot;")
-      .replaceAll("'", "&#039;");
-  }
-  function showAuthTab(tab) {
-    document
-      .getElementById("loginBox")
-      .classList.toggle("hidden", tab !== "login");
-    document
-      .getElementById("registerBox")
-      .classList.toggle("hidden", tab !== "register");
-    document
-      .getElementById("loginTab")
-      .classList.toggle("active", tab === "login");
-    document
-      .getElementById("registerTab")
-      .classList.toggle("active", tab === "register");
-    document.getElementById("authMessage").innerHTML = "";
-  }
-  function showSubmissionTab(tab) {
-    document
-      .getElementById("albumBox")
-      .classList.toggle("hidden", tab !== "album");
-    document
-      .getElementById("trackBox")
-      .classList.toggle("hidden", tab !== "track");
-    document
-      .getElementById("mediaBox")
-      .classList.toggle("hidden", tab !== "media");
-    document
-      .getElementById("albumTab")
-      .classList.toggle("active", tab === "album");
-    document
-      .getElementById("trackTab")
-      .classList.toggle("active", tab === "track");
-    document
-      .getElementById("mediaTab")
-      .classList.toggle("active", tab === "media");
-  }
-  async function registerArtist() {
-    const email =
-      document.getElementById("registerEmail").value.trim();
-    const password =
-      document.getElementById("registerPassword").value;
-    const confirmation =
-      document.getElementById("registerPasswordConfirm").value;
-    if (!email || !password) {
-      showMessage(
-        "authMessage",
-        "Merci de renseigner ton e-mail et ton mot de passe.",
-        "error"
-      );
-      return;
-    }
-    if (password.length < 6) {
-      showMessage(
-        "authMessage",
-        "Le mot de passe doit contenir au moins 6 caractères.",
-        "error"
-      );
-      return;
-    }
-    if (password !== confirmation) {
-      showMessage(
-        "authMessage",
-        "Les deux mots de passe ne correspondent pas.",
-        "error"
-      );
-      return;
-    }
-    showMessage(
-      "authMessage",
-      "Création du compte en cours..."
-    );
-    const {
-      data,
-      error
-    } = await client.auth.signUp({
-      email,
-      password
-    });
-    if (error) {
-      showMessage(
-        "authMessage",
-        error.message,
-        "error"
-      );
-      return;
-    }
-    if (!data.session) {
-      showMessage(
-        "authMessage",
-        "Compte créé. Vérifie ton e-mail si une confirmation est demandée, puis connecte-toi.",
-        "success"
-      );
-      showAuthTab("login");
-      document.getElementById("loginEmail").value = email;
-      return;
-    }
-    showMessage(
-      "authMessage",
-      "Compte créé. Bienvenue sur INDAMORA PLAY.",
-      "success"
-    );
-    currentUser = data.user;
-    await openArtistApp();
-  }
-  async function login() {
-    const email =
-      document.getElementById("loginEmail").value.trim();
-    const password =
-      document.getElementById("loginPassword").value;
-    if (!email || !password) {
-      showMessage(
-        "authMessage",
-        "Merci de renseigner ton e-mail et ton mot de passe.",
-        "error"
-      );
-      return;
-    }
-    showMessage(
-      "authMessage",
-      "Connexion..."
-    );
-    const {
-      data,
-      error
-    } = await client.auth.signInWithPassword({
-      email,
-      password
-    });
-    if (error) {
-      showMessage(
-        "authMessage",
-        error.message,
-        "error"
-      );
-      return;
-    }
-    currentUser = data.user;
-    await openArtistApp();
-  }
-  async function logout() {
-    await client.auth.signOut();
-    currentUser = null;
-    currentArtist = null;
-    document
-      .getElementById("authSection")
-      .classList.remove("hidden");
-    document
-      .getElementById("appSection")
-      .classList.add("hidden");
-    document
-      .getElementById("headerActions")
-      .classList.add("hidden");
-    showAuthTab("login");
-  }
-  async function openArtistApp() {
-    document
-      .getElementById("authSection")
-      .classList.add("hidden");
-    document
-      .getElementById("appSection")
-      .classList.remove("hidden");
-    document
-      .getElementById("headerActions")
-      .classList.remove("hidden");
-    document.getElementById("userEmail").textContent =
-      currentUser?.email || "";
-    await loadArtist();
-  }
-  async function loadArtist() {
-    if (!currentUser) return;
-    const {
-      data,
-      error
-    } = await client
-      .from("artists")
-      .select(
-        "id,owner_id,name,slug,bio,city,region,language,genre,avatar_url,verified,status,created_at"
-      )
-      .eq("owner_id", currentUser.id)
-      .order("created_at", {
-        ascending: false
-      })
-      .limit(1);
-    if (error) {
-      showMessage(
-        "profileMessage",
-        error.message,
-        "error"
-      );
-      return;
-    }
-    currentArtist =
-      data && data.length
-        ? data[0]
-        : null;
-    if (currentArtist) {
-      document.getElementById("artistName").value =
-        currentArtist.name || "";
-      document.getElementById("artistBio").value =
-        currentArtist.bio || "";
-      document.getElementById("artistCity").value =
-        currentArtist.city || "";
-      document.getElementById("artistRegion").value =
-        currentArtist.region || "";
-      document.getElementById("artistLanguage").value =
-        currentArtist.language || "";
-      document.getElementById("artistGenre").value =
-        currentArtist.genre || "";
-      document.getElementById("artistAvatar").value =
-        currentArtist.avatar_url || "";
-      document.getElementById("artistStatus").textContent =
-        currentArtist.status || "pending";
-      await loadArtistData();
-    } else {
-      document.getElementById("artistStatus").textContent =
-        "Profil non créé";
-      document.getElementById("albumsTable").innerHTML =
-        "<p>Crée ton profil artiste pour commencer.</p>";
-      document.getElementById("tracksTable").innerHTML =
-        "<p>Crée ton profil artiste pour commencer.</p>";
-      document.getElementById("mediaTable").innerHTML =
-        "<p>Crée ton profil artiste pour commencer.</p>";
-      document.getElementById("earningsTable").innerHTML =
-        "<p>Aucun revenu pour le moment.</p>";
-    }
-  }
-  async function createOrUpdateArtist() {
-    if (!currentUser) return;
-    const name =
-      document.getElementById("artistName").value.trim();
-    const bio =
-      document.getElementById("artistBio").value.trim();
-    const city =
-      document.getElementById("artistCity").value.trim();
-    const region =
-      document.getElementById("artistRegion").value.trim();
-    const language =
-      document.getElementById("artistLanguage").value.trim();
-    const genre =
-      document.getElementById("artistGenre").value.trim();
-    const avatar =
-      document.getElementById("artistAvatar").value.trim();
-    if (!name) {
-      showMessage(
-        "profileMessage",
-        "Le nom de l'artiste est obligatoire.",
-        "error"
-      );
-      return;
-    }
-    if (!currentArtist) {
-      const {
-        data,
-        error
-      } = await client.rpc(
-        "submit_artist_profile",
-        {
-          p_name: name,
-          p_bio: bio || null,
-          p_city: city || null,
-          p_region: region || null,
-          p_language: language || null,
-          p_genre: genre || null,
-          p_avatar_url: avatar || null
-        }
-      );
-      if (error) {
-        showMessage(
-          "profileMessage",
-          error.message,
-          "error"
-        );
-        return;
-      }
-      showMessage(
-        "profileMessage",
-        "Profil artiste envoyé pour validation.",
-        "success"
-      );
-      await loadArtist();
-      return;
-    }
-    const updates = {
-      name,
-      bio: bio || null,
-      city: city || null,
-      region: region || null,
-      language: language || null,
-      genre: genre || null,
-      avatar_url: avatar || null
-    };
-    const {
-      error
-    } = await client
-      .from("artists")
-      .update(updates)
-      .eq("id", currentArtist.id)
-      .eq("owner_id", currentUser.id);
-    if (error) {
-      showMessage(
-        "profileMessage",
-        error.message,
-        "error"
-      );
-      return;
-    }
-    showMessage(
-      "profileMessage",
-      "Profil mis à jour.",
-      "success"
-    );
-    await loadArtist();
-  }
-  async function loadArtistData() {
-    if (!currentArtist) return;
-    const artistId = currentArtist.id;
-    const {
-      data: albums,
-      error: albumsError
-    } = await client
-      .from("albums")
-      .select(
-        "id,title,slug,type,cover_url,release_date,status,created_at"
-      )
-      .eq("artist_id", artistId)
-      .order("created_at", {
-        ascending: false
-      });
-    if (albumsError) {
-      document.getElementById("albumsTable").innerHTML =
-        "<div class='message error'>" +
-        escapeHtml(albumsError.message) +
-        "</div>";
-    } else {
-      renderAlbums(albums || []);
-      populateAlbumSelect(albums || []);
-    }
-    const {
-      data: tracks,
-      error: tracksError
-    } = await client
-      .from("tracks")
-      .select(
-        "id,title,slug,album_id,genre,language,city,region,status,play_count,created_at"
-      )
-      .eq("artist_id", artistId)
-      .order("created_at", {
-        ascending: false
-      });
-    if (tracksError) {
-      document.getElementById("tracksTable").innerHTML =
-        "<div class='message error'>" +
-        escapeHtml(tracksError.message) +
-        "</div>";
-    } else {
-      renderTracks(tracks || []);
-      document.getElementById("statTracks").textContent =
-        tracks?.length || 0;
-      document.getElementById("statPlays").textContent =
-        (tracks || []).reduce(
-          (total, track) =>
-            total + Number(track.play_count || 0),
-          0
-        );
-    }
-    const {
-      data: media,
-      error: mediaError
-    } = await client
-      .from("media")
-      .select(
-        "id,title,type,media_url,description,status,created_at"
-      )
-      .eq("artist_id", artistId)
-      .order("created_at", {
-        ascending: false
-      });
-    if (mediaError) {
-      document.getElementById("mediaTable").innerHTML =
-        "<div class='message error'>" +
-        escapeHtml(mediaError.message) +
-        "</div>";
-    } else {
-      renderMedia(media || []);
-    }
-    const {
-      data: earnings,
-      error: earningsError
-    } = await client
-      .from("artist_earnings")
-      .select(
-        "id,period_start,period_end,plays,amount_cents,currency,status,created_at"
-      )
-      .eq("artist_id", artistId)
-      .order("period_start", {
-        ascending: false
-      });
-    if (earningsError) {
-      document.getElementById("earningsTable").innerHTML =
-        "<div class='message error'>" +
-        escapeHtml(earningsError.message) +
-        "</div>";
-    } else {
-      renderEarnings(earnings || []);
-    }
-    document.getElementById("statArtists").textContent = "1";
-    document.getElementById("statAlbums").textContent =
-      albums?.length || 0;
-  }
-  function renderAlbums(albums) {
-    if (!albums.length) {
-      document.getElementById("albumsTable").innerHTML =
-        "<p>Aucun album pour le moment.</p>";
-      return;
-    }
-    let html =
-      "<table>" +
-      "<thead><tr>" +
-      "<th>Titre</th>" +
-      "<th>Type</th>" +
-      "<th>Statut</th>" +
-      "<th>Date</th>" +
-      "</tr></thead><tbody>";
-    albums.forEach(album => {
-      html +=
-        "<tr>" +
-        "<td>" + escapeHtml(album.title) + "</td>" +
-        "<td>" + escapeHtml(album.type) + "</td>" +
-        "<td><span class='badge'>" +
-        escapeHtml(album.status) +
-        "</span></td>" +
-        "<td>" +
-        escapeHtml(album.release_date || "") +
-        "</td>" +
-        "</tr>";
-    });
-    html += "</tbody></table>";
-    document.getElementById("albumsTable").innerHTML = html;
-  }
-  function renderTracks(tracks) {
-    if (!tracks.length) {
-      document.getElementById("tracksTable").innerHTML =
-        "<p>Aucune musique pour le moment.</p>";
-      return;
-    }
-    let html =
-      "<table>" +
-      "<thead><tr>" +
-      "<th>Titre</th>" +
-      "<th>Genre</th>" +
-      "<th>Écoutes</th>" +
-      "<th>Statut</th>" +
-      "</tr></thead><tbody>";
-    tracks.forEach(track => {
-      html +=
-        "<tr>" +
-        "<td>" + escapeHtml(track.title) + "</td>" +
-        "<td>" + escapeHtml(track.genre || "") + "</td>" +
-        "<td>" + Number(track.play_count || 0) + "</td>" +
-        "<td><span class='badge'>" +
-        escapeHtml(track.status) +
-        "</span></td>" +
-        "</tr>";
-    });
-    html += "</tbody></table>";
-    document.getElementById("tracksTable").innerHTML = html;
-  }
-  function renderMedia(media) {
-    if (!media.length) {
-      document.getElementById("mediaTable").innerHTML =
-        "<p>Aucun contenu pour le moment.</p>";
-      return;
-    }
-    let html =
-      "<table>" +
-      "<thead><tr>" +
-      "<th>Titre</th>" +
-      "<th>Type</th>" +
-      "<th>Statut</th>" +
-      "</tr></thead><tbody>";
-    media.forEach(item => {
-      html +=
-        "<tr>" +
-        "<td>" + escapeHtml(item.title) + "</td>" +
-        "<td>" + escapeHtml(item.type) + "</td>" +
-        "<td><span class='badge'>" +
-        escapeHtml(item.status) +
-        "</span></td>" +
-        "</tr>";
-    });
-    html += "</tbody></table>";
-    document.getElementById("mediaTable").innerHTML = html;
-  }
-  function renderEarnings(earnings) {
-    if (!earnings.length) {
-      document.getElementById("earningsTable").innerHTML =
-        "<p>Aucun revenu enregistré pour le moment.</p>";
-      return;
-    }
-    let html =
-      "<table>" +
-      "<thead><tr>" +
-      "<th>Période</th>" +
-      "<th>Écoutes</th>" +
-      "<th>Montant</th>" +
-      "<th>Statut</th>" +
-      "</tr></thead><tbody>";
-    earnings.forEach(item => {
-      const amount =
-        Number(item.amount_cents || 0) / 100;
-      html +=
-        "<tr>" +
-        "<td>" +
-        escapeHtml(item.period_start || "") +
-        " → " +
-        escapeHtml(item.period_end || "") +
-        "</td>" +
-        "<td>" +
-        Number(item.plays || 0) +
-        "</td>" +
-        "<td>" +
-        amount.toLocaleString("fr-FR") +
-        " " +
-        escapeHtml(item.currency || "XAF") +
-        "</td>" +
-        "<td><span class='badge'>" +
-        escapeHtml(item.status || "pending") +
-        "</span></td>" +
-        "</tr>";
-    });
-    html += "</tbody></table>";
-    document.getElementById("earningsTable").innerHTML = html;
-  }
-  function populateAlbumSelect(albums) {
-    const select =
-      document.getElementById("trackAlbum");
-    select.innerHTML =
-      '<option value="">Aucun album</option>';
-    albums.forEach(album => {
-      const option =
-        document.createElement("option");
-      option.value = album.id;
-      option.textContent =
-        album.title + " (" + album.type + ")";
-      select.appendChild(option);
-    });
-  }
-  async function submitAlbum() {
-    if (!currentArtist) {
-      showMessage(
-        "submissionMessage",
-        "Crée d'abord ton profil artiste.",
-        "error"
-      );
-      return;
-    }
-    const title =
-      document.getElementById("albumTitle").value.trim();
-    const type =
-      document.getElementById("albumType").value;
-    const date =
-      document.getElementById("albumDate").value;
-    const cover =
-      document.getElementById("albumCover").value.trim();
-    const description =
-      document.getElementById("albumDescription").value.trim();
-    if (!title) {
-      showMessage(
-        "submissionMessage",
-        "Le titre de l'album est obligatoire.",
-        "error"
-      );
-      return;
-    }
-    const {
-      error
-    } = await client.rpc(
-      "submit_artist_album",
-      {
-        p_title: title,
-        p_type: type,
-        p_cover_url: cover || null,
-        p_release_date: date || null,
-        p_description: description || null
-      }
-    );
-    if (error) {
-      showMessage(
-        "submissionMessage",
-        error.message,
-        "error"
-      );
-      return;
-    }
-    showMessage(
-      "submissionMessage",
-      "Album envoyé pour validation.",
-      "success"
-    );
-    document.getElementById("albumTitle").value = "";
-    document.getElementById("albumCover").value = "";
-    document.getElementById("albumDescription").value = "";
-    await loadArtistData();
-  }
-  async function submitTrack() {
-    if (!currentArtist) {
-      showMessage(
-        "submissionMessage",
-        "Crée d'abord ton profil artiste.",
-        "error"
-      );
-      return;
-    }
-    const title =
-      document.getElementById("trackTitle").value.trim();
-    const album =
-      document.getElementById("trackAlbum").value || null;
-    const audio =
-      document.getElementById("trackAudio").value.trim();
-    const durationValue =
-      document.getElementById("trackDuration").value;
-    const duration =
-      durationValue
-        ? Number(durationValue)
-        : null;
-    const genre =
-      document.getElementById("trackGenre").value.trim();
-    const language =
-      document.getElementById("trackLanguage").value.trim();
-    const city =
-      document.getElementById("trackCity").value.trim();
-    const region =
-      document.getElementById("trackRegion").value.trim();
-    if (!title) {
-      showMessage(
-        "submissionMessage",
-        "Le titre de la musique est obligatoire.",
-        "error"
-      );
-      return;
-    }
-    const {
-      error
-    } = await client.rpc(
-      "submit_artist_track",
-      {
-        p_title: title,
-        p_album_id: album,
-        p_audio_url: audio || null,
-        p_duration_seconds: duration,
-        p_genre: genre || null,
-        p_language: language || null,
-        p_city: city || null,
-        p_region: region || null
-      }
-    );
-    if (error) {
-      showMessage(
-        "submissionMessage",
-        error.message,
-        "error"
-      );
-      return;
-    }
-    showMessage(
-      "submissionMessage",
-      "Musique envoyée pour validation.",
-      "success"
-    );
-    document.getElementById("trackTitle").value = "";
-    document.getElementById("trackAudio").value = "";
-    document.getElementById("trackDuration").value = "";
-    document.getElementById("trackGenre").value = "";
-    document.getElementById("trackLanguage").value = "";
-    document.getElementById("trackCity").value = "";
-    document.getElementById("trackRegion").value = "";
-    await loadArtistData();
-  }
-  async function submitMedia() {
-    if (!currentArtist) {
-      showMessage(
-        "submissionMessage",
-        "Crée d'abord ton profil artiste.",
-        "error"
-      );
-      return;
-    }
-    const title =
-      document.getElementById("mediaTitle").value.trim();
-    const type =
-      document.getElementById("mediaType").value;
-    const url =
-      document.getElementById("mediaUrl").value.trim();
-    const description =
-      document.getElementById("mediaDescription").value.trim();
-    if (!title) {
-      showMessage(
-        "submissionMessage",
-        "Le titre est obligatoire.",
-        "error"
-      );
-      return;
-    }
-    const {
-      error
-    } = await client.rpc(
-      "submit_artist_media",
-      {
-        p_title: title,
-        p_type: type,
-        p_media_url: url || null,
-        p_description: description || null
-      }
-    );
-    if (error) {
-      showMessage(
-        "submissionMessage",
-        error.message,
-        "error"
-      );
-      return;
-    }
-    showMessage(
-      "submissionMessage",
-      "Contenu envoyé pour validation.",
-      "success"
-    );
-    document.getElementById("mediaTitle").value = "";
-    document.getElementById("mediaUrl").value = "";
-    document.getElementById("mediaDescription").value = "";
-    await loadArtistData();
-  }
-  async function checkSession() {
-    const {
-      data
-    } = await client.auth.getSession();
-    if (data?.session?.user) {
-      currentUser =
-        data.session.user;
-      await openArtistApp();
-    }
-  }
-  client.auth.onAuthStateChange(
-    async (event, session) => {
-      if (
-        event === "SIGNED_IN" &&
-        session?.user
-      ) {
-        currentUser =
-          session.user;
-        await openArtistApp();
-      }
-    }
-  );
-  checkSession();
+const SUPABASE_URL="https://adqsdnqkbitplbhbihiv.supabase.co";
+const SUPABASE_KEY="sb_publishable_dpjfWOYeNQRmP2nJq5FoMA_8NUuD0HF";
+const client=window.supabase.createClient(SUPABASE_URL,SUPABASE_KEY);
+let currentUser=null;
+let currentArtist=null;
+function escapeHtml(value){
+return value==null?"":String(value)
+.replaceAll("&","&amp;")
+.replaceAll("<","&lt;")
+.replaceAll(">","&gt;")
+.replaceAll('"',"&quot;")
+.replaceAll("'","&#039;");
+}
+function showMessage(id,text,type=""){
+const el=document.getElementById(id);
+if(el)el.innerHTML='<div class="message '+type+'">'+escapeHtml(text)+'</div>';
+}
+function showAuthTab(tab){
+document.getElementById("loginBox").classList.toggle("hidden",tab!=="login");
+document.getElementById("registerBox").classList.toggle("hidden",tab!=="register");
+document.getElementById("loginTab").classList.toggle("active",tab==="login");
+document.getElementById("registerTab").classList.toggle("active",tab==="register");
+document.getElementById("authMessage").innerHTML="";
+}
+function showSubmissionTab(tab){
+["album","track","media"].forEach(x=>{
+document.getElementById(x+"Box").classList.toggle("hidden",tab!==x);
+document.getElementById(x+"Tab").classList.toggle("active",tab===x);
+});
+}
+async function registerArtist(){
+const email=document.getElementById("registerEmail").value.trim();
+const password=document.getElementById("registerPassword").value;
+const confirmation=document.getElementById("registerPasswordConfirm").value;
+if(!email||!password)
+return showMessage("authMessage","Merci de renseigner ton e-mail et ton mot de passe.","error");
+if(password.length<6)
+return showMessage("authMessage","Le mot de passe doit contenir au moins 6 caractères.","error");
+if(password!==confirmation)
+return showMessage("authMessage","Les deux mots de passe ne correspondent pas.","error");
+showMessage("authMessage","Création du compte en cours...");
+const {data,error}=await client.auth.signUp({email,password});
+if(error)
+return showMessage("authMessage",error.message,"error");
+if(!data.session){
+showMessage("authMessage","Compte créé. Vérifie ton e-mail si une confirmation est demandée, puis connecte-toi.","success");
+showAuthTab("login");
+document.getElementById("loginEmail").value=email;
+return;
+}
+currentUser=data.user;
+await openArtistApp();
+}
+async function login(){
+const email=document.getElementById("loginEmail").value.trim();
+const password=document.getElementById("loginPassword").value;
+if(!email||!password)
+return showMessage("authMessage","Merci de renseigner ton e-mail et ton mot de passe.","error");
+showMessage("authMessage","Connexion...");
+const {data,error}=await client.auth.signInWithPassword({email,password});
+if(error)
+return showMessage("authMessage",error.message,"error");
+currentUser=data.user;
+await openArtistApp();
+}
+async function logout(){
+await client.auth.signOut();
+currentUser=null;
+currentArtist=null;
+document.getElementById("authSection").classList.remove("hidden");
+document.getElementById("appSection").classList.add("hidden");
+document.getElementById("headerActions").classList.add("hidden");
+showAuthTab("login");
+}
+async function openArtistApp(){
+document.getElementById("authSection").classList.add("hidden");
+document.getElementById("appSection").classList.remove("hidden");
+document.getElementById("headerActions").classList.remove("hidden");
+document.getElementById("userEmail").textContent=currentUser?.email||"";
+await loadArtist();
+}
+async function loadArtist(){
+if(!currentUser)return;
+const {data,error}=await client
+.from("artists")
+.select("id,owner_id,name,slug,bio,city,region,language,genre,avatar_url,verified,status,created_at")
+.eq("owner_id",currentUser.id)
+.order("created_at",{ascending:false})
+.limit(1);
+if(error)
+return showMessage("profileMessage",error.message,"error");
+currentArtist=data?.[0]||null;
+if(currentArtist){
+document.getElementById("artistName").value=currentArtist.name||"";
+document.getElementById("artistBio").value=currentArtist.bio||"";
+document.getElementById("artistCity").value=currentArtist.city||"";
+document.getElementById("artistRegion").value=currentArtist.region||"";
+document.getElementById("artistLanguage").value=currentArtist.language||"";
+document.getElementById("artistGenre").value=currentArtist.genre||"";
+document.getElementById("artistAvatar").value=currentArtist.avatar_url||"";
+document.getElementById("artistStatus").textContent=currentArtist.status||"pending";
+await loadArtistData();
+}else{
+document.getElementById("artistStatus").textContent="Profil non créé";
+document.getElementById("albumsTable").innerHTML="<p>Crée ton profil artiste pour commencer.</p>";
+document.getElementById("tracksTable").innerHTML="<p>Crée ton profil artiste pour commencer.</p>";
+document.getElementById("mediaTable").innerHTML="<p>Crée ton profil artiste pour commencer.</p>";
+document.getElementById("earningsTable").innerHTML="<p>Aucun revenu pour le moment.</p>";
+}
+}
+async function createOrUpdateArtist(){
+if(!currentUser)return;
+const name=document.getElementById("artistName").value.trim();
+const bio=document.getElementById("artistBio").value.trim();
+const city=document.getElementById("artistCity").value.trim();
+const region=document.getElementById("artistRegion").value.trim();
+const language=document.getElementById("artistLanguage").value.trim();
+const genre=document.getElementById("artistGenre").value.trim();
+const avatar=document.getElementById("artistAvatar").value.trim();
+if(!name)
+return showMessage("profileMessage","Le nom de l'artiste est obligatoire.","error");
+if(!currentArtist){
+const {error}=await client.rpc("submit_artist_profile",{
+p_name:name,
+p_bio:bio||null,
+p_city:city||null,
+p_region:region||null,
+p_language:language||null,
+p_genre:genre||null,
+p_avatar_url:avatar||null
+});
+if(error)
+return showMessage("profileMessage",error.message,"error");
+showMessage("profileMessage","Profil artiste envoyé pour validation.","success");
+return loadArtist();
+}
+const {error}=await client
+.from("artists")
+.update({
+name,
+bio:bio||null,
+city:city||null,
+region:region||null,
+language:language||null,
+genre:genre||null,
+avatar_url:avatar||null
+})
+.eq("id",currentArtist.id)
+.eq("owner_id",currentUser.id);
+if(error)
+return showMessage("profileMessage",error.message,"error");
+showMessage("profileMessage","Profil mis à jour.","success");
+await loadArtist();
+}
+async function loadArtistData(){
+if(!currentArtist)return;
+const artistId=currentArtist.id;
+const {data:albums,error:albumsError}=await client
+.from("albums")
+.select("id,title,slug,type,cover_url,release_date,status,created_at")
+.eq("artist_id",artistId)
+.order("created_at",{ascending:false});
+if(albumsError)
+document.getElementById("albumsTable").innerHTML='<div class="message error">'+escapeHtml(albumsError.message)+"</div>";
+else{
+renderAlbums(albums||[]);
+populateAlbumSelect(albums||[]);
+}
+const {data:tracks,error:tracksError}=await client
+.from("tracks")
+.select("id,title,slug,album_id,genre,language,city,region,status,play_count,created_at")
+.eq("artist_id",artistId)
+.order("created_at",{ascending:false});
+if(tracksError)
+document.getElementById("tracksTable").innerHTML='<div class="message error">'+escapeHtml(tracksError.message)+"</div>";
+else{
+renderTracks(tracks||[]);
+document.getElementById("statTracks").textContent=tracks?.length||0;
+document.getElementById("statPlays").textContent=(tracks||[]).reduce((t,x)=>t+Number(x.play_count||0),0);
+}
+const {data:media,error:mediaError}=await client
+.from("media")
+.select("id,title,type,media_url,description,status,created_at")
+.eq("artist_id",artistId)
+.order("created_at",{ascending:false});
+if(mediaError)
+document.getElementById("mediaTable").innerHTML='<div class="message error">'+escapeHtml(mediaError.message)+"</div>";
+else renderMedia(media||[]);
+const {data:earnings,error:earningsError}=await client
+.from("artist_earnings")
+.select("id,period_start,period_end,plays,amount_cents,currency,status,created_at")
+.eq("artist_id",artistId)
+.order("period_start",{ascending:false});
+if(earningsError)
+document.getElementById("earningsTable").innerHTML='<div class="message error">'+escapeHtml(earningsError.message)+"</div>";
+else renderEarnings(earnings||[]);
+document.getElementById("statArtists").textContent="1";
+document.getElementById("statAlbums").textContent=albums?.length||0;
+}
+function renderAlbums(albums){
+if(!albums.length)
+return document.getElementById("albumsTable").innerHTML="<p>Aucun album pour le moment.</p>";
+let h='<table><thead><tr><th>Titre</th><th>Type</th><th>Statut</th><th>Date</th></tr></thead><tbody>';
+albums.forEach(a=>{
+h+='<tr><td>'+escapeHtml(a.title)+'</td><td>'+escapeHtml(a.type)+'</td><td><span class="badge">'+escapeHtml(a.status)+'</span></td><td>'+escapeHtml(a.release_date||"")+'</td></tr>';
+});
+document.getElementById("albumsTable").innerHTML=h+"</tbody></table>";
+}
+function renderTracks(tracks){
+if(!tracks.length)
+return document.getElementById("tracksTable").innerHTML="<p>Aucune musique pour le moment.</p>";
+let h='<table><thead><tr><th>Titre</th><th>Genre</th><th>Écoutes</th><th>Statut</th></tr></thead><tbody>';
+tracks.forEach(t=>{
+h+='<tr><td>'+escapeHtml(t.title)+'</td><td>'+escapeHtml(t.genre||"")+'</td><td>'+Number(t.play_count||0)+'</td><td><span class="badge">'+escapeHtml(t.status)+'</span></td></tr>';
+});
+document.getElementById("tracksTable").innerHTML=h+"</tbody></table>";
+}
+function renderMedia(media){
+if(!media.length)
+return document.getElementById("mediaTable").innerHTML="<p>Aucun contenu pour le moment.</p>";
+let h='<table><thead><tr><th>Titre</th><th>Type</th><th>Statut</th></tr></thead><tbody>';
+media.forEach(m=>{
+h+='<tr><td>'+escapeHtml(m.title)+'</td><td>'+escapeHtml(m.type)+'</td><td><span class="badge">'+escapeHtml(m.status)+'</span></td></tr>';
+});
+document.getElementById("mediaTable").innerHTML=h+"</tbody></table>";
+}
+function renderEarnings(earnings){
+if(!earnings.length)
+return document.getElementById("earningsTable").innerHTML="<p>Aucun revenu enregistré pour le moment.</p>";
+let h='<table><thead><tr><th>Période</th><th>Écoutes</th><th>Montant</th><th>Statut</th></tr></thead><tbody>';
+earnings.forEach(e=>{
+h+='<tr><td>'+escapeHtml(e.period_start||"")+" → "+escapeHtml(e.period_end||"")+'</td><td>'+Number(e.plays||0)+'</td><td>'+Number(e.amount_cents||0)/100+' '+escapeHtml(e.currency||"XAF")+'</td><td><span class="badge">'+escapeHtml(e.status||"pending")+'</span></td></tr>';
+});
+document.getElementById("earningsTable").innerHTML=h+"</tbody></table>";
+}
+function populateAlbumSelect(albums){
+const s=document.getElementById("trackAlbum");
+s.innerHTML='<option value="">Aucun album</option>';
+albums.forEach(a=>{
+const o=document.createElement("option");
+o.value=a.id;
+o.textContent=a.title+" ("+a.type+")";
+s.appendChild(o);
+});
+}
+async function prepareTrackFile(){
+const input=document.getElementById("trackFile");
+const file=input.files?.[0];
+const name=document.getElementById("trackFileName");
+if(!file){
+name.textContent="Aucun fichier sélectionné";
+return;
+}
+if(file.type!=="audio/mpeg"&&!file.name.toLowerCase().endsWith(".mp3")){
+input.value="";
+name.textContent="Aucun fichier sélectionné";
+return showMessage("submissionMessage","Choisis un fichier MP3.","error");
+}
+if(file.size>50*1024*1024){
+input.value="";
+name.textContent="Aucun fichier sélectionné";
+return showMessage("submissionMessage","Le MP3 ne doit pas dépasser 50 Mo.","error");
+}
+name.textContent=file.name;
+const url=URL.createObjectURL(file);
+const audio=new Audio();
+audio.preload="metadata";
+audio.onloadedmetadata=()=>{
+if(Number.isFinite(audio.duration))
+document.getElementById("trackDuration").value=Math.round(audio.duration);
+URL.revokeObjectURL(url);
+};
+audio.src=url;
+}
+function safeFileName(name){
+return name
+.normalize("NFD")
+.replace(/[\u0300-\u036f]/g,"")
+.replace(/[^a-zA-Z0-9._-]+/g,"-")
+.replace(/^-+|-+$/g,"")
+.slice(0,120)||"audio.mp3";
+}
+async function submitAlbum(){
+if(!currentArtist)
+return showMessage("submissionMessage","Crée d'abord ton profil artiste.","error");
+const title=document.getElementById("albumTitle").value.trim();
+const type=document.getElementById("albumType").value;
+const date=document.getElementById("albumDate").value;
+const cover=document.getElementById("albumCover").value.trim();
+const description=document.getElementById("albumDescription").value.trim();
+if(!title)
+return showMessage("submissionMessage","Le titre de l'album est obligatoire.","error");
+const {error}=await client.rpc("submit_artist_album",{
+p_title:title,
+p_type:type,
+p_cover_url:cover||null,
+p_release_date:date||null,
+p_description:description||null
+});
+if(error)
+return showMessage("submissionMessage",error.message,"error");
+showMessage("submissionMessage","Album envoyé pour validation.","success");
+document.getElementById("albumTitle").value="";
+document.getElementById("albumCover").value="";
+document.getElementById("albumDescription").value="";
+await loadArtistData();
+}
+async function submitTrack(){
+if(!currentArtist)
+return showMessage("submissionMessage","Crée d'abord ton profil artiste.","error");
+const file=document.getElementById("trackFile").files?.[0];
+const title=document.getElementById("trackTitle").value.trim();
+const album=document.getElementById("trackAlbum").value||null;
+const durationValue=document.getElementById("trackDuration").value;
+const duration=durationValue?Number(durationValue):null;
+const genre=document.getElementById("trackGenre").value.trim();
+const language=document.getElementById("trackLanguage").value.trim();
+const city=document.getElementById("trackCity").value.trim();
+const region=document.getElementById("trackRegion").value.trim();
+if(!title)
+return showMessage("submissionMessage","Le titre de la musique est obligatoire.","error");
+if(!file)
+return showMessage("submissionMessage","Choisis d'abord un fichier MP3.","error");
+if(file.type!=="audio/mpeg"&&!file.name.toLowerCase().endsWith(".mp3"))
+return showMessage("submissionMessage","Choisis un fichier MP3.","error");
+if(file.size>50*1024*1024)
+return showMessage("submissionMessage","Le MP3 ne doit pas dépasser 50 Mo.","error");
+const button=document.getElementById("trackSubmitButton");
+button.disabled=true;
+button.textContent="Envoi du MP3...";
+document.getElementById("trackProgress").style.width="20%";
+const path=currentUser.id+"/"+crypto.randomUUID()+"-"+safeFileName(file.name);
+const {error:uploadError}=await client
+.storage
+.from("audio")
+.upload(path,file,{
+contentType:"audio/mpeg",
+cacheControl:"3600",
+upsert:false
+});
+if(uploadError){
+button.disabled=false;
+button.textContent="Envoyer le MP3 et soumettre la musique";
+document.getElementById("trackProgress").style.width="0";
+return showMessage("submissionMessage","Envoi du MP3 impossible : "+uploadError.message,"error");
+}
+document.getElementById("trackProgress").style.width="65%";
+const {error}=await client.rpc("submit_artist_track",{
+p_title:title,
+p_album_id:album,
+p_audio_url:path,
+p_duration_seconds:duration,
+p_genre:genre||null,
+p_language:language||null,
+p_city:city||null,
+p_region:region||null
+});
+if(error){
+button.disabled=false;
+button.textContent="Envoyer le MP3 et soumettre la musique";
+document.getElementById("trackProgress").style.width="0";
+return showMessage("submissionMessage","MP3 envoyé mais enregistrement de la musique impossible : "+error.message,"error");
+}
+document.getElementById("trackProgress").style.width="100%";
+showMessage("submissionMessage","Musique envoyée pour validation. Le MP3 est bien enregistré sur INDAMORA PLAY.","success");
+document.getElementById("trackTitle").value="";
+document.getElementById("trackFile").value="";
+document.getElementById("trackFileName").textContent="Aucun fichier sélectionné";
+document.getElementById("trackDuration").value="";
+document.getElementById("trackGenre").value="";
+document.getElementById("trackLanguage").value="";
+document.getElementById("trackCity").value="";
+document.getElementById("trackRegion").value="";
+button.disabled=false;
+button.textContent="Envoyer le MP3 et soumettre la musique";
+await loadArtistData();
+}
+async function submitMedia(){
+if(!currentArtist)
+return showMessage("submissionMessage","Crée d'abord ton profil artiste.","error");
+const title=document.getElementById("mediaTitle").value.trim();
+const type=document.getElementById("mediaType").value;
+const url=document.getElementById("mediaUrl").value.trim();
+const description=document.getElementById("mediaDescription").value.trim();
+if(!title)
+return showMessage("submissionMessage","Le titre est obligatoire.","error");
+const {error}=await client.rpc("submit_artist_media",{
+p_title:title,
+p_type:type,
+p_media_url:url||null,
+p_description:description||null
+});
+if(error)
+return showMessage("submissionMessage",error.message,"error");
+showMessage("submissionMessage","Contenu envoyé pour validation.","success");
+document.getElementById("mediaTitle").value="";
+document.getElementById("mediaUrl").value="";
+document.getElementById("mediaDescription").value="";
+await loadArtistData();
+}
+async function checkSession(){
+const {data}=await client.auth.getSession();
+if(data?.session?.user){
+currentUser=data.session.user;
+await openArtistApp();
+}
+}
+client.auth.onAuthStateChange(async(event,session)=>{
+if(event==="SIGNED_IN"&&session?.user){
+currentUser=session.user;
+await openArtistApp();
+}
+});
+checkSession();
 </script>
 </body>
 </html>
