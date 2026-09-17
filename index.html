@@ -3,21 +3,22 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="theme-color" content="#1565c0">
-  <meta name="description" content="INDAMORA PLAY — plateforme musicale d'Afrique centrale">
-  <title>INDAMORA PLAY — INDAMORA RECORDS</title>
+
+  <title>INDAMORA PLAY — Musique d'Afrique centrale</title>
+  <meta name="description" content="INDAMORA PLAY — plateforme de musique d'Afrique centrale 🇨🇫">
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
   <style>
     :root {
-      --blue: #1565c0;
-      --blue-dark: #0d47a1;
+      --blue: #0757c9;
+      --blue-dark: #043b8c;
       --blue-light: #eaf3ff;
-      --blue-soft: #f4f8ff;
-      --text: #172033;
-      --muted: #64748b;
-      --border: #dbe5f0;
       --white: #ffffff;
-      --shadow: 0 8px 25px rgba(21, 101, 192, 0.08);
+      --text: #14213d;
+      --muted: #667085;
+      --border: #dbe5f2;
+      --shadow: 0 8px 30px rgba(7, 87, 201, 0.10);
     }
 
     * {
@@ -34,7 +35,7 @@
       font-family: Arial, Helvetica, sans-serif;
       background: var(--white);
       color: var(--text);
-      line-height: 1.6;
+      line-height: 1.5;
     }
 
     a {
@@ -42,11 +43,17 @@
       text-decoration: none;
     }
 
+    button,
+    input,
+    select {
+      font: inherit;
+    }
+
     header {
       position: sticky;
       top: 0;
       z-index: 100;
-      background: rgba(255, 255, 255, 0.96);
+      background: rgba(255, 255, 255, 0.97);
       border-bottom: 1px solid var(--border);
       backdrop-filter: blur(10px);
     }
@@ -54,7 +61,8 @@
     .nav {
       max-width: 1200px;
       margin: auto;
-      padding: 16px 20px;
+      min-height: 72px;
+      padding: 0 20px;
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -62,29 +70,30 @@
     }
 
     .logo {
-      color: var(--blue-dark);
-      font-size: 22px;
+      color: var(--blue);
       font-weight: 900;
-      white-space: nowrap;
+      font-size: 22px;
       letter-spacing: -0.5px;
+      white-space: nowrap;
     }
 
     .logo span {
-      color: var(--blue);
+      color: var(--text);
+      font-weight: 700;
     }
 
     nav {
       display: flex;
-      gap: 18px;
       align-items: center;
-      flex-wrap: wrap;
-      justify-content: flex-end;
+      gap: 22px;
+      overflow-x: auto;
     }
 
     nav a {
-      color: #334155;
+      color: #344054;
       font-size: 14px;
-      font-weight: 600;
+      font-weight: 700;
+      white-space: nowrap;
     }
 
     nav a:hover {
@@ -92,163 +101,163 @@
     }
 
     .hero {
-      background:
-        linear-gradient(180deg, #f4f8ff 0%, #ffffff 100%);
+      background: linear-gradient(135deg, #f4f8ff 0%, #ffffff 55%, #eaf3ff 100%);
       border-bottom: 1px solid var(--border);
     }
 
     .hero-inner {
       max-width: 1200px;
       margin: auto;
-      padding: 95px 20px 85px;
-      text-align: center;
+      padding: 70px 20px 60px;
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 40px;
+      align-items: center;
     }
 
     .badge {
-      display: inline-block;
-      padding: 8px 14px;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 7px 12px;
       border-radius: 999px;
       background: var(--blue-light);
-      color: var(--blue-dark);
+      color: var(--blue);
       font-size: 13px;
       font-weight: 800;
+      margin-bottom: 18px;
+    }
+
+    h1 {
+      font-size: clamp(38px, 6vw, 70px);
+      line-height: 0.98;
+      letter-spacing: -3px;
       margin-bottom: 20px;
     }
 
-    .hero h1 {
-      font-size: clamp(44px, 8vw, 82px);
-      line-height: 1;
-      letter-spacing: -2px;
-      margin-bottom: 22px;
-      color: #102a43;
-    }
-
-    .hero h1 span {
+    h1 strong {
       color: var(--blue);
     }
 
     .hero p {
-      max-width: 720px;
-      margin: auto;
+      max-width: 650px;
       color: var(--muted);
       font-size: 18px;
-    }
-
-    .hero-buttons {
-      margin-top: 32px;
-      display: flex;
-      justify-content: center;
-      gap: 12px;
-      flex-wrap: wrap;
-    }
-
-    .btn {
-      display: inline-block;
-      padding: 13px 21px;
-      border-radius: 10px;
-      font-weight: 800;
-      background: var(--blue);
-      color: white;
-      box-shadow: 0 6px 15px rgba(21, 101, 192, 0.18);
-    }
-
-    .btn:hover {
-      background: var(--blue-dark);
-    }
-
-    .btn.secondary {
-      background: white;
-      color: var(--blue-dark);
-      border: 1px solid #bcd2ec;
-      box-shadow: none;
-    }
-
-    .btn.secondary:hover {
-      background: var(--blue-soft);
-    }
-
-    section {
-      max-width: 1200px;
-      margin: auto;
-      padding: 65px 20px;
-    }
-
-    .section-title {
       margin-bottom: 28px;
     }
 
-    .section-title h2 {
-      color: #102a43;
-      font-size: 30px;
+    .hero-buttons {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
     }
 
-    .section-title p {
-      color: var(--muted);
-      margin-top: 6px;
+    .btn {
+      border: none;
+      cursor: pointer;
+      border-radius: 12px;
+      padding: 13px 20px;
+      font-weight: 800;
+      transition: 0.2s ease;
     }
 
-    .player {
+    .btn-primary {
+      background: var(--blue);
+      color: white;
+    }
+
+    .btn-primary:hover {
+      background: var(--blue-dark);
+      transform: translateY(-1px);
+    }
+
+    .btn-secondary {
+      background: white;
+      color: var(--blue);
+      border: 1px solid var(--border);
+    }
+
+    .hero-card {
       background: white;
       border: 1px solid var(--border);
-      border-radius: 16px;
-      padding: 22px;
+      border-radius: 24px;
+      padding: 28px;
       box-shadow: var(--shadow);
     }
 
-    .player-top {
-      display: flex;
-      align-items: center;
-      gap: 18px;
-    }
-
-    .cover {
-      width: 80px;
-      height: 80px;
-      border-radius: 12px;
-      background: linear-gradient(135deg, #1565c0, #42a5f5);
+    .hero-card-icon {
+      width: 62px;
+      height: 62px;
+      border-radius: 18px;
+      background: var(--blue-light);
+      color: var(--blue);
       display: grid;
       place-items: center;
-      color: white;
       font-size: 30px;
-      font-weight: 900;
-      flex-shrink: 0;
+      margin-bottom: 18px;
     }
 
-    .track-info h3 {
-      color: #102a43;
-      margin-bottom: 5px;
+    .hero-card h2 {
+      margin-bottom: 8px;
+      font-size: 22px;
     }
 
-    .track-info p {
-      color: var(--muted);
+    .hero-card p {
+      font-size: 15px;
+      margin: 0;
     }
 
-    audio {
-      width: 100%;
-      margin-top: 20px;
+    main {
+      max-width: 1200px;
+      margin: auto;
+      padding: 50px 20px 120px;
     }
 
-    .filters {
+    section {
+      margin-bottom: 70px;
+      scroll-margin-top: 100px;
+    }
+
+    .section-header {
       display: flex;
-      gap: 10px;
-      flex-wrap: wrap;
+      align-items: end;
+      justify-content: space-between;
+      gap: 20px;
+      margin-bottom: 22px;
+    }
+
+    .section-title {
+      font-size: 30px;
+      letter-spacing: -1px;
+    }
+
+    .section-subtitle {
+      color: var(--muted);
+      margin-top: 4px;
+    }
+
+    .search-area {
+      display: grid;
+      grid-template-columns: 1fr 180px 180px;
+      gap: 12px;
       margin-bottom: 25px;
     }
 
-    .filter {
+    .input,
+    .select {
+      width: 100%;
+      padding: 13px 15px;
+      border: 1px solid var(--border);
+      border-radius: 12px;
       background: white;
-      border: 1px solid #cbd8e6;
-      color: #334155;
-      border-radius: 999px;
-      padding: 9px 14px;
-      cursor: pointer;
-      font-weight: 600;
+      color: var(--text);
+      outline: none;
     }
 
-    .filter:hover {
+    .input:focus,
+    .select:focus {
       border-color: var(--blue);
-      color: var(--blue);
-      background: var(--blue-soft);
+      box-shadow: 0 0 0 3px rgba(7, 87, 201, 0.08);
     }
 
     .grid {
@@ -258,170 +267,335 @@
     }
 
     .card {
-      background: white;
       border: 1px solid var(--border);
-      border-radius: 14px;
+      background: white;
+      border-radius: 18px;
       overflow: hidden;
-      box-shadow: var(--shadow);
-      transition: transform .2s ease, box-shadow .2s ease;
+      box-shadow: 0 4px 18px rgba(16, 24, 40, 0.04);
+      transition: 0.2s ease;
     }
 
     .card:hover {
       transform: translateY(-3px);
-      box-shadow: 0 12px 30px rgba(21, 101, 192, .12);
-    }
-
-    .card-image {
-      aspect-ratio: 1 / 1;
-      background: var(--blue-soft);
-      display: grid;
-      place-items: center;
-      font-size: 42px;
-      color: var(--blue);
-    }
-
-    .card-content {
-      padding: 16px;
-    }
-
-    .card-content h3 {
-      color: #102a43;
-      margin-bottom: 5px;
-    }
-
-    .card-content p {
-      color: var(--muted);
-      font-size: 14px;
-    }
-
-    .ranking {
-      display: grid;
-      gap: 10px;
-    }
-
-    .rank {
-      display: grid;
-      grid-template-columns: 45px 1fr auto;
-      align-items: center;
-      gap: 12px;
-      background: white;
-      border: 1px solid var(--border);
-      padding: 13px;
-      border-radius: 10px;
       box-shadow: var(--shadow);
     }
 
-    .rank-number {
-      font-size: 22px;
-      font-weight: 900;
+    .cover {
+      width: 100%;
+      aspect-ratio: 1 / 1;
+      object-fit: cover;
+      background: var(--blue-light);
+      display: block;
+    }
+
+    .placeholder {
+      width: 100%;
+      aspect-ratio: 1 / 1;
+      display: grid;
+      place-items: center;
+      background: linear-gradient(135deg, #eaf3ff, #f7fbff);
       color: var(--blue);
+      font-size: 42px;
     }
 
-    .rank small {
+    .card-body {
+      padding: 16px;
+    }
+
+    .card-title {
+      font-size: 17px;
+      font-weight: 800;
+      margin-bottom: 5px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .card-meta {
       color: var(--muted);
+      font-size: 13px;
     }
 
-    .feature-grid {
+    .artist-card {
+      padding: 18px;
+      text-align: center;
+    }
+
+    .artist-avatar {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      object-fit: cover;
+      display: block;
+      margin: 0 auto 14px;
+      background: var(--blue-light);
+    }
+
+    .artist-placeholder {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      margin: 0 auto 14px;
+      background: var(--blue-light);
+      color: var(--blue);
+      font-size: 36px;
+      font-weight: 900;
+    }
+
+    .artist-name {
+      font-weight: 800;
+      font-size: 17px;
+      margin-bottom: 4px;
+    }
+
+    .verified {
+      color: var(--blue);
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .track-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .track {
+      display: grid;
+      grid-template-columns: 52px 1fr auto auto;
+      gap: 14px;
+      align-items: center;
+      padding: 12px;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      background: white;
+    }
+
+    .track-number {
+      width: 42px;
+      height: 42px;
+      border-radius: 10px;
+      background: var(--blue-light);
+      color: var(--blue);
+      display: grid;
+      place-items: center;
+      font-weight: 900;
+    }
+
+    .track-title {
+      font-weight: 800;
+    }
+
+    .track-artist {
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .play-btn {
+      width: 42px;
+      height: 42px;
+      border: none;
+      border-radius: 50%;
+      background: var(--blue);
+      color: white;
+      cursor: pointer;
+      font-size: 16px;
+      display: grid;
+      place-items: center;
+    }
+
+    .play-btn:hover {
+      background: var(--blue-dark);
+    }
+
+    .plays {
+      color: var(--muted);
+      font-size: 12px;
+      min-width: 70px;
+      text-align: right;
+    }
+
+    .media-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
       gap: 18px;
     }
 
-    .feature {
-      padding: 25px;
-      background: white;
+    .media-card {
       border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 20px;
+      background: white;
+    }
+
+    .media-icon {
+      width: 50px;
+      height: 50px;
+      display: grid;
+      place-items: center;
       border-radius: 14px;
-      box-shadow: var(--shadow);
+      background: var(--blue-light);
+      color: var(--blue);
+      font-size: 24px;
+      margin-bottom: 15px;
     }
 
-    .feature-icon {
-      font-size: 32px;
-      margin-bottom: 10px;
+    .media-type {
+      color: var(--blue);
+      text-transform: uppercase;
+      font-size: 11px;
+      font-weight: 900;
+      letter-spacing: 0.7px;
+      margin-bottom: 5px;
     }
 
-    .feature h3 {
-      color: #102a43;
+    .media-title {
+      font-weight: 800;
+      margin-bottom: 7px;
     }
 
-    .feature p {
+    .media-description {
       color: var(--muted);
-      margin-top: 8px;
+      font-size: 14px;
+      margin-bottom: 15px;
     }
 
-    .submit-box {
-      background: var(--blue-soft);
-      border: 1px solid #cfe0f5;
-      border-radius: 16px;
-      padding: 32px;
+    .media-link {
+      display: inline-block;
+      color: var(--blue);
+      font-size: 13px;
+      font-weight: 800;
     }
 
-    .submit-box h2 {
-      color: var(--blue-dark);
-    }
-
-    .submit-box p {
+    .empty {
+      padding: 35px 20px;
+      border: 1px dashed #b9c9df;
+      border-radius: 18px;
+      background: #f8fbff;
+      text-align: center;
       color: var(--muted);
-      margin: 10px 0 22px;
+    }
+
+    .loading {
+      padding: 30px;
+      text-align: center;
+      color: var(--muted);
+    }
+
+    .player {
+      position: fixed;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      z-index: 200;
+      background: rgba(255,255,255,0.98);
+      border-top: 1px solid var(--border);
+      box-shadow: 0 -8px 30px rgba(7, 87, 201, 0.08);
+      padding: 12px 20px;
+      display: none;
+    }
+
+    .player-inner {
+      max-width: 1200px;
+      margin: auto;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 18px;
+      align-items: center;
+    }
+
+    .now-playing {
+      min-width: 0;
+    }
+
+    .now-playing-title {
+      font-weight: 800;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .now-playing-artist {
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    audio {
+      width: min(520px, 45vw);
     }
 
     footer {
       border-top: 1px solid var(--border);
-      margin-top: 40px;
-      background: #f8fafc;
-    }
-
-    .footer-inner {
-      max-width: 1200px;
-      margin: auto;
-      padding: 30px 20px;
-      display: flex;
-      justify-content: space-between;
-      gap: 20px;
-      flex-wrap: wrap;
+      background: #f8fbff;
+      padding: 35px 20px;
+      text-align: center;
       color: var(--muted);
-      font-size: 14px;
+      font-size: 13px;
     }
 
-    .footer-brand {
-      color: var(--blue-dark);
-      font-weight: 800;
+    footer strong {
+      color: var(--blue);
     }
 
     @media (max-width: 900px) {
+      .hero-inner {
+        grid-template-columns: 1fr;
+      }
+
       .grid {
         grid-template-columns: repeat(2, 1fr);
       }
 
-      .feature-grid {
+      .search-area {
         grid-template-columns: 1fr;
       }
 
-      .nav {
-        align-items: flex-start;
-        flex-direction: column;
+      .media-grid {
+        grid-template-columns: 1fr;
       }
 
-      nav {
-        justify-content: flex-start;
+      .player-inner {
+        grid-template-columns: 1fr;
+      }
+
+      audio {
+        width: 100%;
       }
     }
 
-    @media (max-width: 560px) {
+    @media (max-width: 600px) {
+      .nav {
+        min-height: 62px;
+      }
+
+      nav {
+        gap: 13px;
+      }
+
+      .logo {
+        font-size: 18px;
+      }
+
+      .hero-inner {
+        padding-top: 45px;
+      }
+
       .grid {
         grid-template-columns: 1fr;
       }
 
-      .hero-inner {
-        padding-top: 60px;
+      .track {
+        grid-template-columns: 45px 1fr auto;
       }
 
-      .hero p {
-        font-size: 16px;
+      .plays {
+        display: none;
       }
 
-      .rank {
-        grid-template-columns: 35px 1fr auto;
+      h1 {
+        letter-spacing: -2px;
       }
     }
   </style>
@@ -429,315 +603,1178 @@
 
 <body>
 
-<header>
-  <div class="nav">
-
-    <a href="index.html" class="logo">
-      INDAMORA <span>PLAY</span>
-    </a>
-
-    <nav>
-      <a href="#musique">Musique</a>
-      <a href="#artistes">Artistes</a>
-      <a href="#classement">Classement</a>
-      <a href="#medias">Clips & Podcasts</a>
-      <a href="#radios">Radios</a>
-      <a href="#proposer">Artistes</a>
-    </nav>
-
-  </div>
-</header>
-
-
-<main>
-
-  <div class="hero">
-
-    <div class="hero-inner">
-
-      <div class="badge">
-        🇨🇫 La musique d'Afrique centrale
-      </div>
-
-      <h1>
+  <header>
+    <div class="nav">
+      <a href="#" class="logo">
         INDAMORA <span>PLAY</span>
-      </h1>
-
-      <p>
-        Découvrez les artistes, les musiques, les clips,
-        les podcasts et les nouvelles sonorités d'Afrique centrale.
-      </p>
-
-      <div class="hero-buttons">
-        <a href="#musique" class="btn">🎧 Écouter</a>
-        <a href="#artistes" class="btn secondary">
-          🎤 Découvrir les artistes
-        </a>
-      </div>
-
-    </div>
-
-  </div>
-
-
-  <section id="musique">
-
-    <div class="section-title">
-      <h2>🎧 Musique</h2>
-      <p>Découvrez les sons de la nouvelle scène musicale.</p>
-    </div>
-
-    <div class="filters">
-      <button class="filter">🇨🇫 Bangui</button>
-      <button class="filter">Régions</button>
-      <button class="filter">Sango</button>
-      <button class="filter">Français</button>
-      <button class="filter">Afrobeat</button>
-      <button class="filter">Hip-Hop</button>
-      <button class="filter">Gospel</button>
-      <button class="filter">Traditionnel</button>
-    </div>
-
-    <div class="player">
-
-      <div class="player-top">
-
-        <div class="cover">▶</div>
-
-        <div class="track-info">
-          <h3>INDAMORA PLAY</h3>
-          <p>
-            Votre plateforme musicale d'Afrique centrale
-          </p>
-        </div>
-
-      </div>
-
-      <audio controls>
-        <source src="" type="audio/mpeg">
-        Votre navigateur ne prend pas en charge le lecteur audio.
-      </audio>
-
-    </div>
-
-  </section>
-
-
-  <section id="artistes">
-
-    <div class="section-title">
-      <h2>🎤 Artistes</h2>
-      <p>Découvrez les artistes présents sur INDAMORA PLAY.</p>
-    </div>
-
-    <div class="grid">
-
-      <article class="card">
-        <div class="card-image">🎤</div>
-        <div class="card-content">
-          <h3>Artiste 1</h3>
-          <p>Bangui • Afrobeat</p>
-        </div>
-      </article>
-
-      <article class="card">
-        <div class="card-image">🎙️</div>
-        <div class="card-content">
-          <h3>Artiste 2</h3>
-          <p>Bangui • Hip-Hop</p>
-        </div>
-      </article>
-
-      <article class="card">
-        <div class="card-image">🎶</div>
-        <div class="card-content">
-          <h3>Artiste 3</h3>
-          <p>Région • Gospel</p>
-        </div>
-      </article>
-
-      <article class="card">
-        <div class="card-image">🎵</div>
-        <div class="card-content">
-          <h3>Artiste 4</h3>
-          <p>Région • Traditionnel</p>
-        </div>
-      </article>
-
-    </div>
-
-  </section>
-
-
-  <section id="classement">
-
-    <div class="section-title">
-      <h2>🔥 Classement</h2>
-      <p>Les titres les plus écoutés sur la plateforme.</p>
-    </div>
-
-    <div class="ranking">
-
-      <div class="rank">
-        <div class="rank-number">01</div>
-        <div>
-          <strong>Titre musical</strong><br>
-          <small>Artiste</small>
-        </div>
-        <span>0 écoute</span>
-      </div>
-
-      <div class="rank">
-        <div class="rank-number">02</div>
-        <div>
-          <strong>Titre musical</strong><br>
-          <small>Artiste</small>
-        </div>
-        <span>0 écoute</span>
-      </div>
-
-      <div class="rank">
-        <div class="rank-number">03</div>
-        <div>
-          <strong>Titre musical</strong><br>
-          <small>Artiste</small>
-        </div>
-        <span>0 écoute</span>
-      </div>
-
-    </div>
-
-  </section>
-
-
-  <section id="medias">
-
-    <div class="section-title">
-      <h2>🎬 Clips & Podcasts</h2>
-      <p>Vidéos, interviews et émissions musicales.</p>
-    </div>
-
-    <div class="feature-grid">
-
-      <div class="feature">
-        <div class="feature-icon">🎬</div>
-        <h3>Clips musicaux</h3>
-        <p>
-          Retrouvez les clips des artistes d'Afrique centrale.
-        </p>
-      </div>
-
-      <div class="feature">
-        <div class="feature-icon">🎙️</div>
-        <h3>Podcasts</h3>
-        <p>
-          Interviews, discussions et actualités musicales.
-        </p>
-      </div>
-
-      <div class="feature">
-        <div class="feature-icon">📺</div>
-        <h3>Sessions</h3>
-        <p>
-          Découvrez les performances et sessions exclusives.
-        </p>
-      </div>
-
-    </div>
-
-  </section>
-
-
-  <section id="radios">
-
-    <div class="section-title">
-      <h2>📻 Radios & Playlists</h2>
-      <p>
-        Des sélections musicales pour découvrir de nouveaux artistes.
-      </p>
-    </div>
-
-    <div class="grid">
-
-      <div class="card">
-        <div class="card-image">🇨🇫</div>
-        <div class="card-content">
-          <h3>Radio INDAMORA</h3>
-          <p>La sélection musicale centrafricaine.</p>
-        </div>
-      </div>
-
-      <div class="card">
-        <div class="card-image">🔥</div>
-        <div class="card-content">
-          <h3>Hits du moment</h3>
-          <p>Les titres populaires.</p>
-        </div>
-      </div>
-
-      <div class="card">
-        <div class="card-image">🎤</div>
-        <div class="card-content">
-          <h3>Nouveaux artistes</h3>
-          <p>Découvrez les nouveaux talents.</p>
-        </div>
-      </div>
-
-      <div class="card">
-        <div class="card-image">🌍</div>
-        <div class="card-content">
-          <h3>Afrique centrale</h3>
-          <p>Une sélection régionale.</p>
-        </div>
-      </div>
-
-    </div>
-
-  </section>
-
-
-  <section id="proposer">
-
-    <div class="submit-box">
-
-      <h2>🎤 Tu es artiste ?</h2>
-
-      <p>
-        Tu es artiste, producteur ou créateur ?
-        INDAMORA PLAY est destiné à mettre en valeur
-        les talents d'Afrique centrale.
-      </p>
-
-      <a href="#musique" class="btn">
-        Découvrir la plateforme
       </a>
 
+      <nav>
+        <a href="#musique">Musique</a>
+        <a href="#artistes">Artistes</a>
+        <a href="#classement">Classement</a>
+        <a href="#media">Clips & Podcasts</a>
+        <a href="#radios">Radios</a>
+        <a href="#proposer">Artistes</a>
+      </nav>
     </div>
+  </header>
 
+  <section class="hero">
+    <div class="hero-inner">
+
+      <div>
+        <div class="badge">🇨🇫 Musique d'Afrique centrale</div>
+
+        <h1>
+          Découvre<br>
+          <strong>INDAMORA PLAY</strong>
+        </h1>
+
+        <p>
+          Une plateforme dédiée aux artistes, aux musiques,
+          aux clips et aux voix d'Afrique centrale.
+        </p>
+
+        <div class="hero-buttons">
+          <a href="#musique" class="btn btn-primary">
+            🎧 Écouter la musique
+          </a>
+
+          <a href="#artistes" class="btn btn-secondary">
+            👤 Découvrir les artistes
+          </a>
+        </div>
+      </div>
+
+      <div class="hero-card">
+        <div class="hero-card-icon">🎵</div>
+        <h2>La musique au cœur de l'Afrique centrale</h2>
+        <p>
+          Retrouvez les artistes et les titres publiés sur
+          INDAMORA PLAY.
+        </p>
+      </div>
+
+    </div>
   </section>
 
-</main>
+  <main>
 
+    <!-- MUSIQUE -->
+    <section id="musique">
 
-<footer>
+      <div class="section-header">
+        <div>
+          <h2 class="section-title">🎧 Musique</h2>
+          <p class="section-subtitle">
+            Écoute les morceaux publiés sur INDAMORA PLAY.
+          </p>
+        </div>
+      </div>
 
-  <div class="footer-inner">
+      <div class="search-area">
+        <input
+          id="searchInput"
+          class="input"
+          type="search"
+          placeholder="🔎 Rechercher une musique ou un artiste..."
+        >
 
-    <div class="footer-brand">
-      INDAMORA PLAY — INDAMORA RECORDS
-    </div>
+        <select id="genreFilter" class="select">
+          <option value="">Tous les genres</option>
+        </select>
 
-    <div>
-      🇨🇫 Afrique centrale • Plateforme musicale
-    </div>
+        <select id="cityFilter" class="select">
+          <option value="">Toutes les villes</option>
+        </select>
+      </div>
 
-    <div>
-      © 2026 INDAMORA PLAY
+      <div id="tracksContainer" class="track-list">
+        <div class="loading">Chargement des musiques...</div>
+      </div>
+
+    </section>
+
+    <!-- ARTISTES -->
+    <section id="artistes">
+
+      <div class="section-header">
+        <div>
+          <h2 class="section-title">👤 Artistes</h2>
+          <p class="section-subtitle">
+            Découvre les artistes publiés.
+          </p>
+        </div>
+      </div>
+
+      <div id="artistsContainer" class="grid">
+        <div class="loading">Chargement des artistes...</div>
+      </div>
+
+    </section>
+
+    <!-- CLASSEMENT -->
+    <section id="classement">
+
+      <div class="section-header">
+        <div>
+          <h2 class="section-title">🔥 Classement</h2>
+          <p class="section-subtitle">
+            Les morceaux les plus écoutés.
+          </p>
+        </div>
+      </div>
+
+      <div id="rankingContainer" class="track-list">
+        <div class="loading">Chargement du classement...</div>
+      </div>
+
+    </section>
+
+    <!-- ALBUMS -->
+    <section id="albums">
+
+      <div class="section-header">
+        <div>
+          <h2 class="section-title">💿 Albums & projets</h2>
+          <p class="section-subtitle">
+            Albums, EP et singles publiés.
+          </p>
+        </div>
+      </div>
+
+      <div id="albumsContainer" class="grid">
+        <div class="loading">Chargement des albums...</div>
+      </div>
+
+    </section>
+
+    <!-- CLIPS & PODCASTS -->
+    <section id="media">
+
+      <div class="section-header">
+        <div>
+          <h2 class="section-title">🎬 Clips & Podcasts</h2>
+          <p class="section-subtitle">
+            Vidéos, clips, interviews et podcasts.
+          </p>
+        </div>
+      </div>
+
+      <div id="mediaContainer" class="media-grid">
+        <div class="loading">Chargement...</div>
+      </div>
+
+    </section>
+
+    <!-- RADIOS -->
+    <section id="radios">
+
+      <div class="section-header">
+        <div>
+          <h2 class="section-title">📻 Radios</h2>
+          <p class="section-subtitle">
+            Les radios et programmes disponibles prochainement.
+          </p>
+        </div>
+      </div>
+
+      <div class="empty">
+        📻 Les radios seront disponibles prochainement sur INDAMORA PLAY.
+      </div>
+
+    </section>
+
+    <!-- PROPOSER -->
+    <section id="proposer">
+
+      <div class="section-header">
+        <div>
+          <h2 class="section-title">🎙️ Artistes</h2>
+          <p class="section-subtitle">
+            Les artistes pourront prochainement proposer leur musique.
+          </p>
+        </div>
+      </div>
+
+      <div class="empty">
+        🎵 La mise en place des candidatures artistes est en cours.
+      </div>
+
+    </section>
+
+  </main>
+
+  <!-- LECTEUR -->
+  <div id="player" class="player">
+
+    <div class="player-inner">
+
+      <div class="now-playing">
+        <div id="nowPlayingTitle" class="now-playing-title">
+          Aucun morceau
+        </div>
+
+        <div id="nowPlayingArtist" class="now-playing-artist">
+          INDAMORA PLAY
+        </div>
+      </div>
+
+      <audio id="audioPlayer" controls preload="none"></audio>
+
     </div>
 
   </div>
 
-</footer>
+  <footer>
+    <p>
+      <strong>INDAMORA PLAY</strong> — INDAMORA RECORDS
+    </p>
+
+    <p>
+      Plateforme de musique d'Afrique centrale 🇨🇫
+    </p>
+  </footer>
+
+
+  <script>
+    /*
+      ============================================================
+      CONFIGURATION SUPABASE
+      ============================================================
+
+      IMPORTANT :
+      Remplace uniquement TA_CLE_PUBLISHABLE par ta
+      Publishable key Supabase.
+
+      Ne mets JAMAIS une clé sb_secret_ ici.
+    */
+
+    const SUPABASE_URL =
+      "https://adqsdnqkbitplbhbihiv.supabase.co";
+
+    const SUPABASE_PUBLISHABLE_KEY =
+      "sb_publishable_hHq8n88Rjhb8VaEVyenaVg_RsNoKkbJ";
+
+
+    const supabaseClient =
+      window.supabase.createClient(
+        SUPABASE_URL,
+        SUPABASE_PUBLISHABLE_KEY
+      );
+
+
+    /*
+      ============================================================
+      DONNÉES
+      ============================================================
+    */
+
+    let allTracks = [];
+    let allArtists = [];
+    let allAlbums = [];
+    let allMedia = [];
+
+
+    /*
+      ============================================================
+      UTILITAIRES
+      ============================================================
+    */
+
+    function escapeHtml(value) {
+      if (value === null || value === undefined) {
+        return "";
+      }
+
+      return String(value)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+    }
+
+
+    function formatNumber(value) {
+      return new Intl.NumberFormat("fr-FR").format(
+        Number(value || 0)
+      );
+    }
+
+
+    function formatDuration(seconds) {
+      if (!seconds) return "";
+
+      const total = Number(seconds);
+      const minutes = Math.floor(total / 60);
+      const remaining = total % 60;
+
+      return `${minutes}:${String(remaining).padStart(2, "0")}`;
+    }
+
+
+    function getInitial(name) {
+      if (!name) return "♪";
+
+      return name
+        .trim()
+        .charAt(0)
+        .toUpperCase();
+    }
+
+
+    /*
+      ============================================================
+      CHARGEMENT DES ARTISTES
+      ============================================================
+    */
+
+    async function loadArtists() {
+
+      const container =
+        document.getElementById("artistsContainer");
+
+      const { data, error } =
+        await supabaseClient
+          .from("artists")
+          .select(`
+            id,
+            name,
+            slug,
+            bio,
+            city,
+            region,
+            language,
+            genre,
+            avatar_url,
+            verified
+          `)
+          .eq("status", "published")
+          .order("name", { ascending: true });
+
+      if (error) {
+        console.error("Erreur artistes :", error);
+
+        container.innerHTML = `
+          <div class="empty">
+            Impossible de charger les artistes pour le moment.
+          </div>
+        `;
+
+        return;
+      }
+
+      allArtists = data || [];
+
+      renderArtists(allArtists);
+    }
+
+
+    function renderArtists(artists) {
+
+      const container =
+        document.getElementById("artistsContainer");
+
+      if (!artists.length) {
+
+        container.innerHTML = `
+          <div class="empty">
+            Aucun artiste publié pour le moment.
+          </div>
+        `;
+
+        return;
+      }
+
+      container.innerHTML =
+        artists.map(artist => {
+
+          const avatar = artist.avatar_url
+            ? `
+              <img
+                class="artist-avatar"
+                src="${escapeHtml(artist.avatar_url)}"
+                alt="${escapeHtml(artist.name)}"
+              >
+            `
+            : `
+              <div class="artist-placeholder">
+                ${escapeHtml(getInitial(artist.name))}
+              </div>
+            `;
+
+          return `
+            <article class="card artist-card">
+
+              ${avatar}
+
+              <div class="artist-name">
+                ${escapeHtml(artist.name)}
+              </div>
+
+              ${
+                artist.verified
+                  ? `<div class="verified">✓ Artiste vérifié</div>`
+                  : ""
+              }
+
+              <div class="card-meta">
+                ${escapeHtml(artist.city || "")}
+                ${
+                  artist.region
+                    ? " · " + escapeHtml(artist.region)
+                    : ""
+                }
+              </div>
+
+              ${
+                artist.genre
+                  ? `
+                    <div class="card-meta">
+                      ${escapeHtml(artist.genre)}
+                    </div>
+                  `
+                  : ""
+              }
+
+            </article>
+          `;
+
+        }).join("");
+    }
+
+
+    /*
+      ============================================================
+      CHARGEMENT DES MUSIQUES
+      ============================================================
+    */
+
+    async function loadTracks() {
+
+      const container =
+        document.getElementById("tracksContainer");
+
+      const { data, error } =
+        await supabaseClient
+          .from("tracks")
+          .select(`
+            id,
+            title,
+            slug,
+            audio_url,
+            duration_seconds,
+            genre,
+            language,
+            city,
+            region,
+            play_count,
+            artist_id,
+            album_id,
+            artists (
+              id,
+              name,
+              avatar_url
+            )
+          `)
+          .eq("status", "published")
+          .order("created_at", { ascending: false });
+
+      if (error) {
+
+        console.error("Erreur musiques :", error);
+
+        container.innerHTML = `
+          <div class="empty">
+            Impossible de charger les musiques pour le moment.
+          </div>
+        `;
+
+        return;
+      }
+
+      allTracks = data || [];
+
+      populateFilters(allTracks);
+
+      renderTracks(allTracks);
+    }
+
+
+    function renderTracks(tracks) {
+
+      const container =
+        document.getElementById("tracksContainer");
+
+      if (!tracks.length) {
+
+        container.innerHTML = `
+          <div class="empty">
+            Aucune musique publiée pour le moment.
+          </div>
+        `;
+
+        return;
+      }
+
+      container.innerHTML =
+        tracks.map((track, index) => {
+
+          const artistName =
+            track.artists?.name || "Artiste inconnu";
+
+          const duration =
+            formatDuration(track.duration_seconds);
+
+          return `
+            <article class="track">
+
+              <div class="track-number">
+                ${index + 1}
+              </div>
+
+              <div>
+                <div class="track-title">
+                  ${escapeHtml(track.title)}
+                </div>
+
+                <div class="track-artist">
+                  ${escapeHtml(artistName)}
+
+                  ${
+                    track.genre
+                      ? " · " + escapeHtml(track.genre)
+                      : ""
+                  }
+
+                  ${
+                    duration
+                      ? " · " + escapeHtml(duration)
+                      : ""
+                  }
+                </div>
+              </div>
+
+              <div class="plays">
+                ${formatNumber(track.play_count)} écoutes
+              </div>
+
+              <button
+                class="play-btn"
+                onclick="playTrack('${escapeHtml(track.id)}')"
+                aria-label="Écouter ${escapeHtml(track.title)}"
+              >
+                ▶
+              </button>
+
+            </article>
+          `;
+
+        }).join("");
+    }
+
+
+    /*
+      ============================================================
+      FILTRES
+      ============================================================
+    */
+
+    function populateFilters(tracks) {
+
+      const genreSelect =
+        document.getElementById("genreFilter");
+
+      const citySelect =
+        document.getElementById("cityFilter");
+
+      const genres =
+        [...new Set(
+          tracks
+            .map(t => t.genre)
+            .filter(Boolean)
+        )].sort();
+
+      const cities =
+        [...new Set(
+          tracks
+            .map(t => t.city)
+            .filter(Boolean)
+        )].sort();
+
+      genreSelect.innerHTML =
+        `<option value="">Tous les genres</option>` +
+        genres.map(genre =>
+          `<option value="${escapeHtml(genre)}">
+            ${escapeHtml(genre)}
+          </option>`
+        ).join("");
+
+      citySelect.innerHTML =
+        `<option value="">Toutes les villes</option>` +
+        cities.map(city =>
+          `<option value="${escapeHtml(city)}">
+            ${escapeHtml(city)}
+          </option>`
+        ).join("");
+    }
+
+
+    function applyFilters() {
+
+      const search =
+        document
+          .getElementById("searchInput")
+          .value
+          .toLowerCase()
+          .trim();
+
+      const genre =
+        document.getElementById("genreFilter").value;
+
+      const city =
+        document.getElementById("cityFilter").value;
+
+      const filtered =
+        allTracks.filter(track => {
+
+          const title =
+            (track.title || "").toLowerCase();
+
+          const artist =
+            (track.artists?.name || "").toLowerCase();
+
+          const matchesSearch =
+            !search ||
+            title.includes(search) ||
+            artist.includes(search);
+
+          const matchesGenre =
+            !genre ||
+            track.genre === genre;
+
+          const matchesCity =
+            !city ||
+            track.city === city;
+
+          return (
+            matchesSearch &&
+            matchesGenre &&
+            matchesCity
+          );
+        });
+
+      renderTracks(filtered);
+    }
+
+
+    document
+      .getElementById("searchInput")
+      .addEventListener("input", applyFilters);
+
+    document
+      .getElementById("genreFilter")
+      .addEventListener("change", applyFilters);
+
+    document
+      .getElementById("cityFilter")
+      .addEventListener("change", applyFilters);
+
+
+    /*
+      ============================================================
+      LECTEUR AUDIO
+      ============================================================
+    */
+
+    async function playTrack(trackId) {
+
+      const track =
+        allTracks.find(t => t.id === trackId);
+
+      if (!track) return;
+
+      if (!track.audio_url) {
+
+        alert(
+          "Ce morceau ne possède pas encore de lien audio."
+        );
+
+        return;
+      }
+
+      const player =
+        document.getElementById("player");
+
+      const audio =
+        document.getElementById("audioPlayer");
+
+      const title =
+        document.getElementById("nowPlayingTitle");
+
+      const artist =
+        document.getElementById("nowPlayingArtist");
+
+      title.textContent =
+        track.title || "Morceau";
+
+      artist.textContent =
+        track.artists?.name || "Artiste";
+
+      player.style.display = "block";
+
+      audio.src = track.audio_url;
+
+      try {
+        await audio.play();
+      } catch (error) {
+        console.log(
+          "Lecture automatique bloquée par le navigateur."
+        );
+      }
+    }
+
+
+    /*
+      ============================================================
+      CLASSEMENT
+      ============================================================
+    */
+
+    async function loadRanking() {
+
+      const container =
+        document.getElementById("rankingContainer");
+
+      const { data, error } =
+        await supabaseClient
+          .from("tracks")
+          .select(`
+            id,
+            title,
+            audio_url,
+            duration_seconds,
+            play_count,
+            artist_id,
+            artists (
+              id,
+              name
+            )
+          `)
+          .eq("status", "published")
+          .order("play_count", {
+            ascending: false
+          })
+          .limit(10);
+
+      if (error) {
+
+        console.error("Erreur classement :", error);
+
+        container.innerHTML = `
+          <div class="empty">
+            Impossible de charger le classement.
+          </div>
+        `;
+
+        return;
+      }
+
+      if (!data || !data.length) {
+
+        container.innerHTML = `
+          <div class="empty">
+            Aucun classement disponible pour le moment.
+          </div>
+        `;
+
+        return;
+      }
+
+      container.innerHTML =
+        data.map((track, index) => {
+
+          const artistName =
+            track.artists?.name || "Artiste inconnu";
+
+          return `
+            <article class="track">
+
+              <div class="track-number">
+                ${index + 1}
+              </div>
+
+              <div>
+                <div class="track-title">
+                  ${escapeHtml(track.title)}
+                </div>
+
+                <div class="track-artist">
+                  ${escapeHtml(artistName)}
+                  ${
+                    track.duration_seconds
+                      ? " · " +
+                        escapeHtml(
+                          formatDuration(
+                            track.duration_seconds
+                          )
+                        )
+                      : ""
+                  }
+                </div>
+              </div>
+
+              <div class="plays">
+                ${formatNumber(track.play_count)}
+                écoutes
+              </div>
+
+              <button
+                class="play-btn"
+                onclick="playRankingTrack('${escapeHtml(track.id)}')"
+                aria-label="Écouter ${escapeHtml(track.title)}"
+              >
+                ▶
+              </button>
+
+            </article>
+          `;
+
+        }).join("");
+
+      window.rankingTracks = data;
+    }
+
+
+    function playRankingTrack(trackId) {
+
+      const track =
+        (window.rankingTracks || [])
+          .find(t => t.id === trackId);
+
+      if (!track) return;
+
+      const player =
+        document.getElementById("player");
+
+      const audio =
+        document.getElementById("audioPlayer");
+
+      const title =
+        document.getElementById("nowPlayingTitle");
+
+      const artist =
+        document.getElementById("nowPlayingArtist");
+
+      if (!track.audio_url) {
+
+        alert(
+          "Ce morceau ne possède pas encore de lien audio."
+        );
+
+        return;
+      }
+
+      title.textContent =
+        track.title || "Morceau";
+
+      artist.textContent =
+        track.artists?.name || "Artiste";
+
+      player.style.display = "block";
+
+      audio.src = track.audio_url;
+
+      audio.play().catch(() => {});
+    }
+
+
+    /*
+      ============================================================
+      ALBUMS
+      ============================================================
+    */
+
+    async function loadAlbums() {
+
+      const container =
+        document.getElementById("albumsContainer");
+
+      const { data, error } =
+        await supabaseClient
+          .from("albums")
+          .select(`
+            id,
+            title,
+            slug,
+            type,
+            cover_url,
+            release_date,
+            description,
+            artist_id,
+            artists (
+              id,
+              name
+            )
+          `)
+          .eq("status", "published")
+          .order("release_date", {
+            ascending: false,
+            nullsFirst: false
+          });
+
+      if (error) {
+
+        console.error("Erreur albums :", error);
+
+        container.innerHTML = `
+          <div class="empty">
+            Impossible de charger les albums.
+          </div>
+        `;
+
+        return;
+      }
+
+      allAlbums = data || [];
+
+      renderAlbums(allAlbums);
+    }
+
+
+    function renderAlbums(albums) {
+
+      const container =
+        document.getElementById("albumsContainer");
+
+      if (!albums.length) {
+
+        container.innerHTML = `
+          <div class="empty">
+            Aucun album publié pour le moment.
+          </div>
+        `;
+
+        return;
+      }
+
+      container.innerHTML =
+        albums.map(album => {
+
+          const cover =
+            album.cover_url
+              ? `
+                <img
+                  class="cover"
+                  src="${escapeHtml(album.cover_url)}"
+                  alt="${escapeHtml(album.title)}"
+                >
+              `
+              : `
+                <div class="placeholder">
+                  💿
+                </div>
+              `;
+
+          return `
+            <article class="card">
+
+              ${cover}
+
+              <div class="card-body">
+
+                <div class="card-title">
+                  ${escapeHtml(album.title)}
+                </div>
+
+                <div class="card-meta">
+                  ${escapeHtml(
+                    album.artists?.name ||
+                    "Artiste"
+                  )}
+                </div>
+
+                <div class="card-meta">
+                  ${escapeHtml(
+                    album.type || "Album"
+                  )}
+                </div>
+
+              </div>
+
+            </article>
+          `;
+
+        }).join("");
+    }
+
+
+    /*
+      ============================================================
+      CLIPS & PODCASTS
+      ============================================================
+    */
+
+    async function loadMedia() {
+
+      const container =
+        document.getElementById("mediaContainer");
+
+      const { data, error } =
+        await supabaseClient
+          .from("media")
+          .select(`
+            id,
+            title,
+            type,
+            media_url,
+            description,
+            artist_id,
+            artists (
+              id,
+              name
+            )
+          `)
+          .eq("status", "published")
+          .order("created_at", {
+            ascending: false
+          });
+
+      if (error) {
+
+        console.error("Erreur médias :", error);
+
+        container.innerHTML = `
+          <div class="empty">
+            Impossible de charger les médias.
+          </div>
+        `;
+
+        return;
+      }
+
+      allMedia = data || [];
+
+      renderMedia(allMedia);
+    }
+
+
+    function renderMedia(media) {
+
+      const container =
+        document.getElementById("mediaContainer");
+
+      if (!media.length) {
+
+        container.innerHTML = `
+          <div class="empty">
+            Aucun clip ou podcast publié pour le moment.
+          </div>
+        `;
+
+        return;
+      }
+
+      container.innerHTML =
+        media.map(item => {
+
+          const type =
+            (item.type || "media").toLowerCase();
+
+          let icon = "🎬";
+
+          if (type.includes("podcast")) {
+            icon = "🎙️";
+          }
+
+          if (type.includes("audio")) {
+            icon = "🎧";
+          }
+
+          if (type.includes("video") ||
+              type.includes("clip")) {
+            icon = "🎬";
+          }
+
+          return `
+            <article class="media-card">
+
+              <div class="media-icon">
+                ${icon}
+              </div>
+
+              <div class="media-type">
+                ${escapeHtml(item.type || "Média")}
+              </div>
+
+              <div class="media-title">
+                ${escapeHtml(item.title)}
+              </div>
+
+              <div class="media-description">
+                ${escapeHtml(
+                  item.description || ""
+                )}
+              </div>
+
+              ${
+                item.artists?.name
+                  ? `
+                    <div class="card-meta">
+                      ${escapeHtml(
+                        item.artists.name
+                      )}
+                    </div>
+                  `
+                  : ""
+              }
+
+              ${
+                item.media_url
+                  ? `
+                    <a
+                      class="media-link"
+                      href="${escapeHtml(item.media_url)}"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      ▶ Ouvrir
+                    </a>
+                  `
+                  : ""
+              }
+
+            </article>
+          `;
+
+        }).join("");
+    }
+
+
+    /*
+      ============================================================
+      INITIALISATION
+      ============================================================
+    */
+
+    async function init() {
+
+      await Promise.all([
+        loadArtists(),
+        loadTracks(),
+        loadRanking(),
+        loadAlbums(),
+        loadMedia()
+      ]);
+
+    }
+
+
+    init();
+
+  </script>
 
 </body>
 </html>
