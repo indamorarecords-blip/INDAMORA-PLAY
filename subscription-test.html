@@ -53,6 +53,17 @@ button{
 button:hover{
   background:#084f9f;
 }
+.account-button{
+  display:block;
+  text-align:center;
+  background:white;
+  color:#0b63ce;
+  border:2px solid #0b63ce;
+  padding:14px;
+  border-radius:10px;
+  font-weight:bold;
+  text-decoration:none;
+}
 .notice{
   background:#eef6ff;
   border-left:5px solid #0b63ce;
@@ -64,6 +75,9 @@ a{
   text-decoration:none;
   font-weight:bold;
 }
+.center{
+  text-align:center;
+}
 </style>
 </head>
 <body>
@@ -73,13 +87,26 @@ a{
   <strong>ABONNEMENTS & SOUTIEN</strong>
 </header>
 <main>
+  <div class="card center">
+    <h2>👤 Votre espace INDAMORA PLAY</h2>
+<p id="accountStatus">
+  Vérification de votre compte...
+</p>
+<a id="accountLink"
+   class="account-button"
+   href="account.html">
+  📝 Créer un compte / Se connecter
+</a>
+  </div>
   <div class="card">
     <h2>Abonnement Afrique</h2>
 <div class="price">500 FCFA / mois</div>
 <p>
   Soutenez le développement de la plateforme depuis l'Afrique.
 </p>
-<button onclick="window.location.href='https://buy.stripe.com/bJe8wQ3s76Fi92Gcdt0sU02'">
+<button onclick="startPayment(
+  'https://buy.stripe.com/bJe8wQ3s76Fi92Gcdt0sU02'
+)">
   S’abonner — 500 FCFA / mois
 </button>
   </div>
@@ -89,7 +116,9 @@ a{
 <p>
   Soutenez le développement d’INDAMORA PLAY depuis l’étranger.
 </p>
-<button onclick="window.location.href='https://buy.stripe.com/aFa9AU5Af2p2diW91h0sU00'">
+<button onclick="startPayment(
+  'https://buy.stripe.com/aFa9AU5Af2p2diW91h0sU00'
+)">
   S’abonner — 5 € / mois
 </button>
   </div>
@@ -100,7 +129,9 @@ a{
   et de préparer plus tard des gestes de soutien aux artistes
   qui publient sur INDAMORA PLAY.
 </p>
-<button onclick="window.location.href='https://donate.stripe.com/3cIfZi1jZ2p21Ae91h0sU01'">
+<button onclick="startPayment(
+  'https://donate.stripe.com/3cIfZi1jZ2p21Ae91h0sU01'
+)">
   Faire un don ❤️
 </button>
   </div>
@@ -108,15 +139,55 @@ a{
     <div class="notice">
       <strong>💳 Paiement sécurisé</strong><br><br>
   Les paiements sont traités par Stripe.
-  Les abonnements permettent de soutenir le développement
-  d’INDAMORA PLAY et de l’association.
-  Les dons servent également à soutenir la plateforme
-  et à préparer des gestes de soutien aux artistes publiés.
+  Votre soutien permet de développer INDAMORA PLAY
+  et l'association.
 </div>
   </div>
   <p>
     <a href="index.html">← Retour à INDAMORA PLAY</a>
   </p>
 </main>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+const SUPABASE_URL = "https://adqsdnqkbitplbhbihiv.supabase.co";
+const SUPABASE_KEY = "sb_publishable_dpjfWOYeNQRmP2nJq5FoMA_8NUuD0HF";
+const db = supabase.createClient(
+  SUPABASE_URL,
+  SUPABASE_KEY
+);
+let currentUser = null;
+async function loadAccount(){
+  const { data } = await db.auth.getSession();
+  currentUser = data.session?.user || null;
+  const status = document.getElementById("accountStatus");
+  const link = document.getElementById("accountLink");
+  if(currentUser){
+    status.textContent =
+      "✅ Compte connecté : " +
+      (currentUser.email || "");
+    link.textContent =
+      "✓ Compte connecté — gérer mon compte";
+  }else{
+    status.textContent =
+      "Pour vous abonner ou faire un don, créez d'abord votre compte ou connectez-vous.";
+    link.textContent =
+      "📝 Créer un compte / Se connecter";
+  }
+}
+async function startPayment(baseUrl){
+  if(!currentUser){
+    window.location.href = "account.html";
+    return;
+  }
+  const separator = baseUrl.includes("?") ? "&" : "?";
+  const paymentUrl =
+    baseUrl +
+    separator +
+    "client_reference_id=" +
+    encodeURIComponent(currentUser.id);
+  window.location.href = paymentUrl;
+}
+loadAccount();
+</script>
 </body>
 </html>
