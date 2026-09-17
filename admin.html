@@ -3,20 +3,32 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
   <title>Administration — INDAMORA PLAY</title>
+
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
   <style>
     * {
       box-sizing: border-box;
     }
+
     body {
       margin: 0;
       font-family: Arial, Helvetica, sans-serif;
       background: #f4f8ff;
       color: #102a43;
     }
+
+    button,
+    input,
+    textarea,
+    select {
+      font: inherit;
+    }
+
     header {
-      background: #0b5ed7;
+      background: #0757c9;
       color: white;
       padding: 18px 24px;
       display: flex;
@@ -24,149 +36,191 @@
       align-items: center;
       gap: 15px;
     }
+
     header h1 {
       margin: 0;
       font-size: 22px;
     }
+
     header span {
       font-size: 13px;
       opacity: .9;
     }
+
     .container {
       max-width: 1250px;
       margin: auto;
-      padding: 25px 18px 50px;
+      padding: 25px 18px 60px;
     }
+
     .login-box {
       max-width: 430px;
       margin: 70px auto;
       background: white;
-      border-radius: 16px;
+      border-radius: 18px;
       padding: 30px;
-      box-shadow: 0 8px 30px rgba(20, 60, 110, .12);
+      box-shadow: 0 8px 30px rgba(7, 87, 201, .12);
     }
+
     .logo {
       text-align: center;
-      color: #0b5ed7;
-      font-size: 27px;
-      font-weight: bold;
+      color: #0757c9;
+      font-size: 28px;
+      font-weight: 900;
       margin-bottom: 8px;
     }
+
     .subtitle {
       text-align: center;
       color: #607d9a;
       margin-bottom: 25px;
     }
+
     label {
       display: block;
       font-weight: bold;
       margin: 14px 0 7px;
       font-size: 14px;
     }
+
     input,
     textarea,
     select {
       width: 100%;
       border: 1px solid #c8d8eb;
-      border-radius: 9px;
+      border-radius: 10px;
       padding: 12px;
-      font-size: 14px;
       background: white;
       color: #102a43;
     }
+
     textarea {
       min-height: 100px;
       resize: vertical;
     }
+
     input:focus,
     textarea:focus,
     select:focus {
       outline: none;
-      border-color: #0b5ed7;
-      box-shadow: 0 0 0 3px rgba(11, 94, 215, .10);
+      border-color: #0757c9;
+      box-shadow: 0 0 0 3px rgba(7, 87, 201, .10);
     }
+
     button {
       border: 0;
       border-radius: 9px;
       padding: 11px 15px;
       cursor: pointer;
       font-weight: bold;
-      font-size: 14px;
     }
+
+    button:disabled {
+      opacity: .6;
+      cursor: not-allowed;
+    }
+
     .primary {
-      background: #0b5ed7;
+      background: #0757c9;
       color: white;
     }
+
     .primary:hover {
-      background: #084db2;
+      background: #043b8c;
     }
+
     .secondary {
       background: #e8f1ff;
-      color: #0b5ed7;
+      color: #0757c9;
     }
+
     .danger {
       background: #ffe8e8;
       color: #b42318;
     }
+
     .success {
       background: #e5f8ee;
       color: #16794c;
     }
+
     .gray {
       background: #edf1f5;
       color: #455a64;
     }
+
     .full {
       width: 100%;
       margin-top: 20px;
     }
+
     .error,
     .message {
       padding: 12px;
       border-radius: 9px;
       margin-top: 15px;
-      display: none;
       font-size: 14px;
+      display: none;
     }
+
     .error {
       background: #ffe8e8;
       color: #a61b1b;
+      border: 1px solid #ffcaca;
     }
+
     .message {
       background: #e5f8ee;
       color: #16794c;
     }
+
+    .info {
+      background: #eef6ff;
+      color: #315a80;
+      border-left: 4px solid #0757c9;
+      padding: 13px;
+      border-radius: 7px;
+      margin-bottom: 18px;
+      font-size: 13px;
+    }
+
     #adminApp {
       display: none;
     }
+
     .top-actions {
       display: flex;
       align-items: center;
       gap: 10px;
       flex-wrap: wrap;
     }
+
     .stats {
       display: grid;
       grid-template-columns: repeat(6, 1fr);
       gap: 14px;
       margin-bottom: 25px;
     }
+
     .stat {
       background: white;
       border-radius: 13px;
       padding: 18px;
       box-shadow: 0 5px 20px rgba(20, 60, 110, .08);
     }
+
     .stat strong {
       display: block;
-      color: #0b5ed7;
+      color: #0757c9;
       font-size: 27px;
       margin-bottom: 5px;
     }
+
     .stat span {
       color: #607d9a;
       font-size: 13px;
     }
+
     .section {
       background: white;
       border-radius: 15px;
@@ -174,27 +228,33 @@
       margin-bottom: 22px;
       box-shadow: 0 5px 20px rgba(20, 60, 110, .07);
     }
+
     .section h2 {
       margin-top: 0;
-      color: #0b5ed7;
+      color: #0757c9;
       font-size: 20px;
     }
+
     .form-grid {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
       gap: 5px 18px;
     }
-    .form-grid .full-width {
+
+    .full-width {
       grid-column: 1 / -1;
     }
+
     .table-wrapper {
       overflow-x: auto;
     }
+
     table {
       width: 100%;
       border-collapse: collapse;
       min-width: 760px;
     }
+
     th,
     td {
       padding: 12px 9px;
@@ -203,10 +263,12 @@
       font-size: 13px;
       vertical-align: middle;
     }
+
     th {
       color: #41627e;
       background: #f6f9fd;
     }
+
     .status {
       display: inline-block;
       padding: 5px 9px;
@@ -214,64 +276,67 @@
       font-size: 11px;
       font-weight: bold;
     }
+
     .status-published {
       background: #e4f8ed;
       color: #147a4b;
     }
+
     .status-pending {
       background: #fff3d6;
       color: #956300;
     }
+
     .status-draft {
       background: #edf1f5;
       color: #536575;
     }
+
     .status-rejected {
       background: #ffe8e8;
       color: #ad2525;
     }
+
     .actions {
       display: flex;
       gap: 6px;
       flex-wrap: wrap;
     }
+
     .actions button {
       padding: 7px 9px;
       font-size: 11px;
     }
+
     .empty {
       text-align: center;
       color: #7890a6;
       padding: 25px;
     }
-    .note {
-      background: #eef6ff;
-      border-left: 4px solid #0b5ed7;
-      padding: 13px;
-      border-radius: 7px;
-      margin-bottom: 18px;
-      color: #315a80;
-      font-size: 13px;
+
+    small {
+      color: #607d9a;
     }
-    .logout {
-      background: white;
-      color: #0b5ed7;
-    }
-    .refresh {
-      margin-bottom: 15px;
-    }
+
     @media (max-width: 900px) {
       .stats {
         grid-template-columns: repeat(3, 1fr);
       }
     }
+
     @media (max-width: 650px) {
       .stats {
         grid-template-columns: repeat(2, 1fr);
       }
+
       .form-grid {
         grid-template-columns: 1fr;
       }
+
+      .full-width {
+        grid-column: auto;
+      }
+
       header {
         align-items: flex-start;
         flex-direction: column;
@@ -279,487 +344,1020 @@
     }
   </style>
 </head>
+
 <body>
-  <!-- CONNEXION -->
-  <div id="loginScreen">
-    <div class="login-box">
-      <div class="logo">INDAMORA PLAY</div>
-      <div class="subtitle">Administration · INDAMORA RECORDS</div>
-  <form id="loginForm">
-    <label for="email">Adresse e-mail</label>
-    <input id="email" type="email" autocomplete="email" required>
-    <label for="password">Mot de passe</label>
-    <input id="password" type="password" autocomplete="current-password" required>
-    <button class="primary full" type="submit">
-      Se connecter
-    </button>
-  </form>
-  <div id="loginError" class="error"></div>
+
+<!-- =========================================================
+     CONNEXION
+========================================================= -->
+
+<div id="loginScreen">
+
+  <div class="login-box">
+
+    <div class="logo">
+      INDAMORA PLAY
+    </div>
+
+    <div class="subtitle">
+      Administration · INDAMORA RECORDS
+    </div>
+
+    <form id="loginForm">
+
+      <label for="email">
+        Adresse e-mail
+      </label>
+
+      <input
+        id="email"
+        type="email"
+        autocomplete="email"
+        required
+      >
+
+      <label for="password">
+        Mot de passe
+      </label>
+
+      <input
+        id="password"
+        type="password"
+        autocomplete="current-password"
+        required
+      >
+
+      <button
+        id="loginButton"
+        class="primary full"
+        type="submit"
+      >
+        Se connecter
+      </button>
+
+    </form>
+
+    <div id="loginError" class="error"></div>
+
+  </div>
+
 </div>
-  </div>
-  <!-- ADMIN -->
-  <div id="adminApp">
-<header>
-  <div>
-    <h1>INDAMORA PLAY — Administration</h1>
-    <span id="adminIdentity">Administrateur</span>
-  </div>
-  <div class="top-actions">
-    <button class="secondary" onclick="loadDashboard()">
-      Actualiser
-    </button>
-    <button class="logout" onclick="logout()">
-      Déconnexion
-    </button>
-  </div>
-</header>
-<main class="container">
-  <!-- STATISTIQUES -->
-  <div class="stats">
-    <div class="stat">
-      <strong id="countArtists">0</strong>
-      <span>Artistes</span>
-    </div>
-    <div class="stat">
-      <strong id="countAlbums">0</strong>
-      <span>Albums</span>
-    </div>
-    <div class="stat">
-      <strong id="countTracks">0</strong>
-      <span>Musiques</span>
-    </div>
-    <div class="stat">
-      <strong id="countMedia">0</strong>
-      <span>Clips / médias</span>
-    </div>
-    <div class="stat">
-      <strong id="countPending">0</strong>
-      <span>Soumissions</span>
-    </div>
-    <div class="stat">
-      <strong id="countPlays">0</strong>
-      <span>Écoutes</span>
-    </div>
-  </div>
-  <div id="globalMessage" class="message"></div>
-  <!-- AJOUT ARTISTE -->
-  <section class="section">
-    <h2>Ajouter un artiste</h2>
-    <div class="note">
-      Un nouvel artiste est créé en attente de validation. Il ne sera pas visible
-      publiquement tant que son statut n'est pas « publié ».
-    </div>
-    <form id="artistForm">
-      <div class="form-grid">
-        <div>
-          <label>Nom de l'artiste *</label>
-          <input id="artistName" required>
-        </div>
-        <div>
-          <label>Ville</label>
-          <input id="artistCity" placeholder="Bangui">
-        </div>
-        <div>
-          <label>Région</label>
-          <input id="artistRegion">
-        </div>
-        <div>
-          <label>Langue</label>
-          <input id="artistLanguage" placeholder="Sango, français...">
-        </div>
-        <div>
-          <label>Genre musical</label>
-          <input id="artistGenre" placeholder="Afrobeat, gospel...">
-        </div>
-        <div>
-          <label>URL avatar</label>
-          <input id="artistAvatar" type="url">
-        </div>
-        <div class="full-width">
-          <label>Biographie</label>
-          <textarea id="artistBio"></textarea>
-        </div>
-      </div>
-      <button class="primary" type="submit">
-        Ajouter l'artiste
-      </button>
-    </form>
-  </section>
-  <!-- AJOUT ALBUM -->
-  <section class="section">
-    <h2>Ajouter un album / EP / single</h2>
-    <form id="albumForm">
-      <div class="form-grid">
-        <div>
-          <label>Artiste *</label>
-          <select id="albumArtist" required></select>
-        </div>
-        <div>
-          <label>Titre *</label>
-          <input id="albumTitle" required>
-        </div>
-        <div>
-          <label>Type</label>
-          <select id="albumType">
-            <option value="album">Album</option>
-            <option value="ep">EP</option>
-            <option value="single">Single</option>
-          </select>
-        </div>
-        <div>
-          <label>Date de sortie</label>
-          <input id="albumReleaseDate" type="date">
-        </div>
-        <div>
-          <label>URL pochette</label>
-          <input id="albumCover" type="url">
-        </div>
-        <div class="full-width">
-          <label>Description</label>
-          <textarea id="albumDescription"></textarea>
-        </div>
-      </div>
-      <button class="primary" type="submit">
-        Ajouter
-      </button>
-    </form>
-  </section>
-  <!-- AJOUT MUSIQUE -->
-  <section class="section">
-    <h2>Ajouter une musique</h2>
-    <div class="note">
-      Pour l'instant, le champ audio accepte une URL publique. Ne mets jamais de
-      clé secrète Supabase dans cette page.
-    </div>
-    <form id="trackForm">
-      <div class="form-grid">
-        <div>
-          <label>Artiste *</label>
-          <select id="trackArtist" required></select>
-        </div>
-        <div>
-          <label>Album</label>
-          <select id="trackAlbum"></select>
-        </div>
-        <div>
-          <label>Titre *</label>
-          <input id="trackTitle" required>
-        </div>
-        <div>
-          <label>Genre</label>
-          <input id="trackGenre">
-        </div>
-        <div>
-          <label>Langue</label>
-          <input id="trackLanguage">
-        </div>
-        <div>
-          <label>Ville</label>
-          <input id="trackCity">
-        </div>
-        <div>
-          <label>Région</label>
-          <input id="trackRegion">
-        </div>
-        <div>
-          <label>Durée en secondes</label>
-          <input id="trackDuration" type="number" min="0">
-        </div>
-        <div class="full-width">
-          <label>Lien vers le fichier (URL)</label>
-          <input id="trackAudio" type="url">
-          <small style="color:#607d9a;">
-            Vous pouvez héberger votre fichier sur YouTube, SoundCloud,
-            Audiomack ou Google Drive, puis coller le lien ici.
-          </small>
-        </div>
-      </div>
-      <button class="primary" type="submit">
-        Ajouter la musique
-      </button>
-    </form>
-  </section>
-  <!-- AJOUT MEDIA -->
-  <section class="section">
-    <h2>Ajouter un clip / podcast / média</h2>
-    <form id="mediaForm">
-      <div class="form-grid">
-        <div>
-          <label>Artiste *</label>
-          <select id="mediaArtist" required></select>
-        </div>
-        <div>
-          <label>Titre *</label>
-          <input id="mediaTitle" required>
-        </div>
-        <div>
-          <label>Type</label>
-          <select id="mediaType">
-            <option value="video">Clip vidéo</option>
-            <option value="podcast">Podcast</option>
-            <option value="interview">Interview</option>
-            <option value="other">Autre</option>
-          </select>
-        </div>
-        <div>
-          <label>URL du média *</label>
-          <input id="mediaUrl" type="url" required>
-        </div>
-        <div class="full-width">
-          <label>Description</label>
-          <textarea id="mediaDescription"></textarea>
-        </div>
-      </div>
-      <button class="primary" type="submit">
-        Ajouter le média
-      </button>
-    </form>
-  </section>
-  <!-- ARTISTES -->
-  <section class="section">
-    <h2>Validation des artistes</h2>
-    <div class="table-wrapper">
-      <table>
-        <thead>
-          <tr>
-            <th>Artiste</th>
-            <th>Ville</th>
-            <th>Genre</th>
-            <th>Statut</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody id="artistsTable"></tbody>
-      </table>
-    </div>
-  </section>
-  <!-- ALBUMS -->
-  <section class="section">
-    <h2>Validation des albums / EP / singles</h2>
-    <div class="table-wrapper">
-      <table>
-        <thead>
-          <tr>
-            <th>Titre</th>
-            <th>Artiste</th>
-            <th>Type</th>
-            <th>Statut</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody id="albumsTable"></tbody>
-      </table>
-    </div>
-  </section>
-  <!-- MUSIQUES -->
-  <section class="section">
-    <h2>Validation des musiques</h2>
-    <div class="table-wrapper">
-      <table>
-        <thead>
-          <tr>
-            <th>Titre</th>
-            <th>Artiste</th>
-            <th>Album</th>
-            <th>Écoutes</th>
-            <th>Statut</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody id="tracksTable"></tbody>
-      </table>
-    </div>
-  </section>
-  <!-- MEDIAS -->
-  <section class="section">
-    <h2>Validation des clips / podcasts</h2>
-    <div class="table-wrapper">
-      <table>
-        <thead>
-          <tr>
-            <th>Titre</th>
-            <th>Artiste</th>
-            <th>Type</th>
-            <th>Statut</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody id="mediaTable"></tbody>
-      </table>
-    </div>
-  </section>
-  <!-- SOUMISSIONS -->
-  <section class="section">
-    <h2>Soumissions des artistes</h2>
-    <div class="table-wrapper">
-      <table>
-        <thead>
-          <tr>
-            <th>Artiste</th>
-            <th>Titre</th>
-            <th>Type</th>
-            <th>Ville</th>
-            <th>Statut</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody id="submissionsTable"></tbody>
-      </table>
-    </div>
-  </section>
-</main>
-  </div>
-<script>
-  /* =========================================================
-     CONFIGURATION
-     ========================================================= */
-  const SUPABASE_URL =
-    "https://adqsdnqkbitplbhbihiv.supabase.co";
-  /*
-    IMPORTANT :
-    Colle ici uniquement ta CLÉ PUBLISHABLE Supabase.
-    Ne mets jamais une clé commençant par sb_secret_.
-  */
-  const SUPABASE_PUBLISHABLE_KEY =
-     "sb_publishable_hHq8n88Rjhb8VaEVyenaVg_RsNoKkbJ";
-  const { createClient } =
-    supabase.createClient(
-      SUPABASE_URL,
-      SUPABASE_PUBLISHABLE_KEY
-    );
-  /* =========================================================
-     OUTILS
-     ========================================================= */
-  function escapeHtml(value) {
-    if (value === null || value === undefined) return "";
-    return String(value)
-      .replaceAll("&", "&amp;")
-      .replaceAll("<", "&lt;")
-      .replaceAll(">", "&gt;")
-      .replaceAll('"', "&quot;")
-      .replaceAll("'", "&#039;");
-  }
-  function createSlug(text) {
-    return String(text || "")
-      .toLowerCase()
-      .normalize("NFD")
-      .replace(/[\u0300-\u036f]/g, "")
-      .replace(/[^a-z0-9]+/g, "-")
-      .replace(/^-+|-+$/g, "");
-  }
-  function statusLabel(status) {
-    const labels = {
-      published: "Publié",
-      pending: "En attente",
-      draft: "Brouillon",
-      rejected: "Rejeté"
-    };
-    return labels[status] || status || "Inconnu";
-  }
-  function statusHtml(status) {
-    const safe = escapeHtml(status || "draft");
-    return `
-      <span class="status status-${safe}">
-        ${escapeHtml(statusLabel(status))}
+
+
+<!-- =========================================================
+     ADMINISTRATION
+========================================================= -->
+
+<div id="adminApp">
+
+  <header>
+
+    <div>
+      <h1>
+        INDAMORA PLAY — Administration
+      </h1>
+
+      <span id="adminIdentity">
+        Administrateur
       </span>
-    `;
+    </div>
+
+    <div class="top-actions">
+
+      <button
+        class="secondary"
+        onclick="loadDashboard()"
+      >
+        Actualiser
+      </button>
+
+      <button
+        class="secondary"
+        onclick="logout()"
+      >
+        Déconnexion
+      </button>
+
+    </div>
+
+  </header>
+
+
+  <main class="container">
+
+    <!-- STATISTIQUES -->
+
+    <div class="stats">
+
+      <div class="stat">
+        <strong id="countArtists">0</strong>
+        <span>Artistes</span>
+      </div>
+
+      <div class="stat">
+        <strong id="countAlbums">0</strong>
+        <span>Albums</span>
+      </div>
+
+      <div class="stat">
+        <strong id="countTracks">0</strong>
+        <span>Musiques</span>
+      </div>
+
+      <div class="stat">
+        <strong id="countMedia">0</strong>
+        <span>Médias</span>
+      </div>
+
+      <div class="stat">
+        <strong id="countPending">0</strong>
+        <span>Soumissions</span>
+      </div>
+
+      <div class="stat">
+        <strong id="countPlays">0</strong>
+        <span>Écoutes</span>
+      </div>
+
+    </div>
+
+
+    <div id="globalMessage" class="message"></div>
+
+
+    <!-- =====================================================
+         ARTISTE
+    ====================================================== -->
+
+    <section class="section">
+
+      <h2>
+        👤 Ajouter un artiste
+      </h2>
+
+      <div class="info">
+        Un nouvel artiste est créé avec le statut
+        « pending ». Il ne sera pas visible publiquement
+        tant que tu ne l'auras pas publié.
+      </div>
+
+      <form id="artistForm">
+
+        <div class="form-grid">
+
+          <div>
+            <label>Nom de l'artiste *</label>
+            <input id="artistName" required>
+          </div>
+
+          <div>
+            <label>Ville</label>
+            <input id="artistCity" placeholder="Bangui">
+          </div>
+
+          <div>
+            <label>Région</label>
+            <input id="artistRegion">
+          </div>
+
+          <div>
+            <label>Langue</label>
+            <input
+              id="artistLanguage"
+              placeholder="Sango, français..."
+            >
+          </div>
+
+          <div>
+            <label>Genre musical</label>
+            <input
+              id="artistGenre"
+              placeholder="Afrobeat, gospel..."
+            >
+          </div>
+
+          <div>
+            <label>URL de la photo</label>
+            <input
+              id="artistAvatar"
+              type="url"
+              placeholder="https://..."
+            >
+          </div>
+
+          <div class="full-width">
+
+            <label>Biographie</label>
+
+            <textarea id="artistBio"></textarea>
+
+          </div>
+
+        </div>
+
+        <button
+          class="primary"
+          type="submit"
+        >
+          Ajouter l'artiste
+        </button>
+
+      </form>
+
+    </section>
+
+
+    <!-- =====================================================
+         ALBUM
+    ====================================================== -->
+
+    <section class="section">
+
+      <h2>
+        💿 Ajouter un album / EP / single
+      </h2>
+
+      <form id="albumForm">
+
+        <div class="form-grid">
+
+          <div>
+
+            <label>Artiste *</label>
+
+            <select
+              id="albumArtist"
+              required
+            ></select>
+
+          </div>
+
+          <div>
+
+            <label>Titre *</label>
+
+            <input
+              id="albumTitle"
+              required
+            >
+
+          </div>
+
+          <div>
+
+            <label>Type</label>
+
+            <select id="albumType">
+
+              <option value="album">
+                Album
+              </option>
+
+              <option value="ep">
+                EP
+              </option>
+
+              <option value="single">
+                Single
+              </option>
+
+            </select>
+
+          </div>
+
+          <div>
+
+            <label>Date de sortie</label>
+
+            <input
+              id="albumReleaseDate"
+              type="date"
+            >
+
+          </div>
+
+          <div>
+
+            <label>URL de la pochette</label>
+
+            <input
+              id="albumCover"
+              type="url"
+              placeholder="https://..."
+            >
+
+          </div>
+
+          <div class="full-width">
+
+            <label>Description</label>
+
+            <textarea id="albumDescription"></textarea>
+
+          </div>
+
+        </div>
+
+        <button
+          class="primary"
+          type="submit"
+        >
+          Ajouter l'album
+        </button>
+
+      </form>
+
+    </section>
+
+
+    <!-- =====================================================
+         MUSIQUE
+    ====================================================== -->
+
+    <section class="section">
+
+      <h2>
+        🎵 Ajouter une musique
+      </h2>
+
+      <div class="info">
+        Le morceau sera créé en brouillon. Tu pourras ensuite
+        le publier depuis le tableau ci-dessous.
+      </div>
+
+      <form id="trackForm">
+
+        <div class="form-grid">
+
+          <div>
+
+            <label>Artiste *</label>
+
+            <select
+              id="trackArtist"
+              required
+            ></select>
+
+          </div>
+
+          <div>
+
+            <label>Album</label>
+
+            <select id="trackAlbum">
+              <option value="">
+                Aucun album
+              </option>
+            </select>
+
+          </div>
+
+          <div>
+
+            <label>Titre *</label>
+
+            <input
+              id="trackTitle"
+              required
+            >
+
+          </div>
+
+          <div>
+
+            <label>Genre</label>
+
+            <input id="trackGenre">
+
+          </div>
+
+          <div>
+
+            <label>Langue</label>
+
+            <input id="trackLanguage">
+
+          </div>
+
+          <div>
+
+            <label>Ville</label>
+
+            <input id="trackCity">
+
+          </div>
+
+          <div>
+
+            <label>Région</label>
+
+            <input id="trackRegion">
+
+          </div>
+
+          <div>
+
+            <label>Durée en secondes</label>
+
+            <input
+              id="trackDuration"
+              type="number"
+              min="0"
+            >
+
+          </div>
+
+          <div class="full-width">
+
+            <label>
+              Lien vers le fichier audio (URL)
+            </label>
+
+            <input
+              id="trackAudio"
+              type="url"
+              placeholder="https://..."
+            >
+
+            <small>
+              Vous pouvez héberger votre fichier sur
+              YouTube, SoundCloud, Audiomack ou Google Drive,
+              puis coller le lien ici.
+            </small>
+
+          </div>
+
+        </div>
+
+        <button
+          class="primary"
+          type="submit"
+        >
+          Ajouter la musique
+        </button>
+
+      </form>
+
+    </section>
+
+
+    <!-- =====================================================
+         MEDIA
+    ====================================================== -->
+
+    <section class="section">
+
+      <h2>
+        🎬 Ajouter un clip / podcast
+      </h2>
+
+      <form id="mediaForm">
+
+        <div class="form-grid">
+
+          <div>
+
+            <label>Artiste *</label>
+
+            <select
+              id="mediaArtist"
+              required
+            ></select>
+
+          </div>
+
+          <div>
+
+            <label>Titre *</label>
+
+            <input
+              id="mediaTitle"
+              required
+            >
+
+          </div>
+
+          <div>
+
+            <label>Type</label>
+
+            <select id="mediaType">
+
+              <option value="video">
+                Clip vidéo
+              </option>
+
+              <option value="podcast">
+                Podcast
+              </option>
+
+              <option value="interview">
+                Interview
+              </option>
+
+            </select>
+
+          </div>
+
+          <div>
+
+            <label>Lien du média</label>
+
+            <input
+              id="mediaUrl"
+              type="url"
+              placeholder="https://..."
+            >
+
+          </div>
+
+          <div class="full-width">
+
+            <label>Description</label>
+
+            <textarea id="mediaDescription"></textarea>
+
+          </div>
+
+        </div>
+
+        <button
+          class="primary"
+          type="submit"
+        >
+          Ajouter le média
+        </button>
+
+      </form>
+
+    </section>
+
+
+    <!-- =====================================================
+         ARTISTES
+    ====================================================== -->
+
+    <section class="section">
+
+      <h2>
+        👥 Artistes
+      </h2>
+
+      <div
+        id="artistsTable"
+        class="table-wrapper"
+      >
+        <div class="empty">
+          Chargement...
+        </div>
+      </div>
+
+    </section>
+
+
+    <!-- =====================================================
+         ALBUMS
+    ====================================================== -->
+
+    <section class="section">
+
+      <h2>
+        💿 Albums
+      </h2>
+
+      <div
+        id="albumsTable"
+        class="table-wrapper"
+      >
+        <div class="empty">
+          Chargement...
+        </div>
+      </div>
+
+    </section>
+
+
+    <!-- =====================================================
+         MUSIQUES
+    ====================================================== -->
+
+    <section class="section">
+
+      <h2>
+        🎵 Musiques
+      </h2>
+
+      <div
+        id="tracksTable"
+        class="table-wrapper"
+      >
+        <div class="empty">
+          Chargement...
+        </div>
+      </div>
+
+    </section>
+
+
+    <!-- =====================================================
+         MEDIA
+    ====================================================== -->
+
+    <section class="section">
+
+      <h2>
+        🎬 Clips & podcasts
+      </h2>
+
+      <div
+        id="mediaTable"
+        class="table-wrapper"
+      >
+        <div class="empty">
+          Chargement...
+        </div>
+      </div>
+
+    </section>
+
+  </main>
+
+</div>
+
+
+<script>
+/* ============================================================
+   SUPABASE
+============================================================ */
+
+const SUPABASE_URL =
+  "https://adqsdnqkbitplbhbihiv.supabase.co";
+
+const SUPABASE_PUBLISHABLE_KEY =
+  "TA_CLE_PUBLISHABLE";
+
+const supabaseClient =
+  window.supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_PUBLISHABLE_KEY
+  );
+
+
+/* ============================================================
+   UTILITAIRES
+============================================================ */
+
+function escapeHtml(value) {
+
+  if (
+    value === null ||
+    value === undefined
+  ) {
+    return "";
   }
-  function showError(elementId, message) {
-    const el = document.getElementById(elementId);
-    el.textContent = message;
-    el.style.display = "block";
+
+  return String(value)
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#039;");
+}
+
+
+function slugify(value) {
+
+  return String(value || "")
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "");
+}
+
+
+function formatNumber(value) {
+
+  return new Intl.NumberFormat("fr-FR")
+    .format(Number(value || 0));
+
+}
+
+
+function showMessage(message) {
+
+  const box =
+    document.getElementById("globalMessage");
+
+  box.textContent = message;
+  box.style.display = "block";
+
+  setTimeout(() => {
+    box.style.display = "none";
+  }, 5000);
+}
+
+
+function showLoginError(message) {
+
+  const box =
+    document.getElementById("loginError");
+
+  box.textContent = message;
+  box.style.display = "block";
+
+}
+
+
+function hideLoginError() {
+
+  const box =
+    document.getElementById("loginError");
+
+  box.textContent = "";
+  box.style.display = "none";
+
+}
+
+
+function statusBadge(status) {
+
+  const safeStatus =
+    status || "draft";
+
+  let label = safeStatus;
+
+  if (safeStatus === "published") {
+    label = "Publié";
   }
-  function hideError(elementId) {
-    const el = document.getElementById(elementId);
-    el.style.display = "none";
+
+  if (safeStatus === "pending") {
+    label = "En attente";
   }
-  function showMessage(message) {
-    const el = document.getElementById("globalMessage");
-    el.textContent = message;
-    el.style.display = "block";
-    setTimeout(() => {
-      el.style.display = "none";
-    }, 4000);
+
+  if (safeStatus === "draft") {
+    label = "Brouillon";
   }
-  /* =========================================================
-     AUTHENTIFICATION
-     ========================================================= */
-  async function checkAdmin() {
+
+  if (safeStatus === "rejected") {
+    label = "Rejeté";
+  }
+
+  return `
+    <span class="status status-${escapeHtml(safeStatus)}">
+      ${escapeHtml(label)}
+    </span>
+  `;
+}
+
+
+/* ============================================================
+   AUTHENTIFICATION
+============================================================ */
+
+async function login(email, password) {
+
+  const button =
+    document.getElementById("loginButton");
+
+  hideLoginError();
+
+  button.disabled = true;
+  button.textContent = "Connexion...";
+
+  try {
+
     const {
-      data: { user }
-    } = await supabase.auth.getUser();
-    if (!user) {
-      document.getElementById("loginScreen").style.display = "block";
-      document.getElementById("adminApp").style.display = "none";
-      return false;
-    }
-    const { data: profile, error } =
-      await supabase
-        .from("profiles")
-        .select("display_name, role")
-        .eq("id", user.id)
-        .single();
-    if (error || !profile || profile.role !== "admin") {
-      await supabase.auth.signOut();
-      document.getElementById("loginScreen").style.display = "block";
-      document.getElementById("adminApp").style.display = "none";
-      showError(
-        "loginError",
-        "Accès refusé : ce compte n'est pas administrateur."
-      );
-      return false;
-    }
-    document.getElementById("loginScreen").style.display = "none";
-    document.getElementById("adminApp").style.display = "block";
-    document.getElementById("adminIdentity").textContent =
-      profile.display_name || user.email || "Administrateur";
-    await loadDashboard();
-    return true;
-  }
-  document
-    .getElementById("loginForm")
-    .addEventListener("submit", async function(event) {
-      event.preventDefault();
-      hideError("loginError");
-      const email =
-        document.getElementById("email").value.trim();
-      const password =
-        document.getElementById("password").value;
-      const {
-        error
-      } = await supabase.auth.signInWithPassword({
+      data,
+      error
+    } =
+      await supabaseClient.auth.signInWithPassword({
         email,
         password
       });
-      if (error) {
-        showError(
-          "loginError",
-          "Connexion impossible : " + error.message
-        );
-        return;
-      }
-      await checkAdmin();
-    });
-  async function logout() {
-    await supabase.auth.signOut();
-    document.getElementById("adminApp").style.display = "none";
-    document.getElementById("loginScreen").style.display = "block";
+
+    if (error) {
+
+      console.error("Erreur Supabase :", error);
+
+      throw new Error(
+        error.message ||
+        "La connexion a échoué."
+      );
+    }
+
+    if (!data || !data.user) {
+
+      throw new Error(
+        "Supabase n'a pas retourné d'utilisateur."
+      );
+    }
+
+    await checkAdmin(data.user);
+
+  } catch (error) {
+
+    console.error(error);
+
+    showLoginError(
+      "Connexion impossible : " +
+      (error.message || "Erreur inconnue.")
+    );
+
+  } finally {
+
+    button.disabled = false;
+    button.textContent = "Se connecter";
+
   }
-  /* =========================================================
-     DASHBOARD
-     ========================================================= */
-  async function loadDashboard() {
-    await Promise.all([
-      loadStats(),
-      loadArtists(),
-      loadAlbums(),
-      loadTracks(),
-      loadMedia(),
-      loadSubmissions(),
-      loadArtistSelectors()
-    ]);
+}
+
+
+async function checkAdmin(user) {
+
+  if (!user) {
+
+    showLoginError(
+      "Aucun utilisateur connecté."
+    );
+
+    return;
   }
-  async function loadStats() {
+
+  try {
+
+    const {
+      data: profile,
+      error
+    } =
+      await supabaseClient
+        .from("profiles")
+        .select(`
+          id,
+          display_name,
+          role
+        `)
+        .eq("id", user.id)
+        .maybeSingle();
+
+    if (error) {
+
+      console.error(
+        "Erreur profil :",
+        error
+      );
+
+      throw new Error(
+        "Impossible de vérifier ton profil : " +
+        error.message
+      );
+    }
+
+    if (!profile) {
+
+      await supabaseClient.auth.signOut();
+
+      throw new Error(
+        "Aucun profil administrateur n'a été trouvé pour ce compte."
+      );
+    }
+
+    if (profile.role !== "admin") {
+
+      await supabaseClient.auth.signOut();
+
+      throw new Error(
+        "Ce compte n'a pas le rôle administrateur."
+      );
+    }
+
+    document.getElementById(
+      "adminIdentity"
+    ).textContent =
+      profile.display_name ||
+      user.email ||
+      "Administrateur";
+
+    document.getElementById(
+      "loginScreen"
+    ).style.display = "none";
+
+    document.getElementById(
+      "adminApp"
+    ).style.display = "block";
+
+    await loadDashboard();
+
+  } catch (error) {
+
+    console.error(error);
+
+    showLoginError(
+      error.message ||
+      "Accès administrateur refusé."
+    );
+
+  }
+}
+
+
+async function restoreSession() {
+
+  try {
+
+    const {
+      data,
+      error
+    } =
+      await supabaseClient.auth.getSession();
+
+    if (error) {
+
+      console.error(
+        "Erreur session :",
+        error
+      );
+
+      return;
+    }
+
+    if (
+      data &&
+      data.session &&
+      data.session.user
+    ) {
+
+      await checkAdmin(
+        data.session.user
+      );
+    }
+
+  } catch (error) {
+
+    console.error(
+      "Erreur restauration session :",
+      error
+    );
+
+  }
+}
+
+
+async function logout() {
+
+  await supabaseClient.auth.signOut();
+
+  document.getElementById(
+    "adminApp"
+  ).style.display = "none";
+
+  document.getElementById(
+    "loginScreen"
+  ).style.display = "block";
+
+  document.getElementById(
+    "password"
+  ).value = "";
+
+  hideLoginError();
+
+}
+
+
+/* ============================================================
+   DASHBOARD
+============================================================ */
+
+async function countRows(table) {
+
+  const {
+    count,
+    error
+  } =
+    await supabaseClient
+      .from(table)
+      .select("*", {
+        count: "exact",
+        head: true
+      });
+
+  if (error) {
+    console.error(
+      "Erreur compteur " + table,
+      error
+    );
+
+    return 0;
+  }
+
+  return count || 0;
+}
+
+
+async function loadDashboard() {
+
+  try {
+
     const [
       artists,
       albums,
@@ -767,613 +1365,1209 @@
       media,
       submissions,
       plays
-    ] = await Promise.all([
-      supabase
-        .from("artists")
-        .select("*", { count: "exact", head: true }),
-      supabase
-        .from("albums")
-        .select("*", { count: "exact", head: true }),
-      supabase
-        .from("tracks")
-        .select("*", { count: "exact", head: true }),
-      supabase
-        .from("media")
-        .select("*", { count: "exact", head: true }),
-      supabase
-        .from("submissions")
-        .select("*", { count: "exact", head: true })
-        .eq("status", "pending"),
-      supabase
-        .from("plays")
-        .select("*", { count: "exact", head: true })
+    ] =
+      await Promise.all([
+        countRows("artists"),
+        countRows("albums"),
+        countRows("tracks"),
+        countRows("media"),
+        countRows("submissions"),
+        countRows("plays")
+      ]);
+
+    document.getElementById(
+      "countArtists"
+    ).textContent =
+      formatNumber(artists);
+
+    document.getElementById(
+      "countAlbums"
+    ).textContent =
+      formatNumber(albums);
+
+    document.getElementById(
+      "countTracks"
+    ).textContent =
+      formatNumber(tracks);
+
+    document.getElementById(
+      "countMedia"
+    ).textContent =
+      formatNumber(media);
+
+    document.getElementById(
+      "countPending"
+    ).textContent =
+      formatNumber(submissions);
+
+    document.getElementById(
+      "countPlays"
+    ).textContent =
+      formatNumber(plays);
+
+    await Promise.all([
+      loadArtists(),
+      loadAlbums(),
+      loadTracks(),
+      loadMedia(),
+      loadArtistSelects()
     ]);
-    document.getElementById("countArtists").textContent =
-      artists.count || 0;
-    document.getElementById("countAlbums").textContent =
-      albums.count || 0;
-    document.getElementById("countTracks").textContent =
-      tracks.count || 0;
-    document.getElementById("countMedia").textContent =
-      media.count || 0;
-    document.getElementById("countPending").textContent =
-      submissions.count || 0;
-    document.getElementById("countPlays").textContent =
-      plays.count || 0;
-  }
-  /* =========================================================
-     ARTISTES
-     ========================================================= */
-  async function loadArtists() {
-    const {
-      data,
+
+  } catch (error) {
+
+    console.error(
+      "Erreur dashboard :",
       error
-    } = await supabase
+    );
+
+    showMessage(
+      "Une erreur est survenue pendant le chargement."
+    );
+  }
+}
+
+
+/* ============================================================
+   ARTISTES
+============================================================ */
+
+async function loadArtists() {
+
+  const container =
+    document.getElementById(
+      "artistsTable"
+    );
+
+  const {
+    data,
+    error
+  } =
+    await supabaseClient
       .from("artists")
-      .select("*")
-      .order("created_at", { ascending: false });
-    const tbody =
-      document.getElementById("artistsTable");
-    if (error) {
-      tbody.innerHTML =
-        `<tr><td colspan="5">Erreur : ${escapeHtml(error.message)}</td></tr>`;
-      return;
-    }
-    if (!data || data.length === 0) {
-      tbody.innerHTML =
-        `<tr><td colspan="5" class="empty">Aucun artiste.</td></tr>`;
-      return;
-    }
-    tbody.innerHTML = data.map(artist => `
-      <tr>
-        <td>
-          <strong>${escapeHtml(artist.name)}</strong>
-        </td>
-        <td>
-          ${escapeHtml(artist.city || "—")}
-        </td>
-        <td>
-          ${escapeHtml(artist.genre || "—")}
-        </td>
-        <td>
-          ${statusHtml(artist.status)}
-        </td>
-        <td>
-          <div class="actions">
-            <button
-              class="success"
-              onclick="updateStatus('artists','${artist.id}','published')">
-              Publier
-            </button>
-            <button
-              class="danger"
-              onclick="updateStatus('artists','${artist.id}','rejected')">
-              Rejeter
-            </button>
-            <button
-              class="gray"
-              onclick="updateStatus('artists','${artist.id}','draft')">
-              Brouillon
-            </button>
-          </div>
-        </td>
-      </tr>
-    `).join("");
-  }
-  /* =========================================================
-     ALBUMS
-     ========================================================= */
-  async function loadAlbums() {
-    const {
-      data,
+      .select(`
+        id,
+        name,
+        city,
+        region,
+        genre,
+        language,
+        verified,
+        status,
+        created_at
+      `)
+      .order("created_at", {
+        ascending: false
+      });
+
+  if (error) {
+
+    console.error(
+      "Erreur artistes :",
       error
-    } = await supabase
+    );
+
+    container.innerHTML = `
+      <div class="empty">
+        Erreur : ${escapeHtml(error.message)}
+      </div>
+    `;
+
+    return;
+  }
+
+  if (!data || !data.length) {
+
+    container.innerHTML = `
+      <div class="empty">
+        Aucun artiste pour le moment.
+      </div>
+    `;
+
+    return;
+  }
+
+  container.innerHTML = `
+    <table>
+
+      <thead>
+
+        <tr>
+          <th>Artiste</th>
+          <th>Ville</th>
+          <th>Genre</th>
+          <th>Statut</th>
+          <th>Actions</th>
+        </tr>
+
+      </thead>
+
+      <tbody>
+
+        ${data.map(artist => `
+
+          <tr>
+
+            <td>
+              <strong>
+                ${escapeHtml(artist.name)}
+              </strong>
+              ${
+                artist.verified
+                  ? " ✓"
+                  : ""
+              }
+            </td>
+
+            <td>
+              ${escapeHtml(
+                artist.city || ""
+              )}
+            </td>
+
+            <td>
+              ${escapeHtml(
+                artist.genre || ""
+              )}
+            </td>
+
+            <td>
+              ${statusBadge(
+                artist.status
+              )}
+            </td>
+
+            <td>
+
+              <div class="actions">
+
+                <button
+                  class="success"
+                  onclick="changeStatus('artists','${artist.id}','published')"
+                >
+                  Publier
+                </button>
+
+                <button
+                  class="danger"
+                  onclick="changeStatus('artists','${artist.id}','rejected')"
+                >
+                  Rejeter
+                </button>
+
+                <button
+                  class="gray"
+                  onclick="changeStatus('artists','${artist.id}','draft')"
+                >
+                  Brouillon
+                </button>
+
+              </div>
+
+            </td>
+
+          </tr>
+
+        `).join("")}
+
+      </tbody>
+
+    </table>
+  `;
+}
+
+
+/* ============================================================
+   ALBUMS
+============================================================ */
+
+async function loadAlbums() {
+
+  const container =
+    document.getElementById(
+      "albumsTable"
+    );
+
+  const {
+    data,
+    error
+  } =
+    await supabaseClient
       .from("albums")
       .select(`
-        *,
+        id,
+        title,
+        type,
+        status,
+        release_date,
         artists (
           name
         )
       `)
-      .order("created_at", { ascending: false });
-    const tbody =
-      document.getElementById("albumsTable");
-    if (error) {
-      tbody.innerHTML =
-        `<tr><td colspan="5">Erreur : ${escapeHtml(error.message)}</td></tr>`;
-      return;
-    }
-    if (!data || data.length === 0) {
-      tbody.innerHTML =
-        `<tr><td colspan="5" class="empty">Aucun album.</td></tr>`;
-      return;
-    }
-    tbody.innerHTML = data.map(album => `
-      <tr>
-        <td>
-          <strong>${escapeHtml(album.title)}</strong>
-        </td>
-        <td>
-          ${escapeHtml(album.artists?.name || "—")}
-        </td>
-        <td>
-          ${escapeHtml(album.type || "album")}
-        </td>
-        <td>
-          ${statusHtml(album.status)}
-        </td>
-        <td>
-          <div class="actions">
-            <button
-              class="success"
-              onclick="updateStatus('albums','${album.id}','published')">
-              Publier
-            </button>
-            <button
-              class="danger"
-              onclick="updateStatus('albums','${album.id}','rejected')">
-              Rejeter
-            </button>
-            <button
-              class="gray"
-              onclick="updateStatus('albums','${album.id}','draft')">
-              Brouillon
-            </button>
-          </div>
-        </td>
-      </tr>
-    `).join("");
-  }
-  /* =========================================================
-     MUSIQUES
-     ========================================================= */
-  async function loadTracks() {
-    const {
-      data,
+      .order("created_at", {
+        ascending: false
+      });
+
+  if (error) {
+
+    console.error(
+      "Erreur albums :",
       error
-    } = await supabase
+    );
+
+    container.innerHTML = `
+      <div class="empty">
+        Erreur : ${escapeHtml(error.message)}
+      </div>
+    `;
+
+    return;
+  }
+
+  if (!data || !data.length) {
+
+    container.innerHTML = `
+      <div class="empty">
+        Aucun album pour le moment.
+      </div>
+    `;
+
+    return;
+  }
+
+  container.innerHTML = `
+    <table>
+
+      <thead>
+
+        <tr>
+          <th>Titre</th>
+          <th>Artiste</th>
+          <th>Type</th>
+          <th>Statut</th>
+          <th>Actions</th>
+        </tr>
+
+      </thead>
+
+      <tbody>
+
+        ${data.map(album => `
+
+          <tr>
+
+            <td>
+              <strong>
+                ${escapeHtml(album.title)}
+              </strong>
+            </td>
+
+            <td>
+              ${escapeHtml(
+                album.artists?.name ||
+                ""
+              )}
+            </td>
+
+            <td>
+              ${escapeHtml(
+                album.type || ""
+              )}
+            </td>
+
+            <td>
+              ${statusBadge(
+                album.status
+              )}
+            </td>
+
+            <td>
+
+              <div class="actions">
+
+                <button
+                  class="success"
+                  onclick="changeStatus('albums','${album.id}','published')"
+                >
+                  Publier
+                </button>
+
+                <button
+                  class="danger"
+                  onclick="changeStatus('albums','${album.id}','rejected')"
+                >
+                  Rejeter
+                </button>
+
+                <button
+                  class="gray"
+                  onclick="changeStatus('albums','${album.id}','draft')"
+                >
+                  Brouillon
+                </button>
+
+              </div>
+
+            </td>
+
+          </tr>
+
+        `).join("")}
+
+      </tbody>
+
+    </table>
+  `;
+}
+
+
+/* ============================================================
+   MUSIQUES
+============================================================ */
+
+async function loadTracks() {
+
+  const container =
+    document.getElementById(
+      "tracksTable"
+    );
+
+  const {
+    data,
+    error
+  } =
+    await supabaseClient
       .from("tracks")
       .select(`
-        *,
+        id,
+        title,
+        genre,
+        play_count,
+        status,
+        audio_url,
         artists (
-          name
-        ),
-        albums (
-          title
+          name,
+          status
         )
       `)
-      .order("created_at", { ascending: false });
-    const tbody =
-      document.getElementById("tracksTable");
-    if (error) {
-      tbody.innerHTML =
-        `<tr><td colspan="6">Erreur : ${escapeHtml(error.message)}</td></tr>`;
-      return;
-    }
-    if (!data || data.length === 0) {
-      tbody.innerHTML =
-        `<tr><td colspan="6" class="empty">Aucune musique.</td></tr>`;
-      return;
-    }
-    tbody.innerHTML = data.map(track => `
-      <tr>
-        <td>
-          <strong>${escapeHtml(track.title)}</strong>
-        </td>
-        <td>
-          ${escapeHtml(track.artists?.name || "—")}
-        </td>
-        <td>
-          ${escapeHtml(track.albums?.title || "—")}
-        </td>
-        <td>
-          ${Number(track.play_count || 0)}
-        </td>
-        <td>
-          ${statusHtml(track.status)}
-        </td>
-        <td>
-          <div class="actions">
-            <button
-              class="success"
-              onclick="updateStatus('tracks','${track.id}','published')">
-              Publier
-            </button>
-            <button
-              class="danger"
-              onclick="updateStatus('tracks','${track.id}','rejected')">
-              Rejeter
-            </button>
-            <button
-              class="gray"
-              onclick="updateStatus('tracks','${track.id}','draft')">
-              Brouillon
-            </button>
-          </div>
-        </td>
-      </tr>
-    `).join("");
-  }
-  /* =========================================================
-     MEDIA
-     ========================================================= */
-  async function loadMedia() {
-    const {
-      data,
+      .order("created_at", {
+        ascending: false
+      });
+
+  if (error) {
+
+    console.error(
+      "Erreur musiques :",
       error
-    } = await supabase
+    );
+
+    container.innerHTML = `
+      <div class="empty">
+        Erreur : ${escapeHtml(error.message)}
+      </div>
+    `;
+
+    return;
+  }
+
+  if (!data || !data.length) {
+
+    container.innerHTML = `
+      <div class="empty">
+        Aucune musique pour le moment.
+      </div>
+    `;
+
+    return;
+  }
+
+  container.innerHTML = `
+    <table>
+
+      <thead>
+
+        <tr>
+          <th>Titre</th>
+          <th>Artiste</th>
+          <th>Genre</th>
+          <th>Écoutes</th>
+          <th>Statut</th>
+          <th>Actions</th>
+        </tr>
+
+      </thead>
+
+      <tbody>
+
+        ${data.map(track => `
+
+          <tr>
+
+            <td>
+              <strong>
+                ${escapeHtml(track.title)}
+              </strong>
+            </td>
+
+            <td>
+              ${escapeHtml(
+                track.artists?.name ||
+                ""
+              )}
+            </td>
+
+            <td>
+              ${escapeHtml(
+                track.genre || ""
+              )}
+            </td>
+
+            <td>
+              ${formatNumber(
+                track.play_count
+              )}
+            </td>
+
+            <td>
+              ${statusBadge(
+                track.status
+              )}
+            </td>
+
+            <td>
+
+              <div class="actions">
+
+                <button
+                  class="success"
+                  onclick="changeStatus('tracks','${track.id}','published')"
+                >
+                  Publier
+                </button>
+
+                <button
+                  class="danger"
+                  onclick="changeStatus('tracks','${track.id}','rejected')"
+                >
+                  Rejeter
+                </button>
+
+                <button
+                  class="gray"
+                  onclick="changeStatus('tracks','${track.id}','draft')"
+                >
+                  Brouillon
+                </button>
+
+              </div>
+
+            </td>
+
+          </tr>
+
+        `).join("")}
+
+      </tbody>
+
+    </table>
+  `;
+}
+
+
+/* ============================================================
+   MEDIA
+============================================================ */
+
+async function loadMedia() {
+
+  const container =
+    document.getElementById(
+      "mediaTable"
+    );
+
+  const {
+    data,
+    error
+  } =
+    await supabaseClient
       .from("media")
       .select(`
-        *,
+        id,
+        title,
+        type,
+        media_url,
+        status,
         artists (
           name
         )
       `)
-      .order("created_at", { ascending: false });
-    const tbody =
-      document.getElementById("mediaTable");
-    if (error) {
-      tbody.innerHTML =
-        `<tr><td colspan="5">Erreur : ${escapeHtml(error.message)}</td></tr>`;
-      return;
-    }
-    if (!data || data.length === 0) {
-      tbody.innerHTML =
-        `<tr><td colspan="5" class="empty">Aucun média.</td></tr>`;
-      return;
-    }
-    tbody.innerHTML = data.map(media => `
-      <tr>
-        <td>
-          <strong>${escapeHtml(media.title)}</strong>
-        </td>
-        <td>
-          ${escapeHtml(media.artists?.name || "—")}
-        </td>
-        <td>
-          ${escapeHtml(media.type || "—")}
-        </td>
-        <td>
-          ${statusHtml(media.status)}
-        </td>
-        <td>
-          <div class="actions">
-            <button
-              class="success"
-              onclick="updateStatus('media','${media.id}','published')">
-              Publier
-            </button>
-            <button
-              class="danger"
-              onclick="updateStatus('media','${media.id}','rejected')">
-              Rejeter
-            </button>
-            <button
-              class="gray"
-              onclick="updateStatus('media','${media.id}','draft')">
-              Brouillon
-            </button>
-          </div>
-        </td>
-      </tr>
-    `).join("");
-  }
-  /* =========================================================
-     SOUMISSIONS
-     ========================================================= */
-  async function loadSubmissions() {
-    const {
-      data,
+      .order("created_at", {
+        ascending: false
+      });
+
+  if (error) {
+
+    console.error(
+      "Erreur médias :",
       error
-    } = await supabase
-      .from("submissions")
-      .select("*")
-      .order("created_at", { ascending: false });
-    const tbody =
-      document.getElementById("submissionsTable");
-    if (error) {
-      tbody.innerHTML =
-        `<tr><td colspan="6">Erreur : ${escapeHtml(error.message)}</td></tr>`;
-      return;
-    }
-    if (!data || data.length === 0) {
-      tbody.innerHTML =
-        `<tr><td colspan="6" class="empty">Aucune soumission.</td></tr>`;
-      return;
-    }
-    tbody.innerHTML = data.map(item => `
-      <tr>
-        <td>
-          <strong>${escapeHtml(item.artist_name || "—")}</strong>
-        </td>
-        <td>
-          ${escapeHtml(item.title || "—")}
-        </td>
-        <td>
-          ${escapeHtml(item.content_type || "—")}
-        </td>
-        <td>
-          ${escapeHtml(item.city || "—")}
-        </td>
-        <td>
-          ${statusHtml(item.status)}
-        </td>
-        <td>
-          <div class="actions">
-            <button
-              class="success"
-              onclick="updateStatus('submissions','${item.id}','approved')">
-              Approuver
-            </button>
-            <button
-              class="danger"
-              onclick="updateStatus('submissions','${item.id}','rejected')">
-              Rejeter
-            </button>
-            <button
-              class="gray"
-              onclick="updateStatus('submissions','${item.id}','pending')">
-              Attente
-            </button>
-          </div>
-        </td>
-      </tr>
-    `).join("");
+    );
+
+    container.innerHTML = `
+      <div class="empty">
+        Erreur : ${escapeHtml(error.message)}
+      </div>
+    `;
+
+    return;
   }
-  /* =========================================================
-     MISE À JOUR DES STATUTS
-     ========================================================= */
-  async function updateStatus(table, id, status) {
-    const {
+
+  if (!data || !data.length) {
+
+    container.innerHTML = `
+      <div class="empty">
+        Aucun média pour le moment.
+      </div>
+    `;
+
+    return;
+  }
+
+  container.innerHTML = `
+    <table>
+
+      <thead>
+
+        <tr>
+          <th>Titre</th>
+          <th>Artiste</th>
+          <th>Type</th>
+          <th>Statut</th>
+          <th>Actions</th>
+        </tr>
+
+      </thead>
+
+      <tbody>
+
+        ${data.map(media => `
+
+          <tr>
+
+            <td>
+              <strong>
+                ${escapeHtml(media.title)}
+              </strong>
+            </td>
+
+            <td>
+              ${escapeHtml(
+                media.artists?.name ||
+                ""
+              )}
+            </td>
+
+            <td>
+              ${escapeHtml(
+                media.type || ""
+              )}
+            </td>
+
+            <td>
+              ${statusBadge(
+                media.status
+              )}
+            </td>
+
+            <td>
+
+              <div class="actions">
+
+                <button
+                  class="success"
+                  onclick="changeStatus('media','${media.id}','published')"
+                >
+                  Publier
+                </button>
+
+                <button
+                  class="danger"
+                  onclick="changeStatus('media','${media.id}','rejected')"
+                >
+                  Rejeter
+                </button>
+
+                <button
+                  class="gray"
+                  onclick="changeStatus('media','${media.id}','draft')"
+                >
+                  Brouillon
+                </button>
+
+              </div>
+
+            </td>
+
+          </tr>
+
+        `).join("")}
+
+      </tbody>
+
+    </table>
+  `;
+}
+
+
+/* ============================================================
+   SELECTS ARTISTES / ALBUMS
+============================================================ */
+
+async function loadArtistSelects() {
+
+  const {
+    data,
+    error
+  } =
+    await supabaseClient
+      .from("artists")
+      .select(`
+        id,
+        name,
+        status
+      `)
+      .order("name", {
+        ascending: true
+      });
+
+  if (error) {
+
+    console.error(
+      "Erreur sélection artistes :",
       error
-    } = await supabase
+    );
+
+    return;
+  }
+
+  const selects = [
+    document.getElementById("albumArtist"),
+    document.getElementById("trackArtist"),
+    document.getElementById("mediaArtist")
+  ];
+
+  selects.forEach(select => {
+
+    select.innerHTML =
+      `<option value="">
+        Sélectionner un artiste
+      </option>` +
+      (data || []).map(artist => `
+        <option value="${artist.id}">
+          ${escapeHtml(artist.name)}
+          ${
+            artist.status !== "published"
+              ? " (" +
+                escapeHtml(
+                  artist.status
+                ) +
+                ")"
+              : ""
+          }
+        </option>
+      `).join("");
+
+  });
+
+  await loadAlbumSelect();
+}
+
+
+async function loadAlbumSelect() {
+
+  const select =
+    document.getElementById(
+      "trackAlbum"
+    );
+
+  const {
+    data,
+    error
+  } =
+    await supabaseClient
+      .from("albums")
+      .select(`
+        id,
+        title,
+        artists (
+          name
+        )
+      `)
+      .order("title", {
+        ascending: true
+      });
+
+  if (error) {
+
+    console.error(
+      "Erreur albums sélection :",
+      error
+    );
+
+    return;
+  }
+
+  select.innerHTML =
+    `<option value="">
+      Aucun album
+    </option>` +
+    (data || []).map(album => `
+      <option value="${album.id}">
+        ${escapeHtml(album.title)}
+        ${
+          album.artists?.name
+            ? " — " +
+              escapeHtml(
+                album.artists.name
+              )
+            : ""
+        }
+      </option>
+    `).join("");
+}
+
+
+/* ============================================================
+   CHANGEMENT DE STATUT
+============================================================ */
+
+async function changeStatus(
+  table,
+  id,
+  status
+) {
+
+  const {
+    error
+  } =
+    await supabaseClient
       .from(table)
       .update({
-        status: status
+        status
       })
       .eq("id", id);
-    if (error) {
-      alert(
-        "Impossible de modifier le statut :\n" +
-        error.message
-      );
-      return;
-    }
-    showMessage(
-      "Statut mis à jour : " +
-      statusLabel(status)
-    );
-    await loadDashboard();
-  }
-  /* =========================================================
-     SELECTEURS ARTISTES / ALBUMS
-     ========================================================= */
-  async function loadArtistSelectors() {
-    const {
-      data,
+
+  if (error) {
+
+    console.error(
+      "Erreur changement statut :",
       error
-    } = await supabase
-      .from("artists")
-      .select("id,name")
-      .order("name");
-    if (error || !data) return;
-    const selectors = [
-      "albumArtist",
-      "trackArtist",
-      "mediaArtist"
-    ];
-    selectors.forEach(id => {
-      const select =
-        document.getElementById(id);
-      select.innerHTML =
-        `<option value="">Sélectionner un artiste</option>`;
-      data.forEach(artist => {
-        const option =
-          document.createElement("option");
-        option.value = artist.id;
-        option.textContent = artist.name;
-        select.appendChild(option);
-      });
-    });
+    );
+
+    alert(
+      "Impossible de modifier le statut : " +
+      error.message
+    );
+
+    return;
   }
-  async function loadAlbumSelector(artistId) {
-    const select =
-      document.getElementById("trackAlbum");
-    select.innerHTML =
-      `<option value="">Aucun album</option>`;
-    if (!artistId) return;
-    const {
-      data
-    } = await supabase
-      .from("albums")
-      .select("id,title")
-      .eq("artist_id", artistId)
-      .order("title");
-    if (!data) return;
-    data.forEach(album => {
-      const option =
-        document.createElement("option");
-      option.value = album.id;
-      option.textContent = album.title;
-      select.appendChild(option);
-    });
-  }
-  document
-    .getElementById("trackArtist")
-    .addEventListener("change", function() {
-      loadAlbumSelector(this.value);
-    });
-  /* =========================================================
-     AJOUT ARTISTE
-     ========================================================= */
-  document
-    .getElementById("artistForm")
-    .addEventListener("submit", async function(event) {
+
+  showMessage(
+    "Statut modifié avec succès."
+  );
+
+  await loadDashboard();
+}
+
+
+/* ============================================================
+   AJOUT ARTISTE
+============================================================ */
+
+document
+  .getElementById("artistForm")
+  .addEventListener(
+    "submit",
+    async event => {
+
       event.preventDefault();
+
       const name =
-        document.getElementById("artistName").value.trim();
-      const {
-        data: existing
-      } = await supabase
-        .from("artists")
-        .select("id")
-        .eq("slug", createSlug(name))
-        .maybeSingle();
-      let slug =
-        createSlug(name);
-      if (existing) {
-        slug += "-" + Date.now();
-      }
-      const {
-        error
-      } = await supabase
-        .from("artists")
-        .insert({
-          name,
-          slug,
-          bio: document.getElementById("artistBio").value.trim(),
-          city: document.getElementById("artistCity").value.trim(),
-          region: document.getElementById("artistRegion").value.trim(),
-          language: document.getElementById("artistLanguage").value.trim(),
-          genre: document.getElementById("artistGenre").value.trim(),
-          avatar_url: document.getElementById("artistAvatar").value.trim(),
-          verified: false,
-          status: "pending"
-        });
-      if (error) {
-        alert("Erreur : " + error.message);
+        document
+          .getElementById("artistName")
+          .value
+          .trim();
+
+      if (!name) {
         return;
       }
-      this.reset();
-      showMessage("Artiste ajouté avec succès.");
-      await loadDashboard();
-    });
-  /* =========================================================
-     AJOUT ALBUM
-     ========================================================= */
-  document
-    .getElementById("albumForm")
-    .addEventListener("submit", async function(event) {
-      event.preventDefault();
-      const title =
-        document.getElementById("albumTitle").value.trim();
-      const artistId =
-        document.getElementById("albumArtist").value;
+
       const {
         error
-      } = await supabase
-        .from("albums")
-        .insert({
-          artist_id: artistId,
-          title,
-          slug: createSlug(title) + "-" + Date.now(),
-          type: document.getElementById("albumType").value,
-          cover_url: document.getElementById("albumCover").value.trim(),
-          release_date:
-            document.getElementById("albumReleaseDate").value || null,
-          description:
-            document.getElementById("albumDescription").value.trim(),
-          status: "draft"
-        });
+      } =
+        await supabaseClient
+          .from("artists")
+          .insert({
+            name,
+            slug: slugify(name),
+            bio:
+              document
+                .getElementById("artistBio")
+                .value
+                .trim() || null,
+            city:
+              document
+                .getElementById("artistCity")
+                .value
+                .trim() || null,
+            region:
+              document
+                .getElementById("artistRegion")
+                .value
+                .trim() || null,
+            language:
+              document
+                .getElementById("artistLanguage")
+                .value
+                .trim() || null,
+            genre:
+              document
+                .getElementById("artistGenre")
+                .value
+                .trim() || null,
+            avatar_url:
+              document
+                .getElementById("artistAvatar")
+                .value
+                .trim() || null,
+            verified: false,
+            status: "pending"
+          });
+
       if (error) {
-        alert("Erreur : " + error.message);
+
+        console.error(
+          "Erreur création artiste :",
+          error
+        );
+
+        alert(
+          "Impossible d'ajouter l'artiste : " +
+          error.message
+        );
+
         return;
       }
-      this.reset();
-      showMessage("Album ajouté en brouillon.");
+
+      event.target.reset();
+
+      showMessage(
+        "Artiste ajouté. Il est maintenant en attente de publication."
+      );
+
       await loadDashboard();
-    });
-  /* =========================================================
-     AJOUT MUSIQUE
-     ========================================================= */
-  document
-    .getElementById("trackForm")
-    .addEventListener("submit", async function(event) {
-      event.preventDefault();
-      const title =
-        document.getElementById("trackTitle").value.trim();
-      const artistId =
-        document.getElementById("trackArtist").value;
-      const {
-        error
-      } = await supabase
-        .from("tracks")
-        .insert({
-          artist_id: artistId,
-          album_id:
-            document.getElementById("trackAlbum").value || null,
-          title,
-          slug: createSlug(title) + "-" + Date.now(),
-          audio_url:
-            document.getElementById("trackAudio").value.trim(),
-          duration_seconds:
-            Number(document.getElementById("trackDuration").value) || 0,
-          genre:
-            document.getElementById("trackGenre").value.trim(),
-          language:
-            document.getElementById("trackLanguage").value.trim(),
-          city:
-            document.getElementById("trackCity").value.trim(),
-          region:
-            document.getElementById("trackRegion").value.trim(),
-          status: "draft",
-          play_count: 0
-        });
-      if (error) {
-        alert("Erreur : " + error.message);
-        return;
-      }
-      this.reset();
-      document.getElementById("trackAlbum").innerHTML =
-        `<option value="">Aucun album</option>`;
-      showMessage("Musique ajoutée en brouillon.");
-      await loadDashboard();
-    });
-  /* =========================================================
-     AJOUT MEDIA
-     ========================================================= */
-  document
-    .getElementById("mediaForm")
-    .addEventListener("submit", async function(event) {
-      event.preventDefault();
-      const {
-        error
-      } = await supabase
-        .from("media")
-        .insert({
-          artist_id:
-            document.getElementById("mediaArtist").value,
-          title:
-            document.getElementById("mediaTitle").value.trim(),
-          type:
-            document.getElementById("mediaType").value,
-          media_url:
-            document.getElementById("mediaUrl").value.trim(),
-          description:
-            document.getElementById("mediaDescription").value.trim(),
-          status: "draft"
-        });
-      if (error) {
-        alert("Erreur : " + error.message);
-        return;
-      }
-      this.reset();
-      showMessage("Média ajouté en brouillon.");
-      await loadDashboard();
-    });
-  /* =========================================================
-     DÉMARRAGE
-     ========================================================= */
-  supabase.auth.onAuthStateChange(async function(event) {
-    if (event === "SIGNED_IN") {
-      await checkAdmin();
     }
-    if (event === "SIGNED_OUT") {
-      document.getElementById("adminApp").style.display = "none";
-      document.getElementById("loginScreen").style.display = "block";
+  );
+
+
+/* ============================================================
+   AJOUT ALBUM
+============================================================ */
+
+document
+  .getElementById("albumForm")
+  .addEventListener(
+    "submit",
+    async event => {
+
+      event.preventDefault();
+
+      const title =
+        document
+          .getElementById("albumTitle")
+          .value
+          .trim();
+
+      const artistId =
+        document
+          .getElementById("albumArtist")
+          .value;
+
+      if (!title || !artistId) {
+        return;
+      }
+
+      const {
+        error
+      } =
+        await supabaseClient
+          .from("albums")
+          .insert({
+            artist_id: artistId,
+            title,
+            slug: slugify(title),
+            type:
+              document
+                .getElementById("albumType")
+                .value,
+            cover_url:
+              document
+                .getElementById("albumCover")
+                .value
+                .trim() || null,
+            release_date:
+              document
+                .getElementById("albumReleaseDate")
+                .value || null,
+            description:
+              document
+                .getElementById("albumDescription")
+                .value
+                .trim() || null,
+            status: "draft"
+          });
+
+      if (error) {
+
+        console.error(
+          "Erreur création album :",
+          error
+        );
+
+        alert(
+          "Impossible d'ajouter l'album : " +
+          error.message
+        );
+
+        return;
+      }
+
+      event.target.reset();
+
+      showMessage(
+        "Album ajouté en brouillon."
+      );
+
+      await loadDashboard();
     }
-  });
-  checkAdmin();
+  );
+
+
+/* ============================================================
+   AJOUT MUSIQUE
+============================================================ */
+
+document
+  .getElementById("trackForm")
+  .addEventListener(
+    "submit",
+    async event => {
+
+      event.preventDefault();
+
+      const title =
+        document
+          .getElementById("trackTitle")
+          .value
+          .trim();
+
+      const artistId =
+        document
+          .getElementById("trackArtist")
+          .value;
+
+      if (!title || !artistId) {
+        return;
+      }
+
+      const {
+        error
+      } =
+        await supabaseClient
+          .from("tracks")
+          .insert({
+            artist_id: artistId,
+            album_id:
+              document
+                .getElementById("trackAlbum")
+                .value || null,
+            title,
+            slug: slugify(title),
+            audio_url:
+              document
+                .getElementById("trackAudio")
+                .value
+                .trim() || null,
+            duration_seconds:
+              Number(
+                document
+                  .getElementById("trackDuration")
+                  .value
+              ) || null,
+            genre:
+              document
+                .getElementById("trackGenre")
+                .value
+                .trim() || null,
+            language:
+              document
+                .getElementById("trackLanguage")
+                .value
+                .trim() || null,
+            city:
+              document
+                .getElementById("trackCity")
+                .value
+                .trim() || null,
+            region:
+              document
+                .getElementById("trackRegion")
+                .value
+                .trim() || null,
+            status: "draft",
+            play_count: 0
+          });
+
+      if (error) {
+
+        console.error(
+          "Erreur création musique :",
+          error
+        );
+
+        alert(
+          "Impossible d'ajouter la musique : " +
+          error.message
+        );
+
+        return;
+      }
+
+      event.target.reset();
+
+      showMessage(
+        "Musique ajoutée en brouillon."
+      );
+
+      await loadDashboard();
+    }
+  );
+
+
+/* ============================================================
+   AJOUT MEDIA
+============================================================ */
+
+document
+  .getElementById("mediaForm")
+  .addEventListener(
+    "submit",
+    async event => {
+
+      event.preventDefault();
+
+      const title =
+        document
+          .getElementById("mediaTitle")
+          .value
+          .trim();
+
+      const artistId =
+        document
+          .getElementById("mediaArtist")
+          .value;
+
+      if (!title || !artistId) {
+        return;
+      }
+
+      const {
+        error
+      } =
+        await supabaseClient
+          .from("media")
+          .insert({
+            artist_id: artistId,
+            title,
+            type:
+              document
+                .getElementById("mediaType")
+                .value,
+            media_url:
+              document
+                .getElementById("mediaUrl")
+                .value
+                .trim() || null,
+            description:
+              document
+                .getElementById("mediaDescription")
+                .value
+                .trim() || null,
+            status: "draft"
+          });
+
+      if (error) {
+
+        console.error(
+          "Erreur création média :",
+          error
+        );
+
+        alert(
+          "Impossible d'ajouter le média : " +
+          error.message
+        );
+
+        return;
+      }
+
+      event.target.reset();
+
+      showMessage(
+        "Média ajouté en brouillon."
+      );
+
+      await loadDashboard();
+    }
+  );
+
+
+/* ============================================================
+   FORMULAIRE DE CONNEXION
+============================================================ */
+
+document
+  .getElementById("loginForm")
+  .addEventListener(
+    "submit",
+    async event => {
+
+      event.preventDefault();
+
+      const email =
+        document
+          .getElementById("email")
+          .value
+          .trim();
+
+      const password =
+        document
+          .getElementById("password")
+          .value;
+
+      await login(
+        email,
+        password
+      );
+    }
+  );
+
+
+/* ============================================================
+   INITIALISATION
+============================================================ */
+
+restoreSession();
+
 </script>
+
 </body>
 </html>
