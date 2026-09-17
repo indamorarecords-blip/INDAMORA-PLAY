@@ -20,13 +20,6 @@
       color: #102a43;
     }
 
-    button,
-    input,
-    textarea,
-    select {
-      font: inherit;
-    }
-
     header {
       background: #0757c9;
       color: white;
@@ -59,7 +52,7 @@
       background: white;
       border-radius: 18px;
       padding: 30px;
-      box-shadow: 0 8px 30px rgba(7, 87, 201, .12);
+      box-shadow: 0 8px 30px rgba(7,87,201,.12);
     }
 
     .logo {
@@ -94,17 +87,17 @@
       color: #102a43;
     }
 
-    textarea {
-      min-height: 100px;
-      resize: vertical;
-    }
-
     input:focus,
     textarea:focus,
     select:focus {
       outline: none;
       border-color: #0757c9;
-      box-shadow: 0 0 0 3px rgba(7, 87, 201, .10);
+      box-shadow: 0 0 0 3px rgba(7,87,201,.10);
+    }
+
+    textarea {
+      min-height: 100px;
+      resize: vertical;
     }
 
     button {
@@ -134,14 +127,14 @@
       color: #0757c9;
     }
 
-    .danger {
-      background: #ffe8e8;
-      color: #b42318;
-    }
-
     .success {
       background: #e5f8ee;
       color: #16794c;
+    }
+
+    .danger {
+      background: #ffe8e8;
+      color: #b42318;
     }
 
     .gray {
@@ -184,13 +177,43 @@
       font-size: 13px;
     }
 
+    .upload-box {
+      border: 2px dashed #9bb9dc;
+      border-radius: 13px;
+      padding: 18px;
+      background: #f8fbff;
+      margin-top: 8px;
+    }
+
+    .upload-box input[type="file"] {
+      border: 0;
+      padding: 5px 0;
+      background: transparent;
+    }
+
+    .file-name {
+      display: block;
+      margin-top: 8px;
+      color: #0757c9;
+      font-size: 13px;
+      font-weight: bold;
+      word-break: break-word;
+    }
+
+    .upload-progress {
+      display: none;
+      margin-top: 10px;
+      color: #0757c9;
+      font-size: 13px;
+      font-weight: bold;
+    }
+
     #adminApp {
       display: none;
     }
 
     .top-actions {
       display: flex;
-      align-items: center;
       gap: 10px;
       flex-wrap: wrap;
     }
@@ -206,7 +229,7 @@
       background: white;
       border-radius: 13px;
       padding: 18px;
-      box-shadow: 0 5px 20px rgba(20, 60, 110, .08);
+      box-shadow: 0 5px 20px rgba(20,60,110,.08);
     }
 
     .stat strong {
@@ -226,7 +249,7 @@
       border-radius: 15px;
       padding: 22px;
       margin-bottom: 22px;
-      box-shadow: 0 5px 20px rgba(20, 60, 110, .07);
+      box-shadow: 0 5px 20px rgba(20,60,110,.07);
     }
 
     .section h2 {
@@ -347,9 +370,9 @@
 
 <body>
 
-<!-- =========================================================
+<!-- =====================================================
      CONNEXION
-========================================================= -->
+===================================================== -->
 
 <div id="loginScreen">
 
@@ -404,9 +427,9 @@
 </div>
 
 
-<!-- =========================================================
-     ADMINISTRATION
-========================================================= -->
+<!-- =====================================================
+     ADMIN
+===================================================== -->
 
 <div id="adminApp">
 
@@ -444,8 +467,6 @@
 
 
   <main class="container">
-
-    <!-- STATISTIQUES -->
 
     <div class="stats">
 
@@ -485,9 +506,9 @@
     <div id="globalMessage" class="message"></div>
 
 
-    <!-- =====================================================
+    <!-- =================================================
          ARTISTE
-    ====================================================== -->
+    ================================================== -->
 
     <section class="section">
 
@@ -496,9 +517,7 @@
       </h2>
 
       <div class="info">
-        Un nouvel artiste est créé avec le statut
-        « pending ». Il ne sera pas visible publiquement
-        tant que tu ne l'auras pas publié.
+        Les nouveaux artistes sont créés en attente de publication.
       </div>
 
       <form id="artistForm">
@@ -522,27 +541,39 @@
 
           <div>
             <label>Langue</label>
-            <input
-              id="artistLanguage"
-              placeholder="Sango, français..."
-            >
+            <input id="artistLanguage" placeholder="Sango, français...">
           </div>
 
           <div>
             <label>Genre musical</label>
-            <input
-              id="artistGenre"
-              placeholder="Afrobeat, gospel..."
-            >
+            <input id="artistGenre" placeholder="Afrobeat, gospel...">
           </div>
 
           <div>
-            <label>URL de la photo</label>
-            <input
-              id="artistAvatar"
-              type="url"
-              placeholder="https://..."
-            >
+            <label>Photo de l'artiste</label>
+
+            <div class="upload-box">
+
+              <input
+                id="artistAvatarFile"
+                type="file"
+                accept="image/jpeg,image/png,image/webp"
+              >
+
+              <span
+                id="artistAvatarName"
+                class="file-name"
+              ></span>
+
+              <div
+                id="artistAvatarProgress"
+                class="upload-progress"
+              >
+                Envoi...
+              </div>
+
+            </div>
+
           </div>
 
           <div class="full-width">
@@ -567,15 +598,19 @@
     </section>
 
 
-    <!-- =====================================================
+    <!-- =================================================
          ALBUM
-    ====================================================== -->
+    ================================================== -->
 
     <section class="section">
 
       <h2>
         💿 Ajouter un album / EP / single
       </h2>
+
+      <div class="info">
+        Tu peux maintenant choisir directement la pochette depuis ton appareil.
+      </div>
 
       <form id="albumForm">
 
@@ -636,15 +671,37 @@
 
           </div>
 
-          <div>
+          <div class="full-width">
 
-            <label>URL de la pochette</label>
+            <label>
+              🖼️ Choisir une pochette
+            </label>
 
-            <input
-              id="albumCover"
-              type="url"
-              placeholder="https://..."
-            >
+            <div class="upload-box">
+
+              <input
+                id="albumCoverFile"
+                type="file"
+                accept="image/jpeg,image/png,image/webp"
+              >
+
+              <span
+                id="albumCoverName"
+                class="file-name"
+              ></span>
+
+              <div
+                id="albumCoverProgress"
+                class="upload-progress"
+              >
+                Envoi de la pochette...
+              </div>
+
+            </div>
+
+            <small>
+              JPG, PNG ou WebP — maximum 10 Mo.
+            </small>
 
           </div>
 
@@ -670,9 +727,9 @@
     </section>
 
 
-    <!-- =====================================================
+    <!-- =================================================
          MUSIQUE
-    ====================================================== -->
+    ================================================== -->
 
     <section class="section">
 
@@ -681,8 +738,9 @@
       </h2>
 
       <div class="info">
-        Le morceau sera créé en brouillon. Tu pourras ensuite
-        le publier depuis le tableau ci-dessous.
+        Choisis directement ton fichier audio. Il sera envoyé
+        dans le stockage sécurisé Supabase et le morceau sera
+        créé en brouillon.
       </div>
 
       <form id="trackForm">
@@ -770,19 +828,33 @@
           <div class="full-width">
 
             <label>
-              Lien vers le fichier audio (URL)
+              🎵 Choisir un fichier audio
             </label>
 
-            <input
-              id="trackAudio"
-              type="url"
-              placeholder="https://..."
-            >
+            <div class="upload-box">
+
+              <input
+                id="trackAudioFile"
+                type="file"
+                accept="audio/mpeg,audio/mp4,audio/wav,audio/ogg,audio/x-m4a"
+              >
+
+              <span
+                id="trackAudioName"
+                class="file-name"
+              ></span>
+
+              <div
+                id="trackAudioProgress"
+                class="upload-progress"
+              >
+                Envoi du fichier audio...
+              </div>
+
+            </div>
 
             <small>
-              Vous pouvez héberger votre fichier sur
-              YouTube, SoundCloud, Audiomack ou Google Drive,
-              puis coller le lien ici.
+              MP3, M4A, WAV ou OGG — maximum 50 Mo.
             </small>
 
           </div>
@@ -790,10 +862,11 @@
         </div>
 
         <button
+          id="trackSubmitButton"
           class="primary"
           type="submit"
         >
-          Ajouter la musique
+          Envoyer la musique
         </button>
 
       </form>
@@ -801,9 +874,9 @@
     </section>
 
 
-    <!-- =====================================================
+    <!-- =================================================
          MEDIA
-    ====================================================== -->
+    ================================================== -->
 
     <section class="section">
 
@@ -859,15 +932,33 @@
 
           </div>
 
-          <div>
+          <div class="full-width">
 
-            <label>Lien du média</label>
+            <label>
+              🎬 Choisir un fichier média
+            </label>
 
-            <input
-              id="mediaUrl"
-              type="url"
-              placeholder="https://..."
-            >
+            <div class="upload-box">
+
+              <input
+                id="mediaFile"
+                type="file"
+                accept="video/mp4,video/webm,audio/mpeg,audio/mp4,audio/ogg"
+              >
+
+              <span
+                id="mediaFileName"
+                class="file-name"
+              ></span>
+
+              <div
+                id="mediaFileProgress"
+                class="upload-progress"
+              >
+                Envoi du média...
+              </div>
+
+            </div>
 
           </div>
 
@@ -893,9 +984,9 @@
     </section>
 
 
-    <!-- =====================================================
+    <!-- =================================================
          ARTISTES
-    ====================================================== -->
+    ================================================== -->
 
     <section class="section">
 
@@ -915,9 +1006,9 @@
     </section>
 
 
-    <!-- =====================================================
+    <!-- =================================================
          ALBUMS
-    ====================================================== -->
+    ================================================== -->
 
     <section class="section">
 
@@ -937,9 +1028,9 @@
     </section>
 
 
-    <!-- =====================================================
+    <!-- =================================================
          MUSIQUES
-    ====================================================== -->
+    ================================================== -->
 
     <section class="section">
 
@@ -959,9 +1050,9 @@
     </section>
 
 
-    <!-- =====================================================
+    <!-- =================================================
          MEDIA
-    ====================================================== -->
+    ================================================== -->
 
     <section class="section">
 
@@ -986,15 +1077,23 @@
 
 
 <script>
+
 /* ============================================================
-   SUPABASE
+   CONFIGURATION SUPABASE
 ============================================================ */
 
 const SUPABASE_URL =
   "https://adqsdnqkbitplbhbihiv.supabase.co";
 
+/*
+ IMPORTANT :
+ Remplace uniquement la valeur ci-dessous par TA
+ Publishable key Supabase.
+ Ne mets jamais une clé sb_secret_ ici.
+*/
+
 const SUPABASE_PUBLISHABLE_KEY =
-  "sb_publishable_hHq8n88Rjhb8VaEVyenaVg_RsNoKkbJ";
+  "sb_publishable_dpjfWOYeNQRmP2nJq5FoMA_8NUuD0HF";
 
 const supabaseClient =
   window.supabase.createClient(
@@ -1004,7 +1103,7 @@ const supabaseClient =
 
 
 /* ============================================================
-   UTILITAIRES
+   OUTILS
 ============================================================ */
 
 function escapeHtml(value) {
@@ -1047,36 +1146,42 @@ function formatNumber(value) {
 function showMessage(message) {
 
   const box =
-    document.getElementById("globalMessage");
+    document.getElementById(
+      "globalMessage"
+    );
 
   box.textContent = message;
   box.style.display = "block";
 
   setTimeout(() => {
+
     box.style.display = "none";
-  }, 5000);
+
+  }, 6000);
 }
 
 
 function showLoginError(message) {
 
   const box =
-    document.getElementById("loginError");
+    document.getElementById(
+      "loginError"
+    );
 
   box.textContent = message;
   box.style.display = "block";
-
 }
 
 
 function hideLoginError() {
 
   const box =
-    document.getElementById("loginError");
+    document.getElementById(
+      "loginError"
+    );
 
   box.textContent = "";
   box.style.display = "none";
-
 }
 
 
@@ -1112,18 +1217,191 @@ function statusBadge(status) {
 
 
 /* ============================================================
+   AFFICHAGE NOM FICHIER
+============================================================ */
+
+function setupFileName(
+  inputId,
+  outputId
+) {
+
+  const input =
+    document.getElementById(inputId);
+
+  const output =
+    document.getElementById(outputId);
+
+  if (!input || !output) {
+    return;
+  }
+
+  input.addEventListener(
+    "change",
+    () => {
+
+      const file =
+        input.files &&
+        input.files[0];
+
+      output.textContent =
+        file
+          ? "Fichier sélectionné : " +
+            file.name
+          : "";
+
+    }
+  );
+}
+
+
+setupFileName(
+  "trackAudioFile",
+  "trackAudioName"
+);
+
+setupFileName(
+  "albumCoverFile",
+  "albumCoverName"
+);
+
+setupFileName(
+  "artistAvatarFile",
+  "artistAvatarName"
+);
+
+setupFileName(
+  "mediaFile",
+  "mediaFileName"
+);
+
+
+/* ============================================================
+   UPLOAD SUPABASE STORAGE
+============================================================ */
+
+async function uploadFile(
+  bucket,
+  file,
+  folder,
+  progressId
+) {
+
+  if (!file) {
+    return null;
+  }
+
+  const progress =
+    document.getElementById(progressId);
+
+  if (progress) {
+    progress.style.display = "block";
+    progress.textContent =
+      "Envoi en cours...";
+  }
+
+  const safeName =
+    file.name
+      .toLowerCase()
+      .replace(/[^a-z0-9._-]/g, "-");
+
+  const uniqueName =
+    Date.now() +
+    "-" +
+    Math.random()
+      .toString(36)
+      .substring(2, 9) +
+    "-" +
+    safeName;
+
+  const path =
+    folder +
+    "/" +
+    uniqueName;
+
+  const {
+    data,
+    error
+  } =
+    await supabaseClient
+      .storage
+      .from(bucket)
+      .upload(
+        path,
+        file,
+        {
+          cacheControl: "3600",
+          upsert: false,
+          contentType:
+            file.type || undefined
+        }
+      );
+
+  if (error) {
+
+    console.error(
+      "Erreur upload :",
+      error
+    );
+
+    if (progress) {
+      progress.textContent =
+        "Erreur : " +
+        error.message;
+    }
+
+    throw new Error(
+      "Upload impossible : " +
+      error.message
+    );
+  }
+
+  if (progress) {
+    progress.textContent =
+      "Upload terminé ✓";
+  }
+
+  /*
+   Les pochettes, avatars et médias sont publics.
+   Les fichiers audio restent privés.
+  */
+
+  if (bucket === "audio") {
+
+    return data.path;
+
+  }
+
+  const {
+    data: publicData
+  } =
+    supabaseClient
+      .storage
+      .from(bucket)
+      .getPublicUrl(data.path);
+
+  return publicData.publicUrl;
+}
+
+
+/* ============================================================
    AUTHENTIFICATION
 ============================================================ */
 
-async function login(email, password) {
+async function login(
+  email,
+  password
+) {
 
   const button =
-    document.getElementById("loginButton");
+    document.getElementById(
+      "loginButton"
+    );
 
   hideLoginError();
 
   button.disabled = true;
-  button.textContent = "Connexion...";
+  button.textContent =
+    "Connexion...";
 
   try {
 
@@ -1131,29 +1409,29 @@ async function login(email, password) {
       data,
       error
     } =
-      await supabaseClient.auth.signInWithPassword({
-        email,
-        password
-      });
+      await supabaseClient.auth
+        .signInWithPassword({
+          email,
+          password
+        });
 
     if (error) {
 
-      console.error("Erreur Supabase :", error);
-
       throw new Error(
-        error.message ||
-        "La connexion a échoué."
+        error.message
       );
     }
 
     if (!data || !data.user) {
 
       throw new Error(
-        "Supabase n'a pas retourné d'utilisateur."
+        "Aucun utilisateur retourné par Supabase."
       );
     }
 
-    await checkAdmin(data.user);
+    await checkAdmin(
+      data.user
+    );
 
   } catch (error) {
 
@@ -1161,28 +1439,21 @@ async function login(email, password) {
 
     showLoginError(
       "Connexion impossible : " +
-      (error.message || "Erreur inconnue.")
+      (error.message ||
+       "Erreur inconnue.")
     );
 
   } finally {
 
     button.disabled = false;
-    button.textContent = "Se connecter";
+    button.textContent =
+      "Se connecter";
 
   }
 }
 
 
 async function checkAdmin(user) {
-
-  if (!user) {
-
-    showLoginError(
-      "Aucun utilisateur connecté."
-    );
-
-    return;
-  }
 
   try {
 
@@ -1202,11 +1473,6 @@ async function checkAdmin(user) {
 
     if (error) {
 
-      console.error(
-        "Erreur profil :",
-        error
-      );
-
       throw new Error(
         "Impossible de vérifier ton profil : " +
         error.message
@@ -1218,7 +1484,7 @@ async function checkAdmin(user) {
       await supabaseClient.auth.signOut();
 
       throw new Error(
-        "Aucun profil administrateur n'a été trouvé pour ce compte."
+        "Aucun profil n'a été trouvé pour ce compte."
       );
     }
 
@@ -1227,7 +1493,7 @@ async function checkAdmin(user) {
       await supabaseClient.auth.signOut();
 
       throw new Error(
-        "Ce compte n'a pas le rôle administrateur."
+        "Ce compte n'a pas les droits administrateur."
       );
     }
 
@@ -1256,7 +1522,6 @@ async function checkAdmin(user) {
       error.message ||
       "Accès administrateur refusé."
     );
-
   }
 }
 
@@ -1269,7 +1534,8 @@ async function restoreSession() {
       data,
       error
     } =
-      await supabaseClient.auth.getSession();
+      await supabaseClient.auth
+        .getSession();
 
     if (error) {
 
@@ -1298,7 +1564,6 @@ async function restoreSession() {
       "Erreur restauration session :",
       error
     );
-
   }
 }
 
@@ -1320,12 +1585,11 @@ async function logout() {
   ).value = "";
 
   hideLoginError();
-
 }
 
 
 /* ============================================================
-   DASHBOARD
+   COMPTEURS
 ============================================================ */
 
 async function countRows(table) {
@@ -1342,8 +1606,10 @@ async function countRows(table) {
       });
 
   if (error) {
+
     console.error(
-      "Erreur compteur " + table,
+      "Erreur compteur " +
+      table,
       error
     );
 
@@ -1421,7 +1687,7 @@ async function loadDashboard() {
     );
 
     showMessage(
-      "Une erreur est survenue pendant le chargement."
+      "Erreur pendant le chargement du tableau de bord."
     );
   }
 }
@@ -1461,11 +1727,6 @@ async function loadArtists() {
 
   if (error) {
 
-    console.error(
-      "Erreur artistes :",
-      error
-    );
-
     container.innerHTML = `
       <div class="empty">
         Erreur : ${escapeHtml(error.message)}
@@ -1490,7 +1751,6 @@ async function loadArtists() {
     <table>
 
       <thead>
-
         <tr>
           <th>Artiste</th>
           <th>Ville</th>
@@ -1498,7 +1758,6 @@ async function loadArtists() {
           <th>Statut</th>
           <th>Actions</th>
         </tr>
-
       </thead>
 
       <tbody>
@@ -1542,21 +1801,33 @@ async function loadArtists() {
 
                 <button
                   class="success"
-                  onclick="changeStatus('artists','${artist.id}','published')"
+                  onclick="changeStatus(
+                    'artists',
+                    '${artist.id}',
+                    'published'
+                  )"
                 >
                   Publier
                 </button>
 
                 <button
                   class="danger"
-                  onclick="changeStatus('artists','${artist.id}','rejected')"
+                  onclick="changeStatus(
+                    'artists',
+                    '${artist.id}',
+                    'rejected'
+                  )"
                 >
                   Rejeter
                 </button>
 
                 <button
                   class="gray"
-                  onclick="changeStatus('artists','${artist.id}','draft')"
+                  onclick="changeStatus(
+                    'artists',
+                    '${artist.id}',
+                    'draft'
+                  )"
                 >
                   Brouillon
                 </button>
@@ -1599,6 +1870,7 @@ async function loadAlbums() {
         type,
         status,
         release_date,
+        cover_url,
         artists (
           name
         )
@@ -1608,11 +1880,6 @@ async function loadAlbums() {
       });
 
   if (error) {
-
-    console.error(
-      "Erreur albums :",
-      error
-    );
 
     container.innerHTML = `
       <div class="empty">
@@ -1663,8 +1930,7 @@ async function loadAlbums() {
 
             <td>
               ${escapeHtml(
-                album.artists?.name ||
-                ""
+                album.artists?.name || ""
               )}
             </td>
 
@@ -1686,21 +1952,33 @@ async function loadAlbums() {
 
                 <button
                   class="success"
-                  onclick="changeStatus('albums','${album.id}','published')"
+                  onclick="changeStatus(
+                    'albums',
+                    '${album.id}',
+                    'published'
+                  )"
                 >
                   Publier
                 </button>
 
                 <button
                   class="danger"
-                  onclick="changeStatus('albums','${album.id}','rejected')"
+                  onclick="changeStatus(
+                    'albums',
+                    '${album.id}',
+                    'rejected'
+                  )"
                 >
                   Rejeter
                 </button>
 
                 <button
                   class="gray"
-                  onclick="changeStatus('albums','${album.id}','draft')"
+                  onclick="changeStatus(
+                    'albums',
+                    '${album.id}',
+                    'draft'
+                  )"
                 >
                   Brouillon
                 </button>
@@ -1745,8 +2023,7 @@ async function loadTracks() {
         status,
         audio_url,
         artists (
-          name,
-          status
+          name
         )
       `)
       .order("created_at", {
@@ -1754,11 +2031,6 @@ async function loadTracks() {
       });
 
   if (error) {
-
-    console.error(
-      "Erreur musiques :",
-      error
-    );
 
     container.innerHTML = `
       <div class="empty">
@@ -1810,8 +2082,7 @@ async function loadTracks() {
 
             <td>
               ${escapeHtml(
-                track.artists?.name ||
-                ""
+                track.artists?.name || ""
               )}
             </td>
 
@@ -1839,21 +2110,33 @@ async function loadTracks() {
 
                 <button
                   class="success"
-                  onclick="changeStatus('tracks','${track.id}','published')"
+                  onclick="changeStatus(
+                    'tracks',
+                    '${track.id}',
+                    'published'
+                  )"
                 >
                   Publier
                 </button>
 
                 <button
                   class="danger"
-                  onclick="changeStatus('tracks','${track.id}','rejected')"
+                  onclick="changeStatus(
+                    'tracks',
+                    '${track.id}',
+                    'rejected'
+                  )"
                 >
                   Rejeter
                 </button>
 
                 <button
                   class="gray"
-                  onclick="changeStatus('tracks','${track.id}','draft')"
+                  onclick="changeStatus(
+                    'tracks',
+                    '${track.id}',
+                    'draft'
+                  )"
                 >
                   Brouillon
                 </button>
@@ -1906,11 +2189,6 @@ async function loadMedia() {
 
   if (error) {
 
-    console.error(
-      "Erreur médias :",
-      error
-    );
-
     container.innerHTML = `
       <div class="empty">
         Erreur : ${escapeHtml(error.message)}
@@ -1960,8 +2238,7 @@ async function loadMedia() {
 
             <td>
               ${escapeHtml(
-                media.artists?.name ||
-                ""
+                media.artists?.name || ""
               )}
             </td>
 
@@ -1983,21 +2260,33 @@ async function loadMedia() {
 
                 <button
                   class="success"
-                  onclick="changeStatus('media','${media.id}','published')"
+                  onclick="changeStatus(
+                    'media',
+                    '${media.id}',
+                    'published'
+                  )"
                 >
                   Publier
                 </button>
 
                 <button
                   class="danger"
-                  onclick="changeStatus('media','${media.id}','rejected')"
+                  onclick="changeStatus(
+                    'media',
+                    '${media.id}',
+                    'rejected'
+                  )"
                 >
                   Rejeter
                 </button>
 
                 <button
                   class="gray"
-                  onclick="changeStatus('media','${media.id}','draft')"
+                  onclick="changeStatus(
+                    'media',
+                    '${media.id}',
+                    'draft'
+                  )"
                 >
                   Brouillon
                 </button>
@@ -2018,7 +2307,7 @@ async function loadMedia() {
 
 
 /* ============================================================
-   SELECTS ARTISTES / ALBUMS
+   LISTES ARTISTES / ALBUMS
 ============================================================ */
 
 async function loadArtistSelects() {
@@ -2041,7 +2330,7 @@ async function loadArtistSelects() {
   if (error) {
 
     console.error(
-      "Erreur sélection artistes :",
+      "Erreur artistes :",
       error
     );
 
@@ -2060,20 +2349,23 @@ async function loadArtistSelects() {
       `<option value="">
         Sélectionner un artiste
       </option>` +
-      (data || []).map(artist => `
-        <option value="${artist.id}">
-          ${escapeHtml(artist.name)}
-          ${
-            artist.status !== "published"
-              ? " (" +
-                escapeHtml(
-                  artist.status
-                ) +
-                ")"
-              : ""
-          }
-        </option>
-      `).join("");
+
+      (data || [])
+        .map(artist => `
+          <option value="${artist.id}">
+            ${escapeHtml(artist.name)}
+            ${
+              artist.status !== "published"
+                ? " (" +
+                  escapeHtml(
+                    artist.status
+                  ) +
+                  ")"
+                : ""
+            }
+          </option>
+        `)
+        .join("");
 
   });
 
@@ -2108,7 +2400,7 @@ async function loadAlbumSelect() {
   if (error) {
 
     console.error(
-      "Erreur albums sélection :",
+      "Erreur albums :",
       error
     );
 
@@ -2119,24 +2411,27 @@ async function loadAlbumSelect() {
     `<option value="">
       Aucun album
     </option>` +
-    (data || []).map(album => `
-      <option value="${album.id}">
-        ${escapeHtml(album.title)}
-        ${
-          album.artists?.name
-            ? " — " +
-              escapeHtml(
-                album.artists.name
-              )
-            : ""
-        }
-      </option>
-    `).join("");
+
+    (data || [])
+      .map(album => `
+        <option value="${album.id}">
+          ${escapeHtml(album.title)}
+          ${
+            album.artists?.name
+              ? " — " +
+                escapeHtml(
+                  album.artists.name
+                )
+              : ""
+          }
+        </option>
+      `)
+      .join("");
 }
 
 
 /* ============================================================
-   CHANGEMENT DE STATUT
+   STATUT
 ============================================================ */
 
 async function changeStatus(
@@ -2157,11 +2452,6 @@ async function changeStatus(
 
   if (error) {
 
-    console.error(
-      "Erreur changement statut :",
-      error
-    );
-
     alert(
       "Impossible de modifier le statut : " +
       error.message
@@ -2179,7 +2469,7 @@ async function changeStatus(
 
 
 /* ============================================================
-   AJOUT ARTISTE
+   ARTISTE
 ============================================================ */
 
 document
@@ -2190,86 +2480,138 @@ document
 
       event.preventDefault();
 
-      const name =
-        document
-          .getElementById("artistName")
-          .value
-          .trim();
+      try {
 
-      if (!name) {
-        return;
-      }
+        const name =
+          document
+            .getElementById("artistName")
+            .value
+            .trim();
 
-      const {
-        error
-      } =
-        await supabaseClient
-          .from("artists")
-          .insert({
-            name,
-            slug: slugify(name),
-            bio:
-              document
-                .getElementById("artistBio")
-                .value
-                .trim() || null,
-            city:
-              document
-                .getElementById("artistCity")
-                .value
-                .trim() || null,
-            region:
-              document
-                .getElementById("artistRegion")
-                .value
-                .trim() || null,
-            language:
-              document
-                .getElementById("artistLanguage")
-                .value
-                .trim() || null,
-            genre:
-              document
-                .getElementById("artistGenre")
-                .value
-                .trim() || null,
-            avatar_url:
-              document
-                .getElementById("artistAvatar")
-                .value
-                .trim() || null,
-            verified: false,
-            status: "pending"
-          });
+        if (!name) {
+          return;
+        }
 
-      if (error) {
+        let avatarUrl = null;
 
-        console.error(
-          "Erreur création artiste :",
+        const avatarFile =
+          document
+            .getElementById(
+              "artistAvatarFile"
+            )
+            .files[0];
+
+        if (avatarFile) {
+
+          avatarUrl =
+            await uploadFile(
+              "avatars",
+              avatarFile,
+              "artists",
+              "artistAvatarProgress"
+            );
+        }
+
+        const {
+          data: userData
+        } =
+          await supabaseClient.auth
+            .getUser();
+
+        const {
           error
+        } =
+          await supabaseClient
+            .from("artists")
+            .insert({
+
+              owner_id:
+                userData?.user?.id || null,
+
+              name,
+
+              slug:
+                slugify(name),
+
+              bio:
+                document
+                  .getElementById(
+                    "artistBio"
+                  )
+                  .value
+                  .trim() || null,
+
+              city:
+                document
+                  .getElementById(
+                    "artistCity"
+                  )
+                  .value
+                  .trim() || null,
+
+              region:
+                document
+                  .getElementById(
+                    "artistRegion"
+                  )
+                  .value
+                  .trim() || null,
+
+              language:
+                document
+                  .getElementById(
+                    "artistLanguage"
+                  )
+                  .value
+                  .trim() || null,
+
+              genre:
+                document
+                  .getElementById(
+                    "artistGenre"
+                  )
+                  .value
+                  .trim() || null,
+
+              avatar_url:
+                avatarUrl,
+
+              verified: false,
+
+              status: "pending"
+            });
+
+        if (error) {
+          throw error;
+        }
+
+        event.target.reset();
+
+        document.getElementById(
+          "artistAvatarName"
+        ).textContent = "";
+
+        showMessage(
+          "Artiste ajouté avec succès."
         );
+
+        await loadDashboard();
+
+      } catch (error) {
+
+        console.error(error);
 
         alert(
-          "Impossible d'ajouter l'artiste : " +
+          "Erreur artiste : " +
           error.message
         );
-
-        return;
       }
-
-      event.target.reset();
-
-      showMessage(
-        "Artiste ajouté. Il est maintenant en attente de publication."
-      );
-
-      await loadDashboard();
     }
   );
 
 
 /* ============================================================
-   AJOUT ALBUM
+   ALBUM
 ============================================================ */
 
 document
@@ -2280,79 +2622,123 @@ document
 
       event.preventDefault();
 
-      const title =
-        document
-          .getElementById("albumTitle")
-          .value
-          .trim();
+      try {
 
-      const artistId =
-        document
-          .getElementById("albumArtist")
-          .value;
+        const title =
+          document
+            .getElementById(
+              "albumTitle"
+            )
+            .value
+            .trim();
 
-      if (!title || !artistId) {
-        return;
-      }
+        const artistId =
+          document
+            .getElementById(
+              "albumArtist"
+            )
+            .value;
 
-      const {
-        error
-      } =
-        await supabaseClient
-          .from("albums")
-          .insert({
-            artist_id: artistId,
-            title,
-            slug: slugify(title),
-            type:
-              document
-                .getElementById("albumType")
-                .value,
-            cover_url:
-              document
-                .getElementById("albumCover")
-                .value
-                .trim() || null,
-            release_date:
-              document
-                .getElementById("albumReleaseDate")
-                .value || null,
-            description:
-              document
-                .getElementById("albumDescription")
-                .value
-                .trim() || null,
-            status: "draft"
-          });
+        if (!title || !artistId) {
+          return;
+        }
 
-      if (error) {
+        let coverUrl = null;
 
-        console.error(
-          "Erreur création album :",
+        const coverFile =
+          document
+            .getElementById(
+              "albumCoverFile"
+            )
+            .files[0];
+
+        if (coverFile) {
+
+          coverUrl =
+            await uploadFile(
+              "covers",
+              coverFile,
+              "albums",
+              "albumCoverProgress"
+            );
+        }
+
+        const {
           error
+        } =
+          await supabaseClient
+            .from("albums")
+            .insert({
+
+              artist_id:
+                artistId,
+
+              title,
+
+              slug:
+                slugify(title),
+
+              type:
+                document
+                  .getElementById(
+                    "albumType"
+                  )
+                  .value,
+
+              cover_url:
+                coverUrl,
+
+              release_date:
+                document
+                  .getElementById(
+                    "albumReleaseDate"
+                  )
+                  .value ||
+                null,
+
+              description:
+                document
+                  .getElementById(
+                    "albumDescription"
+                  )
+                  .value
+                  .trim() ||
+                null,
+
+              status: "draft"
+            });
+
+        if (error) {
+          throw error;
+        }
+
+        event.target.reset();
+
+        document.getElementById(
+          "albumCoverName"
+        ).textContent = "";
+
+        showMessage(
+          "Album ajouté en brouillon."
         );
+
+        await loadDashboard();
+
+      } catch (error) {
+
+        console.error(error);
 
         alert(
-          "Impossible d'ajouter l'album : " +
+          "Erreur album : " +
           error.message
         );
-
-        return;
       }
-
-      event.target.reset();
-
-      showMessage(
-        "Album ajouté en brouillon."
-      );
-
-      await loadDashboard();
     }
   );
 
 
 /* ============================================================
-   AJOUT MUSIQUE
+   MUSIQUE + UPLOAD AUDIO
 ============================================================ */
 
 document
@@ -2363,97 +2749,184 @@ document
 
       event.preventDefault();
 
-      const title =
-        document
-          .getElementById("trackTitle")
-          .value
-          .trim();
-
-      const artistId =
-        document
-          .getElementById("trackArtist")
-          .value;
-
-      if (!title || !artistId) {
-        return;
-      }
-
-      const {
-        error
-      } =
-        await supabaseClient
-          .from("tracks")
-          .insert({
-            artist_id: artistId,
-            album_id:
-              document
-                .getElementById("trackAlbum")
-                .value || null,
-            title,
-            slug: slugify(title),
-            audio_url:
-              document
-                .getElementById("trackAudio")
-                .value
-                .trim() || null,
-            duration_seconds:
-              Number(
-                document
-                  .getElementById("trackDuration")
-                  .value
-              ) || null,
-            genre:
-              document
-                .getElementById("trackGenre")
-                .value
-                .trim() || null,
-            language:
-              document
-                .getElementById("trackLanguage")
-                .value
-                .trim() || null,
-            city:
-              document
-                .getElementById("trackCity")
-                .value
-                .trim() || null,
-            region:
-              document
-                .getElementById("trackRegion")
-                .value
-                .trim() || null,
-            status: "draft",
-            play_count: 0
-          });
-
-      if (error) {
-
-        console.error(
-          "Erreur création musique :",
-          error
+      const button =
+        document.getElementById(
+          "trackSubmitButton"
         );
 
+      button.disabled = true;
+      button.textContent =
+        "Envoi en cours...";
+
+      try {
+
+        const title =
+          document
+            .getElementById(
+              "trackTitle"
+            )
+            .value
+            .trim();
+
+        const artistId =
+          document
+            .getElementById(
+              "trackArtist"
+            )
+            .value;
+
+        if (!title || !artistId) {
+
+          throw new Error(
+            "Le titre et l'artiste sont obligatoires."
+          );
+        }
+
+        const audioFile =
+          document
+            .getElementById(
+              "trackAudioFile"
+            )
+            .files[0];
+
+        if (!audioFile) {
+
+          throw new Error(
+            "Choisis un fichier audio avant de continuer."
+          );
+        }
+
+        if (
+          audioFile.size >
+          50 * 1024 * 1024
+        ) {
+
+          throw new Error(
+            "Le fichier audio dépasse 50 Mo."
+          );
+        }
+
+        const audioPath =
+          await uploadFile(
+            "audio",
+            audioFile,
+            "tracks",
+            "trackAudioProgress"
+          );
+
+        const {
+          error
+        } =
+          await supabaseClient
+            .from("tracks")
+            .insert({
+
+              artist_id:
+                artistId,
+
+              album_id:
+                document
+                  .getElementById(
+                    "trackAlbum"
+                  )
+                  .value ||
+                null,
+
+              title,
+
+              slug:
+                slugify(title),
+
+              audio_url:
+                audioPath,
+
+              duration_seconds:
+                Number(
+                  document
+                    .getElementById(
+                      "trackDuration"
+                    )
+                    .value
+                ) || null,
+
+              genre:
+                document
+                  .getElementById(
+                    "trackGenre"
+                  )
+                  .value
+                  .trim() ||
+                null,
+
+              language:
+                document
+                  .getElementById(
+                    "trackLanguage"
+                  )
+                  .value
+                  .trim() ||
+                null,
+
+              city:
+                document
+                  .getElementById(
+                    "trackCity"
+                  )
+                  .value
+                  .trim() ||
+                null,
+
+              region:
+                document
+                  .getElementById(
+                    "trackRegion"
+                  )
+                  .value
+                  .trim() ||
+                null,
+
+              status: "draft",
+
+              play_count: 0
+            });
+
+        if (error) {
+          throw error;
+        }
+
+        event.target.reset();
+
+        document.getElementById(
+          "trackAudioName"
+        ).textContent = "";
+
+        showMessage(
+          "🎵 Musique envoyée avec succès et enregistrée en brouillon."
+        );
+
+        await loadDashboard();
+
+      } catch (error) {
+
+        console.error(error);
+
         alert(
-          "Impossible d'ajouter la musique : " +
+          "Erreur musique : " +
           error.message
         );
 
-        return;
+      } finally {
+
+        button.disabled = false;
+        button.textContent =
+          "Envoyer la musique";
       }
-
-      event.target.reset();
-
-      showMessage(
-        "Musique ajoutée en brouillon."
-      );
-
-      await loadDashboard();
     }
   );
 
 
 /* ============================================================
-   AJOUT MEDIA
+   MEDIA
 ============================================================ */
 
 document
@@ -2464,74 +2937,122 @@ document
 
       event.preventDefault();
 
-      const title =
-        document
-          .getElementById("mediaTitle")
-          .value
-          .trim();
+      try {
 
-      const artistId =
-        document
-          .getElementById("mediaArtist")
-          .value;
+        const title =
+          document
+            .getElementById(
+              "mediaTitle"
+            )
+            .value
+            .trim();
 
-      if (!title || !artistId) {
-        return;
-      }
+        const artistId =
+          document
+            .getElementById(
+              "mediaArtist"
+            )
+            .value;
 
-      const {
-        error
-      } =
-        await supabaseClient
-          .from("media")
-          .insert({
-            artist_id: artistId,
-            title,
-            type:
-              document
-                .getElementById("mediaType")
-                .value,
-            media_url:
-              document
-                .getElementById("mediaUrl")
-                .value
-                .trim() || null,
-            description:
-              document
-                .getElementById("mediaDescription")
-                .value
-                .trim() || null,
-            status: "draft"
-          });
+        if (!title || !artistId) {
+          return;
+        }
 
-      if (error) {
+        const mediaFile =
+          document
+            .getElementById(
+              "mediaFile"
+            )
+            .files[0];
 
-        console.error(
-          "Erreur création média :",
+        let mediaUrl = null;
+
+        if (mediaFile) {
+
+          if (
+            mediaFile.size >
+            100 * 1024 * 1024
+          ) {
+
+            throw new Error(
+              "Le fichier média dépasse 100 Mo."
+            );
+          }
+
+          mediaUrl =
+            await uploadFile(
+              "media",
+              mediaFile,
+              "media",
+              "mediaFileProgress"
+            );
+        }
+
+        const {
           error
+        } =
+          await supabaseClient
+            .from("media")
+            .insert({
+
+              artist_id:
+                artistId,
+
+              title,
+
+              type:
+                document
+                  .getElementById(
+                    "mediaType"
+                  )
+                  .value,
+
+              media_url:
+                mediaUrl,
+
+              description:
+                document
+                  .getElementById(
+                    "mediaDescription"
+                  )
+                  .value
+                  .trim() ||
+                null,
+
+              status: "draft"
+            });
+
+        if (error) {
+          throw error;
+        }
+
+        event.target.reset();
+
+        document.getElementById(
+          "mediaFileName"
+        ).textContent = "";
+
+        showMessage(
+          "Média ajouté en brouillon."
         );
+
+        await loadDashboard();
+
+      } catch (error) {
+
+        console.error(error);
 
         alert(
-          "Impossible d'ajouter le média : " +
+          "Erreur média : " +
           error.message
         );
-
-        return;
       }
-
-      event.target.reset();
-
-      showMessage(
-        "Média ajouté en brouillon."
-      );
-
-      await loadDashboard();
     }
   );
 
 
 /* ============================================================
-   FORMULAIRE DE CONNEXION
+   CONNEXION
 ============================================================ */
 
 document
@@ -2544,13 +3065,17 @@ document
 
       const email =
         document
-          .getElementById("email")
+          .getElementById(
+            "email"
+          )
           .value
           .trim();
 
       const password =
         document
-          .getElementById("password")
+          .getElementById(
+            "password"
+          )
           .value;
 
       await login(
