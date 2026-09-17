@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>INDAMORA PLAY — Configuration paiements</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #f5f9ff;
+      color: #123;
+    }
+    header {
+      background: #0757b8;
+      color: white;
+      text-align: center;
+      padding: 22px;
+    }
+    .container {
+      max-width: 800px;
+      margin: 30px auto;
+      padding: 20px;
+    }
+    .card {
+      background: white;
+      padding: 25px;
+      border-radius: 16px;
+      box-shadow: 0 4px 18px rgba(0,0,0,.08);
+      margin-bottom: 20px;
+    }
+    h2 {
+      color: #0757b8;
+    }
+    code {
+      display: block;
+      background: #eef5ff;
+      padding: 14px;
+      border-radius: 10px;
+      word-break: break-all;
+      color: #064b9e;
+    }
+    .ok {
+      color: #176b2c;
+      font-weight: bold;
+    }
+    .warning {
+      color: #9a5a00;
+      font-weight: bold;
+    }
+    a {
+      color: #0757b8;
+      font-weight: bold;
+      text-decoration: none;
+    }
+  </style>
+</head>
+<body>
+<header>
+  <h1>🎧 INDAMORA PLAY</h1>
+  <p>Configuration sécurisée des paiements</p>
+</header>
+<div class="container">
+  <div class="card">
+    <h2>Webhook Stripe</h2>
+    <p class="ok">
+      ✓ La fonction serveur Stripe existe déjà.
+    </p>
+    <p>
+      Elle est destinée à enregistrer les abonnements et dons
+      dans la base INDAMORA PLAY.
+    </p>
+    <h3>Adresse du webhook</h3>
+    <code>
+https://adqsdnqkbitplbhbihiv.supabase.co/functions/v1/stripe-webhook
+    </code>
+  </div>
+  <div class="card">
+    <h2>Événements nécessaires</h2>
+    <ul>
+      <li>checkout.session.completed</li>
+      <li>customer.subscription.updated</li>
+      <li>customer.subscription.deleted</li>
+      <li>invoice.payment_failed</li>
+    </ul>
+  </div>
+  <div class="card">
+    <h2>Association avec le compte visiteur</h2>
+    <p>
+      Les Payment Links utilisent le paramètre
+      <strong>client_reference_id</strong>.
+    </p>
+    <p>
+      Il permet de rattacher le paiement au compte
+      INDAMORA PLAY connecté.
+    </p>
+    <p class="warning">
+      ⚠️ Ne jamais mettre une clé secrète Stripe dans un fichier HTML.
+    </p>
+  </div>
+  <div class="card">
+    <h2>Étape restante</h2>
+    <p>
+      Dans Stripe, il faut maintenant créer/activer le webhook
+      avec l'adresse ci-dessus et récupérer son
+      <strong>Signing secret</strong>.
+    </p>
+    <p>
+      Ce secret devra rester uniquement côté serveur Supabase.
+    </p>
+  </div>
+  <div class="card">
+    <a href="index.html">
+      ← Retour à INDAMORA PLAY
+    </a>
+  </div>
+</div>
+</body>
+</html>
