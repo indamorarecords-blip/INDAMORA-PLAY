@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>INDAMORA PLAY — Mes soutiens</title>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #f5f9ff;
+      color: #123;
+    }
+    header {
+      background: #0757b8;
+      color: white;
+      text-align: center;
+      padding: 22px;
+    }
+    header h1 {
+      margin: 0;
+    }
+    .container {
+      max-width: 850px;
+      margin: 30px auto;
+      padding: 20px;
+    }
+    .card {
+      background: white;
+      border-radius: 16px;
+      padding: 22px;
+      margin-bottom: 20px;
+      box-shadow: 0 4px 18px rgba(0,0,0,.08);
+    }
+    h2 {
+      color: #0757b8;
+    }
+    .payment {
+      border: 1px solid #dce7f5;
+      border-radius: 12px;
+      padding: 18px;
+      margin-top: 15px;
+    }
+    .status {
+      display: inline-block;
+      padding: 6px 10px;
+      border-radius: 20px;
+      background: #eaf3ff;
+      color: #0757b8;
+      font-weight: bold;
+      font-size: 13px;
+    }
+    .amount {
+      font-size: 22px;
+      font-weight: bold;
+      color: #0757b8;
+      margin: 10px 0;
+    }
+    button {
+      width: 100%;
+      border: 0;
+      border-radius: 10px;
+      padding: 13px;
+      background: #0757b8;
+      color: white;
+      font-size: 16px;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+    button:hover {
+      background: #064b9e;
+    }
+    .message {
+      padding: 14px;
+      border-radius: 10px;
+      background: #eaf3ff;
+      color: #0757b8;
+      margin-top: 15px;
+    }
+    .error {
+      background: #ffecec;
+      color: #a40000;
+    }
+    a {
+      color: #0757b8;
+      font-weight: bold;
+      text-decoration: none;
+    }
+  </style>
+</head>
+<body>
+<header>
+  <h1>🎧 INDAMORA PLAY</h1>
+  <p>Mes abonnements et mes dons</p>
+</header>
+<div class="container">
+  <div class="card">
+    <h2>Mon compte</h2>
+    <p id="accountInfo">
+      Vérification...
+    </p>
+    <button id="refreshBtn">
+      Actualiser
+    </button>
+  </div>
+  <div class="card">
+    <h2>❤️ Mes soutiens</h2>
+    <div id="payments">
+      Chargement...
+    </div>
+  </div>
+  <div class="card">
+    <a href="subscription-account.html">
+      ← Abonnements & dons
+    </a>
+    <br><br>
+    <a href="index.html">
+      ← Retour à INDAMORA PLAY
+    </a>
+  </div>
+</div>
+<script>
+  const SUPABASE_URL =
+    "https://adqsdnqkbitplbhbihiv.supabase.co";
+  const SUPABASE_KEY =
+    "sb_publishable_dpjfWOYeNQRmP2nJq5FoMA_8NUuD0HF";
+  const db = window.supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_KEY
+  );
+  const accountInfo =
+    document.getElementById("accountInfo");
+  const payments =
+    document.getElementById("payments");
+  const refreshBtn =
+    document.getElementById("refreshBtn");
+  async function loadPayments() {
+    payments.innerHTML = "Chargement...";
+    const {
+      data: sessionData,
+      error: sessionError
+    } = await db.auth.getSession();
+    if (sessionError || !sessionData.session) {
+      accountInfo.innerHTML = `
+        <span class="message error">
+          Vous devez être connecté pour consulter vos soutiens.
+        </span>
+        <br><br>
+        <a href="account.html">
+          → Se connecter
+        </a>
+      `;
+      payments.innerHTML = "";
+      return;
+    }
+    const user =
+      sessionData.session.user;
+    accountInfo.innerHTML = `
+      Connecté avec :
+      <strong>${escapeHtml(user.email || "")}</strong>
+    `;
+    const {
+      data,
+      error
+    } = await db
+      .from("support_payments")
+      .select(`
+        id,
+        kind,
+        plan_code,
+        amount_total,
+        currency,
+        status,
+        current_period_start,
+        current_period_end,
+        created_at
+      `)
+      .order("created_at", {
+        ascending: false
+      });
+    if (error) {
+      payments.innerHTML = `
+        <div class="message error">
+          Impossible de charger vos soutiens pour le moment.
+        </div>
+      `;
+      return;
+    }
+    if (!data || data.length === 0) {
+      payments.innerHTML = `
+        <div class="message">
+          Aucun abonnement ou don enregistré pour le moment.
+          <br><br>
+          Vos futurs paiements apparaîtront ici.
+        </div>
+      `;
+      return;
+    }
+    payments.innerHTML =
+      data.map(renderPayment).join("");
+  }
+  function renderPayment(payment) {
+    const kind =
+      payment.kind === "subscription"
+        ? "Abonnement"
+        : "Don";
+    const amount =
+      payment.amount_total != null
+        ? formatAmount(
+            payment.amount_total,
+            payment.currency
+          )
+        : "Montant non disponible";
+    const status =
+      payment.status || "pending";
+    let period = "";
+    if (
+      payment.current_period_start &&
+      payment.current_period_end
+    ) {
+      period = `
+        <p>
+          Période :
+          ${formatDate(payment.current_period_start)}
+          →
+          ${formatDate(payment.current_period_end)}
+        </p>
+      `;
+    }
+    return `
+      <div class="payment">
+        <span class="status">
+          ${escapeHtml(status)}
+        </span>
+        <h3>
+          ${kind}
+        </h3>
+        <div class="amount">
+          ${amount}
+        </div>
+        ${period}
+        <p>
+          Enregistré le :
+          ${formatDate(payment.created_at)}
+        </p>
+      </div>
+    `;
+  }
+  function formatAmount(amount, currency) {
+    const value =
+      Number(amount) / 100;
+    const code =
+      (currency || "eur").toUpperCase();
+    return value.toLocaleString(
+      "fr-FR",
+      {
+        minimumFractionDigits:
+          code === "XAF" ? 0 : 2,
+        maximumFractionDigits:
+          code === "XAF" ? 0 : 2
+      }
+    ) + " " + code;
+  }
+  function formatDate(value) {
+    if (!value) return "";
+    return new Date(value).toLocaleDateString(
+      "fr-FR"
+    );
+  }
+  function escapeHtml(value) {
+    return String(value)
+      .replaceAll("&", "&amp;")
+      .replaceAll("<", "&lt;")
+      .replaceAll(">", "&gt;")
+      .replaceAll('"', "&quot;")
+      .replaceAll("'", "&#039;");
+  }
+  refreshBtn.addEventListener(
+    "click",
+    loadPayments
+  );
+  loadPayments();
+</script>
+</body>
+</html>
