@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Catalogue — INDAMORA PLAY</title>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      background: #f5f9ff;
+      color: #102a43;
+    }
+    header {
+      background: #0757b8;
+      color: white;
+      padding: 16px 20px;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+    .header-inner {
+      max-width: 1100px;
+      margin: auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 15px;
+    }
+    .logo {
+      font-size: 22px;
+      font-weight: bold;
+    }
+    .back {
+      color: white;
+      text-decoration: none;
+      font-weight: bold;
+    }
+    main {
+      max-width: 1100px;
+      margin: 30px auto;
+      padding: 0 18px;
+    }
+    h1 {
+      color: #073b7a;
+      margin-bottom: 8px;
+    }
+    .intro {
+      color: #627d98;
+      margin-bottom: 30px;
+    }
+    .section {
+      margin-bottom: 40px;
+    }
+    .section-title {
+      color: #073b7a;
+      font-size: 28px;
+      margin-bottom: 16px;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 18px;
+    }
+    .card {
+      background: white;
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 4px 16px rgba(0, 70, 140, 0.08);
+    }
+    .image {
+      width: 100%;
+      aspect-ratio: 1 / 1;
+      object-fit: cover;
+      background: #e7f0fb;
+    }
+    .placeholder {
+      width: 100%;
+      aspect-ratio: 1 / 1;
+      background: #e7f0fb;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 60px;
+    }
+    .card-body {
+      padding: 16px;
+    }
+    .card-title {
+      color: #073b7a;
+      font-weight: bold;
+      font-size: 18px;
+      margin-bottom: 8px;
+    }
+    .meta {
+      color: #627d98;
+      font-size: 14px;
+      line-height: 1.5;
+      margin-bottom: 12px;
+    }
+    .button {
+      display: inline-block;
+      background: #0757b8;
+      color: white;
+      text-decoration: none;
+      padding: 9px 13px;
+      border-radius: 9px;
+      font-weight: bold;
+      font-size: 14px;
+    }
+    .notice {
+      background: white;
+      border-radius: 14px;
+      padding: 18px;
+      color: #627d98;
+    }
+    footer {
+      text-align: center;
+      color: #627d98;
+      padding: 40px 20px;
+    }
+  </style>
+</head>
+<body>
+<header>
+  <div class="header-inner">
+    <div class="logo">🎧 INDAMORA PLAY</div>
+    <a class="back" href="index.html">← Accueil</a>
+  </div>
+</header>
+<main>
+  <h1>Catalogue public</h1>
+  <div class="intro">
+    Découvrez les artistes et albums publiés sur INDAMORA PLAY.
+  </div>
+  <section class="section">
+    <h2 class="section-title">🎤 Artistes</h2>
+    <div id="artists" class="grid">
+      <div class="notice">Chargement des artistes...</div>
+    </div>
+  </section>
+  <section class="section">
+    <h2 class="section-title">💿 Albums</h2>
+    <div id="albums" class="grid">
+      <div class="notice">Chargement des albums...</div>
+    </div>
+  </section>
+</main>
+<footer>
+  <strong>INDAMORA PLAY</strong><br>
+  INDAMORA RECORDS — Musique d’Afrique centrale 🇨🇫
+</footer>
+<script>
+  const SUPABASE_URL =
+    "https://adqsdnqkbitplbhbihiv.supabase.co";
+  const SUPABASE_KEY =
+    "sb_publishable_dpjfWOYeNQRmP2nJq5FoMA_8NUuD0HF";
+  const db = window.supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_KEY
+  );
+  async function loadArtists() {
+    const container =
+      document.getElementById("artists");
+    const { data, error } = await db
+      .from("artists")
+      .select(`
+        id,
+        name,
+        slug,
+        bio,
+        city,
+        region,
+        language,
+        genre,
+        avatar_url,
+        verified
+      `)
+      .eq("status", "published")
+      .order("name", {
+        ascending: true
+      });
+    if (error) {
+      console.error(error);
+      container.innerHTML =
+        '<div class="notice">Impossible de charger les artistes.</div>';
+      return;
+    }
+    if (!data || data.length === 0) {
+      container.innerHTML =
+        '<div class="notice">Aucun artiste publié pour le moment.</div>';
+      return;
+    }
+    container.innerHTML = "";
+    data.forEach(artist => {
+      const card =
+        document.createElement("div");
+      card.className = "card";
+      if (artist.avatar_url) {
+        const img =
+          document.createElement("img");
+        img.className = "image";
+        img.src = artist.avatar_url;
+        img.alt = artist.name;
+        card.appendChild(img);
+      } else {
+        const placeholder =
+          document.createElement("div");
+        placeholder.className = "placeholder";
+        placeholder.textContent = "🎤";
+        card.appendChild(placeholder);
+      }
+      const body =
+        document.createElement("div");
+      body.className = "card-body";
+      const title =
+        document.createElement("div");
+      title.className = "card-title";
+      title.textContent =
+        artist.name || "Artiste";
+      body.appendChild(title);
+      const meta =
+        document.createElement("div");
+      meta.className = "meta";
+      const parts = [];
+      if (artist.city) parts.push(artist.city);
+      if (artist.region) parts.push(artist.region);
+      if (artist.genre) parts.push(artist.genre);
+      if (artist.language) parts.push(artist.language);
+      meta.textContent =
+        parts.join(" · ");
+      body.appendChild(meta);
+      if (artist.verified) {
+        const verified =
+          document.createElement("div");
+        verified.className = "meta";
+        verified.textContent = "✓ Artiste vérifié";
+        body.appendChild(verified);
+      }
+      const link =
+        document.createElement("a");
+      link.className = "button";
+      link.textContent = "Voir le profil";
+      link.href =
+        "public-artist.html?id=" +
+        encodeURIComponent(artist.id);
+      body.appendChild(link);
+      card.appendChild(body);
+      container.appendChild(card);
+    });
+  }
+  async function loadAlbums() {
+    const container =
+      document.getElementById("albums");
+    const { data, error } = await db
+      .from("albums")
+      .select(`
+        id,
+        title,
+        slug,
+        type,
+        cover_url,
+        release_date,
+        description,
+        artist_id,
+        artists (
+          id,
+          name,
+          status
+        )
+      `)
+      .eq("status", "published")
+      .order("created_at", {
+        ascending: false
+      });
+    if (error) {
+      console.error(error);
+      container.innerHTML =
+        '<div class="notice">Impossible de charger les albums.</div>';
+      return;
+    }
+    const albums =
+      (data || []).filter(album =>
+        album.artists &&
+        album.artists.status === "published"
+      );
+    if (albums.length === 0) {
+      container.innerHTML =
+        '<div class="notice">Aucun album publié pour le moment.</div>';
+      return;
+    }
+    container.innerHTML = "";
+    albums.forEach(album => {
+      const card =
+        document.createElement("div");
+      card.className = "card";
+      if (album.cover_url) {
+        const img =
+          document.createElement("img");
+        img.className = "image";
+        img.src = album.cover_url;
+        img.alt = album.title;
+        card.appendChild(img);
+      } else {
+        const placeholder =
+          document.createElement("div");
+        placeholder.className = "placeholder";
+        placeholder.textContent = "💿";
+        card.appendChild(placeholder);
+      }
+      const body =
+        document.createElement("div");
+      body.className = "card-body";
+      const title =
+        document.createElement("div");
+      title.className = "card-title";
+      title.textContent =
+        album.title || "Album";
+      body.appendChild(title);
+      const meta =
+        document.createElement("div");
+      meta.className = "meta";
+      const parts = [];
+      if (album.artists?.name) {
+        parts.push(album.artists.name);
+      }
+      if (album.type) {
+        parts.push(album.type.toUpperCase());
+      }
+      if (album.release_date) {
+        parts.push(
+          new Date(album.release_date)
+            .toLocaleDateString("fr-FR")
+        );
+      }
+      meta.textContent =
+        parts.join(" · ");
+      body.appendChild(meta);
+      const link =
+        document.createElement("a");
+      link.className = "button";
+      link.textContent = "Voir l’album";
+      link.href =
+        "public-album.html?id=" +
+        encodeURIComponent(album.id);
+      body.appendChild(link);
+      card.appendChild(body);
+      container.appendChild(card);
+    });
+  }
+  loadArtists();
+  loadAlbums();
+</script>
+</body>
+</html>
