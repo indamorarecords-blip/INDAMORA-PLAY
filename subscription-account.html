@@ -3,12 +3,10 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>INDAMORA PLAY — Abonnement</title>
+  <title>INDAMORA PLAY — Abonnement & soutien</title>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <style>
-    * {
-      box-sizing: border-box;
-    }
+    * { box-sizing: border-box; }
     body {
       margin: 0;
       font-family: Arial, sans-serif;
@@ -18,17 +16,10 @@
     header {
       background: #0757b8;
       color: white;
-      padding: 18px;
       text-align: center;
+      padding: 22px;
     }
-    header h1 {
-      margin: 0;
-      font-size: 24px;
-    }
-    header p {
-      margin: 6px 0 0;
-      opacity: .9;
-    }
+    header h1 { margin: 0; }
     .container {
       max-width: 900px;
       margin: 30px auto;
@@ -36,24 +27,22 @@
     }
     .account {
       background: white;
-      border-radius: 16px;
       padding: 20px;
+      border-radius: 16px;
       box-shadow: 0 4px 18px rgba(0,0,0,.08);
-      margin-bottom: 24px;
       text-align: center;
+      margin-bottom: 25px;
     }
-    .account strong {
-      color: #0757b8;
-    }
+    .account strong { color: #0757b8; }
     .plans {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
       gap: 20px;
     }
     .card {
       background: white;
+      padding: 25px;
       border-radius: 16px;
-      padding: 24px;
       box-shadow: 0 4px 18px rgba(0,0,0,.08);
       text-align: center;
     }
@@ -62,30 +51,25 @@
       margin-top: 0;
     }
     .price {
-      font-size: 28px;
+      font-size: 27px;
       font-weight: bold;
       margin: 18px 0;
     }
     button {
+      width: 100%;
       border: 0;
       border-radius: 10px;
-      padding: 13px 20px;
+      padding: 14px;
       background: #0757b8;
       color: white;
       font-size: 16px;
       cursor: pointer;
-      width: 100%;
     }
-    button:hover {
-      background: #064b9e;
-    }
-    .don {
-      margin-top: 20px;
-    }
+    button:hover { background: #064b9e; }
     .logout {
+      margin-top: 12px;
       background: #e8f1ff;
       color: #0757b8;
-      margin-top: 12px;
     }
     .message {
       margin-top: 15px;
@@ -97,16 +81,16 @@
       background: #ffecec;
       color: #a40000;
     }
-    .success {
-      background: #eaf8ee;
-      color: #176b2c;
-    }
-    a.back {
-      display: inline-block;
-      margin-top: 20px;
+    .info {
+      background: #eaf3ff;
       color: #0757b8;
-      text-decoration: none;
+    }
+    .back {
+      display: inline-block;
+      margin-top: 22px;
+      color: #0757b8;
       font-weight: bold;
+      text-decoration: none;
     }
   </style>
 </head>
@@ -117,8 +101,10 @@
 </header>
 <div class="container">
   <div class="account">
-    <div id="accountInfo">Vérification de votre compte...</div>
-    <button class="logout" id="logoutBtn" style="display:none;">
+    <div id="accountInfo">
+      Vérification du compte...
+    </div>
+    <button id="logoutBtn" class="logout" style="display:none;">
       Déconnexion
     </button>
     <div id="message" class="message"></div>
@@ -127,25 +113,29 @@
     <div class="card">
       <h2>🌍 Afrique</h2>
       <p>Pour les personnes vivant en Afrique.</p>
-      <div class="price">500 FCFA / mois</div>
-      <button onclick="subscribeAfrica()">
+      <div class="price">
+        500 FCFA / mois
+      </div>
+      <button id="africaBtn">
         S’abonner — 500 FCFA / mois
       </button>
     </div>
     <div class="card">
       <h2>🌎 Hors Afrique</h2>
       <p>Pour les personnes vivant hors d’Afrique.</p>
-      <div class="price">5 € / mois</div>
-      <button onclick="subscribeOutsideAfrica()">
+      <div class="price">
+        5 € / mois
+      </div>
+      <button id="outsideBtn">
         S’abonner — 5 € / mois
       </button>
     </div>
-    <div class="card don">
-      <h2>❤️ Faire un don</h2>
+    <div class="card">
+      <h2>❤️ Don</h2>
       <p>
-        Vous pouvez soutenir INDAMORA PLAY avec un don libre.
+        Soutenez INDAMORA PLAY et encouragez les artistes publiés.
       </p>
-      <button onclick="donate()">
+      <button id="donationBtn">
         Faire un don ❤️
       </button>
     </div>
@@ -165,43 +155,41 @@
   );
   const AFRICA_LINK =
     "https://buy.stripe.com/bJe8wQ3s76Fi92Gcdt0sU02";
-  const OUTSIDE_AFRICA_LINK =
+  const OUTSIDE_LINK =
     "https://buy.stripe.com/aFa9AU5Af2p2diW91h0sU00";
   const DONATION_LINK =
     "https://donate.stripe.com/3cIfZi1jZ2p21Ae91h0sU01";
-  const accountInfo = document.getElementById("accountInfo");
-  const logoutBtn = document.getElementById("logoutBtn");
-  const message = document.getElementById("message");
-  function showMessage(text, type = "success") {
+  const accountInfo =
+    document.getElementById("accountInfo");
+  const logoutBtn =
+    document.getElementById("logoutBtn");
+  const message =
+    document.getElementById("message");
+  function showMessage(text) {
     message.textContent = text;
-    message.className = "message " + type;
+    message.className = "message info";
     message.style.display = "block";
   }
-  async function checkAccount() {
+  async function loadAccount() {
     const {
-      data: { session },
+      data,
       error
     } = await db.auth.getSession();
-    if (error) {
-      accountInfo.innerHTML =
-        "<strong>Erreur de connexion.</strong>";
-      showMessage(error.message, "error");
-      return;
-    }
-    if (!session) {
+    if (error || !data.session) {
       accountInfo.innerHTML = `
-        <strong>Vous devez créer un compte ou vous connecter.</strong>
+        <strong>Compte requis</strong><br><br>
+        Veuillez vous connecter avant de choisir
+        un abonnement ou de faire un don.
         <br><br>
         <a href="account.html">
-          Créer mon compte / Me connecter
+          → Aller à mon compte
         </a>
       `;
       return;
     }
-    const email = session.user.email || "Utilisateur";
     accountInfo.innerHTML = `
-      Vous êtes connecté avec le compte :
-      <strong>${escapeHtml(email)}</strong>
+      Connecté avec :
+      <strong>${escapeHtml(data.session.user.email || "")}</strong>
     `;
     logoutBtn.style.display = "block";
   }
@@ -213,39 +201,56 @@
       .replaceAll('"', "&quot;")
       .replaceAll("'", "&#039;");
   }
-  async function requireAccount() {
+  async function goToPayment(url) {
     const {
-      data: { session }
+      data
     } = await db.auth.getSession();
-    if (!session) {
+    if (!data.session) {
       showMessage(
-        "Veuillez créer votre compte ou vous connecter avant de continuer.",
-        "error"
+        "Veuillez vous connecter avant de continuer."
       );
       setTimeout(() => {
         window.location.href = "account.html";
-      }, 1200);
-      return false;
+      }, 1000);
+      return;
     }
-    return true;
+    /*
+      On transmet l'identifiant de session utilisateur
+      à Stripe via client_reference_id.
+      Le webhook pourra ensuite rattacher le paiement
+      au compte INDAMORA PLAY.
+    */
+    const userId =
+      data.session.user.id;
+    const separator =
+      url.includes("?") ? "&" : "?";
+    const paymentUrl =
+      url +
+      separator +
+      "client_reference_id=" +
+      encodeURIComponent(userId);
+    window.location.href = paymentUrl;
   }
-  async function subscribeAfrica() {
-    if (!(await requireAccount())) return;
-    window.location.href = AFRICA_LINK;
-  }
-  async function subscribeOutsideAfrica() {
-    if (!(await requireAccount())) return;
-    window.location.href = OUTSIDE_AFRICA_LINK;
-  }
-  async function donate() {
-    if (!(await requireAccount())) return;
-    window.location.href = DONATION_LINK;
-  }
+  document
+    .getElementById("africaBtn")
+    .addEventListener("click", () => {
+      goToPayment(AFRICA_LINK);
+    });
+  document
+    .getElementById("outsideBtn")
+    .addEventListener("click", () => {
+      goToPayment(OUTSIDE_LINK);
+    });
+  document
+    .getElementById("donationBtn")
+    .addEventListener("click", () => {
+      goToPayment(DONATION_LINK);
+    });
   logoutBtn.addEventListener("click", async () => {
     await db.auth.signOut();
     window.location.href = "account.html";
   });
-  checkAccount();
+  loadAccount();
 </script>
 </body>
 </html>
