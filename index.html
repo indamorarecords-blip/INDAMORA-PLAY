@@ -53,7 +53,7 @@
       position: sticky;
       top: 0;
       z-index: 100;
-      background: rgba(255, 255, 255, 0.97);
+      background: rgba(255,255,255,0.97);
       border-bottom: 1px solid var(--border);
       backdrop-filter: blur(10px);
     }
@@ -73,18 +73,15 @@
       color: var(--blue);
       font-weight: 900;
       font-size: 22px;
-      letter-spacing: -0.5px;
       white-space: nowrap;
     }
 
     .logo span {
       color: var(--text);
-      font-weight: 700;
     }
 
     nav {
       display: flex;
-      align-items: center;
       gap: 22px;
       overflow-x: auto;
     }
@@ -101,7 +98,7 @@
     }
 
     .hero {
-      background: linear-gradient(135deg, #f4f8ff 0%, #ffffff 55%, #eaf3ff 100%);
+      background: linear-gradient(135deg,#f4f8ff 0%,#ffffff 55%,#eaf3ff 100%);
       border-bottom: 1px solid var(--border);
     }
 
@@ -117,8 +114,6 @@
 
     .badge {
       display: inline-flex;
-      align-items: center;
-      gap: 8px;
       padding: 7px 12px;
       border-radius: 999px;
       background: var(--blue-light);
@@ -129,8 +124,8 @@
     }
 
     h1 {
-      font-size: clamp(38px, 6vw, 70px);
-      line-height: 0.98;
+      font-size: clamp(38px,6vw,70px);
+      line-height: .98;
       letter-spacing: -3px;
       margin-bottom: 20px;
     }
@@ -158,7 +153,6 @@
       border-radius: 12px;
       padding: 13px 20px;
       font-weight: 800;
-      transition: 0.2s ease;
     }
 
     .btn-primary {
@@ -168,7 +162,6 @@
 
     .btn-primary:hover {
       background: var(--blue-dark);
-      transform: translateY(-1px);
     }
 
     .btn-secondary {
@@ -219,10 +212,6 @@
     }
 
     .section-header {
-      display: flex;
-      align-items: end;
-      justify-content: space-between;
-      gap: 20px;
       margin-bottom: 22px;
     }
 
@@ -257,12 +246,11 @@
     .input:focus,
     .select:focus {
       border-color: var(--blue);
-      box-shadow: 0 0 0 3px rgba(7, 87, 201, 0.08);
     }
 
     .grid {
       display: grid;
-      grid-template-columns: repeat(4, 1fr);
+      grid-template-columns: repeat(4,1fr);
       gap: 18px;
     }
 
@@ -271,18 +259,12 @@
       background: white;
       border-radius: 18px;
       overflow: hidden;
-      box-shadow: 0 4px 18px rgba(16, 24, 40, 0.04);
-      transition: 0.2s ease;
-    }
-
-    .card:hover {
-      transform: translateY(-3px);
-      box-shadow: var(--shadow);
+      box-shadow: 0 4px 18px rgba(16,24,40,.04);
     }
 
     .cover {
       width: 100%;
-      aspect-ratio: 1 / 1;
+      aspect-ratio: 1/1;
       object-fit: cover;
       background: var(--blue-light);
       display: block;
@@ -290,10 +272,10 @@
 
     .placeholder {
       width: 100%;
-      aspect-ratio: 1 / 1;
+      aspect-ratio: 1/1;
       display: grid;
       place-items: center;
-      background: linear-gradient(135deg, #eaf3ff, #f7fbff);
+      background: linear-gradient(135deg,#eaf3ff,#f7fbff);
       color: var(--blue);
       font-size: 42px;
     }
@@ -321,23 +303,23 @@
       text-align: center;
     }
 
-    .artist-avatar {
-      width: 100px;
-      height: 100px;
-      border-radius: 50%;
-      object-fit: cover;
-      display: block;
-      margin: 0 auto 14px;
-      background: var(--blue-light);
-    }
-
+    .artist-avatar,
     .artist-placeholder {
       width: 100px;
       height: 100px;
       border-radius: 50%;
+      margin: 0 auto 14px;
+    }
+
+    .artist-avatar {
+      object-fit: cover;
+      display: block;
+      background: var(--blue-light);
+    }
+
+    .artist-placeholder {
       display: grid;
       place-items: center;
-      margin: 0 auto 14px;
       background: var(--blue-light);
       color: var(--blue);
       font-size: 36px;
@@ -419,7 +401,7 @@
 
     .media-grid {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
+      grid-template-columns: repeat(3,1fr);
       gap: 18px;
     }
 
@@ -447,7 +429,6 @@
       text-transform: uppercase;
       font-size: 11px;
       font-weight: 900;
-      letter-spacing: 0.7px;
       margin-bottom: 5px;
     }
 
@@ -463,7 +444,6 @@
     }
 
     .media-link {
-      display: inline-block;
       color: var(--blue);
       font-size: 13px;
       font-weight: 800;
@@ -484,15 +464,24 @@
       color: var(--muted);
     }
 
+    .error-box {
+      padding: 15px;
+      border-radius: 12px;
+      background: #fff4f4;
+      border: 1px solid #f0caca;
+      color: #a33;
+      font-size: 14px;
+    }
+
     .player {
       position: fixed;
       left: 0;
       right: 0;
       bottom: 0;
       z-index: 200;
-      background: rgba(255,255,255,0.98);
+      background: rgba(255,255,255,.98);
       border-top: 1px solid var(--border);
-      box-shadow: 0 -8px 30px rgba(7, 87, 201, 0.08);
+      box-shadow: 0 -8px 30px rgba(7,87,201,.08);
       padding: 12px 20px;
       display: none;
     }
@@ -504,10 +493,6 @@
       grid-template-columns: 1fr auto;
       gap: 18px;
       align-items: center;
-    }
-
-    .now-playing {
-      min-width: 0;
     }
 
     .now-playing-title {
@@ -523,7 +508,13 @@
     }
 
     audio {
-      width: min(520px, 45vw);
+      width: min(520px,45vw);
+    }
+
+    .status {
+      color: var(--blue);
+      font-size: 12px;
+      margin-top: 4px;
     }
 
     footer {
@@ -539,13 +530,13 @@
       color: var(--blue);
     }
 
-    @media (max-width: 900px) {
+    @media(max-width:900px) {
       .hero-inner {
         grid-template-columns: 1fr;
       }
 
       .grid {
-        grid-template-columns: repeat(2, 1fr);
+        grid-template-columns: repeat(2,1fr);
       }
 
       .search-area {
@@ -565,7 +556,7 @@
       }
     }
 
-    @media (max-width: 600px) {
+    @media(max-width:600px) {
       .nav {
         min-height: 62px;
       }
@@ -603,1178 +594,1472 @@
 
 <body>
 
-  <header>
-    <div class="nav">
-      <a href="#" class="logo">
-        INDAMORA <span>PLAY</span>
-      </a>
+<header>
+  <div class="nav">
+    <a href="#" class="logo">
+      INDAMORA <span>PLAY</span>
+    </a>
 
-      <nav>
-        <a href="#musique">Musique</a>
-        <a href="#artistes">Artistes</a>
-        <a href="#classement">Classement</a>
-        <a href="#media">Clips & Podcasts</a>
-        <a href="#radios">Radios</a>
-        <a href="#proposer">Artistes</a>
-      </nav>
+    <nav>
+      <a href="#musique">Musique</a>
+      <a href="#artistes">Artistes</a>
+      <a href="#classement">Classement</a>
+      <a href="#albums">Albums</a>
+      <a href="#media">Clips & Podcasts</a>
+      <a href="#radios">Radios</a>
+      <a href="#proposer">Artistes</a>
+    </nav>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="hero-inner">
+
+    <div>
+      <div class="badge">🇨🇫 Musique d'Afrique centrale</div>
+
+      <h1>
+        Découvre<br>
+        <strong>INDAMORA PLAY</strong>
+      </h1>
+
+      <p>
+        Une plateforme dédiée aux artistes, aux musiques,
+        aux clips et aux voix d'Afrique centrale.
+      </p>
+
+      <div class="hero-buttons">
+        <a href="#musique" class="btn btn-primary">
+          🎧 Écouter la musique
+        </a>
+
+        <a href="#artistes" class="btn btn-secondary">
+          👤 Découvrir les artistes
+        </a>
+      </div>
     </div>
-  </header>
 
-  <section class="hero">
-    <div class="hero-inner">
+    <div class="hero-card">
+      <div class="hero-card-icon">🎵</div>
 
-      <div>
-        <div class="badge">🇨🇫 Musique d'Afrique centrale</div>
+      <h2>
+        La musique au cœur de l'Afrique centrale
+      </h2>
 
-        <h1>
-          Découvre<br>
-          <strong>INDAMORA PLAY</strong>
-        </h1>
-
-        <p>
-          Une plateforme dédiée aux artistes, aux musiques,
-          aux clips et aux voix d'Afrique centrale.
-        </p>
-
-        <div class="hero-buttons">
-          <a href="#musique" class="btn btn-primary">
-            🎧 Écouter la musique
-          </a>
-
-          <a href="#artistes" class="btn btn-secondary">
-            👤 Découvrir les artistes
-          </a>
-        </div>
-      </div>
-
-      <div class="hero-card">
-        <div class="hero-card-icon">🎵</div>
-        <h2>La musique au cœur de l'Afrique centrale</h2>
-        <p>
-          Retrouvez les artistes et les titres publiés sur
-          INDAMORA PLAY.
-        </p>
-      </div>
-
-    </div>
-  </section>
-
-  <main>
-
-    <!-- MUSIQUE -->
-    <section id="musique">
-
-      <div class="section-header">
-        <div>
-          <h2 class="section-title">🎧 Musique</h2>
-          <p class="section-subtitle">
-            Écoute les morceaux publiés sur INDAMORA PLAY.
-          </p>
-        </div>
-      </div>
-
-      <div class="search-area">
-        <input
-          id="searchInput"
-          class="input"
-          type="search"
-          placeholder="🔎 Rechercher une musique ou un artiste..."
-        >
-
-        <select id="genreFilter" class="select">
-          <option value="">Tous les genres</option>
-        </select>
-
-        <select id="cityFilter" class="select">
-          <option value="">Toutes les villes</option>
-        </select>
-      </div>
-
-      <div id="tracksContainer" class="track-list">
-        <div class="loading">Chargement des musiques...</div>
-      </div>
-
-    </section>
-
-    <!-- ARTISTES -->
-    <section id="artistes">
-
-      <div class="section-header">
-        <div>
-          <h2 class="section-title">👤 Artistes</h2>
-          <p class="section-subtitle">
-            Découvre les artistes publiés.
-          </p>
-        </div>
-      </div>
-
-      <div id="artistsContainer" class="grid">
-        <div class="loading">Chargement des artistes...</div>
-      </div>
-
-    </section>
-
-    <!-- CLASSEMENT -->
-    <section id="classement">
-
-      <div class="section-header">
-        <div>
-          <h2 class="section-title">🔥 Classement</h2>
-          <p class="section-subtitle">
-            Les morceaux les plus écoutés.
-          </p>
-        </div>
-      </div>
-
-      <div id="rankingContainer" class="track-list">
-        <div class="loading">Chargement du classement...</div>
-      </div>
-
-    </section>
-
-    <!-- ALBUMS -->
-    <section id="albums">
-
-      <div class="section-header">
-        <div>
-          <h2 class="section-title">💿 Albums & projets</h2>
-          <p class="section-subtitle">
-            Albums, EP et singles publiés.
-          </p>
-        </div>
-      </div>
-
-      <div id="albumsContainer" class="grid">
-        <div class="loading">Chargement des albums...</div>
-      </div>
-
-    </section>
-
-    <!-- CLIPS & PODCASTS -->
-    <section id="media">
-
-      <div class="section-header">
-        <div>
-          <h2 class="section-title">🎬 Clips & Podcasts</h2>
-          <p class="section-subtitle">
-            Vidéos, clips, interviews et podcasts.
-          </p>
-        </div>
-      </div>
-
-      <div id="mediaContainer" class="media-grid">
-        <div class="loading">Chargement...</div>
-      </div>
-
-    </section>
-
-    <!-- RADIOS -->
-    <section id="radios">
-
-      <div class="section-header">
-        <div>
-          <h2 class="section-title">📻 Radios</h2>
-          <p class="section-subtitle">
-            Les radios et programmes disponibles prochainement.
-          </p>
-        </div>
-      </div>
-
-      <div class="empty">
-        📻 Les radios seront disponibles prochainement sur INDAMORA PLAY.
-      </div>
-
-    </section>
-
-    <!-- PROPOSER -->
-    <section id="proposer">
-
-      <div class="section-header">
-        <div>
-          <h2 class="section-title">🎙️ Artistes</h2>
-          <p class="section-subtitle">
-            Les artistes pourront prochainement proposer leur musique.
-          </p>
-        </div>
-      </div>
-
-      <div class="empty">
-        🎵 La mise en place des candidatures artistes est en cours.
-      </div>
-
-    </section>
-
-  </main>
-
-  <!-- LECTEUR -->
-  <div id="player" class="player">
-
-    <div class="player-inner">
-
-      <div class="now-playing">
-        <div id="nowPlayingTitle" class="now-playing-title">
-          Aucun morceau
-        </div>
-
-        <div id="nowPlayingArtist" class="now-playing-artist">
-          INDAMORA PLAY
-        </div>
-      </div>
-
-      <audio id="audioPlayer" controls preload="none"></audio>
-
+      <p>
+        Retrouvez les artistes et les titres publiés
+        sur INDAMORA PLAY.
+      </p>
     </div>
 
   </div>
+</section>
 
-  <footer>
-    <p>
-      <strong>INDAMORA PLAY</strong> — INDAMORA RECORDS
+<main>
+
+<section id="musique">
+
+  <div class="section-header">
+    <h2 class="section-title">🎧 Musique</h2>
+    <p class="section-subtitle">
+      Écoute les morceaux publiés sur INDAMORA PLAY.
     </p>
+  </div>
 
-    <p>
-      Plateforme de musique d'Afrique centrale 🇨🇫
+  <div class="search-area">
+
+    <input
+      id="searchInput"
+      class="input"
+      type="search"
+      placeholder="🔎 Rechercher une musique ou un artiste..."
+    >
+
+    <select id="genreFilter" class="select">
+      <option value="">Tous les genres</option>
+    </select>
+
+    <select id="cityFilter" class="select">
+      <option value="">Toutes les villes</option>
+    </select>
+
+  </div>
+
+  <div id="tracksContainer" class="track-list">
+    <div class="loading">
+      Chargement des musiques...
+    </div>
+  </div>
+
+</section>
+
+<section id="artistes">
+
+  <div class="section-header">
+    <h2 class="section-title">👤 Artistes</h2>
+
+    <p class="section-subtitle">
+      Découvre les artistes publiés.
     </p>
-  </footer>
+  </div>
+
+  <div id="artistsContainer" class="grid">
+    <div class="loading">
+      Chargement des artistes...
+    </div>
+  </div>
+
+</section>
+
+<section id="classement">
+
+  <div class="section-header">
+    <h2 class="section-title">🔥 Classement</h2>
+
+    <p class="section-subtitle">
+      Les morceaux les plus écoutés.
+    </p>
+  </div>
+
+  <div id="rankingContainer" class="track-list">
+    <div class="loading">
+      Chargement du classement...
+    </div>
+  </div>
+
+</section>
+
+<section id="albums">
+
+  <div class="section-header">
+    <h2 class="section-title">💿 Albums & projets</h2>
+
+    <p class="section-subtitle">
+      Albums, EP et singles publiés.
+    </p>
+  </div>
+
+  <div id="albumsContainer" class="grid">
+    <div class="loading">
+      Chargement des albums...
+    </div>
+  </div>
+
+</section>
+
+<section id="media">
+
+  <div class="section-header">
+    <h2 class="section-title">🎬 Clips & Podcasts</h2>
+
+    <p class="section-subtitle">
+      Vidéos, clips, interviews et podcasts.
+    </p>
+  </div>
+
+  <div id="mediaContainer" class="media-grid">
+    <div class="loading">
+      Chargement...
+    </div>
+  </div>
+
+</section>
+
+<section id="radios">
+
+  <div class="section-header">
+    <h2 class="section-title">📻 Radios</h2>
+
+    <p class="section-subtitle">
+      Les radios et programmes disponibles prochainement.
+    </p>
+  </div>
+
+  <div class="empty">
+    📻 Les radios seront disponibles prochainement
+    sur INDAMORA PLAY.
+  </div>
+
+</section>
+
+<section id="proposer">
+
+  <div class="section-header">
+    <h2 class="section-title">🎙️ Artistes</h2>
+
+    <p class="section-subtitle">
+      Les artistes pourront prochainement proposer leur musique.
+    </p>
+  </div>
+
+  <div class="empty">
+    🎵 La mise en place des candidatures artistes est en cours.
+  </div>
+
+</section>
+
+</main>
+
+<div id="player" class="player">
+
+  <div class="player-inner">
+
+    <div class="now-playing">
+
+      <div id="nowPlayingTitle" class="now-playing-title">
+        Aucun morceau
+      </div>
+
+      <div id="nowPlayingArtist" class="now-playing-artist">
+        INDAMORA PLAY
+      </div>
+
+      <div id="playerStatus" class="status"></div>
+
+    </div>
+
+    <audio
+      id="audioPlayer"
+      controls
+      preload="none">
+    </audio>
+
+  </div>
+
+</div>
+
+<footer>
+
+  <p>
+    <strong>INDAMORA PLAY</strong> — INDAMORA RECORDS
+  </p>
+
+  <p>
+    Plateforme de musique d'Afrique centrale 🇨🇫
+  </p>
+
+</footer>
+
+<script>
+
+/* ============================================================
+   SUPABASE
+   ============================================================ */
+
+const SUPABASE_URL =
+  "https://adqsdnqkbitplbhbihiv.supabase.co";
+
+/*
+   IMPORTANT :
+   Garde ici ta vraie Publishable key Supabase.
+
+   Ne mets JAMAIS une clé sb_secret_ dans ce fichier.
+*/
+
+const SUPABASE_PUBLISHABLE_KEY =
+  "sb_publishable_dpjfWOYeNQRmP2nJq5FoMA_8NUuD0HF";
+
+const supabaseClient =
+  window.supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_PUBLISHABLE_KEY
+  );
 
 
-  <script>
-    /*
-      ============================================================
-      CONFIGURATION SUPABASE
-      ============================================================
+/* ============================================================
+   DONNÉES
+   ============================================================ */
 
-      IMPORTANT :
-      Remplace uniquement TA_CLE_PUBLISHABLE par ta
-      Publishable key Supabase.
+let allTracks = [];
+let allArtists = [];
+let allAlbums = [];
+let allMedia = [];
 
-      Ne mets JAMAIS une clé sb_secret_ ici.
-    */
-
-    const SUPABASE_URL =
-      "https://adqsdnqkbitplbhbihiv.supabase.co";
-
-    const SUPABASE_PUBLISHABLE_KEY =
-      "sb_publishable_dpjfWOYeNQRmP2nJq5FoMA_8NUuD0HF";
+let rankingTracks = [];
 
 
-    const supabaseClient =
-      window.supabase.createClient(
-        SUPABASE_URL,
-        SUPABASE_PUBLISHABLE_KEY
-      );
+/* ============================================================
+   UTILITAIRES
+   ============================================================ */
+
+function escapeHtml(value) {
+
+  if (
+    value === null ||
+    value === undefined
+  ) {
+    return "";
+  }
+
+  return String(value)
+    .replace(/&/g,"&amp;")
+    .replace(/</g,"&lt;")
+    .replace(/>/g,"&gt;")
+    .replace(/"/g,"&quot;")
+    .replace(/'/g,"&#039;");
+}
 
 
-    /*
-      ============================================================
-      DONNÉES
-      ============================================================
-    */
+function formatNumber(value) {
 
-    let allTracks = [];
-    let allArtists = [];
-    let allAlbums = [];
-    let allMedia = [];
+  return new Intl.NumberFormat("fr-FR")
+    .format(Number(value || 0));
+
+}
 
 
-    /*
-      ============================================================
-      UTILITAIRES
-      ============================================================
-    */
+function formatDuration(seconds) {
 
-    function escapeHtml(value) {
-      if (value === null || value === undefined) {
-        return "";
-      }
+  if (!seconds) {
+    return "";
+  }
 
-      return String(value)
-        .replace(/&/g, "&amp;")
-        .replace(/</g, "&lt;")
-        .replace(/>/g, "&gt;")
-        .replace(/"/g, "&quot;")
-        .replace(/'/g, "&#039;");
-    }
+  const total =
+    Number(seconds);
 
+  const minutes =
+    Math.floor(total / 60);
 
-    function formatNumber(value) {
-      return new Intl.NumberFormat("fr-FR").format(
-        Number(value || 0)
-      );
-    }
+  const remaining =
+    total % 60;
+
+  return (
+    `${minutes}:` +
+    `${String(remaining).padStart(2,"0")}`
+  );
+
+}
 
 
-    function formatDuration(seconds) {
-      if (!seconds) return "";
+function getInitial(name) {
 
-      const total = Number(seconds);
-      const minutes = Math.floor(total / 60);
-      const remaining = total % 60;
+  if (!name) {
+    return "♪";
+  }
 
-      return `${minutes}:${String(remaining).padStart(2, "0")}`;
-    }
+  return name
+    .trim()
+    .charAt(0)
+    .toUpperCase();
 
-
-    function getInitial(name) {
-      if (!name) return "♪";
-
-      return name
-        .trim()
-        .charAt(0)
-        .toUpperCase();
-    }
+}
 
 
-    /*
-      ============================================================
-      CHARGEMENT DES ARTISTES
-      ============================================================
-    */
+/* ============================================================
+   ARTISTES
+   ============================================================ */
 
-    async function loadArtists() {
+async function loadArtists() {
 
-      const container =
-        document.getElementById("artistsContainer");
+  const container =
+    document.getElementById(
+      "artistsContainer"
+    );
 
-      const { data, error } =
-        await supabaseClient
-          .from("artists")
-          .select(`
-            id,
-            name,
-            slug,
-            bio,
-            city,
-            region,
-            language,
-            genre,
-            avatar_url,
-            verified
-          `)
-          .eq("status", "published")
-          .order("name", { ascending: true });
+  const { data, error } =
+    await supabaseClient
+      .from("artists")
+      .select(`
+        id,
+        name,
+        slug,
+        bio,
+        city,
+        region,
+        language,
+        genre,
+        avatar_url,
+        verified
+      `)
+      .eq("status","published")
+      .order("name", {
+        ascending: true
+      });
 
-      if (error) {
-        console.error("Erreur artistes :", error);
+  if (error) {
 
-        container.innerHTML = `
-          <div class="empty">
-            Impossible de charger les artistes pour le moment.
+    console.error(
+      "Erreur artistes :",
+      error
+    );
+
+    container.innerHTML = `
+      <div class="error-box">
+        Impossible de charger les artistes.
+      </div>
+    `;
+
+    return;
+  }
+
+  allArtists =
+    data || [];
+
+  renderArtists(allArtists);
+}
+
+
+function renderArtists(artists) {
+
+  const container =
+    document.getElementById(
+      "artistsContainer"
+    );
+
+  if (!artists.length) {
+
+    container.innerHTML = `
+      <div class="empty">
+        Aucun artiste publié pour le moment.
+      </div>
+    `;
+
+    return;
+  }
+
+  container.innerHTML =
+    artists.map(artist => {
+
+      const avatar =
+        artist.avatar_url
+
+          ? `
+            <img
+              class="artist-avatar"
+              src="${escapeHtml(
+                artist.avatar_url
+              )}"
+              alt="${escapeHtml(
+                artist.name
+              )}"
+            >
+          `
+
+          : `
+            <div class="artist-placeholder">
+              ${escapeHtml(
+                getInitial(artist.name)
+              )}
+            </div>
+          `;
+
+      return `
+        <article class="card artist-card">
+
+          ${avatar}
+
+          <div class="artist-name">
+            ${escapeHtml(
+              artist.name
+            )}
           </div>
-        `;
 
-        return;
-      }
+          ${
+            artist.verified
+              ? `
+                <div class="verified">
+                  ✓ Artiste vérifié
+                </div>
+              `
+              : ""
+          }
 
-      allArtists = data || [];
+          <div class="card-meta">
+            ${escapeHtml(
+              artist.city || ""
+            )}
 
-      renderArtists(allArtists);
-    }
-
-
-    function renderArtists(artists) {
-
-      const container =
-        document.getElementById("artistsContainer");
-
-      if (!artists.length) {
-
-        container.innerHTML = `
-          <div class="empty">
-            Aucun artiste publié pour le moment.
+            ${
+              artist.region
+                ? " · " +
+                  escapeHtml(
+                    artist.region
+                  )
+                : ""
+            }
           </div>
-        `;
 
-        return;
-      }
+          ${
+            artist.genre
+              ? `
+                <div class="card-meta">
+                  ${escapeHtml(
+                    artist.genre
+                  )}
+                </div>
+              `
+              : ""
+          }
 
-      container.innerHTML =
-        artists.map(artist => {
+        </article>
+      `;
 
-          const avatar = artist.avatar_url
-            ? `
-              <img
-                class="artist-avatar"
-                src="${escapeHtml(artist.avatar_url)}"
-                alt="${escapeHtml(artist.name)}"
-              >
-            `
-            : `
-              <div class="artist-placeholder">
-                ${escapeHtml(getInitial(artist.name))}
-              </div>
-            `;
+    }).join("");
 
-          return `
-            <article class="card artist-card">
+}
 
-              ${avatar}
 
-              <div class="artist-name">
-                ${escapeHtml(artist.name)}
-              </div>
+/* ============================================================
+   MUSIQUES
+   ============================================================ */
+
+async function loadTracks() {
+
+  const container =
+    document.getElementById(
+      "tracksContainer"
+    );
+
+  const { data, error } =
+    await supabaseClient
+      .from("tracks")
+      .select(`
+        id,
+        title,
+        slug,
+        audio_url,
+        duration_seconds,
+        genre,
+        language,
+        city,
+        region,
+        play_count,
+        artist_id,
+        album_id,
+        artists (
+          id,
+          name,
+          avatar_url
+        )
+      `)
+      .eq("status","published")
+      .order("created_at", {
+        ascending: false
+      });
+
+  if (error) {
+
+    console.error(
+      "Erreur musiques :",
+      error
+    );
+
+    container.innerHTML = `
+      <div class="error-box">
+        Impossible de charger les musiques.
+      </div>
+    `;
+
+    return;
+  }
+
+  allTracks =
+    data || [];
+
+  populateFilters(
+    allTracks
+  );
+
+  renderTracks(
+    allTracks
+  );
+}
+
+
+function renderTracks(tracks) {
+
+  const container =
+    document.getElementById(
+      "tracksContainer"
+    );
+
+  if (!tracks.length) {
+
+    container.innerHTML = `
+      <div class="empty">
+        Aucune musique publiée pour le moment.
+      </div>
+    `;
+
+    return;
+  }
+
+  container.innerHTML =
+    tracks.map((track,index) => {
+
+      const artistName =
+        track.artists?.name ||
+        "Artiste inconnu";
+
+      const duration =
+        formatDuration(
+          track.duration_seconds
+        );
+
+      return `
+        <article class="track">
+
+          <div class="track-number">
+            ${index + 1}
+          </div>
+
+          <div>
+
+            <div class="track-title">
+              ${escapeHtml(
+                track.title
+              )}
+            </div>
+
+            <div class="track-artist">
+              ${escapeHtml(
+                artistName
+              )}
 
               ${
-                artist.verified
-                  ? `<div class="verified">✓ Artiste vérifié</div>`
+                track.genre
+                  ? " · " +
+                    escapeHtml(
+                      track.genre
+                    )
                   : ""
               }
 
-              <div class="card-meta">
-                ${escapeHtml(artist.city || "")}
+              ${
+                duration
+                  ? " · " +
+                    escapeHtml(
+                      duration
+                    )
+                  : ""
+              }
+            </div>
+
+          </div>
+
+          <div class="plays">
+            ${formatNumber(
+              track.play_count
+            )}
+            écoutes
+          </div>
+
+          <button
+            class="play-btn"
+            onclick="playTrack('${track.id}')"
+            aria-label="Écouter ${escapeHtml(
+              track.title
+            )}"
+          >
+            ▶
+          </button>
+
+        </article>
+      `;
+
+    }).join("");
+
+}
+
+
+/* ============================================================
+   FILTRES
+   ============================================================ */
+
+function populateFilters(tracks) {
+
+  const genreSelect =
+    document.getElementById(
+      "genreFilter"
+    );
+
+  const citySelect =
+    document.getElementById(
+      "cityFilter"
+    );
+
+  const genres =
+    [...new Set(
+      tracks
+        .map(t => t.genre)
+        .filter(Boolean)
+    )].sort();
+
+  const cities =
+    [...new Set(
+      tracks
+        .map(t => t.city)
+        .filter(Boolean)
+    )].sort();
+
+  genreSelect.innerHTML =
+    `<option value="">
+      Tous les genres
+    </option>` +
+
+    genres.map(genre =>
+      `<option value="${escapeHtml(
+        genre
+      )}">
+        ${escapeHtml(
+          genre
+        )}
+      </option>`
+    ).join("");
+
+  citySelect.innerHTML =
+    `<option value="">
+      Toutes les villes
+    </option>` +
+
+    cities.map(city =>
+      `<option value="${escapeHtml(
+        city
+      )}">
+        ${escapeHtml(
+          city
+        )}
+      </option>`
+    ).join("");
+
+}
+
+
+function applyFilters() {
+
+  const search =
+    document
+      .getElementById(
+        "searchInput"
+      )
+      .value
+      .toLowerCase()
+      .trim();
+
+  const genre =
+    document.getElementById(
+      "genreFilter"
+    ).value;
+
+  const city =
+    document.getElementById(
+      "cityFilter"
+    ).value;
+
+  const filtered =
+    allTracks.filter(track => {
+
+      const title =
+        (track.title || "")
+          .toLowerCase();
+
+      const artist =
+        (
+          track.artists?.name ||
+          ""
+        ).toLowerCase();
+
+      const matchesSearch =
+        !search ||
+        title.includes(search) ||
+        artist.includes(search);
+
+      const matchesGenre =
+        !genre ||
+        track.genre === genre;
+
+      const matchesCity =
+        !city ||
+        track.city === city;
+
+      return (
+        matchesSearch &&
+        matchesGenre &&
+        matchesCity
+      );
+
+    });
+
+  renderTracks(
+    filtered
+  );
+
+}
+
+
+document
+  .getElementById(
+    "searchInput"
+  )
+  .addEventListener(
+    "input",
+    applyFilters
+  );
+
+
+document
+  .getElementById(
+    "genreFilter"
+  )
+  .addEventListener(
+    "change",
+    applyFilters
+  );
+
+
+document
+  .getElementById(
+    "cityFilter"
+  )
+  .addEventListener(
+    "change",
+    applyFilters
+  );
+
+
+/* ============================================================
+   LECTURE AUDIO SÉCURISÉE
+   ============================================================ */
+
+async function getSignedAudioUrl(trackId) {
+
+  const response =
+    await fetch(
+      `${SUPABASE_URL}/functions/v1/play-track`,
+      {
+        method: "POST",
+
+        headers: {
+          "Content-Type":
+            "application/json",
+
+          "apikey":
+            SUPABASE_PUBLISHABLE_KEY
+        },
+
+        body: JSON.stringify({
+          track_id: trackId
+        })
+      }
+    );
+
+  let result = null;
+
+  try {
+    result =
+      await response.json();
+  } catch (error) {
+    result = null;
+  }
+
+  if (!response.ok) {
+
+    throw new Error(
+      result?.error ||
+      "Impossible d'obtenir le lien audio."
+    );
+
+  }
+
+  if (!result?.signed_url) {
+
+    throw new Error(
+      "Le serveur n'a pas retourné de lien audio."
+    );
+
+  }
+
+  return result.signed_url;
+}
+
+
+async function playTrack(trackId) {
+
+  const track =
+    allTracks.find(
+      t => t.id === trackId
+    );
+
+  if (!track) {
+    return;
+  }
+
+  const player =
+    document.getElementById(
+      "player"
+    );
+
+  const audio =
+    document.getElementById(
+      "audioPlayer"
+    );
+
+  const title =
+    document.getElementById(
+      "nowPlayingTitle"
+    );
+
+  const artist =
+    document.getElementById(
+      "nowPlayingArtist"
+    );
+
+  const status =
+    document.getElementById(
+      "playerStatus"
+    );
+
+  title.textContent =
+    track.title ||
+    "Morceau";
+
+  artist.textContent =
+    track.artists?.name ||
+    "Artiste";
+
+  status.textContent =
+    "Chargement sécurisé...";
+
+  player.style.display =
+    "block";
+
+  audio.pause();
+
+  audio.removeAttribute(
+    "src"
+  );
+
+  try {
+
+    const signedUrl =
+      await getSignedAudioUrl(
+        track.id
+      );
+
+    audio.src =
+      signedUrl;
+
+    status.textContent =
+      "Lecture en cours";
+
+    try {
+
+      await audio.play();
+
+    } catch (error) {
+
+      status.textContent =
+        "Appuie sur ▶ pour commencer la lecture.";
+
+    }
+
+  } catch (error) {
+
+    console.error(
+      "Erreur lecture audio :",
+      error
+    );
+
+    status.textContent =
+      "";
+
+    alert(
+      error.message ||
+      "Impossible de lire ce morceau."
+    );
+
+  }
+
+}
+
+
+/* ============================================================
+   CLASSEMENT
+   ============================================================ */
+
+async function loadRanking() {
+
+  const container =
+    document.getElementById(
+      "rankingContainer"
+    );
+
+  const { data, error } =
+    await supabaseClient
+      .from("tracks")
+      .select(`
+        id,
+        title,
+        audio_url,
+        duration_seconds,
+        play_count,
+        artist_id,
+        artists (
+          id,
+          name
+        )
+      `)
+      .eq("status","published")
+      .order("play_count", {
+        ascending: false
+      })
+      .limit(10);
+
+  if (error) {
+
+    console.error(
+      "Erreur classement :",
+      error
+    );
+
+    container.innerHTML = `
+      <div class="error-box">
+        Impossible de charger le classement.
+      </div>
+    `;
+
+    return;
+  }
+
+  rankingTracks =
+    data || [];
+
+  if (!rankingTracks.length) {
+
+    container.innerHTML = `
+      <div class="empty">
+        Aucun classement disponible pour le moment.
+      </div>
+    `;
+
+    return;
+  }
+
+  container.innerHTML =
+    rankingTracks.map(
+      (track,index) => {
+
+        const artistName =
+          track.artists?.name ||
+          "Artiste inconnu";
+
+        return `
+          <article class="track">
+
+            <div class="track-number">
+              ${index + 1}
+            </div>
+
+            <div>
+
+              <div class="track-title">
+                ${escapeHtml(
+                  track.title
+                )}
+              </div>
+
+              <div class="track-artist">
+                ${escapeHtml(
+                  artistName
+                )}
+
                 ${
-                  artist.region
-                    ? " · " + escapeHtml(artist.region)
+                  track.duration_seconds
+                    ? " · " +
+                      escapeHtml(
+                        formatDuration(
+                          track.duration_seconds
+                        )
+                      )
                     : ""
                 }
               </div>
 
-              ${
-                artist.genre
-                  ? `
-                    <div class="card-meta">
-                      ${escapeHtml(artist.genre)}
-                    </div>
-                  `
-                  : ""
-              }
+            </div>
 
-            </article>
+            <div class="plays">
+              ${formatNumber(
+                track.play_count
+              )}
+              écoutes
+            </div>
+
+            <button
+              class="play-btn"
+              onclick="playRankingTrack('${track.id}')"
+              aria-label="Écouter ${escapeHtml(
+                track.title
+              )}"
+            >
+              ▶
+            </button>
+
+          </article>
+        `;
+
+      }
+    ).join("");
+
+}
+
+
+function playRankingTrack(trackId) {
+
+  const track =
+    rankingTracks.find(
+      t => t.id === trackId
+    );
+
+  if (!track) {
+    return;
+  }
+
+  /*
+     Le classement utilise la même
+     lecture sécurisée que la liste principale.
+  */
+
+  playTrack(track.id);
+
+}
+
+
+/* ============================================================
+   ALBUMS
+   ============================================================ */
+
+async function loadAlbums() {
+
+  const container =
+    document.getElementById(
+      "albumsContainer"
+    );
+
+  const { data, error } =
+    await supabaseClient
+      .from("albums")
+      .select(`
+        id,
+        title,
+        slug,
+        type,
+        cover_url,
+        release_date,
+        description,
+        artist_id,
+        artists (
+          id,
+          name
+        )
+      `)
+      .eq("status","published")
+      .order("release_date", {
+        ascending: false,
+        nullsFirst: false
+      });
+
+  if (error) {
+
+    console.error(
+      "Erreur albums :",
+      error
+    );
+
+    container.innerHTML = `
+      <div class="error-box">
+        Impossible de charger les albums.
+      </div>
+    `;
+
+    return;
+  }
+
+  allAlbums =
+    data || [];
+
+  renderAlbums(
+    allAlbums
+  );
+
+}
+
+
+function renderAlbums(albums) {
+
+  const container =
+    document.getElementById(
+      "albumsContainer"
+    );
+
+  if (!albums.length) {
+
+    container.innerHTML = `
+      <div class="empty">
+        Aucun album publié pour le moment.
+      </div>
+    `;
+
+    return;
+  }
+
+  container.innerHTML =
+    albums.map(album => {
+
+      const cover =
+        album.cover_url
+
+          ? `
+            <img
+              class="cover"
+              src="${escapeHtml(
+                album.cover_url
+              )}"
+              alt="${escapeHtml(
+                album.title
+              )}"
+            >
+          `
+
+          : `
+            <div class="placeholder">
+              💿
+            </div>
           `;
 
-        }).join("");
-    }
+      return `
+        <article class="card">
 
+          ${cover}
 
-    /*
-      ============================================================
-      CHARGEMENT DES MUSIQUES
-      ============================================================
-    */
+          <div class="card-body">
 
-    async function loadTracks() {
+            <div class="card-title">
+              ${escapeHtml(
+                album.title
+              )}
+            </div>
 
-      const container =
-        document.getElementById("tracksContainer");
+            <div class="card-meta">
+              ${escapeHtml(
+                album.artists?.name ||
+                "Artiste"
+              )}
+            </div>
 
-      const { data, error } =
-        await supabaseClient
-          .from("tracks")
-          .select(`
-            id,
-            title,
-            slug,
-            audio_url,
-            duration_seconds,
-            genre,
-            language,
-            city,
-            region,
-            play_count,
-            artist_id,
-            album_id,
-            artists (
-              id,
-              name,
-              avatar_url
-            )
-          `)
-          .eq("status", "published")
-          .order("created_at", { ascending: false });
+            <div class="card-meta">
+              ${escapeHtml(
+                album.type ||
+                "Album"
+              )}
+            </div>
 
-      if (error) {
-
-        console.error("Erreur musiques :", error);
-
-        container.innerHTML = `
-          <div class="empty">
-            Impossible de charger les musiques pour le moment.
           </div>
-        `;
 
-        return;
+        </article>
+      `;
+
+    }).join("");
+
+}
+
+
+/* ============================================================
+   CLIPS / PODCASTS
+   ============================================================ */
+
+async function loadMedia() {
+
+  const container =
+    document.getElementById(
+      "mediaContainer"
+    );
+
+  const { data, error } =
+    await supabaseClient
+      .from("media")
+      .select(`
+        id,
+        title,
+        type,
+        media_url,
+        description,
+        artist_id,
+        artists (
+          id,
+          name
+        )
+      `)
+      .eq("status","published")
+      .order("created_at", {
+        ascending: false
+      });
+
+  if (error) {
+
+    console.error(
+      "Erreur médias :",
+      error
+    );
+
+    container.innerHTML = `
+      <div class="error-box">
+        Impossible de charger les médias.
+      </div>
+    `;
+
+    return;
+  }
+
+  allMedia =
+    data || [];
+
+  renderMedia(
+    allMedia
+  );
+
+}
+
+
+function renderMedia(media) {
+
+  const container =
+    document.getElementById(
+      "mediaContainer"
+    );
+
+  if (!media.length) {
+
+    container.innerHTML = `
+      <div class="empty">
+        Aucun clip ou podcast publié pour le moment.
+      </div>
+    `;
+
+    return;
+  }
+
+  container.innerHTML =
+    media.map(item => {
+
+      const type =
+        (
+          item.type ||
+          "media"
+        ).toLowerCase();
+
+      let icon =
+        "🎬";
+
+      if (
+        type.includes("podcast")
+      ) {
+        icon =
+          "🎙️";
       }
 
-      allTracks = data || [];
+      if (
+        type.includes("audio")
+      ) {
+        icon =
+          "🎧";
+      }
 
-      populateFilters(allTracks);
+      if (
+        type.includes("video") ||
+        type.includes("clip")
+      ) {
+        icon =
+          "🎬";
+      }
 
-      renderTracks(allTracks);
-    }
+      return `
+        <article class="media-card">
 
-
-    function renderTracks(tracks) {
-
-      const container =
-        document.getElementById("tracksContainer");
-
-      if (!tracks.length) {
-
-        container.innerHTML = `
-          <div class="empty">
-            Aucune musique publiée pour le moment.
+          <div class="media-icon">
+            ${icon}
           </div>
-        `;
 
-        return;
-      }
-
-      container.innerHTML =
-        tracks.map((track, index) => {
-
-          const artistName =
-            track.artists?.name || "Artiste inconnu";
-
-          const duration =
-            formatDuration(track.duration_seconds);
-
-          return `
-            <article class="track">
-
-              <div class="track-number">
-                ${index + 1}
-              </div>
-
-              <div>
-                <div class="track-title">
-                  ${escapeHtml(track.title)}
-                </div>
-
-                <div class="track-artist">
-                  ${escapeHtml(artistName)}
-
-                  ${
-                    track.genre
-                      ? " · " + escapeHtml(track.genre)
-                      : ""
-                  }
-
-                  ${
-                    duration
-                      ? " · " + escapeHtml(duration)
-                      : ""
-                  }
-                </div>
-              </div>
-
-              <div class="plays">
-                ${formatNumber(track.play_count)} écoutes
-              </div>
-
-              <button
-                class="play-btn"
-                onclick="playTrack('${escapeHtml(track.id)}')"
-                aria-label="Écouter ${escapeHtml(track.title)}"
-              >
-                ▶
-              </button>
-
-            </article>
-          `;
-
-        }).join("");
-    }
-
-
-    /*
-      ============================================================
-      FILTRES
-      ============================================================
-    */
-
-    function populateFilters(tracks) {
-
-      const genreSelect =
-        document.getElementById("genreFilter");
-
-      const citySelect =
-        document.getElementById("cityFilter");
-
-      const genres =
-        [...new Set(
-          tracks
-            .map(t => t.genre)
-            .filter(Boolean)
-        )].sort();
-
-      const cities =
-        [...new Set(
-          tracks
-            .map(t => t.city)
-            .filter(Boolean)
-        )].sort();
-
-      genreSelect.innerHTML =
-        `<option value="">Tous les genres</option>` +
-        genres.map(genre =>
-          `<option value="${escapeHtml(genre)}">
-            ${escapeHtml(genre)}
-          </option>`
-        ).join("");
-
-      citySelect.innerHTML =
-        `<option value="">Toutes les villes</option>` +
-        cities.map(city =>
-          `<option value="${escapeHtml(city)}">
-            ${escapeHtml(city)}
-          </option>`
-        ).join("");
-    }
-
-
-    function applyFilters() {
-
-      const search =
-        document
-          .getElementById("searchInput")
-          .value
-          .toLowerCase()
-          .trim();
-
-      const genre =
-        document.getElementById("genreFilter").value;
-
-      const city =
-        document.getElementById("cityFilter").value;
-
-      const filtered =
-        allTracks.filter(track => {
-
-          const title =
-            (track.title || "").toLowerCase();
-
-          const artist =
-            (track.artists?.name || "").toLowerCase();
-
-          const matchesSearch =
-            !search ||
-            title.includes(search) ||
-            artist.includes(search);
-
-          const matchesGenre =
-            !genre ||
-            track.genre === genre;
-
-          const matchesCity =
-            !city ||
-            track.city === city;
-
-          return (
-            matchesSearch &&
-            matchesGenre &&
-            matchesCity
-          );
-        });
-
-      renderTracks(filtered);
-    }
-
-
-    document
-      .getElementById("searchInput")
-      .addEventListener("input", applyFilters);
-
-    document
-      .getElementById("genreFilter")
-      .addEventListener("change", applyFilters);
-
-    document
-      .getElementById("cityFilter")
-      .addEventListener("change", applyFilters);
-
-
-    /*
-      ============================================================
-      LECTEUR AUDIO
-      ============================================================
-    */
-
-    async function playTrack(trackId) {
-
-      const track =
-        allTracks.find(t => t.id === trackId);
-
-      if (!track) return;
-
-      if (!track.audio_url) {
-
-        alert(
-          "Ce morceau ne possède pas encore de lien audio."
-        );
-
-        return;
-      }
-
-      const player =
-        document.getElementById("player");
-
-      const audio =
-        document.getElementById("audioPlayer");
-
-      const title =
-        document.getElementById("nowPlayingTitle");
-
-      const artist =
-        document.getElementById("nowPlayingArtist");
-
-      title.textContent =
-        track.title || "Morceau";
-
-      artist.textContent =
-        track.artists?.name || "Artiste";
-
-      player.style.display = "block";
-
-      audio.src = track.audio_url;
-
-      try {
-        await audio.play();
-      } catch (error) {
-        console.log(
-          "Lecture automatique bloquée par le navigateur."
-        );
-      }
-    }
-
-
-    /*
-      ============================================================
-      CLASSEMENT
-      ============================================================
-    */
-
-    async function loadRanking() {
-
-      const container =
-        document.getElementById("rankingContainer");
-
-      const { data, error } =
-        await supabaseClient
-          .from("tracks")
-          .select(`
-            id,
-            title,
-            audio_url,
-            duration_seconds,
-            play_count,
-            artist_id,
-            artists (
-              id,
-              name
-            )
-          `)
-          .eq("status", "published")
-          .order("play_count", {
-            ascending: false
-          })
-          .limit(10);
-
-      if (error) {
-
-        console.error("Erreur classement :", error);
-
-        container.innerHTML = `
-          <div class="empty">
-            Impossible de charger le classement.
+          <div class="media-type">
+            ${escapeHtml(
+              item.type ||
+              "Média"
+            )}
           </div>
-        `;
 
-        return;
-      }
-
-      if (!data || !data.length) {
-
-        container.innerHTML = `
-          <div class="empty">
-            Aucun classement disponible pour le moment.
+          <div class="media-title">
+            ${escapeHtml(
+              item.title
+            )}
           </div>
-        `;
 
-        return;
-      }
-
-      container.innerHTML =
-        data.map((track, index) => {
-
-          const artistName =
-            track.artists?.name || "Artiste inconnu";
-
-          return `
-            <article class="track">
-
-              <div class="track-number">
-                ${index + 1}
-              </div>
-
-              <div>
-                <div class="track-title">
-                  ${escapeHtml(track.title)}
-                </div>
-
-                <div class="track-artist">
-                  ${escapeHtml(artistName)}
-                  ${
-                    track.duration_seconds
-                      ? " · " +
-                        escapeHtml(
-                          formatDuration(
-                            track.duration_seconds
-                          )
-                        )
-                      : ""
-                  }
-                </div>
-              </div>
-
-              <div class="plays">
-                ${formatNumber(track.play_count)}
-                écoutes
-              </div>
-
-              <button
-                class="play-btn"
-                onclick="playRankingTrack('${escapeHtml(track.id)}')"
-                aria-label="Écouter ${escapeHtml(track.title)}"
-              >
-                ▶
-              </button>
-
-            </article>
-          `;
-
-        }).join("");
-
-      window.rankingTracks = data;
-    }
-
-
-    function playRankingTrack(trackId) {
-
-      const track =
-        (window.rankingTracks || [])
-          .find(t => t.id === trackId);
-
-      if (!track) return;
-
-      const player =
-        document.getElementById("player");
-
-      const audio =
-        document.getElementById("audioPlayer");
-
-      const title =
-        document.getElementById("nowPlayingTitle");
-
-      const artist =
-        document.getElementById("nowPlayingArtist");
-
-      if (!track.audio_url) {
-
-        alert(
-          "Ce morceau ne possède pas encore de lien audio."
-        );
-
-        return;
-      }
-
-      title.textContent =
-        track.title || "Morceau";
-
-      artist.textContent =
-        track.artists?.name || "Artiste";
-
-      player.style.display = "block";
-
-      audio.src = track.audio_url;
-
-      audio.play().catch(() => {});
-    }
-
-
-    /*
-      ============================================================
-      ALBUMS
-      ============================================================
-    */
-
-    async function loadAlbums() {
-
-      const container =
-        document.getElementById("albumsContainer");
-
-      const { data, error } =
-        await supabaseClient
-          .from("albums")
-          .select(`
-            id,
-            title,
-            slug,
-            type,
-            cover_url,
-            release_date,
-            description,
-            artist_id,
-            artists (
-              id,
-              name
-            )
-          `)
-          .eq("status", "published")
-          .order("release_date", {
-            ascending: false,
-            nullsFirst: false
-          });
-
-      if (error) {
-
-        console.error("Erreur albums :", error);
-
-        container.innerHTML = `
-          <div class="empty">
-            Impossible de charger les albums.
+          <div class="media-description">
+            ${escapeHtml(
+              item.description ||
+              ""
+            )}
           </div>
-        `;
 
-        return;
-      }
-
-      allAlbums = data || [];
-
-      renderAlbums(allAlbums);
-    }
-
-
-    function renderAlbums(albums) {
-
-      const container =
-        document.getElementById("albumsContainer");
-
-      if (!albums.length) {
-
-        container.innerHTML = `
-          <div class="empty">
-            Aucun album publié pour le moment.
-          </div>
-        `;
-
-        return;
-      }
-
-      container.innerHTML =
-        albums.map(album => {
-
-          const cover =
-            album.cover_url
+          ${
+            item.artists?.name
               ? `
-                <img
-                  class="cover"
-                  src="${escapeHtml(album.cover_url)}"
-                  alt="${escapeHtml(album.title)}"
-                >
+                <div class="card-meta">
+                  ${escapeHtml(
+                    item.artists.name
+                  )}
+                </div>
               `
-              : `
-                <div class="placeholder">
-                  💿
-                </div>
-              `;
-
-          return `
-            <article class="card">
-
-              ${cover}
-
-              <div class="card-body">
-
-                <div class="card-title">
-                  ${escapeHtml(album.title)}
-                </div>
-
-                <div class="card-meta">
-                  ${escapeHtml(
-                    album.artists?.name ||
-                    "Artiste"
-                  )}
-                </div>
-
-                <div class="card-meta">
-                  ${escapeHtml(
-                    album.type || "Album"
-                  )}
-                </div>
-
-              </div>
-
-            </article>
-          `;
-
-        }).join("");
-    }
-
-
-    /*
-      ============================================================
-      CLIPS & PODCASTS
-      ============================================================
-    */
-
-    async function loadMedia() {
-
-      const container =
-        document.getElementById("mediaContainer");
-
-      const { data, error } =
-        await supabaseClient
-          .from("media")
-          .select(`
-            id,
-            title,
-            type,
-            media_url,
-            description,
-            artist_id,
-            artists (
-              id,
-              name
-            )
-          `)
-          .eq("status", "published")
-          .order("created_at", {
-            ascending: false
-          });
-
-      if (error) {
-
-        console.error("Erreur médias :", error);
-
-        container.innerHTML = `
-          <div class="empty">
-            Impossible de charger les médias.
-          </div>
-        `;
-
-        return;
-      }
-
-      allMedia = data || [];
-
-      renderMedia(allMedia);
-    }
-
-
-    function renderMedia(media) {
-
-      const container =
-        document.getElementById("mediaContainer");
-
-      if (!media.length) {
-
-        container.innerHTML = `
-          <div class="empty">
-            Aucun clip ou podcast publié pour le moment.
-          </div>
-        `;
-
-        return;
-      }
-
-      container.innerHTML =
-        media.map(item => {
-
-          const type =
-            (item.type || "media").toLowerCase();
-
-          let icon = "🎬";
-
-          if (type.includes("podcast")) {
-            icon = "🎙️";
+              : ""
           }
 
-          if (type.includes("audio")) {
-            icon = "🎧";
+          ${
+            item.media_url
+              ? `
+                <a
+                  class="media-link"
+                  href="${escapeHtml(
+                    item.media_url
+                  )}"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  ▶ Ouvrir
+                </a>
+              `
+              : ""
           }
 
-          if (type.includes("video") ||
-              type.includes("clip")) {
-            icon = "🎬";
-          }
+        </article>
+      `;
 
-          return `
-            <article class="media-card">
+    }).join("");
 
-              <div class="media-icon">
-                ${icon}
-              </div>
-
-              <div class="media-type">
-                ${escapeHtml(item.type || "Média")}
-              </div>
-
-              <div class="media-title">
-                ${escapeHtml(item.title)}
-              </div>
-
-              <div class="media-description">
-                ${escapeHtml(
-                  item.description || ""
-                )}
-              </div>
-
-              ${
-                item.artists?.name
-                  ? `
-                    <div class="card-meta">
-                      ${escapeHtml(
-                        item.artists.name
-                      )}
-                    </div>
-                  `
-                  : ""
-              }
-
-              ${
-                item.media_url
-                  ? `
-                    <a
-                      class="media-link"
-                      href="${escapeHtml(item.media_url)}"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      ▶ Ouvrir
-                    </a>
-                  `
-                  : ""
-              }
-
-            </article>
-          `;
-
-        }).join("");
-    }
+}
 
 
-    /*
-      ============================================================
-      INITIALISATION
-      ============================================================
-    */
+/* ============================================================
+   INITIALISATION
+   ============================================================ */
 
-    async function init() {
+async function init() {
 
-      await Promise.all([
-        loadArtists(),
-        loadTracks(),
-        loadRanking(),
-        loadAlbums(),
-        loadMedia()
-      ]);
+  await Promise.all([
+    loadArtists(),
+    loadTracks(),
+    loadRanking(),
+    loadAlbums(),
+    loadMedia()
+  ]);
 
-    }
+}
 
 
-    init();
+/* ============================================================
+   DÉMARRAGE
+   ============================================================ */
 
-  </script>
+init();
+
+</script>
 
 </body>
 </html>
