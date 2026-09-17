@@ -3,2063 +3,848 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-  <title>INDAMORA PLAY — Musique d'Afrique centrale</title>
-  <meta name="description" content="INDAMORA PLAY — plateforme de musique d'Afrique centrale 🇨🇫">
-
+  <title>INDAMORA PLAY — INDAMORA RECORDS</title>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
   <style>
-    :root {
-      --blue: #0757c9;
-      --blue-dark: #043b8c;
-      --blue-light: #eaf3ff;
-      --white: #ffffff;
-      --text: #14213d;
-      --muted: #667085;
-      --border: #dbe5f2;
-      --shadow: 0 8px 30px rgba(7, 87, 201, 0.10);
-    }
-
     * {
       box-sizing: border-box;
       margin: 0;
       padding: 0;
     }
-
-    html {
-      scroll-behavior: smooth;
-    }
-
     body {
       font-family: Arial, Helvetica, sans-serif;
-      background: var(--white);
-      color: var(--text);
-      line-height: 1.5;
+      background: #ffffff;
+      color: #123;
     }
-
-    a {
-      color: inherit;
-      text-decoration: none;
-    }
-
-    button,
-    input,
-    select {
-      font: inherit;
-    }
-
     header {
+      background: #0757b8;
+      color: white;
+      padding: 18px 20px;
       position: sticky;
       top: 0;
-      z-index: 100;
-      background: rgba(255,255,255,0.97);
-      border-bottom: 1px solid var(--border);
-      backdrop-filter: blur(10px);
+      z-index: 20;
+      box-shadow: 0 2px 10px rgba(0,0,0,.12);
     }
-
-    .nav {
+    .header-inner {
       max-width: 1200px;
       margin: auto;
-      min-height: 72px;
-      padding: 0 20px;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 20px;
+      gap: 15px;
+      flex-wrap: wrap;
     }
-
     .logo {
-      color: var(--blue);
-      font-weight: 900;
-      font-size: 22px;
-      white-space: nowrap;
+      font-size: 24px;
+      font-weight: 800;
     }
-
-    .logo span {
-      color: var(--text);
+    .logo small {
+      display: block;
+      font-size: 11px;
+      opacity: .9;
+      margin-top: 3px;
     }
-
     nav {
       display: flex;
-      gap: 22px;
-      overflow-x: auto;
+      gap: 8px;
+      flex-wrap: wrap;
     }
-
     nav a {
-      color: #344054;
-      font-size: 14px;
+      color: white;
+      text-decoration: none;
       font-weight: 700;
-      white-space: nowrap;
+      padding: 8px 12px;
+      border-radius: 8px;
     }
-
     nav a:hover {
-      color: var(--blue);
+      background: rgba(255,255,255,.15);
     }
-
     .hero {
-      background: linear-gradient(135deg,#f4f8ff 0%,#ffffff 55%,#eaf3ff 100%);
-      border-bottom: 1px solid var(--border);
+      background: linear-gradient(135deg, #0757b8, #0b82e6);
+      color: white;
+      padding: 65px 20px;
     }
-
     .hero-inner {
       max-width: 1200px;
       margin: auto;
-      padding: 70px 20px 60px;
-      display: grid;
-      grid-template-columns: 1.2fr 0.8fr;
-      gap: 40px;
-      align-items: center;
     }
-
-    .badge {
-      display: inline-flex;
-      padding: 7px 12px;
-      border-radius: 999px;
-      background: var(--blue-light);
-      color: var(--blue);
-      font-size: 13px;
-      font-weight: 800;
-      margin-bottom: 18px;
+    .hero h1 {
+      font-size: clamp(35px, 7vw, 68px);
+      margin-bottom: 15px;
     }
-
-    h1 {
-      font-size: clamp(38px,6vw,70px);
-      line-height: .98;
-      letter-spacing: -3px;
-      margin-bottom: 20px;
-    }
-
-    h1 strong {
-      color: var(--blue);
-    }
-
     .hero p {
-      max-width: 650px;
-      color: var(--muted);
+      max-width: 720px;
       font-size: 18px;
-      margin-bottom: 28px;
+      line-height: 1.6;
     }
-
-    .hero-buttons {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 12px;
-    }
-
-    .btn {
-      border: none;
-      cursor: pointer;
-      border-radius: 12px;
-      padding: 13px 20px;
-      font-weight: 800;
-    }
-
-    .btn-primary {
-      background: var(--blue);
-      color: white;
-    }
-
-    .btn-primary:hover {
-      background: var(--blue-dark);
-    }
-
-    .btn-secondary {
-      background: white;
-      color: var(--blue);
-      border: 1px solid var(--border);
-    }
-
-    .hero-card {
-      background: white;
-      border: 1px solid var(--border);
-      border-radius: 24px;
-      padding: 28px;
-      box-shadow: var(--shadow);
-    }
-
-    .hero-card-icon {
-      width: 62px;
-      height: 62px;
-      border-radius: 18px;
-      background: var(--blue-light);
-      color: var(--blue);
-      display: grid;
-      place-items: center;
-      font-size: 30px;
-      margin-bottom: 18px;
-    }
-
-    .hero-card h2 {
-      margin-bottom: 8px;
-      font-size: 22px;
-    }
-
-    .hero-card p {
-      font-size: 15px;
-      margin: 0;
-    }
-
-    main {
+    .container {
       max-width: 1200px;
       margin: auto;
-      padding: 50px 20px 120px;
+      padding: 35px 20px;
     }
-
     section {
-      margin-bottom: 70px;
-      scroll-margin-top: 100px;
+      margin-bottom: 50px;
     }
-
-    .section-header {
-      margin-bottom: 22px;
+    h2 {
+      color: #0757b8;
+      margin-bottom: 20px;
+      font-size: 28px;
     }
-
-    .section-title {
-      font-size: 30px;
-      letter-spacing: -1px;
-    }
-
-    .section-subtitle {
-      color: var(--muted);
-      margin-top: 4px;
-    }
-
-    .search-area {
+    .search-box {
       display: grid;
-      grid-template-columns: 1fr 180px 180px;
+      grid-template-columns: 2fr 1fr 1fr;
       gap: 12px;
       margin-bottom: 25px;
     }
-
-    .input,
-    .select {
+    input,
+    select {
       width: 100%;
-      padding: 13px 15px;
-      border: 1px solid var(--border);
-      border-radius: 12px;
+      padding: 13px;
+      border: 1px solid #c9d7e8;
+      border-radius: 9px;
       background: white;
-      color: var(--text);
+      font-size: 15px;
       outline: none;
     }
-
-    .input:focus,
-    .select:focus {
-      border-color: var(--blue);
+    input:focus,
+    select:focus {
+      border-color: #0757b8;
     }
-
     .grid {
       display: grid;
-      grid-template-columns: repeat(4,1fr);
+      grid-template-columns: repeat(auto-fit, minmax(245px, 1fr));
       gap: 18px;
     }
-
     .card {
-      border: 1px solid var(--border);
+      border: 1px solid #dce6f2;
+      border-radius: 14px;
+      padding: 18px;
       background: white;
-      border-radius: 18px;
-      overflow: hidden;
-      box-shadow: 0 4px 18px rgba(16,24,40,.04);
+      box-shadow: 0 4px 14px rgba(0,0,0,.05);
     }
-
+    .card:hover {
+      box-shadow: 0 7px 22px rgba(0,0,0,.09);
+    }
     .cover {
       width: 100%;
-      aspect-ratio: 1/1;
+      aspect-ratio: 1 / 1;
       object-fit: cover;
-      background: var(--blue-light);
-      display: block;
-    }
-
-    .placeholder {
-      width: 100%;
-      aspect-ratio: 1/1;
-      display: grid;
-      place-items: center;
-      background: linear-gradient(135deg,#eaf3ff,#f7fbff);
-      color: var(--blue);
-      font-size: 42px;
-    }
-
-    .card-body {
-      padding: 16px;
-    }
-
-    .card-title {
-      font-size: 17px;
-      font-weight: 800;
-      margin-bottom: 5px;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
-    }
-
-    .card-meta {
-      color: var(--muted);
-      font-size: 13px;
-    }
-
-    .artist-card {
-      padding: 18px;
-      text-align: center;
-    }
-
-    .artist-avatar,
-    .artist-placeholder {
-      width: 100px;
-      height: 100px;
-      border-radius: 50%;
-      margin: 0 auto 14px;
-    }
-
-    .artist-avatar {
-      object-fit: cover;
-      display: block;
-      background: var(--blue-light);
-    }
-
-    .artist-placeholder {
-      display: grid;
-      place-items: center;
-      background: var(--blue-light);
-      color: var(--blue);
-      font-size: 36px;
-      font-weight: 900;
-    }
-
-    .artist-name {
-      font-weight: 800;
-      font-size: 17px;
-      margin-bottom: 4px;
-    }
-
-    .verified {
-      color: var(--blue);
-      font-size: 13px;
-      font-weight: 700;
-    }
-
-    .track-list {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-    }
-
-    .track {
-      display: grid;
-      grid-template-columns: 52px 1fr auto auto;
-      gap: 14px;
-      align-items: center;
-      padding: 12px;
-      border: 1px solid var(--border);
-      border-radius: 14px;
-      background: white;
-    }
-
-    .track-number {
-      width: 42px;
-      height: 42px;
       border-radius: 10px;
-      background: var(--blue-light);
-      color: var(--blue);
-      display: grid;
-      place-items: center;
-      font-weight: 900;
+      background: #edf4fb;
+      margin-bottom: 14px;
     }
-
-    .track-title {
-      font-weight: 800;
-    }
-
-    .track-artist {
-      color: var(--muted);
-      font-size: 13px;
-    }
-
-    .play-btn {
-      width: 42px;
-      height: 42px;
-      border: none;
+    .artist-avatar {
+      width: 75px;
+      height: 75px;
+      object-fit: cover;
       border-radius: 50%;
-      background: var(--blue);
-      color: white;
-      cursor: pointer;
-      font-size: 16px;
-      display: grid;
-      place-items: center;
+      background: #edf4fb;
+      margin-bottom: 12px;
     }
-
-    .play-btn:hover {
-      background: var(--blue-dark);
-    }
-
-    .plays {
-      color: var(--muted);
-      font-size: 12px;
-      min-width: 70px;
-      text-align: right;
-    }
-
-    .media-grid {
-      display: grid;
-      grid-template-columns: repeat(3,1fr);
-      gap: 18px;
-    }
-
-    .media-card {
-      border: 1px solid var(--border);
-      border-radius: 18px;
-      padding: 20px;
-      background: white;
-    }
-
-    .media-icon {
-      width: 50px;
-      height: 50px;
-      display: grid;
-      place-items: center;
-      border-radius: 14px;
-      background: var(--blue-light);
-      color: var(--blue);
-      font-size: 24px;
-      margin-bottom: 15px;
-    }
-
-    .media-type {
-      color: var(--blue);
-      text-transform: uppercase;
-      font-size: 11px;
-      font-weight: 900;
-      margin-bottom: 5px;
-    }
-
-    .media-title {
-      font-weight: 800;
+    .card h3 {
       margin-bottom: 7px;
+      color: #0757b8;
     }
-
-    .media-description {
-      color: var(--muted);
-      font-size: 14px;
-      margin-bottom: 15px;
-    }
-
-    .media-link {
-      color: var(--blue);
+    .meta {
+      color: #60758d;
       font-size: 13px;
-      font-weight: 800;
+      line-height: 1.5;
+      margin-bottom: 10px;
     }
-
+    .play-button {
+      width: 100%;
+      border: none;
+      background: #0757b8;
+      color: white;
+      padding: 12px;
+      border-radius: 9px;
+      cursor: pointer;
+      font-weight: 700;
+      margin-top: 8px;
+    }
+    .play-button:hover {
+      background: #064895;
+    }
+    .play-button:disabled {
+      opacity: .6;
+      cursor: not-allowed;
+    }
+    .status {
+      margin-top: 10px;
+      font-size: 13px;
+      color: #60758d;
+      min-height: 18px;
+    }
     .empty {
-      padding: 35px 20px;
-      border: 1px dashed #b9c9df;
-      border-radius: 18px;
-      background: #f8fbff;
-      text-align: center;
-      color: var(--muted);
-    }
-
-    .loading {
-      padding: 30px;
-      text-align: center;
-      color: var(--muted);
-    }
-
-    .error-box {
-      padding: 15px;
+      padding: 25px;
+      border: 1px dashed #bfd0e4;
       border-radius: 12px;
-      background: #fff4f4;
-      border: 1px solid #f0caca;
-      color: #a33;
-      font-size: 14px;
+      text-align: center;
+      color: #60758d;
     }
-
     .player {
       position: fixed;
       left: 0;
       right: 0;
       bottom: 0;
-      z-index: 200;
-      background: rgba(255,255,255,.98);
-      border-top: 1px solid var(--border);
-      box-shadow: 0 -8px 30px rgba(7,87,201,.08);
-      padding: 12px 20px;
-      display: none;
+      background: white;
+      border-top: 1px solid #dce6f2;
+      padding: 12px 18px;
+      z-index: 30;
+      box-shadow: 0 -3px 15px rgba(0,0,0,.08);
     }
-
     .player-inner {
       max-width: 1200px;
       margin: auto;
       display: grid;
       grid-template-columns: 1fr auto;
-      gap: 18px;
+      gap: 15px;
       align-items: center;
     }
-
-    .now-playing-title {
-      font-weight: 800;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
+    .now-playing {
+      min-width: 0;
     }
-
-    .now-playing-artist {
-      color: var(--muted);
-      font-size: 12px;
+    .now-playing strong {
+      display: block;
+      color: #0757b8;
+      margin-bottom: 4px;
     }
-
-    audio {
-      width: min(520px,45vw);
-    }
-
-    .status {
-      color: var(--blue);
-      font-size: 12px;
-      margin-top: 4px;
-    }
-
-    footer {
-      border-top: 1px solid var(--border);
-      background: #f8fbff;
-      padding: 35px 20px;
-      text-align: center;
-      color: var(--muted);
+    .now-playing span {
       font-size: 13px;
+      color: #60758d;
     }
-
-    footer strong {
-      color: var(--blue);
+    audio {
+      width: min(500px, 100%);
     }
-
-    @media(max-width:900px) {
-      .hero-inner {
+    .notice {
+      padding: 15px;
+      border-radius: 10px;
+      background: #edf5ff;
+      border: 1px solid #cfe2f8;
+      color: #174c83;
+      margin-bottom: 20px;
+    }
+    footer {
+      background: #0757b8;
+      color: white;
+      padding: 35px 20px 100px;
+      text-align: center;
+    }
+    footer p {
+      margin: 7px 0;
+    }
+    @media (max-width: 750px) {
+      .search-box {
         grid-template-columns: 1fr;
       }
-
-      .grid {
-        grid-template-columns: repeat(2,1fr);
-      }
-
-      .search-area {
-        grid-template-columns: 1fr;
-      }
-
-      .media-grid {
-        grid-template-columns: 1fr;
-      }
-
       .player-inner {
         grid-template-columns: 1fr;
       }
-
       audio {
         width: 100%;
       }
     }
-
-    @media(max-width:600px) {
-      .nav {
-        min-height: 62px;
-      }
-
-      nav {
-        gap: 13px;
-      }
-
-      .logo {
-        font-size: 18px;
-      }
-
-      .hero-inner {
-        padding-top: 45px;
-      }
-
-      .grid {
-        grid-template-columns: 1fr;
-      }
-
-      .track {
-        grid-template-columns: 45px 1fr auto;
-      }
-
-      .plays {
-        display: none;
-      }
-
-      h1 {
-        letter-spacing: -2px;
-      }
-    }
   </style>
 </head>
-
 <body>
-
 <header>
-  <div class="nav">
-    <a href="#" class="logo">
-      INDAMORA <span>PLAY</span>
-    </a>
-
+  <div class="header-inner">
+    <div class="logo">
+      🎧 INDAMORA PLAY
+      <small>INDAMORA RECORDS</small>
+    </div>
     <nav>
-      <a href="#musique">Musique</a>
+      <a href="#musiques">Musiques</a>
       <a href="#artistes">Artistes</a>
       <a href="#classement">Classement</a>
       <a href="#albums">Albums</a>
-      <a href="#media">Clips & Podcasts</a>
-      <a href="#radios">Radios</a>
-      <a href="#proposer">Artistes</a>
+      <a href="#medias">Clips & Podcasts</a>
     </nav>
   </div>
 </header>
-
 <section class="hero">
   <div class="hero-inner">
-
-    <div>
-      <div class="badge">🇨🇫 Musique d'Afrique centrale</div>
-
-      <h1>
-        Découvre<br>
-        <strong>INDAMORA PLAY</strong>
-      </h1>
-
-      <p>
-        Une plateforme dédiée aux artistes, aux musiques,
-        aux clips et aux voix d'Afrique centrale.
-      </p>
-
-      <div class="hero-buttons">
-        <a href="#musique" class="btn btn-primary">
-          🎧 Écouter la musique
-        </a>
-
-        <a href="#artistes" class="btn btn-secondary">
-          👤 Découvrir les artistes
-        </a>
-      </div>
-    </div>
-
-    <div class="hero-card">
-      <div class="hero-card-icon">🎵</div>
-
-      <h2>
-        La musique au cœur de l'Afrique centrale
-      </h2>
-
-      <p>
-        Retrouvez les artistes et les titres publiés
-        sur INDAMORA PLAY.
-      </p>
-    </div>
-
-  </div>
-</section>
-
-<main>
-
-<section id="musique">
-
-  <div class="section-header">
-    <h2 class="section-title">🎧 Musique</h2>
-    <p class="section-subtitle">
-      Écoute les morceaux publiés sur INDAMORA PLAY.
+    <h1>La musique d'Afrique centrale 🇨🇫</h1>
+    <p>
+      Découvrez les artistes, morceaux, albums, clips et podcasts
+      d'Afrique centrale sur INDAMORA PLAY.
     </p>
   </div>
-
-  <div class="search-area">
-
-    <input
-      id="searchInput"
-      class="input"
-      type="search"
-      placeholder="🔎 Rechercher une musique ou un artiste..."
-    >
-
-    <select id="genreFilter" class="select">
-      <option value="">Tous les genres</option>
-    </select>
-
-    <select id="cityFilter" class="select">
-      <option value="">Toutes les villes</option>
-    </select>
-
+</section>
+<main class="container">
+  <div id="globalStatus" class="notice">
+    Chargement du catalogue...
   </div>
-
-  <div id="tracksContainer" class="track-list">
-    <div class="loading">
-      Chargement des musiques...
+  <section id="musiques">
+    <h2>🎧 Musiques</h2>
+    <div class="search-box">
+      <input
+        id="search"
+        type="search"
+        placeholder="Rechercher un artiste, un morceau..."
+      >
+      <select id="genreFilter">
+        <option value="">Tous les genres</option>
+      </select>
+      <select id="cityFilter">
+        <option value="">Toutes les villes</option>
+      </select>
     </div>
-  </div>
-
-</section>
-
-<section id="artistes">
-
-  <div class="section-header">
-    <h2 class="section-title">👤 Artistes</h2>
-
-    <p class="section-subtitle">
-      Découvre les artistes publiés.
-    </p>
-  </div>
-
-  <div id="artistsContainer" class="grid">
-    <div class="loading">
-      Chargement des artistes...
+    <div id="tracks" class="grid"></div>
+  </section>
+  <section id="artistes">
+    <h2>👤 Artistes</h2>
+    <div id="artists" class="grid"></div>
+  </section>
+  <section id="classement">
+    <h2>🔥 Classement des morceaux</h2>
+    <div id="ranking" class="grid"></div>
+  </section>
+  <section id="albums">
+    <h2>💿 Albums & projets</h2>
+    <div id="albumsGrid" class="grid"></div>
+  </section>
+  <section id="medias">
+    <h2>🎬 Clips & 🎙️ Podcasts</h2>
+    <div id="mediaGrid" class="grid"></div>
+  </section>
+  <section>
+    <h2>📻 Radios</h2>
+    <div class="empty">
+      Les radios INDAMORA PLAY seront ajoutées prochainement.
     </div>
-  </div>
-
-</section>
-
-<section id="classement">
-
-  <div class="section-header">
-    <h2 class="section-title">🔥 Classement</h2>
-
-    <p class="section-subtitle">
-      Les morceaux les plus écoutés.
-    </p>
-  </div>
-
-  <div id="rankingContainer" class="track-list">
-    <div class="loading">
-      Chargement du classement...
+  </section>
+  <section>
+    <h2>🎤 Proposer sa musique</h2>
+    <div class="notice">
+      Les artistes et créateurs pourront prochainement proposer leurs
+      morceaux directement à INDAMORA PLAY pour validation.
     </div>
-  </div>
-
-</section>
-
-<section id="albums">
-
-  <div class="section-header">
-    <h2 class="section-title">💿 Albums & projets</h2>
-
-    <p class="section-subtitle">
-      Albums, EP et singles publiés.
-    </p>
-  </div>
-
-  <div id="albumsContainer" class="grid">
-    <div class="loading">
-      Chargement des albums...
-    </div>
-  </div>
-
-</section>
-
-<section id="media">
-
-  <div class="section-header">
-    <h2 class="section-title">🎬 Clips & Podcasts</h2>
-
-    <p class="section-subtitle">
-      Vidéos, clips, interviews et podcasts.
-    </p>
-  </div>
-
-  <div id="mediaContainer" class="media-grid">
-    <div class="loading">
-      Chargement...
-    </div>
-  </div>
-
-</section>
-
-<section id="radios">
-
-  <div class="section-header">
-    <h2 class="section-title">📻 Radios</h2>
-
-    <p class="section-subtitle">
-      Les radios et programmes disponibles prochainement.
-    </p>
-  </div>
-
-  <div class="empty">
-    📻 Les radios seront disponibles prochainement
-    sur INDAMORA PLAY.
-  </div>
-
-</section>
-
-<section id="proposer">
-
-  <div class="section-header">
-    <h2 class="section-title">🎙️ Artistes</h2>
-
-    <p class="section-subtitle">
-      Les artistes pourront prochainement proposer leur musique.
-    </p>
-  </div>
-
-  <div class="empty">
-    🎵 La mise en place des candidatures artistes est en cours.
-  </div>
-
-</section>
-
+  </section>
 </main>
-
-<div id="player" class="player">
-
+<div class="player">
   <div class="player-inner">
-
     <div class="now-playing">
-
-      <div id="nowPlayingTitle" class="now-playing-title">
-        Aucun morceau
-      </div>
-
-      <div id="nowPlayingArtist" class="now-playing-artist">
-        INDAMORA PLAY
-      </div>
-
-      <div id="playerStatus" class="status"></div>
-
+      <strong id="nowTitle">Aucun morceau</strong>
+      <span id="nowArtist">Sélectionnez un morceau pour commencer.</span>
     </div>
-
-    <audio
-      id="audioPlayer"
-      controls
-      preload="none">
-    </audio>
-
+    <audio id="audioPlayer" controls preload="none"></audio>
   </div>
-
 </div>
-
 <footer>
-
-  <p>
-    <strong>INDAMORA PLAY</strong> — INDAMORA RECORDS
-  </p>
-
-  <p>
-    Plateforme de musique d'Afrique centrale 🇨🇫
-  </p>
-
+  <p><strong>INDAMORA PLAY</strong></p>
+  <p>Une plateforme dédiée aux musiques d'Afrique centrale 🇨🇫</p>
+  <p>© INDAMORA RECORDS</p>
 </footer>
-
 <script>
-
-/* ============================================================
-   SUPABASE
-   ============================================================ */
-
-const SUPABASE_URL =
-  "https://adqsdnqkbitplbhbihiv.supabase.co";
-
-/*
-   IMPORTANT :
-   Garde ici ta vraie Publishable key Supabase.
-
-   Ne mets JAMAIS une clé sb_secret_ dans ce fichier.
-*/
-
-const SUPABASE_PUBLISHABLE_KEY =
-  "sb_publishable_dpjfWOYeNQRmP2nJq5FoMA_8NUuD0HF";
-
-const supabaseClient =
-  window.supabase.createClient(
+  const SUPABASE_URL = "https://adqsdnqkbitplbhbihiv.supabase.co";
+  /*
+    IMPORTANT :
+    Conserve ici ta clé Publishable actuelle.
+    N'utilise jamais une clé sb_secret_ dans ce fichier public.
+  */
+  const SUPABASE_PUBLISHABLE_KEY = "sb_publishable_dpjfWOYeNQRmP2nJq5FoMA_8NUuD0HF";
+  const { createClient } = supabase;
+  const db = createClient(
     SUPABASE_URL,
     SUPABASE_PUBLISHABLE_KEY
   );
-
-
-/* ============================================================
-   DONNÉES
-   ============================================================ */
-
-let allTracks = [];
-let allArtists = [];
-let allAlbums = [];
-let allMedia = [];
-
-let rankingTracks = [];
-
-
-/* ============================================================
-   UTILITAIRES
-   ============================================================ */
-
-function escapeHtml(value) {
-
-  if (
-    value === null ||
-    value === undefined
-  ) {
-    return "";
+  const tracksContainer = document.getElementById("tracks");
+  const artistsContainer = document.getElementById("artists");
+  const rankingContainer = document.getElementById("ranking");
+  const albumsContainer = document.getElementById("albumsGrid");
+  const mediaContainer = document.getElementById("mediaGrid");
+  const globalStatus = document.getElementById("globalStatus");
+  const searchInput = document.getElementById("search");
+  const genreFilter = document.getElementById("genreFilter");
+  const cityFilter = document.getElementById("cityFilter");
+  const audioPlayer = document.getElementById("audioPlayer");
+  const nowTitle = document.getElementById("nowTitle");
+  const nowArtist = document.getElementById("nowArtist");
+  let allTracks = [];
+  let allArtists = [];
+  let allAlbums = [];
+  let allMedia = [];
+  /*
+    Empêche plusieurs enregistrements d'écoute pour
+    le même morceau pendant une même lecture.
+  */
+  let countedTrackId = null;
+  function escapeHtml(value) {
+    if (value === null || value === undefined) return "";
+    return String(value)
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;")
+      .replace(/'/g, "&#039;");
   }
-
-  return String(value)
-    .replace(/&/g,"&amp;")
-    .replace(/</g,"&lt;")
-    .replace(/>/g,"&gt;")
-    .replace(/"/g,"&quot;")
-    .replace(/'/g,"&#039;");
-}
-
-
-function formatNumber(value) {
-
-  return new Intl.NumberFormat("fr-FR")
-    .format(Number(value || 0));
-
-}
-
-
-function formatDuration(seconds) {
-
-  if (!seconds) {
-    return "";
+  function publicImage(url) {
+    if (!url) {
+      return "data:image/svg+xml;charset=UTF-8," +
+        encodeURIComponent(`
+          <svg xmlns="http://www.w3.org/2000/svg"
+               width="600"
+               height="600"
+               viewBox="0 0 600 600">
+            <rect width="600" height="600" fill="#edf4fb"/>
+            <text x="300" y="315"
+                  text-anchor="middle"
+                  font-family="Arial"
+                  font-size="70"
+                  fill="#0757b8">🎵</text>
+          </svg>
+        `);
+    }
+    return url;
   }
-
-  const total =
-    Number(seconds);
-
-  const minutes =
-    Math.floor(total / 60);
-
-  const remaining =
-    total % 60;
-
-  return (
-    `${minutes}:` +
-    `${String(remaining).padStart(2,"0")}`
-  );
-
-}
-
-
-function getInitial(name) {
-
-  if (!name) {
-    return "♪";
+  async function loadCatalog() {
+    globalStatus.textContent = "Chargement du catalogue...";
+    const [
+      artistsResponse,
+      tracksResponse,
+      albumsResponse,
+      mediaResponse
+    ] = await Promise.all([
+      db
+        .from("artists")
+        .select("*")
+        .eq("status", "published")
+        .order("name"),
+      db
+        .from("tracks")
+        .select("*")
+        .eq("status", "published")
+        .order("created_at", { ascending: false }),
+      db
+        .from("albums")
+        .select("*")
+        .eq("status", "published")
+        .order("release_date", { ascending: false }),
+      db
+        .from("media")
+        .select("*")
+        .eq("status", "published")
+        .order("created_at", { ascending: false })
+    ]);
+    if (artistsResponse.error) {
+      console.error(artistsResponse.error);
+      globalStatus.textContent =
+        "Erreur lors du chargement des artistes.";
+      return;
+    }
+    if (tracksResponse.error) {
+      console.error(tracksResponse.error);
+      globalStatus.textContent =
+        "Erreur lors du chargement des morceaux.";
+      return;
+    }
+    allArtists = artistsResponse.data || [];
+    allTracks = tracksResponse.data || [];
+    allAlbums = albumsResponse.data || [];
+    allMedia = mediaResponse.data || [];
+    populateFilters();
+    renderAll();
+    if (
+      allTracks.length === 0 &&
+      allArtists.length === 0
+    ) {
+      globalStatus.textContent =
+        "Le catalogue est encore vide. Les premiers contenus apparaîtront ici après publication.";
+    } else {
+      globalStatus.textContent =
+        "Catalogue INDAMORA PLAY chargé.";
+    }
   }
-
-  return name
-    .trim()
-    .charAt(0)
-    .toUpperCase();
-
-}
-
-
-/* ============================================================
-   ARTISTES
-   ============================================================ */
-
-async function loadArtists() {
-
-  const container =
-    document.getElementById(
-      "artistsContainer"
-    );
-
-  const { data, error } =
-    await supabaseClient
-      .from("artists")
-      .select(`
-        id,
-        name,
-        slug,
-        bio,
-        city,
-        region,
-        language,
-        genre,
-        avatar_url,
-        verified
-      `)
-      .eq("status","published")
-      .order("name", {
-        ascending: true
-      });
-
-  if (error) {
-
-    console.error(
-      "Erreur artistes :",
-      error
-    );
-
-    container.innerHTML = `
-      <div class="error-box">
-        Impossible de charger les artistes.
-      </div>
-    `;
-
-    return;
-  }
-
-  allArtists =
-    data || [];
-
-  renderArtists(allArtists);
-}
-
-
-function renderArtists(artists) {
-
-  const container =
-    document.getElementById(
-      "artistsContainer"
-    );
-
-  if (!artists.length) {
-
-    container.innerHTML = `
-      <div class="empty">
-        Aucun artiste publié pour le moment.
-      </div>
-    `;
-
-    return;
-  }
-
-  container.innerHTML =
-    artists.map(artist => {
-
-      const avatar =
-        artist.avatar_url
-
-          ? `
-            <img
-              class="artist-avatar"
-              src="${escapeHtml(
-                artist.avatar_url
-              )}"
-              alt="${escapeHtml(
-                artist.name
-              )}"
-            >
-          `
-
-          : `
-            <div class="artist-placeholder">
-              ${escapeHtml(
-                getInitial(artist.name)
-              )}
-            </div>
-          `;
-
-      return `
-        <article class="card artist-card">
-
-          ${avatar}
-
-          <div class="artist-name">
-            ${escapeHtml(
-              artist.name
-            )}
-          </div>
-
-          ${
-            artist.verified
-              ? `
-                <div class="verified">
-                  ✓ Artiste vérifié
-                </div>
-              `
-              : ""
-          }
-
-          <div class="card-meta">
-            ${escapeHtml(
-              artist.city || ""
-            )}
-
-            ${
-              artist.region
-                ? " · " +
-                  escapeHtml(
-                    artist.region
-                  )
-                : ""
-            }
-          </div>
-
-          ${
-            artist.genre
-              ? `
-                <div class="card-meta">
-                  ${escapeHtml(
-                    artist.genre
-                  )}
-                </div>
-              `
-              : ""
-          }
-
-        </article>
-      `;
-
-    }).join("");
-
-}
-
-
-/* ============================================================
-   MUSIQUES
-   ============================================================ */
-
-async function loadTracks() {
-
-  const container =
-    document.getElementById(
-      "tracksContainer"
-    );
-
-  const { data, error } =
-    await supabaseClient
-      .from("tracks")
-      .select(`
-        id,
-        title,
-        slug,
-        audio_url,
-        duration_seconds,
-        genre,
-        language,
-        city,
-        region,
-        play_count,
-        artist_id,
-        album_id,
-        artists (
-          id,
-          name,
-          avatar_url
-        )
-      `)
-      .eq("status","published")
-      .order("created_at", {
-        ascending: false
-      });
-
-  if (error) {
-
-    console.error(
-      "Erreur musiques :",
-      error
-    );
-
-    container.innerHTML = `
-      <div class="error-box">
-        Impossible de charger les musiques.
-      </div>
-    `;
-
-    return;
-  }
-
-  allTracks =
-    data || [];
-
-  populateFilters(
-    allTracks
-  );
-
-  renderTracks(
-    allTracks
-  );
-}
-
-
-function renderTracks(tracks) {
-
-  const container =
-    document.getElementById(
-      "tracksContainer"
-    );
-
-  if (!tracks.length) {
-
-    container.innerHTML = `
-      <div class="empty">
-        Aucune musique publiée pour le moment.
-      </div>
-    `;
-
-    return;
-  }
-
-  container.innerHTML =
-    tracks.map((track,index) => {
-
-      const artistName =
-        track.artists?.name ||
-        "Artiste inconnu";
-
-      const duration =
-        formatDuration(
-          track.duration_seconds
-        );
-
-      return `
-        <article class="track">
-
-          <div class="track-number">
-            ${index + 1}
-          </div>
-
-          <div>
-
-            <div class="track-title">
-              ${escapeHtml(
-                track.title
-              )}
-            </div>
-
-            <div class="track-artist">
-              ${escapeHtml(
-                artistName
-              )}
-
-              ${
-                track.genre
-                  ? " · " +
-                    escapeHtml(
-                      track.genre
-                    )
-                  : ""
-              }
-
-              ${
-                duration
-                  ? " · " +
-                    escapeHtml(
-                      duration
-                    )
-                  : ""
-              }
-            </div>
-
-          </div>
-
-          <div class="plays">
-            ${formatNumber(
-              track.play_count
-            )}
-            écoutes
-          </div>
-
-          <button
-            class="play-btn"
-            onclick="playTrack('${track.id}')"
-            aria-label="Écouter ${escapeHtml(
-              track.title
-            )}"
-          >
-            ▶
-          </button>
-
-        </article>
-      `;
-
-    }).join("");
-
-}
-
-
-/* ============================================================
-   FILTRES
-   ============================================================ */
-
-function populateFilters(tracks) {
-
-  const genreSelect =
-    document.getElementById(
-      "genreFilter"
-    );
-
-  const citySelect =
-    document.getElementById(
-      "cityFilter"
-    );
-
-  const genres =
-    [...new Set(
-      tracks
-        .map(t => t.genre)
-        .filter(Boolean)
-    )].sort();
-
-  const cities =
-    [...new Set(
-      tracks
-        .map(t => t.city)
-        .filter(Boolean)
-    )].sort();
-
-  genreSelect.innerHTML =
-    `<option value="">
-      Tous les genres
-    </option>` +
-
-    genres.map(genre =>
-      `<option value="${escapeHtml(
-        genre
-      )}">
-        ${escapeHtml(
-          genre
-        )}
-      </option>`
-    ).join("");
-
-  citySelect.innerHTML =
-    `<option value="">
-      Toutes les villes
-    </option>` +
-
-    cities.map(city =>
-      `<option value="${escapeHtml(
-        city
-      )}">
-        ${escapeHtml(
-          city
-        )}
-      </option>`
-    ).join("");
-
-}
-
-
-function applyFilters() {
-
-  const search =
-    document
-      .getElementById(
-        "searchInput"
+  function populateFilters() {
+    const genres = [
+      ...new Set(
+        allTracks
+          .map(track => track.genre)
+          .filter(Boolean)
       )
-      .value
-      .toLowerCase()
-      .trim();
-
-  const genre =
-    document.getElementById(
-      "genreFilter"
-    ).value;
-
-  const city =
-    document.getElementById(
-      "cityFilter"
-    ).value;
-
-  const filtered =
-    allTracks.filter(track => {
-
-      const title =
-        (track.title || "")
-          .toLowerCase();
-
-      const artist =
-        (
-          track.artists?.name ||
-          ""
-        ).toLowerCase();
-
+    ].sort();
+    const cities = [
+      ...new Set(
+        [
+          ...allTracks.map(track => track.city),
+          ...allArtists.map(artist => artist.city)
+        ].filter(Boolean)
+      )
+    ].sort();
+    genreFilter.innerHTML =
+      '<option value="">Tous les genres</option>' +
+      genres
+        .map(
+          genre =>
+            `<option value="${escapeHtml(genre)}">${escapeHtml(genre)}</option>`
+        )
+        .join("");
+    cityFilter.innerHTML =
+      '<option value="">Toutes les villes</option>' +
+      cities
+        .map(
+          city =>
+            `<option value="${escapeHtml(city)}">${escapeHtml(city)}</option>`
+        )
+        .join("");
+  }
+  function getArtistName(artistId) {
+    const artist = allArtists.find(
+      item => item.id === artistId
+    );
+    return artist ? artist.name : "Artiste";
+  }
+  function renderAll() {
+    renderTracks();
+    renderArtists();
+    renderRanking();
+    renderAlbums();
+    renderMedia();
+  }
+  function filteredTracks() {
+    const search = searchInput.value
+      .trim()
+      .toLowerCase();
+    const genre = genreFilter.value;
+    const city = cityFilter.value;
+    return allTracks.filter(track => {
+      const artistName =
+        getArtistName(track.artist_id).toLowerCase();
       const matchesSearch =
         !search ||
-        title.includes(search) ||
-        artist.includes(search);
-
+        track.title.toLowerCase().includes(search) ||
+        artistName.includes(search);
       const matchesGenre =
-        !genre ||
-        track.genre === genre;
-
+        !genre || track.genre === genre;
       const matchesCity =
         !city ||
-        track.city === city;
-
+        track.city === city ||
+        allArtists.some(
+          artist =>
+            artist.id === track.artist_id &&
+            artist.city === city
+        );
       return (
         matchesSearch &&
         matchesGenre &&
         matchesCity
       );
-
     });
-
-  renderTracks(
-    filtered
-  );
-
-}
-
-
-document
-  .getElementById(
-    "searchInput"
-  )
-  .addEventListener(
-    "input",
-    applyFilters
-  );
-
-
-document
-  .getElementById(
-    "genreFilter"
-  )
-  .addEventListener(
-    "change",
-    applyFilters
-  );
-
-
-document
-  .getElementById(
-    "cityFilter"
-  )
-  .addEventListener(
-    "change",
-    applyFilters
-  );
-
-
-/* ============================================================
-   LECTURE AUDIO SÉCURISÉE
-   ============================================================ */
-
-async function getSignedAudioUrl(trackId) {
-
-  const response =
-    await fetch(
+  }
+  function renderTracks() {
+    const tracks = filteredTracks();
+    if (!tracks.length) {
+      tracksContainer.innerHTML =
+        '<div class="empty">Aucun morceau ne correspond à votre recherche.</div>';
+      return;
+    }
+    tracksContainer.innerHTML = tracks
+      .map(track => {
+        const artistName =
+          getArtistName(track.artist_id);
+        return `
+          <article class="card">
+            <h3>${escapeHtml(track.title)}</h3>
+            <div class="meta">
+              👤 ${escapeHtml(artistName)}<br>
+              ${track.genre ? "🎵 " + escapeHtml(track.genre) + "<br>" : ""}
+              ${track.language ? "🌍 " + escapeHtml(track.language) + "<br>" : ""}
+              ${track.city ? "📍 " + escapeHtml(track.city) + "<br>" : ""}
+              ▶️ ${Number(track.play_count || 0)} écoute(s)
+            </div>
+            <button
+              class="play-button"
+              onclick="playTrack('${track.id}')"
+            >
+              ▶️ Écouter
+            </button>
+          </article>
+        `;
+      })
+      .join("");
+  }
+  function renderArtists() {
+    if (!allArtists.length) {
+      artistsContainer.innerHTML =
+        '<div class="empty">Aucun artiste publié pour le moment.</div>';
+      return;
+    }
+    artistsContainer.innerHTML = allArtists
+      .map(artist => {
+        return `
+          <article class="card">
+            <img
+              class="artist-avatar"
+              src="${escapeHtml(publicImage(artist.avatar_url))}"
+              alt="${escapeHtml(artist.name)}"
+            >
+            <h3>${escapeHtml(artist.name)}</h3>
+            <div class="meta">
+              ${artist.city ? "📍 " + escapeHtml(artist.city) + "<br>" : ""}
+              ${artist.region ? "🗺️ " + escapeHtml(artist.region) + "<br>" : ""}
+              ${artist.language ? "🌍 " + escapeHtml(artist.language) + "<br>" : ""}
+              ${artist.genre ? "🎵 " + escapeHtml(artist.genre) : ""}
+            </div>
+          </article>
+        `;
+      })
+      .join("");
+  }
+  function renderRanking() {
+    const ranking = [...allTracks]
+      .sort(
+        (a, b) =>
+          Number(b.play_count || 0) -
+          Number(a.play_count || 0)
+      )
+      .slice(0, 10);
+    if (!ranking.length) {
+      rankingContainer.innerHTML =
+        '<div class="empty">Le classement apparaîtra avec les premiers morceaux publiés.</div>';
+      return;
+    }
+    rankingContainer.innerHTML = ranking
+      .map((track, index) => {
+        return `
+          <article class="card">
+            <h3>#${index + 1} — ${escapeHtml(track.title)}</h3>
+            <div class="meta">
+              👤 ${escapeHtml(getArtistName(track.artist_id))}<br>
+              🔥 ${Number(track.play_count || 0)} écoute(s)
+            </div>
+            <button
+              class="play-button"
+              onclick="playTrack('${track.id}')"
+            >
+              ▶️ Écouter
+            </button>
+          </article>
+        `;
+      })
+      .join("");
+  }
+  function renderAlbums() {
+    if (!allAlbums.length) {
+      albumsContainer.innerHTML =
+        '<div class="empty">Aucun album ou projet publié pour le moment.</div>';
+      return;
+    }
+    albumsContainer.innerHTML = allAlbums
+      .map(album => {
+        return `
+          <article class="card">
+            <img
+              class="cover"
+              src="${escapeHtml(publicImage(album.cover_url))}"
+              alt="${escapeHtml(album.title)}"
+            >
+            <h3>${escapeHtml(album.title)}</h3>
+            <div class="meta">
+              👤 ${escapeHtml(getArtistName(album.artist_id))}<br>
+              ${album.type ? "💿 " + escapeHtml(album.type) + "<br>" : ""}
+              ${album.release_date ? "📅 " + escapeHtml(album.release_date) : ""}
+            </div>
+          </article>
+        `;
+      })
+      .join("");
+  }
+  function renderMedia() {
+    if (!allMedia.length) {
+      mediaContainer.innerHTML =
+        '<div class="empty">Aucun clip ou podcast publié pour le moment.</div>';
+      return;
+    }
+    mediaContainer.innerHTML = allMedia
+      .map(item => {
+        const typeLabel =
+          item.type === "video"
+            ? "🎬 Clip"
+            : item.type === "podcast"
+            ? "🎙️ Podcast"
+            : item.type === "interview"
+            ? "🎤 Interview"
+            : "📺 Média";
+        return `
+          <article class="card">
+            <h3>${escapeHtml(item.title)}</h3>
+            <div class="meta">
+              ${typeLabel}<br>
+              👤 ${escapeHtml(getArtistName(item.artist_id))}
+            </div>
+            ${
+              item.media_url
+                ? `
+                  <a
+                    href="${escapeHtml(item.media_url)}"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="play-button"
+                    style="display:block;text-align:center;text-decoration:none;"
+                  >
+                    Ouvrir le média
+                  </a>
+                `
+                : ""
+            }
+          </article>
+        `;
+      })
+      .join("");
+  }
+  /*
+    Récupère une URL signée depuis l'Edge Function
+    play-track, sans rendre le bucket audio public.
+  */
+  async function getSignedAudioUrl(trackId) {
+    const response = await fetch(
       `${SUPABASE_URL}/functions/v1/play-track`,
       {
         method: "POST",
-
         headers: {
-          "Content-Type":
-            "application/json",
-
-          "apikey":
-            SUPABASE_PUBLISHABLE_KEY
+          "Content-Type": "application/json",
+          "apikey": SUPABASE_PUBLISHABLE_KEY
         },
-
         body: JSON.stringify({
           track_id: trackId
         })
       }
     );
-
-  let result = null;
-
-  try {
-    result =
-      await response.json();
-  } catch (error) {
-    result = null;
-  }
-
-  if (!response.ok) {
-
-    throw new Error(
-      result?.error ||
-      "Impossible d'obtenir le lien audio."
-    );
-
-  }
-
-  if (!result?.signed_url) {
-
-    throw new Error(
-      "Le serveur n'a pas retourné de lien audio."
-    );
-
-  }
-
-  return result.signed_url;
-}
-
-
-async function playTrack(trackId) {
-
-  const track =
-    allTracks.find(
-      t => t.id === trackId
-    );
-
-  if (!track) {
-    return;
-  }
-
-  const player =
-    document.getElementById(
-      "player"
-    );
-
-  const audio =
-    document.getElementById(
-      "audioPlayer"
-    );
-
-  const title =
-    document.getElementById(
-      "nowPlayingTitle"
-    );
-
-  const artist =
-    document.getElementById(
-      "nowPlayingArtist"
-    );
-
-  const status =
-    document.getElementById(
-      "playerStatus"
-    );
-
-  title.textContent =
-    track.title ||
-    "Morceau";
-
-  artist.textContent =
-    track.artists?.name ||
-    "Artiste";
-
-  status.textContent =
-    "Chargement sécurisé...";
-
-  player.style.display =
-    "block";
-
-  audio.pause();
-
-  audio.removeAttribute(
-    "src"
-  );
-
-  try {
-
-    const signedUrl =
-      await getSignedAudioUrl(
-        track.id
-      );
-
-    audio.src =
-      signedUrl;
-
-    status.textContent =
-      "Lecture en cours";
-
+    let data = {};
     try {
-
-      await audio.play();
-
+      data = await response.json();
     } catch (error) {
-
-      status.textContent =
-        "Appuie sur ▶ pour commencer la lecture.";
-
+      throw new Error(
+        "Réponse invalide du serveur audio."
+      );
     }
-
-  } catch (error) {
-
-    console.error(
-      "Erreur lecture audio :",
-      error
-    );
-
-    status.textContent =
-      "";
-
-    alert(
-      error.message ||
-      "Impossible de lire ce morceau."
-    );
-
+    if (!response.ok || !data.signed_url) {
+      throw new Error(
+        data.error ||
+        "Morceau indisponible."
+      );
+    }
+    return data.signed_url;
   }
-
-}
-
-
-/* ============================================================
-   CLASSEMENT
-   ============================================================ */
-
-async function loadRanking() {
-
-  const container =
-    document.getElementById(
-      "rankingContainer"
-    );
-
-  const { data, error } =
-    await supabaseClient
-      .from("tracks")
-      .select(`
-        id,
-        title,
-        audio_url,
-        duration_seconds,
-        play_count,
-        artist_id,
-        artists (
-          id,
-          name
-        )
-      `)
-      .eq("status","published")
-      .order("play_count", {
-        ascending: false
-      })
-      .limit(10);
-
-  if (error) {
-
-    console.error(
-      "Erreur classement :",
-      error
-    );
-
-    container.innerHTML = `
-      <div class="error-box">
-        Impossible de charger le classement.
-      </div>
-    `;
-
-    return;
-  }
-
-  rankingTracks =
-    data || [];
-
-  if (!rankingTracks.length) {
-
-    container.innerHTML = `
-      <div class="empty">
-        Aucun classement disponible pour le moment.
-      </div>
-    `;
-
-    return;
-  }
-
-  container.innerHTML =
-    rankingTracks.map(
-      (track,index) => {
-
-        const artistName =
-          track.artists?.name ||
-          "Artiste inconnu";
-
-        return `
-          <article class="track">
-
-            <div class="track-number">
-              ${index + 1}
-            </div>
-
-            <div>
-
-              <div class="track-title">
-                ${escapeHtml(
-                  track.title
-                )}
-              </div>
-
-              <div class="track-artist">
-                ${escapeHtml(
-                  artistName
-                )}
-
-                ${
-                  track.duration_seconds
-                    ? " · " +
-                      escapeHtml(
-                        formatDuration(
-                          track.duration_seconds
-                        )
-                      )
-                    : ""
-                }
-              </div>
-
-            </div>
-
-            <div class="plays">
-              ${formatNumber(
-                track.play_count
-              )}
-              écoutes
-            </div>
-
-            <button
-              class="play-btn"
-              onclick="playRankingTrack('${track.id}')"
-              aria-label="Écouter ${escapeHtml(
-                track.title
-              )}"
-            >
-              ▶
-            </button>
-
-          </article>
-        `;
-
-      }
-    ).join("");
-
-}
-
-
-function playRankingTrack(trackId) {
-
-  const track =
-    rankingTracks.find(
-      t => t.id === trackId
-    );
-
-  if (!track) {
-    return;
-  }
-
   /*
-     Le classement utilise la même
-     lecture sécurisée que la liste principale.
+    Enregistre UNE écoute pour la lecture courante.
+    La fonction SQL vérifie elle-même que le morceau
+    et son artiste sont publiés.
   */
-
-  playTrack(track.id);
-
-}
-
-
-/* ============================================================
-   ALBUMS
-   ============================================================ */
-
-async function loadAlbums() {
-
-  const container =
-    document.getElementById(
-      "albumsContainer"
+  async function recordPlay(trackId) {
+    if (countedTrackId === trackId) {
+      return;
+    }
+    const { data, error } = await db.rpc(
+      "record_track_play",
+      {
+        p_track_id: trackId
+      }
     );
-
-  const { data, error } =
-    await supabaseClient
-      .from("albums")
-      .select(`
-        id,
-        title,
-        slug,
-        type,
-        cover_url,
-        release_date,
-        description,
-        artist_id,
-        artists (
-          id,
-          name
-        )
-      `)
-      .eq("status","published")
-      .order("release_date", {
-        ascending: false,
-        nullsFirst: false
+    if (error) {
+      console.error(
+        "Erreur compteur d'écoute :",
+        error
+      );
+      return;
+    }
+    countedTrackId = trackId;
+    /*
+      Met à jour immédiatement le compteur local
+      sans recharger toute la page.
+    */
+    const track = allTracks.find(
+      item => item.id === trackId
+    );
+    if (track && data && data.play_count !== undefined) {
+      track.play_count =
+        Number(data.play_count);
+    }
+    renderTracks();
+    renderRanking();
+  }
+  /*
+    Lance un morceau.
+  */
+  async function playTrack(trackId) {
+    const track = allTracks.find(
+      item => item.id === trackId
+    );
+    if (!track) {
+      alert("Morceau introuvable.");
+      return;
+    }
+    const buttons =
+      document.querySelectorAll(".play-button");
+    buttons.forEach(button => {
+      button.disabled = true;
+    });
+    nowTitle.textContent = track.title;
+    nowArtist.textContent =
+      getArtistName(track.artist_id);
+    try {
+      const signedUrl =
+        await getSignedAudioUrl(trackId);
+      audioPlayer.src = signedUrl;
+      /*
+        L'écoute est enregistrée au moment où
+        la lecture démarre réellement.
+      */
+      audioPlayer.onplay = async () => {
+        await recordPlay(trackId);
+      };
+      await audioPlayer.play();
+    } catch (error) {
+      console.error(error);
+      alert(
+        error.message ||
+        "Morceau indisponible."
+      );
+    } finally {
+      buttons.forEach(button => {
+        button.disabled = false;
       });
-
-  if (error) {
-
-    console.error(
-      "Erreur albums :",
-      error
-    );
-
-    container.innerHTML = `
-      <div class="error-box">
-        Impossible de charger les albums.
-      </div>
-    `;
-
-    return;
+    }
   }
-
-  allAlbums =
-    data || [];
-
-  renderAlbums(
-    allAlbums
+  /*
+    Quand l'utilisateur arrête puis lance un autre morceau,
+    le prochain morceau peut être compté.
+  */
+  audioPlayer.addEventListener(
+    "ended",
+    () => {
+      countedTrackId = null;
+    }
   );
-
-}
-
-
-function renderAlbums(albums) {
-
-  const container =
-    document.getElementById(
-      "albumsContainer"
-    );
-
-  if (!albums.length) {
-
-    container.innerHTML = `
-      <div class="empty">
-        Aucun album publié pour le moment.
-      </div>
-    `;
-
-    return;
-  }
-
-  container.innerHTML =
-    albums.map(album => {
-
-      const cover =
-        album.cover_url
-
-          ? `
-            <img
-              class="cover"
-              src="${escapeHtml(
-                album.cover_url
-              )}"
-              alt="${escapeHtml(
-                album.title
-              )}"
-            >
-          `
-
-          : `
-            <div class="placeholder">
-              💿
-            </div>
-          `;
-
-      return `
-        <article class="card">
-
-          ${cover}
-
-          <div class="card-body">
-
-            <div class="card-title">
-              ${escapeHtml(
-                album.title
-              )}
-            </div>
-
-            <div class="card-meta">
-              ${escapeHtml(
-                album.artists?.name ||
-                "Artiste"
-              )}
-            </div>
-
-            <div class="card-meta">
-              ${escapeHtml(
-                album.type ||
-                "Album"
-              )}
-            </div>
-
-          </div>
-
-        </article>
-      `;
-
-    }).join("");
-
-}
-
-
-/* ============================================================
-   CLIPS / PODCASTS
-   ============================================================ */
-
-async function loadMedia() {
-
-  const container =
-    document.getElementById(
-      "mediaContainer"
-    );
-
-  const { data, error } =
-    await supabaseClient
-      .from("media")
-      .select(`
-        id,
-        title,
-        type,
-        media_url,
-        description,
-        artist_id,
-        artists (
-          id,
-          name
-        )
-      `)
-      .eq("status","published")
-      .order("created_at", {
-        ascending: false
-      });
-
-  if (error) {
-
-    console.error(
-      "Erreur médias :",
-      error
-    );
-
-    container.innerHTML = `
-      <div class="error-box">
-        Impossible de charger les médias.
-      </div>
-    `;
-
-    return;
-  }
-
-  allMedia =
-    data || [];
-
-  renderMedia(
-    allMedia
+  searchInput.addEventListener(
+    "input",
+    renderTracks
   );
-
-}
-
-
-function renderMedia(media) {
-
-  const container =
-    document.getElementById(
-      "mediaContainer"
-    );
-
-  if (!media.length) {
-
-    container.innerHTML = `
-      <div class="empty">
-        Aucun clip ou podcast publié pour le moment.
-      </div>
-    `;
-
-    return;
-  }
-
-  container.innerHTML =
-    media.map(item => {
-
-      const type =
-        (
-          item.type ||
-          "media"
-        ).toLowerCase();
-
-      let icon =
-        "🎬";
-
-      if (
-        type.includes("podcast")
-      ) {
-        icon =
-          "🎙️";
-      }
-
-      if (
-        type.includes("audio")
-      ) {
-        icon =
-          "🎧";
-      }
-
-      if (
-        type.includes("video") ||
-        type.includes("clip")
-      ) {
-        icon =
-          "🎬";
-      }
-
-      return `
-        <article class="media-card">
-
-          <div class="media-icon">
-            ${icon}
-          </div>
-
-          <div class="media-type">
-            ${escapeHtml(
-              item.type ||
-              "Média"
-            )}
-          </div>
-
-          <div class="media-title">
-            ${escapeHtml(
-              item.title
-            )}
-          </div>
-
-          <div class="media-description">
-            ${escapeHtml(
-              item.description ||
-              ""
-            )}
-          </div>
-
-          ${
-            item.artists?.name
-              ? `
-                <div class="card-meta">
-                  ${escapeHtml(
-                    item.artists.name
-                  )}
-                </div>
-              `
-              : ""
-          }
-
-          ${
-            item.media_url
-              ? `
-                <a
-                  class="media-link"
-                  href="${escapeHtml(
-                    item.media_url
-                  )}"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  ▶ Ouvrir
-                </a>
-              `
-              : ""
-          }
-
-        </article>
-      `;
-
-    }).join("");
-
-}
-
-
-/* ============================================================
-   INITIALISATION
-   ============================================================ */
-
-async function init() {
-
-  await Promise.all([
-    loadArtists(),
-    loadTracks(),
-    loadRanking(),
-    loadAlbums(),
-    loadMedia()
-  ]);
-
-}
-
-
-/* ============================================================
-   DÉMARRAGE
-   ============================================================ */
-
-init();
-
+  genreFilter.addEventListener(
+    "change",
+    renderTracks
+  );
+  cityFilter.addEventListener(
+    "change",
+    renderTracks
+  );
+  /*
+    Si l'utilisateur change manuellement de source,
+    on permet au morceau suivant d'être comptabilisé.
+  */
+  audioPlayer.addEventListener(
+    "emptied",
+    () => {
+      countedTrackId = null;
+    }
+  );
+  loadCatalog().catch(error => {
+    console.error(error);
+    globalStatus.textContent =
+      "Impossible de charger le catalogue. Vérifiez la connexion et la configuration Supabase.";
+  });
+  window.playTrack = playTrack;
 </script>
-
 </body>
 </html>
