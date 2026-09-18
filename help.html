@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Centre d’aide — INDAMORA PLAY</title>
+  <style>
+    :root{
+      --blue:#0b5ed7;
+      --blue-dark:#084298;
+      --blue-light:#eaf3ff;
+      --white:#ffffff;
+      --text:#17324d;
+      --muted:#64748b;
+      --border:#dbe7f5;
+      --background:#f7fbff;
+    }
+    *{
+      box-sizing:border-box;
+    }
+    body{
+      margin:0;
+      font-family:Arial,Helvetica,sans-serif;
+      background:var(--background);
+      color:var(--text);
+      line-height:1.7;
+    }
+    header{
+      background:var(--blue);
+      color:white;
+      padding:18px 20px;
+      position:sticky;
+      top:0;
+      z-index:10;
+      box-shadow:0 3px 12px rgba(0,0,0,.08);
+    }
+    .header-inner{
+      max-width:1100px;
+      margin:auto;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:20px;
+    }
+    .logo{
+      font-size:20px;
+      font-weight:800;
+    }
+    .logo small{
+      display:block;
+      font-size:12px;
+      opacity:.9;
+      margin-top:2px;
+    }
+    nav a{
+      color:white;
+      text-decoration:none;
+      margin-left:16px;
+      font-size:14px;
+    }
+    nav a:hover{
+      text-decoration:underline;
+    }
+    main{
+      max-width:1050px;
+      margin:45px auto;
+      padding:0 20px;
+    }
+    .hero{
+      background:linear-gradient(135deg,#ffffff,#eaf3ff);
+      border:1px solid var(--border);
+      border-radius:20px;
+      padding:38px;
+      margin-bottom:25px;
+    }
+    h1{
+      margin-top:0;
+      color:var(--blue-dark);
+      font-size:36px;
+    }
+    h2{
+      color:var(--blue-dark);
+      margin-top:0;
+      font-size:23px;
+    }
+    .intro{
+      font-size:17px;
+      color:#40566d;
+    }
+    .grid{
+      display:grid;
+      grid-template-columns:repeat(2,1fr);
+      gap:20px;
+    }
+    .card{
+      background:white;
+      border:1px solid var(--border);
+      border-radius:16px;
+      padding:25px;
+      box-shadow:0 4px 15px rgba(30,80,130,.05);
+    }
+    .card p:last-child{
+      margin-bottom:0;
+    }
+    .icon{
+      font-size:30px;
+      margin-bottom:10px;
+    }
+    a{
+      color:var(--blue);
+      font-weight:600;
+    }
+    .notice{
+      background:var(--blue-light);
+      border-left:4px solid var(--blue);
+      padding:16px 18px;
+      border-radius:8px;
+      margin:25px 0;
+    }
+    .steps{
+      padding-left:22px;
+    }
+    .steps li{
+      margin-bottom:9px;
+    }
+    .button{
+      display:inline-block;
+      background:var(--blue);
+      color:white;
+      padding:11px 17px;
+      border-radius:9px;
+      text-decoration:none;
+      margin-top:12px;
+    }
+    .button:hover{
+      background:var(--blue-dark);
+    }
+    .faq{
+      margin-top:25px;
+    }
+    .faq-item{
+      padding:18px 0;
+      border-bottom:1px solid var(--border);
+    }
+    .faq-item:last-child{
+      border-bottom:none;
+    }
+    .faq-question{
+      font-weight:800;
+      color:var(--blue-dark);
+      margin-bottom:6px;
+    }
+    footer{
+      margin-top:50px;
+      padding:30px 20px;
+      background:#eaf3ff;
+      text-align:center;
+      color:var(--muted);
+      font-size:14px;
+    }
+    @media(max-width:750px){
+      .header-inner{
+        flex-direction:column;
+        align-items:flex-start;
+      }
+      nav a{
+        margin-left:0;
+        margin-right:12px;
+      }
+      .grid{
+        grid-template-columns:1fr;
+      }
+      h1{
+        font-size:29px;
+      }
+      .hero,
+      .card{
+        padding:22px;
+      }
+    }
+  </style>
+</head>
+<body>
+<header>
+  <div class="header-inner">
+    <div class="logo">
+      🎧 INDAMORA PLAY
+      <small>INDAMORA RECORDS</small>
+    </div>
+<nav>
+  <a href="index.html">Accueil</a>
+  <a href="about.html">À propos</a>
+  <a href="contact.html">Contact</a>
+</nav>
+  </div>
+</header>
+<main>
+  <section class="hero">
+    <h1>Centre d’aide</h1>
+<p class="intro">
+  Bienvenue dans le centre d’aide d’<strong>INDAMORA PLAY</strong>.
+  Retrouvez ici les principales informations pour utiliser la plateforme,
+  écouter de la musique, créer un compte et accéder à l’espace artiste.
+</p>
+<div class="notice">
+  Si vous rencontrez un problème qui n’est pas expliqué ici,
+  vous pouvez nous contacter directement.
+</div>
+<a class="button" href="contact.html">
+  Contacter INDAMORA PLAY
+</a>
+  </section>
+  <section class="grid">
+<div class="card">
+  <div class="icon">👤</div>
+  <h2>Créer un compte</h2>
+  <p>
+    La création d’un compte permet notamment d’accéder aux fonctionnalités
+    réservées aux utilisateurs et à l’espace artiste.
+  </p>
+  <ol class="steps">
+    <li>Ouvrez la page « Créer un compte ».</li>
+    <li>Indiquez votre adresse email.</li>
+    <li>Choisissez un mot de passe.</li>
+    <li>Complétez les informations demandées.</li>
+    <li>Validez votre inscription.</li>
+  </ol>
+  <a class="button" href="register.html">
+    Créer un compte
+  </a>
+</div>
+<div class="card">
+  <div class="icon">🎤</div>
+  <h2>Espace artiste</h2>
+  <p>
+    Les artistes peuvent utiliser leur espace dédié pour présenter leur
+    profil et proposer leurs contenus à la plateforme.
+  </p>
+  <p>
+    Les contenus soumis peuvent faire l’objet d’une validation avant
+    leur publication publique.
+  </p>
+  <a class="button" href="artist.html">
+    Accéder à l’espace artiste
+  </a>
+</div>
+<div class="card">
+  <div class="icon">🎵</div>
+  <h2>Écouter une musique</h2>
+  <p>
+    Parcourez les musiques publiées depuis la plateforme et utilisez
+    le lecteur disponible sur les contenus concernés.
+  </p>
+  <p>
+    Seuls les contenus publiés sont destinés à apparaître dans le
+    catalogue public.
+  </p>
+  <a class="button" href="public-catalog.html">
+    Voir le catalogue
+  </a>
+</div>
+<div class="card">
+  <div class="icon">💳</div>
+  <h2>Abonnements et dons</h2>
+  <p>
+    INDAMORA PLAY peut proposer un abonnement destiné à soutenir
+    le fonctionnement et le développement de la plateforme associative.
+  </p>
+  <p>
+    Une rubrique de dons permet également aux visiteurs de soutenir
+    le projet et les actions menées en faveur des artistes publiés.
+  </p>
+  <a class="button" href="subscription-account.html">
+    Abonnements et dons
+  </a>
+</div>
+<div class="card">
+  <div class="icon">📊</div>
+  <h2>Suivre son activité artiste</h2>
+  <p>
+    L’espace artiste permet, lorsque les données sont disponibles,
+    de consulter certaines informations relatives aux contenus,
+    aux écoutes et aux statistiques.
+  </p>
+  <a class="button" href="artist-stats.html">
+    Voir les statistiques
+  </a>
+</div>
+<div class="card">
+  <div class="icon">📝</div>
+  <h2>Proposer sa musique</h2>
+  <p>
+    Les artistes et contributeurs peuvent proposer leurs contenus
+    à INDAMORA PLAY en utilisant les fonctionnalités prévues à cet effet.
+  </p>
+  <p>
+    Les contenus doivent respecter les droits des auteurs et les règles
+    de la plateforme.
+  </p>
+  <a class="button" href="artist.html">
+    Proposer un contenu
+  </a>
+</div>
+  </section>
+  <section class="card faq">
+<h2>Questions fréquentes</h2>
+<div class="faq-item">
+  <div class="faq-question">
+    Je n’arrive pas à créer mon compte. Que faire ?
+  </div>
+  <div>
+    Vérifiez votre adresse email et votre mot de passe.
+    Si une confirmation par email est demandée, consultez votre boîte
+    de réception et confirmez votre adresse avant de vous reconnecter.
+  </div>
+</div>
+<div class="faq-item">
+  <div class="faq-question">
+    Je suis artiste. Comment publier ma musique ?
+  </div>
+  <div>
+    Créez votre compte puis utilisez l’espace artiste pour proposer
+    votre profil et vos contenus. Les contenus peuvent être soumis
+    à validation avant publication.
+  </div>
+</div>
+<div class="faq-item">
+  <div class="faq-question">
+    Pourquoi une musique n’apparaît-elle pas dans le catalogue public ?
+  </div>
+  <div>
+    Un contenu peut être en attente de validation ou ne pas encore
+    être publié. Le catalogue public affiche les contenus validés
+    et publiés.
+  </div>
+</div>
+<div class="faq-item">
+  <div class="faq-question">
+    Comment consulter mes abonnements ou mes dons ?
+  </div>
+  <div>
+    Connectez-vous à votre compte puis ouvrez la rubrique consacrée
+    aux abonnements et aux dons.
+  </div>
+</div>
+<div class="faq-item">
+  <div class="faq-question">
+    Où puis-je demander de l’aide ?
+  </div>
+  <div>
+    Utilisez la
+    <a href="contact.html">page de contact</a>
+    pour nous transmettre votre demande.
+  </div>
+</div>
+  </section>
+  <section class="card" style="margin-top:20px;">
+<h2>Informations utiles</h2>
+<p>
+  Pour connaître les règles concernant l’utilisation de la plateforme,
+  consultez les
+  <a href="terms.html">Conditions d’utilisation</a>.
+</p>
+<p>
+  Pour les informations relatives aux données personnelles,
+  consultez la
+  <a href="privacy.html">Politique de confidentialité</a>.
+</p>
+<p>
+  Pour les informations légales concernant l’éditeur du site,
+  consultez les
+  <a href="legal.html">Mentions légales</a>.
+</p>
+<a class="button" href="index.html">
+  ← Retour à INDAMORA PLAY
+</a>
+  </section>
+</main>
+<footer>
+  © 2026 INDAMORA PLAY — INDAMORA RECORDS
+</footer>
+</body>
+</html>
