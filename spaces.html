@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>INDAMORA PLAY — Espaces</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+body {
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+  background: #f5f9ff;
+  color: #123;
+}
+header {
+  background: #0757b8;
+  color: white;
+  padding: 25px 20px;
+  text-align: center;
+}
+header h1 {
+  margin: 0;
+  font-size: 30px;
+}
+header p {
+  margin: 8px 0 0;
+}
+main {
+  max-width: 1100px;
+  margin: 30px auto;
+  padding: 20px;
+}
+.intro {
+  background: white;
+  border-radius: 16px;
+  padding: 25px;
+  margin-bottom: 25px;
+  box-shadow: 0 4px 15px rgba(0,0,0,.07);
+  text-align: center;
+}
+.intro h2 {
+  color: #0757b8;
+  margin-top: 0;
+}
+.spaces {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+  gap: 18px;
+}
+.space {
+  background: white;
+  border: 1px solid #d8e5f3;
+  border-radius: 16px;
+  padding: 24px;
+  text-align: center;
+  box-shadow: 0 4px 15px rgba(0,0,0,.06);
+  transition: transform .15s ease, box-shadow .15s ease;
+}
+.space:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 24px rgba(0,0,0,.10);
+}
+.icon {
+  font-size: 42px;
+  margin-bottom: 12px;
+}
+.space h3 {
+  color: #0757b8;
+  margin: 8px 0;
+}
+.space p {
+  color: #60758d;
+  line-height: 1.5;
+  min-height: 48px;
+}
+.button {
+  display: block;
+  width: 100%;
+  padding: 13px;
+  border-radius: 10px;
+  background: #0757b8;
+  color: white;
+  text-decoration: none;
+  font-weight: bold;
+  margin-top: 15px;
+}
+.button:hover {
+  background: #064895;
+}
+.secondary {
+  background: #e8f2ff;
+  color: #0757b8;
+}
+.secondary:hover {
+  background: #d8eaff;
+}
+footer {
+  margin-top: 40px;
+  background: #0757b8;
+  color: white;
+  text-align: center;
+  padding: 30px 20px;
+}
+footer a {
+  color: white;
+  font-weight: bold;
+  text-decoration: none;
+}
+  </style>
+</head>
+<body>
+<header>
+  <h1>🎧 INDAMORA PLAY</h1>
+  <p>Les espaces de la plateforme</p>
+</header>
+<main>
+  <div class="intro">
+    <h2>Bienvenue sur les espaces INDAMORA PLAY</h2>
+    <p>
+      Choisis directement l'espace auquel tu veux accéder.
+      Les contenus publics restent accessibles sans compte.
+    </p>
+  </div>
+  <div class="spaces">
+<div class="space">
+  <div class="icon">🎤</div>
+  <h3>Espace artiste</h3>
+  <p>
+    Gérer ton profil et proposer ta musique ou tes contenus.
+  </p>
+  <a class="button" href="artist.html">
+    Accéder à l'espace artiste
+  </a>
+</div>
+<div class="space">
+  <div class="icon">📝</div>
+  <h3>Créer un compte</h3>
+  <p>
+    Créer gratuitement ton compte artiste.
+  </p>
+  <a class="button" href="register.html">
+    Créer mon compte
+  </a>
+</div>
+<div class="space">
+  <div class="icon">🏷️</div>
+  <h3>Mes catégories</h3>
+  <p>
+    Choisir les catégories qui correspondent à ton activité.
+  </p>
+  <a class="button" href="my-categories.html">
+    Gérer mes catégories
+  </a>
+</div>
+<div class="space">
+  <div class="icon">👥</div>
+  <h3>Artistes & créateurs</h3>
+  <p>
+    Découvrir les profils publiés sur INDAMORA PLAY.
+  </p>
+  <a class="button secondary" href="artists.html">
+    Voir les artistes
+  </a>
+</div>
+<div class="space">
+  <div class="icon">🎧</div>
+  <h3>Catalogue</h3>
+  <p>
+    Écouter les morceaux et découvrir les contenus publiés.
+  </p>
+  <a class="button secondary" href="public-catalog.html">
+    Ouvrir le catalogue
+  </a>
+</div>
+<div class="space">
+  <div class="icon">💿</div>
+  <h3>Albums</h3>
+  <p>
+    Découvrir les albums et projets publiés.
+  </p>
+  <a class="button secondary" href="public-album.html">
+    Voir les albums
+  </a>
+</div>
+<div class="space">
+  <div class="icon">🎬</div>
+  <h3>Clips & médias</h3>
+  <p>
+    Découvrir les clips, podcasts et autres médias.
+  </p>
+  <a class="button secondary" href="public-media.html">
+    Voir les médias
+  </a>
+</div>
+<div class="space">
+  <div class="icon">💙</div>
+  <h3>Soutenir INDAMORA</h3>
+  <p>
+    Découvrir les possibilités de soutien à la plateforme.
+  </p>
+  <a class="button secondary" href="support.html">
+    Soutenir la plateforme
+  </a>
+</div>
+  </div>
+</main>
+<footer>
+  <p>
+    <strong>INDAMORA PLAY</strong>
+  </p>
+  <p>
+    <a href="index.html">← Retour à l'accueil</a>
+  </p>
+</footer>
+</body>
+</html>
