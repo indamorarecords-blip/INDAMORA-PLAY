@@ -1,257 +1,239 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Mes catégories — INDAMORA PLAY</title>
-<style>
-*{box-sizing:border-box}
-body{
-  margin:0;
-  font-family:Arial,sans-serif;
-  background:#f5f9ff;
-  color:#123;
-}
-header{
-  background:#0866d6;
-  color:#fff;
-  padding:20px;
-  text-align:center;
-}
-header h1{
-  margin:0;
-  font-size:25px;
-}
-header p{
-  margin:7px 0 0;
-}
-main{
-  max-width:950px;
-  margin:30px auto;
-  padding:0 18px;
-}
-.card{
-  background:#fff;
-  border-radius:16px;
-  padding:25px;
-  box-shadow:0 5px 20px rgba(0,70,150,.08);
-}
-h2{
-  color:#0866d6;
-  margin-top:0;
-}
-.info{
-  color:#52677d;
-  line-height:1.5;
-}
-.search{
-  width:100%;
-  padding:14px;
-  margin:18px 0;
-  border:1px solid #c9d8ea;
-  border-radius:10px;
-  font-size:16px;
-}
-.categories{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
-  gap:12px;
-}
-.category{
-  border:2px solid #dbe7f5;
-  background:#fff;
-  border-radius:12px;
-  padding:15px;
-  cursor:pointer;
-  user-select:none;
-  transition:.15s;
-}
-.category:hover{
-  border-color:#0866d6;
-  background:#f5f9ff;
-}
-.category.selected{
-  border-color:#0866d6;
-  background:#e8f2ff;
-  color:#0756ad;
-  font-weight:bold;
-}
-.count{
-  margin-top:18px;
-  color:#0866d6;
-  font-weight:bold;
-}
-button{
-  width:100%;
-  margin-top:24px;
-  padding:15px;
-  border:0;
-  border-radius:11px;
-  background:#0866d6;
-  color:white;
-  font-size:17px;
-  font-weight:bold;
-  cursor:pointer;
-}
-button:hover{
-  background:#0756ad;
-}
-button:disabled{
-  opacity:.6;
-}
-.message{
-  display:none;
-  margin-top:18px;
-  padding:14px;
-  border-radius:10px;
-}
-.success{
-  display:block;
-  background:#eaf8ef;
-  color:#176b36;
-}
-.error{
-  display:block;
-  background:#fff0f0;
-  color:#a32121;
-}
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mes catégories — INDAMORA PLAY</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #ffffff;
+      color: #123;
+    }
+    header {
+      background: #0b63ce;
+      color: white;
+      padding: 18px 20px;
+      text-align: center;
+    }
+    header h1 {
+      margin: 0;
+      font-size: 25px;
+    }
+    main {
+      max-width: 900px;
+      margin: 30px auto;
+      padding: 0 18px 50px;
+    }
+    .intro {
+      text-align: center;
+      margin-bottom: 25px;
+    }
+    .intro h2 {
+      color: #0b63ce;
+      margin-bottom: 8px;
+    }
+    .intro p {
+      color: #555;
+      margin-top: 0;
+    }
+    #search {
+      width: 100%;
+      padding: 14px;
+      border: 1px solid #cfd8e3;
+      border-radius: 10px;
+      font-size: 16px;
+      margin-bottom: 22px;
+    }
+    .categories {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+      gap: 14px;
+    }
+    .category {
+      border: 2px solid #d9e5f2;
+      border-radius: 12px;
+      padding: 18px;
+      background: white;
+      cursor: pointer;
+      transition: 0.2s;
+      text-align: center;
+      font-size: 16px;
+      font-weight: bold;
+    }
+    .category:hover {
+      border-color: #0b63ce;
+      transform: translateY(-2px);
+    }
+    .category.selected {
+      background: #e8f2ff;
+      border-color: #0b63ce;
+      color: #0b63ce;
+    }
+    .icon {
+      display: block;
+      font-size: 30px;
+      margin-bottom: 9px;
+    }
+    .actions {
+      text-align: center;
+      margin-top: 30px;
+    }
+    button {
+      border: 0;
+      border-radius: 10px;
+      padding: 14px 28px;
+      background: #0b63ce;
+      color: white;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+    button:hover {
+      background: #084f9f;
+    }
+    #message {
+      margin-top: 15px;
+      text-align: center;
+      font-weight: bold;
+      color: #0b63ce;
+    }
+  </style>
 </head>
 <body>
 <header>
   <h1>INDAMORA PLAY</h1>
-  <p>Mes catégories</p>
 </header>
 <main>
-<div class="card">
-<h2>Choisis tes catégories</h2>
-<p class="info">
-Sélectionne une ou plusieurs catégories correspondant à ton activité.
-Tu peux en choisir plusieurs.
-</p>
+  <div class="intro">
+    <h2>Mes catégories</h2>
+    <p>
+      Sélectionne les catégories qui correspondent à ton profil.
+    </p>
+  </div>
 
 <input
+type=“text”
 id=“search”
-class=“search”
-type=“search”
 placeholder=“Rechercher une catégorie…”
 
-<div id="categories" class="categories"></div>
-<div id="count" class="count">
-0 catégorie sélectionnée
+  <div class="categories" id="categories">
+<div class="category" data-name="Artistes & chanteurs">
+  <span class="icon">🎤</span>
+  Artistes & chanteurs
 </div>
-<button id="saveBtn">
-Enregistrer mes catégories
-</button>
-<div id="message" class="message"></div>
+<div class="category" data-name="Gospel">
+  <span class="icon">🙏</span>
+  Gospel
 </div>
+<div class="category" data-name="Chantres">
+  <span class="icon">🎼</span>
+  Chantres
+</div>
+<div class="category" data-name="Serviteurs de Dieu">
+  <span class="icon">⛪</span>
+  Serviteurs de Dieu
+</div>
+<div class="category" data-name="Prédicateurs & enseignants">
+  <span class="icon">📖</span>
+  Prédicateurs & enseignants
+</div>
+<div class="category" data-name="Cinéma">
+  <span class="icon">🎬</span>
+  Cinéma
+</div>
+<div class="category" data-name="Vidéastes & vidéos">
+  <span class="icon">🎥</span>
+  Vidéastes & vidéos
+</div>
+<div class="category" data-name="Humour">
+  <span class="icon">😂</span>
+  Humour
+</div>
+<div class="category" data-name="Podcasts">
+  <span class="icon">🎧</span>
+  Podcasts
+</div>
+<div class="category" data-name="Créateurs de contenu">
+  <span class="icon">📱</span>
+  Créateurs de contenu
+</div>
+<div class="category" data-name="Influenceurs">
+  <span class="icon">⭐</span>
+  Influenceurs
+</div>
+<div class="category" data-name="Producteurs & beatmakers">
+  <span class="icon">🎼</span>
+  Producteurs & beatmakers
+</div>
+<div class="category" data-name="Médias">
+  <span class="icon">📻</span>
+  Médias
+</div>
+<div class="category" data-name="Labels & structures">
+  <span class="icon">🏷️</span>
+  Labels & structures
+</div>
+<div class="category" data-name="Associations & organisations">
+  <span class="icon">🌍</span>
+  Associations & organisations
+</div>
+<div class="category" data-name="Danseurs">
+  <span class="icon">💃</span>
+  Danseurs
+</div>
+<div class="category" data-name="Couturiers">
+  <span class="icon">🧵</span>
+  Couturiers
+</div>
+<div class="category" data-name="Agences de communication">
+  <span class="icon">📣</span>
+  Agences de communication
+</div>
+<div class="category" data-name="Agences de voyage">
+  <span class="icon">✈️</span>
+  Agences de voyage
+</div>
+<div class="category" data-name="Conteurs">
+  <span class="icon">📚</span>
+  Conteurs
+</div>
+  </div>
+  <div class="actions">
+    <button id="save">
+      Enregistrer mes catégories
+    </button>
+<div id="message"></div>
+  </div>
 </main>
 <script>
-const SUPABASE_URL =
-"https://adqsdnqkbitplbhbihiv.supabase.co";
-const SUPABASE_KEY =
-"sb_publishable_dpjfWOYeNQRmP2nJq5FoMA_8NUuD0HF";
-const categories = [
-["1","🎤","Artistes & chanteurs"],
-["2","🙏","Gospel"],
-["3","🎼","Chantres"],
-["4","⛪","Serviteurs de Dieu"],
-["5","📖","Prédicateurs & enseignants"],
-["6","🎬","Cinéma"],
-["7","🎥","Vidéastes & vidéos"],
-["8","😂","Humour"],
-["9","🎧","Podcasts"],
-["10","📱","Créateurs de contenu"],
-["11","⭐","Influenceurs"],
-["12","🎼","Producteurs & beatmakers"],
-["13","📻","Médias"],
-["14","🏷️","Labels & structures"],
-["15","🌍","Associations & organisations"],
-["16","💃","Danseurs"],
-["17","🧵","Couturiers"],
-["18","📣","Agences de communication"],
-["19","✈️","Agences de voyage"],
-["20","📚","Conteurs"]
-];
-let selected = new Set();
-const categoriesEl =
-document.getElementById("categories");
-const searchEl =
-document.getElementById("search");
-const countEl =
-document.getElementById("count");
-const saveBtn =
-document.getElementById("saveBtn");
-const messageEl =
-document.getElementById("message");
-function showMessage(text,type){
-  messageEl.textContent = text;
-  messageEl.className =
-    "message " + type;
-}
-function updateCount(){
-  const n = selected.size;
-  countEl.textContent =
-    n +
-    (n > 1
-      ? " catégories sélectionnées"
-      : " catégorie sélectionnée");
-}
-function render(){
-  const search =
-    searchEl.value
-      .toLowerCase()
-      .trim();
-  categoriesEl.innerHTML = "";
-  categories
-    .filter(item =>
-      item[2]
-        .toLowerCase()
-        .includes(search)
-    )
-    .forEach(item => {
-      const div =
-        document.createElement("div");
-      div.className =
-        "category" +
-        (
-          selected.has(item[0])
-          ? " selected"
-          : ""
-        );
-      div.innerHTML =
-        item[1] +
-        " " +
-        item[2];
-      div.addEventListener(
-        "click",
-        function(){
-          if(selected.has(item[0])){
-            selected.delete(item[0]);
-          }else{
-            selected.add(item[0]);
-          }
-          render();
-        }
-      );
-      categoriesEl.appendChild(div);
+  const categories = document.querySelectorAll(".category");
+  const search = document.getElementById("search");
+  const save = document.getElementById("save");
+  const message = document.getElementById("message");
+  categories.forEach(category => {
+    category.addEventListener("click", () => {
+      category.classList.toggle("selected");
     });
-  updateCount();
-}
-searchEl.addEventListener(
-  "input",
-  render
-);
-saveBtn.addEventListener(
-  "click",
-  async function(){
-    showMessage(
-      "Pour enregistrer tes catégories, connecte-toi à ton compte artiste.",
-      "error"
-    );
-  }
-);
-render();
+  });
+  search.addEventListener("input", () => {
+    const value = search.value.toLowerCase().trim();
+    categories.forEach(category => {
+      const name = category.dataset.name.toLowerCase();
+      category.style.display =
+        name.includes(value) ? "block" : "none";
+    });
+  });
+  save.addEventListener("click", () => {
+    const selected = document.querySelectorAll(".category.selected");
+    message.textContent =
+      selected.length +
+      " catégorie(s) sélectionnée(s).";
+  });
 </script>
 </body>
 </html>
