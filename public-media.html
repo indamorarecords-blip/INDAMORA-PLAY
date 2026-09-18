@@ -6,381 +6,345 @@
   <title>Clips & Podcasts — INDAMORA PLAY</title>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <style>
+    :root {
+      --blue: #1689C7;
+      --blue-dark: #0757B8;
+      --blue-soft: #EAF6FC;
+      --red: #D92525;
+      --yellow: #F2C230;
+      --green: #168447;
+      --white: #FFFFFF;
+      --cream: #FFFDF8;
+      --text: #18324A;
+      --muted: #6D7F8F;
+      --border: #E1EDF3;
+      --shadow: 0 12px 35px rgba(22, 137, 199, 0.10);
+      --shadow-hover: 0 18px 45px rgba(22, 137, 199, 0.17);
+      --radius: 22px;
+    }
     * {
       box-sizing: border-box;
     }
+    html {
+      scroll-behavior: smooth;
+    }
     body {
       margin: 0;
-      font-family: Arial, Helvetica, sans-serif;
-      background: #f5f9ff;
-      color: #102a43;
+      font-family:
+        Inter,
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        Arial,
+        Helvetica,
+        sans-serif;
+      background:
+        linear-gradient(
+          180deg,
+          var(--cream) 0%,
+          var(--white) 40%,
+          var(--blue-soft) 100%
+        );
+      color: var(--text);
+      min-height: 100vh;
     }
+    /* =========================
+       HEADER
+    ========================= */
     header {
-      background: #0757b8;
-      color: white;
-      padding: 16px 20px;
       position: sticky;
       top: 0;
-      z-index: 10;
+      z-index: 50;
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--border);
     }
     .header-inner {
-      max-width: 1100px;
+      max-width: 1180px;
       margin: auto;
+      min-height: 76px;
+      padding: 14px 20px;
       display: flex;
-      justify-content: space-between;
       align-items: center;
-      gap: 15px;
+      justify-content: space-between;
+      gap: 18px;
     }
     .logo {
-      font-size: 22px;
-      font-weight: bold;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: var(--blue-dark);
+      font-size: 21px;
+      font-weight: 900;
+      letter-spacing: -0.4px;
+    }
+    .logo-mark {
+      width: 39px;
+      height: 39px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 12px;
+      background:
+        linear-gradient(
+          135deg,
+          var(--blue),
+          var(--blue-dark)
+        );
+      color: white;
+      box-shadow:
+        0 8px 20px rgba(22, 137, 199, 0.20);
     }
     .back {
-      color: white;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--blue-dark);
       text-decoration: none;
-      font-weight: bold;
+      font-size: 14px;
+      font-weight: 800;
+      padding: 10px 14px;
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      transition:
+        transform 0.2s ease,
+        background 0.2s ease,
+        border-color 0.2s ease;
     }
+    .back:hover {
+      transform: translateY(-2px);
+      background: var(--blue-soft);
+      border-color: #B9DDEC;
+    }
+    /* =========================
+       MAIN
+    ========================= */
     main {
-      max-width: 1100px;
-      margin: 30px auto;
-      padding: 0 18px;
+      max-width: 1180px;
+      margin: auto;
+      padding:
+        48px 20px 35px;
+    }
+    .hero {
+      position: relative;
+      overflow: hidden;
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: 30px;
+      padding: 42px 38px;
+      box-shadow: var(--shadow);
+      margin-bottom: 34px;
+    }
+    .hero::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 5px;
+      background:
+        linear-gradient(
+          90deg,
+          var(--blue) 0%,
+          var(--blue) 35%,
+          var(--red) 35%,
+          var(--red) 55%,
+          var(--yellow) 55%,
+          var(--yellow) 75%,
+          var(--green) 75%,
+          var(--green) 100%
+        );
+    }
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 8px 13px;
+      border-radius: 999px;
+      background: var(--blue-soft);
+      border: 1px solid #CDE8F4;
+      color: var(--blue-dark);
+      font-size: 12px;
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: 0.4px;
+      margin-bottom: 17px;
     }
     h1 {
-      color: #073b7a;
-      margin-bottom: 8px;
+      margin: 0 0 13px;
+      color: var(--text);
+      font-size:
+        clamp(30px, 5vw, 52px);
+      line-height: 1.05;
+      letter-spacing: -1.7px;
+    }
+    .hero-accent {
+      color: var(--blue-dark);
     }
     .intro {
-      color: #627d98;
-      margin-bottom: 30px;
+      max-width: 760px;
+      margin: 0;
+      color: var(--muted);
+      font-size: 17px;
+      line-height: 1.7;
     }
+    /* =========================
+       FILTERS
+    ========================= */
     .filters {
       display: flex;
       flex-wrap: wrap;
       gap: 10px;
-      margin-bottom: 25px;
+      margin-bottom: 30px;
     }
     .filter {
-      border: 0;
-      background: white;
-      color: #0757b8;
-      border-radius: 22px;
-      padding: 10px 16px;
-      font-weight: bold;
+      border: 1px solid var(--border);
+      background: var(--white);
+      color: var(--blue-dark);
+      border-radius: 999px;
+      padding:
+        11px 17px;
+      font-size: 13px;
+      font-weight: 900;
       cursor: pointer;
-      box-shadow: 0 3px 12px rgba(0, 70, 140, 0.08);
+      box-shadow:
+        0 5px 15px rgba(22, 137, 199, 0.06);
+      transition:
+        transform 0.2s ease,
+        background 0.2s ease,
+        color 0.2s ease,
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
+    }
+    .filter:hover {
+      transform: translateY(-2px);
+      border-color: #B9DDEC;
+      background: var(--blue-soft);
+      box-shadow:
+        0 8px 20px rgba(22, 137, 199, 0.10);
     }
     .filter.active {
-      background: #0757b8;
+      background:
+        linear-gradient(
+          135deg,
+          var(--blue),
+          var(--blue-dark)
+        );
+      border-color: var(--blue-dark);
       color: white;
+      box-shadow:
+        0 8px 20px rgba(7, 87, 184, 0.18);
     }
+    /* =========================
+       MEDIA GRID
+    ========================= */
     .grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-      gap: 20px;
+      grid-template-columns:
+        repeat(
+          auto-fill,
+          minmax(285px, 1fr)
+        );
+      gap: 22px;
     }
+    /* =========================
+       CARDS
+    ========================= */
     .card {
-      background: white;
-      border-radius: 16px;
+      position: relative;
       overflow: hidden;
-      box-shadow: 0 4px 16px rgba(0, 70, 140, 0.08);
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      transition:
+        transform 0.25s ease,
+        box-shadow 0.25s ease,
+        border-color 0.25s ease;
     }
+    .card:hover {
+      transform: translateY(-6px);
+      box-shadow: var(--shadow-hover);
+      border-color: #C7E2EE;
+    }
+    .card::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      height: 3px;
+      background:
+        linear-gradient(
+          90deg,
+          var(--blue),
+          var(--red),
+          var(--yellow),
+          var(--green)
+        );
+      opacity: 0;
+      transition:
+        opacity 0.25s ease;
+    }
+    .card:hover::after {
+      opacity: 1;
+    }
+    /* =========================
+       VISUAL
+    ========================= */
     .visual {
       width: 100%;
       aspect-ratio: 16 / 9;
-      background: #e7f0fb;
+      background:
+        linear-gradient(
+          135deg,
+          var(--blue-soft),
+          #F9FDFF
+        );
       display: flex;
       align-items: center;
       justify-content: center;
       overflow: hidden;
+      position: relative;
+    }
+    .visual::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      background:
+        linear-gradient(
+          180deg,
+          rgba(255,255,255,0) 55%,
+          rgba(7,87,184,0.08) 100%
+        );
     }
     .visual img {
       width: 100%;
       height: 100%;
       object-fit: cover;
+      transition:
+        transform 0.4s ease;
+    }
+    .card:hover .visual img {
+      transform: scale(1.035);
+    }
+    .visual iframe {
+      width: 100%;
+      height: 100%;
+      border: 0;
     }
     .visual-icon {
-      font-size: 60px;
+      font-size: 62px;
+      filter:
+        drop-shadow(
+          0 8px 15px
+          rgba(22, 137, 199, 0.12)
+        );
     }
-    .card-body {
-      padding: 18px;
-    }
-    .type {
-      display: inline-block;
-      background: #e7f0fb;
-      color: #0757b8;
-      padding: 6px 10px;
-      border-radius: 20px;
-      font-size: 12px;
-      font-weight: bold;
-      margin-bottom: 10px;
-    }
-    .title {
-      color: #073b7a;
-      font-size: 19px;
-      font-weight: bold;
-      margin-bottom: 8px;
-    }
-    .artist {
-      color: #486581;
-      margin-bottom: 10px;
-    }
-    .description {
-      color: #627d98;
-      font-size: 14px;
-      line-height: 1.6;
-      margin-bottom: 15px;
-    }
-    .button {
-      display: inline-block;
-      background: #0757b8;
-      color: white;
-      text-decoration: none;
-      padding: 10px 14px;
-      border-radius: 9px;
-      font-weight: bold;
-      font-size: 14px;
-    }
-    .notice {
-      background: white;
-      border-radius: 14px;
-      padding: 20px;
-      color: #627d98;
-      grid-column: 1 / -1;
-    }
-    footer {
-      text-align: center;
-      color: #627d98;
-      padding: 40px 20px;
-    }
-  </style>
-</head>
-<body>
-<header>
-  <div class="header-inner">
-    <div class="logo">🎧 INDAMORA PLAY</div>
-    <a class="back" href="index.html">← Accueil</a>
-  </div>
-</header>
-<main>
-  <h1>🎬 Clips, Podcasts & Radios</h1>
-  <div class="intro">
-    Retrouvez les contenus vidéo et audio publiés par les artistes
-    sur INDAMORA PLAY.
-  </div>
-  <div class="filters">
-    <button class="filter active" data-type="all">
-      Tous
-    </button>
-<button class="filter" data-type="clip">
-  🎬 Clips
-</button>
-<button class="filter" data-type="podcast">
-  🎙️ Podcasts
-</button>
-<button class="filter" data-type="radio">
-  📻 Radios
-</button>
-  </div>
-  <div id="mediaGrid" class="grid">
-    <div class="notice">
-      Chargement des contenus...
-    </div>
-  </div>
-</main>
-<footer>
-  <strong>INDAMORA PLAY</strong><br>
-  INDAMORA RECORDS — Musique d’Afrique centrale 🇨🇫
-</footer>
-<script>
-  const SUPABASE_URL =
-    "https://adqsdnqkbitplbhbihiv.supabase.co";
-  const SUPABASE_KEY =
-    "sb_publishable_dpjfWOYeNQRmP2nJq5FoMA_8NUuD0HF";
-  const db = window.supabase.createClient(
-    SUPABASE_URL,
-    SUPABASE_KEY
-  );
-  let allMedia = [];
-  let currentType = "all";
-  const mediaGrid =
-    document.getElementById("mediaGrid");
-  function typeLabel(type) {
-    if (type === "clip") return "🎬 CLIP";
-    if (type === "podcast") return "🎙️ PODCAST";
-    if (type === "radio") return "📻 RADIO";
-    return "🎬 MEDIA";
-  }
-  function iconForType(type) {
-    if (type === "clip") return "🎬";
-    if (type === "podcast") return "🎙️";
-    if (type === "radio") return "📻";
-    return "🎧";
-  }
-  function renderMedia() {
-    const filtered =
-      currentType === "all"
-        ? allMedia
-        : allMedia.filter(
-            item => item.type === currentType
-          );
-    mediaGrid.innerHTML = "";
-    if (filtered.length === 0) {
-      const notice =
-        document.createElement("div");
-      notice.className = "notice";
-      notice.textContent =
-        currentType === "all"
-          ? "Aucun contenu publié pour le moment."
-          : "Aucun contenu de ce type n’est publié pour le moment.";
-      mediaGrid.appendChild(notice);
-      return;
-    }
-    filtered.forEach(item => {
-      const card =
-        document.createElement("article");
-      card.className = "card";
-      const visual =
-        document.createElement("div");
-      visual.className = "visual";
-      if (item.media_url) {
-        const lower =
-          item.media_url.toLowerCase();
-        const isImage =
-          /\.(jpg|jpeg|png|webp|gif)$/i.test(lower);
-        if (isImage) {
-          const img =
-            document.createElement("img");
-          img.src = item.media_url;
-          img.alt = item.title || "Media";
-          visual.appendChild(img);
-        } else {
-          const iframe =
-            document.createElement("iframe");
-          iframe.src = item.media_url;
-          iframe.width = "100%";
-          iframe.height = "100%";
-          iframe.style.border = "0";
-          iframe.allow =
-            "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share";
-          iframe.allowFullscreen = true;
-          visual.appendChild(iframe);
-        }
-      } else {
-        const icon =
-          document.createElement("div");
-        icon.className = "visual-icon";
-        icon.textContent =
-          iconForType(item.type);
-        visual.appendChild(icon);
-      }
-      card.appendChild(visual);
-      const body =
-        document.createElement("div");
-      body.className = "card-body";
-      const type =
-        document.createElement("div");
-      type.className = "type";
-      type.textContent =
-        typeLabel(item.type);
-      body.appendChild(type);
-      const title =
-        document.createElement("div");
-      title.className = "title";
-      title.textContent =
-        item.title || "Sans titre";
-      body.appendChild(title);
-      if (item.artists?.name) {
-        const artist =
-          document.createElement("div");
-        artist.className = "artist";
-        artist.textContent =
-          "Par " + item.artists.name;
-        body.appendChild(artist);
-      }
-      if (item.description) {
-        const description =
-          document.createElement("div");
-        description.className = "description";
-        description.textContent =
-          item.description;
-        body.appendChild(description);
-      }
-      if (item.media_url) {
-        const link =
-          document.createElement("a");
-        link.className = "button";
-        link.href =
-          item.media_url;
-        link.target = "_blank";
-        link.rel = "noopener noreferrer";
-        link.textContent =
-          item.type === "clip"
-            ? "▶ Voir le clip"
-            : item.type === "podcast"
-              ? "▶ Écouter"
-              : "▶ Ouvrir la radio";
-        body.appendChild(link);
-      } else {
-        const notice =
-          document.createElement("div");
-        notice.className = "description";
-        notice.textContent =
-          "Contenu en préparation.";
-        body.appendChild(notice);
-      }
-      card.appendChild(body);
-      mediaGrid.appendChild(card);
-    });
-  }
-  async function loadMedia() {
-    const { data, error } = await db
-      .from("media")
-      .select(`
-        id,
-        title,
-        type,
-        media_url,
-        description,
-        artist_id,
-        artists (
-          id,
-          name,
-          status
-        )
-      `)
-      .eq("status", "published")
-      .order("created_at", {
-        ascending: false
-      });
-    if (error) {
-      console.error(error);
-      mediaGrid.innerHTML =
-        '<div class="notice">Impossible de charger les contenus.</div>';
-      return;
-    }
-    allMedia =
-      (data || []).filter(item =>
-        item.artists &&
-        item.artists.status === "published"
-      );
-    renderMedia();
-  }
-  document
-    .querySelectorAll(".filter")
-    .forEach(button => {
-      button.addEventListener("click", () => {
-        document
-          .querySelectorAll(".filter")
-          .forEach(btn =>
-            btn.classList.remove("active")
-          );
-        button.classList.add("active");
-        currentType =
-          button.dataset.type;
-        renderMedia();
-      });
-    });
-  loadMedia();
-</script>
-</body>
-</html>
+    /* =========================
+       CARD BODY
+    ========================= */
+    .card-body
