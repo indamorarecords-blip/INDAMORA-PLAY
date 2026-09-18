@@ -1,33 +1,140 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Mes catégories — INDAMORA PLAY</title>
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <style>
-    *{box-sizing:border-box}
-    body{margin:0;font-family:Arial,sans-serif;background:#fff;color:#123}
-    header{background:#0b63ce;color:#fff;padding:18px 20px}
-    header h1{margin:0;font-size:24px}
-    header p{margin:6px 0 0;opacity:.9}
-    main{max-width:900px;margin:30px auto;padding:0 18px}
-    .card{border:1px solid #dbe7f5;border-radius:14px;padding:22px;background:#fff;box-shadow:0 4px 16px rgba(0,70,150,.06)}
-    h2{color:#0b63ce;margin-top:0}
-    .search{width:100%;padding:13px;border:1px solid #cbd8e8;border-radius:10px;margin:12px 0 20px;font-size:16px}
-    .categories{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px}
-    label{display:flex;align-items:center;gap:10px;padding:13px;border:1px solid #dbe7f5;border-radius:10px;cursor:pointer}
-    label:hover{background:#f4f8ff}
-    input[type="checkbox"]{width:18px;height:18px}
-    button{margin-top:22px;background:#0b63ce;color:#fff;border:0;padding:13px 22px;border-radius:10px;font-size:16px;font-weight:bold;cursor:pointer}
-    button:hover{background:#084f9f}
-    .message{margin-top:18px;padding:12px;border-radius:10px;display:none}
-    .success{display:block;background:#eaf7ee;color:#176b36}
-    .error{display:block;background:#fff0f0;color:#a32121}
-    .info{margin-bottom:18px;color:#50657d;line-height:1.5}
-    .count{margin-top:12px;color:#0b63ce;font-weight:bold}
-    a{color:#0b63ce}
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mes catégories — INDAMORA PLAY</title>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<style>
+*{
+  box-sizing:border-box;
+}
+body{
+  margin:0;
+  font-family:Arial,sans-serif;
+  background:#f5f9ff;
+  color:#123;
+}
+header{
+  background:#0866d6;
+  color:white;
+  padding:20px;
+  text-align:center;
+}
+header h1{
+  margin:0;
+  font-size:25px;
+}
+header p{
+  margin:7px 0 0;
+}
+main{
+  max-width:950px;
+  margin:30px auto;
+  padding:0 18px;
+}
+.card{
+  background:white;
+  border-radius:16px;
+  padding:25px;
+  box-shadow:0 5px 20px rgba(0,70,150,.08);
+}
+h2{
+  color:#0866d6;
+  margin-top:0;
+}
+.info{
+  color:#52677d;
+  line-height:1.5;
+}
+.search{
+  width:100%;
+  padding:14px;
+  margin:18px 0;
+  border:1px solid #c9d8ea;
+  border-radius:10px;
+  font-size:16px;
+  outline:none;
+}
+.search:focus{
+  border-color:#0866d6;
+}
+.categories{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+  gap:12px;
+}
+.category{
+  border:2px solid #dbe7f5;
+  background:white;
+  border-radius:12px;
+  padding:15px;
+  cursor:pointer;
+  user-select:none;
+  font-size:15px;
+  transition:.15s;
+}
+.category:hover{
+  border-color:#0866d6;
+  background:#f5f9ff;
+}
+.category.selected{
+  border-color:#0866d6;
+  background:#eaf3ff;
+  color:#0756ad;
+  font-weight:bold;
+}
+.category input{
+  position:absolute;
+  opacity:0;
+  pointer-events:none;
+}
+.save{
+  width:100%;
+  margin-top:25px;
+  padding:15px;
+  border:0;
+  border-radius:11px;
+  background:#0866d6;
+  color:white;
+  font-size:17px;
+  font-weight:bold;
+  cursor:pointer;
+}
+.save:hover{
+  background:#0756ad;
+}
+.save:disabled{
+  opacity:.6;
+  cursor:not-allowed;
+}
+.count{
+  margin-top:16px;
+  font-weight:bold;
+  color:#0866d6;
+}
+.message{
+  margin-top:18px;
+  padding:14px;
+  border-radius:10px;
+  display:none;
+}
+.message.success{
+  display:block;
+  background:#eaf8ef;
+  color:#176b36;
+}
+.message.error{
+  display:block;
+  background:#fff0f0;
+  color:#a32121;
+}
+.loading{
+  text-align:center;
+  color:#52677d;
+  padding:25px;
+}
+</style>
 </head>
 <body>
 <header>
@@ -35,235 +142,246 @@
   <p>Mes catégories</p>
 </header>
 <main>
-  <div class="card">
-    <h2>Choisis tes catégories</h2>
+<div class="card">
+<h2>Choisis tes catégories</h2>
 <p class="info">
-  Tu peux sélectionner plusieurs catégories correspondant à ton activité.
-  Ces catégories pourront être utilisées pour mieux présenter ton profil
-  sur INDAMORA PLAY.
+Sélectionne une ou plusieurs catégories qui correspondent à ton activité.
+Tu peux en choisir plusieurs.
 </p>
+
 <input
-  id="search"
-  class="search"
-  type="search"
-  placeholder="Rechercher une catégorie..."
->
-<div id="categories" class="categories"></div>
-<div id="count" class="count">0 catégorie sélectionnée</div>
-<button id="saveBtn">Enregistrer mes catégories</button>
+id=“search”
+class=“search”
+type=“search”
+placeholder=“Rechercher une catégorie…”
+
+<div id="categories" class="categories">
+  <div class="loading">Chargement des catégories...</div>
+</div>
+<div id="count" class="count">
+  0 catégorie sélectionnée
+</div>
+<button id="saveBtn" class="save">
+  Enregistrer mes catégories
+</button>
 <div id="message" class="message"></div>
-  </div>
+</div>
 </main>
 <script>
-const SUPABASE_URL = "https://adqsdnqkbitplbhbihiv.supabase.co";
-const SUPABASE_KEY = "sb_publishable_dpjfWOYeNQRmP2nJq5FoMA_8NUuD0HF";
-const supabaseClient = window.supabase.createClient(
+const SUPABASE_URL =
+"https://adqsdnqkbitplbhbihiv.supabase.co";
+const SUPABASE_KEY =
+"sb_publishable_dpjfWOYeNQRmP2nJq5FoMA_8NUuD0HF";
+const client =
+window.supabase.createClient(
   SUPABASE_URL,
   SUPABASE_KEY
 );
-let allCategories = [];
+let categories = [];
+let selectedIds = new Set();
 let artistId = null;
-const categoriesEl = document.getElementById("categories");
-const searchEl = document.getElementById("search");
-const countEl = document.getElementById("count");
-const saveBtn = document.getElementById("saveBtn");
-const messageEl = document.getElementById("message");
-const slugFallback = [
-  ["artistes-chanteurs","Artistes & chanteurs","🎤"],
-  ["gospel","Gospel","🙏"],
-  ["chantres","Chantres","🎼"],
-  ["serviteurs-de-dieu","Serviteurs de Dieu","⛪"],
-  ["predicateurs-enseignants","Prédicateurs & enseignants","📖"],
-  ["cinema","Cinéma","🎬"],
-  ["videastes-videos","Vidéastes & vidéos","🎥"],
-  ["humour","Humour","😂"],
-  ["podcasts","Podcasts","🎧"],
-  ["createurs-de-contenu","Créateurs de contenu","📱"],
-  ["influenceurs","Influenceurs","⭐"],
-  ["producteurs-beatmakers","Producteurs & beatmakers","🎼"],
-  ["medias","Médias","📻"],
-  ["labels-structures","Labels & structures","🏷️"],
-  ["associations-organisations","Associations & organisations","🌍"],
-  ["danseurs","Danseurs","💃"],
-  ["couturiers","Couturiers","🧵"],
-  ["agences-de-communication","Agences de communication","📣"],
-  ["agences-de-voyage","Agences de voyage","✈️"],
-  ["conteurs","Conteurs","📚"]
-];
-function showMessage(text, type) {
+const categoriesEl =
+document.getElementById("categories");
+const searchEl =
+document.getElementById("search");
+const countEl =
+document.getElementById("count");
+const saveBtn =
+document.getElementById("saveBtn");
+const messageEl =
+document.getElementById("message");
+function message(text,type){
   messageEl.textContent = text;
-  messageEl.className = "message " + type;
+  messageEl.className =
+    "message " + type;
 }
-function updateCount() {
-  const checked = document.querySelectorAll(
-    '#categories input[type="checkbox"]:checked'
-  ).length;
+function updateCount(){
+  const n = selectedIds.size;
   countEl.textContent =
-    checked + (checked > 1 ? " catégories sélectionnées" : " catégorie sélectionnée");
+    n +
+    (n > 1
+      ? " catégories sélectionnées"
+      : " catégorie sélectionnée");
 }
-function renderCategories(filter = "") {
-  const q = filter.trim().toLowerCase();
+function render(){
+  const search =
+    searchEl.value
+      .trim()
+      .toLowerCase();
   categoriesEl.innerHTML = "";
-  const filtered = allCategories.filter(category =>
-    category.name.toLowerCase().includes(q)
-  );
-  if (!filtered.length) {
+  const filtered =
+    categories.filter(category =>
+      category.name
+        .toLowerCase()
+        .includes(search)
+    );
+  if(filtered.length === 0){
     categoriesEl.innerHTML =
       "<p>Aucune catégorie trouvée.</p>";
     return;
   }
   filtered.forEach(category => {
-    const label = document.createElement("label");
-    const checkbox = document.createElement("input");
-    checkbox.type = "checkbox";
-    checkbox.value = category.id;
-    checkbox.dataset.slug = category.slug;
-    if (category.selected) {
-      checkbox.checked = true;
-    }
-    checkbox.addEventListener("change", updateCount);
-    const text = document.createElement("span");
-    text.textContent =
-      (category.icon ? category.icon + " " : "") + category.name;
-    label.appendChild(checkbox);
-    label.appendChild(text);
-    categoriesEl.appendChild(label);
+    const div =
+      document.createElement("div");
+    div.className =
+      "category" +
+      (
+        selectedIds.has(category.id)
+        ? " selected"
+        : ""
+      );
+    div.innerHTML =
+      "<input type='checkbox'>" +
+      "<span>" +
+      (category.icon || "") +
+      " " +
+      category.name +
+      "</span>";
+    div.addEventListener("click",function(){
+      if(selectedIds.has(category.id)){
+        selectedIds.delete(category.id);
+      }else{
+        selectedIds.add(category.id);
+      }
+      render();
+    });
+    categoriesEl.appendChild(div);
   });
   updateCount();
 }
-async function loadArtist() {
-  const {
-    data: { user },
-    error
-  } = await supabaseClient.auth.getUser();
-  if (error || !user) {
-    showMessage(
-      "Tu dois être connecté pour gérer tes catégories.",
+async function getArtist(){
+  const result =
+    await client.auth.getUser();
+  const user =
+    result.data.user;
+  if(!user){
+    message(
+      "Connecte-toi d'abord à ton compte artiste.",
       "error"
     );
     saveBtn.disabled = true;
     return false;
   }
-  const { data: artist, error: artistError } =
-    await supabaseClient
+  const resultArtist =
+    await client
       .from("artists")
       .select("id")
-      .eq("owner_id", user.id)
+      .eq("owner_id",user.id)
       .maybeSingle();
-  if (artistError) {
-    console.error(artistError);
-    showMessage(
+  if(resultArtist.error){
+    console.error(resultArtist.error);
+    message(
       "Impossible de récupérer ton profil artiste.",
       "error"
     );
     return false;
   }
-  if (!artist) {
-    showMessage(
+  if(!resultArtist.data){
+    message(
       "Aucun profil artiste n'est encore associé à ce compte.",
       "error"
     );
     saveBtn.disabled = true;
     return false;
   }
-  artistId = artist.id;
+  artistId =
+    resultArtist.data.id;
   return true;
 }
-async function loadCategories() {
-  const { data: categories, error } =
-    await supabaseClient
+async function loadCategories(){
+  const result =
+    await client
       .from("categories")
       .select("id,slug,name,icon")
-      .eq("active", true)
+      .eq("active",true)
       .order("name");
-  if (error) {
-    console.error(error);
-    allCategories = slugFallback.map(item => ({
-      slug: item[0],
-      name: item[1],
-      icon: item[2],
-      id: item[0],
-      selected: false
-    }));
-    renderCategories();
+  if(result.error){
+    console.error(result.error);
+    message(
+      "Impossible de charger les catégories.",
+      "error"
+    );
     return;
   }
-  allCategories = categories || [];
-  if (artistId) {
-    const { data: selected, error: selectedError } =
-      await supabaseClient
+  categories =
+    result.data || [];
+  if(artistId){
+    const selected =
+      await client
         .from("artist_categories")
         .select("category_id")
-        .eq("artist_id", artistId);
-    if (!selectedError && selected) {
-      const selectedIds = new Set(
-        selected.map(row => row.category_id)
-      );
-      allCategories = allCategories.map(category => ({
-        ...category,
-        selected: selectedIds.has(category.id)
-      }));
+        .eq("artist_id",artistId);
+    if(!selected.error){
+      selected.data.forEach(row => {
+        selectedIds.add(
+          row.category_id
+        );
+      });
     }
   }
-  renderCategories();
+  render();
 }
-searchEl.addEventListener("input", () => {
-  renderCategories(searchEl.value);
-});
-saveBtn.addEventListener("click", async () => {
-  if (!artistId) {
-    showMessage(
-      "Profil artiste introuvable.",
-      "error"
-    );
-    return;
-  }
-  saveBtn.disabled = true;
-  saveBtn.textContent = "Enregistrement...";
-  try {
-    const selectedIds = Array.from(
-      document.querySelectorAll(
-        '#categories input[type="checkbox"]:checked'
-      )
-    ).map(input => input.value);
-    const { error: deleteError } =
-      await supabaseClient
-        .from("artist_categories")
-        .delete()
-        .eq("artist_id", artistId);
-    if (deleteError) {
-      throw deleteError;
+searchEl.addEventListener(
+  "input",
+  render
+);
+saveBtn.addEventListener(
+  "click",
+  async function(){
+    if(!artistId){
+      message(
+        "Profil artiste introuvable.",
+        "error"
+      );
+      return;
     }
-    if (selectedIds.length > 0) {
-      const rows = selectedIds.map(categoryId => ({
-        artist_id: artistId,
-        category_id: categoryId
-      }));
-      const { error: insertError } =
-        await supabaseClient
+    saveBtn.disabled = true;
+    saveBtn.textContent =
+      "Enregistrement...";
+    try{
+      const remove =
+        await client
           .from("artist_categories")
-          .insert(rows);
-      if (insertError) {
-        throw insertError;
+          .delete()
+          .eq("artist_id",artistId);
+      if(remove.error){
+        throw remove.error;
       }
+      if(selectedIds.size > 0){
+        const rows =
+          Array.from(selectedIds)
+            .map(categoryId => ({
+              artist_id:artistId,
+              category_id:categoryId
+            }));
+        const insert =
+          await client
+            .from("artist_categories")
+            .insert(rows);
+        if(insert.error){
+          throw insert.error;
+        }
+      }
+      message(
+        "Tes catégories ont bien été enregistrées.",
+        "success"
+      );
+    }catch(error){
+      console.error(error);
+      message(
+        "Erreur pendant l'enregistrement des catégories.",
+        "error"
+      );
     }
-    showMessage(
-      "Tes catégories ont bien été enregistrées.",
-      "success"
-    );
-  } catch (error) {
-    console.error(error);
-    showMessage(
-      "Une erreur est survenue pendant l'enregistrement.",
-      "error"
-    );
+    saveBtn.disabled = false;
+    saveBtn.textContent =
+      "Enregistrer mes catégories";
   }
-  saveBtn.disabled = false;
-  saveBtn.textContent = "Enregistrer mes catégories";
-});
-(async function init() {
-  const ok = await loadArtist();
-  if (ok) {
+);
+(async function(){
+  const artistOk =
+    await getArtist();
+  if(artistOk){
     await loadCategories();
   }
 })();
