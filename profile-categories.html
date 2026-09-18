@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Catégories du profil — INDAMORA PLAY</title>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <style>
     * {
       box-sizing: border-box;
@@ -63,7 +64,6 @@
       padding: 14px;
       background: #f8fbff;
       cursor: pointer;
-      transition: 0.2s;
     }
     .category:hover {
       border-color: #0b63ce;
@@ -106,6 +106,27 @@
     button:hover {
       background: #084f9f;
     }
+    button:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+    .message {
+      margin-top: 15px;
+      padding: 12px;
+      border-radius: 9px;
+      display: none;
+      line-height: 1.5;
+    }
+    .success {
+      display: block;
+      background: #e9f8ef;
+      color: #176b3a;
+    }
+    .error {
+      display: block;
+      background: #fff0f0;
+      color: #a32121;
+    }
     .note {
       font-size: 14px;
       color: #657;
@@ -126,7 +147,7 @@
 </header>
 <main>
   <div class="card">
-    <h2>Catégories de votre profil</h2>
+    <h2>Catégories du profil</h2>
 <p class="intro">
   Sélectionnez une ou plusieurs catégories correspondant à votre activité.
   Un même profil peut appartenir à plusieurs catégories.
@@ -137,17 +158,20 @@
   placeholder="Rechercher une catégorie..."
   oninput="filterCategories()"
 >
-<div class="categories" id="categories"></div>
+<div class="categories" id="categories">
+  Chargement des catégories...
+</div>
 <div class="selected">
   <strong>Catégories sélectionnées :</strong>
-  <div id="selectedList">Aucune catégorie sélectionnée.</div>
+  <div id="selectedList">Chargement...</div>
 </div>
-<button onclick="saveCategories()">
+<button id="saveButton" onclick="saveCategories()" disabled>
   Enregistrer mes catégories
 </button>
+<div id="message" class="message"></div>
 <p class="note">
-  Cette première étape enregistre localement votre sélection.
-  Elle ne modifie aucun système existant d'INDAMORA PLAY.
+  Vos catégories sont enregistrées dans Supabase et pourront ensuite
+  être utilisées dans l'annuaire INDAMORA PLAY.
 </p>
   </div>
 </main>
@@ -155,84 +179,199 @@
   © INDAMORA PLAY — INDAMORA RECORDS
 </footer>
 <script>
-  const categories = [
-    { icon: "🎤", name: "Artistes & chanteurs" },
-    { icon: "🙏", name: "Gospel" },
-    { icon: "🎼", name: "Chantres" },
-    { icon: "⛪", name: "Serviteurs de Dieu" },
-    { icon: "📖", name: "Prédicateurs & enseignants" },
-    { icon: "🎬", name: "Cinéma" },
-    { icon: "🎥", name: "Vidéastes & vidéos" },
-    { icon: "😂", name: "Humour" },
-    { icon: "🎧", name: "Podcasts" },
-    { icon: "📱", name: "Créateurs de contenu" },
-    { icon: "⭐", name: "Influenceurs" },
-    { icon: "🎼", name: "Producteurs & beatmakers" },
-    { icon: "📻", name: "Médias" },
-    { icon: "🏷️", name: "Labels & structures" },
-    { icon: "🌍", name: "Associations & organisations" },
-    { icon: "💃", name: "Danseurs" },
-    { icon: "🧵", name: "Couturiers" },
-    { icon: "📣", name: "Agences de communication" },
-    { icon: "✈️", name: "Agences de voyage" },
-    { icon: "📚", name: "Conteurs" }
-  ];
-  const storageKey = "indamora_profile_categories";
+  const SUPABASE_URL =
+    "https://adqsdnqkbitplbhbihiv.supabase.co";
+  const SUPABASE_PUBLISHABLE_KEY =
+    "sb_publishable_dpjfWOYeNQRmP2nJq5FoMA_8NUuD0HF";
+  const supabaseClient = window.supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_PUBLISHABLE_KEY
+  );
+  let allCategories = [];
+  let selectedCategoryIds = new Set();
+  let artistId = null;
+  function showMessage(text, type) {
+    const box = document.getElementById("message");
+    box.textContent = text;
+    box.className = "message " + type;
+  }
+  async function loadProfile() {
+    const {
+      data: { user },
+      error
+    } = await supabaseClient.auth.getUser();
+    if (error || !user) {
+      throw new Error(
+        "Vous devez être connecté à votre compte pour gérer vos catégories."
+      );
+    }
+    const { data: artist, error: artistError } =
+      await supabaseClient
+        .from("artists")
+        .select("id,name,status")
+        .eq("owner_id", user.id)
+        .maybeSingle();
+    if (artistError) {
+      throw artistError;
+    }
+    if (!artist) {
+      throw new Error(
+        "Aucun profil artiste n'est encore associé à ce compte."
+      );
+    }
+    artistId = artist.id;
+  }
+  async function loadCategories() {
+    const { data, error } =
+      await supabaseClient
+        .from("categories")
+        .select("id,slug,name,icon")
+        .eq("active", true)
+        .order("name");
+    if (error) {
+      throw error;
+    }
+    allCategories = data || [];
+  }
+  async function loadSelectedCategories() {
+    const { data, error } =
+      await supabaseClient
+        .from("artist_categories")
+        .select("category_id")
+        .eq("artist_id", artistId);
+    if (error) {
+      throw error;
+    }
+    selectedCategoryIds = new Set(
+      (data || []).map(row => row.category_id)
+    );
+  }
   function renderCategories(filter = "") {
     const container = document.getElementById("categories");
-    const saved = JSON.parse(localStorage.getItem(storageKey) || "[]");
-    container.innerHTML = "";
-    categories
-      .filter(category =>
-        category.name.toLowerCase().includes(filter.toLowerCase())
+    const filtered = allCategories.filter(category =>
+      category.name.toLowerCase().includes(
+        filter.toLowerCase()
       )
-      .forEach((category, index) => {
-        const checked = saved.includes(category.name);
-        const div = document.createElement("div");
-        div.className = "category";
-        div.innerHTML = `
-          <label>
-            <input
-              type="checkbox"
-              value="${category.name}"
-              ${checked ? "checked" : ""}
-              onchange="updateSelected()"
-            >
-            <span>${category.icon}</span>
-            <span>${category.name}</span>
-          </label>
-        `;
-        container.appendChild(div);
-      });
+    );
+    if (!filtered.length) {
+      container.innerHTML =
+        "<p>Aucune catégorie trouvée.</p>";
+      updateSelected();
+      return;
+    }
+    container.innerHTML = "";
+    filtered.forEach(category => {
+      const div = document.createElement("div");
+      div.className = "category";
+      const checked = selectedCategoryIds.has(category.id);
+      div.innerHTML = `
+        <label>
+          <input
+            type="checkbox"
+            value="${category.id}"
+            ${checked ? "checked" : ""}
+            onchange="toggleCategory('${category.id}')"
+          >
+          <span>${category.icon || ""}</span>
+          <span>${category.name}</span>
+        </label>
+      `;
+      container.appendChild(div);
+    });
+    updateSelected();
+  }
+  function toggleCategory(categoryId) {
+    if (selectedCategoryIds.has(categoryId)) {
+      selectedCategoryIds.delete(categoryId);
+    } else {
+      selectedCategoryIds.add(categoryId);
+    }
     updateSelected();
   }
   function updateSelected() {
-    const selected = Array.from(
-      document.querySelectorAll('.category input[type="checkbox"]:checked')
-    ).map(input => input.value);
     const list = document.getElementById("selectedList");
-    if (selected.length === 0) {
+    const selected = allCategories
+      .filter(category => selectedCategoryIds.has(category.id))
+      .map(category =>
+        `${category.icon || ""} ${category.name}`.trim()
+      );
+    if (!selected.length) {
       list.textContent = "Aucune catégorie sélectionnée.";
       return;
     }
     list.textContent = selected.join(" • ");
   }
   function filterCategories() {
-    const value = document.getElementById("search").value;
+    const value =
+      document.getElementById("search").value;
     renderCategories(value);
   }
-  function saveCategories() {
-    const selected = Array.from(
-      document.querySelectorAll('.category input[type="checkbox"]:checked')
-    ).map(input => input.value);
-    localStorage.setItem(storageKey, JSON.stringify(selected));
-    alert(
-      selected.length
-        ? "Vos catégories ont été enregistrées."
-        : "Aucune catégorie n'a été sélectionnée."
-    );
+  async function saveCategories() {
+    const button = document.getElementById("saveButton");
+    button.disabled = true;
+    button.textContent = "Enregistrement...";
+    try {
+      const { error: deleteError } =
+        await supabaseClient
+          .from("artist_categories")
+          .delete()
+          .eq("artist_id", artistId);
+      if (deleteError) {
+        throw deleteError;
+      }
+      const rows = Array.from(selectedCategoryIds).map(
+        categoryId => ({
+          artist_id: artistId,
+          category_id: categoryId
+        })
+      );
+      if (rows.length) {
+        const { error: insertError } =
+          await supabaseClient
+            .from("artist_categories")
+            .insert(rows);
+        if (insertError) {
+          throw insertError;
+        }
+      }
+      showMessage(
+        "Vos catégories ont été enregistrées avec succès.",
+        "success"
+      );
+    } catch (error) {
+      console.error(error);
+      showMessage(
+        "Impossible d'enregistrer les catégories. Vérifiez que vous êtes connecté et que votre profil existe.",
+        "error"
+      );
+    } finally {
+      button.disabled = false;
+      button.textContent =
+        "Enregistrer mes catégories";
+    }
   }
-  renderCategories();
+  async function init() {
+    try {
+      await loadProfile();
+      await loadCategories();
+      await loadSelectedCategories();
+      renderCategories();
+      document.getElementById("saveButton").disabled = false;
+    } catch (error) {
+      console.error(error);
+      document.getElementById("categories").innerHTML =
+        "<p>Impossible de charger les catégories.</p>";
+      document.getElementById("selectedList").textContent =
+        error.message ||
+        "Une erreur est survenue.";
+      showMessage(
+        error.message ||
+        "Une erreur est survenue.",
+        "error"
+      );
+    }
+  }
+  init();
 </script>
 </body>
 </html>
