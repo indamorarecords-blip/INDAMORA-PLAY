@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mes revenus — INDAMORA PLAY</title>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #f5f9ff;
+      color: #123;
+    }
+    header {
+      background: #0757b8;
+      color: white;
+      padding: 20px;
+      text-align: center;
+    }
+    header h1 {
+      margin: 0;
+      font-size: 25px;
+    }
+    header p {
+      margin: 7px 0 0;
+      opacity: 0.92;
+    }
+    main {
+      max-width: 950px;
+      margin: 30px auto;
+      padding: 0 18px;
+    }
+    .card {
+      background: white;
+      border-radius: 16px;
+      padding: 22px;
+      margin-bottom: 20px;
+      box-shadow: 0 8px 25px rgba(0, 70, 150, 0.08);
+    }
+    .account {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 15px;
+      flex-wrap: wrap;
+    }
+    .email {
+      color: #0757b8;
+      font-weight: bold;
+      word-break: break-word;
+      margin-top: 5px;
+    }
+    button,
+    a.button {
+      display: inline-block;
+      border: 0;
+      border-radius: 10px;
+      padding: 11px 16px;
+      background: #0757b8;
+      color: white;
+      text-decoration: none;
+      cursor: pointer;
+      font-weight: bold;
+    }
+    button.secondary,
+    a.secondary {
+      background: #e8f1ff;
+      color: #0757b8;
+    }
+    button.danger {
+      background: #d93025;
+    }
+    .actions {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-top: 16px;
+    }
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 15px;
+      margin-top: 18px;
+    }
+    .stat {
+      background: #f7fbff;
+      border: 1px solid #dbe8f8;
+      border-radius: 14px;
+      padding: 18px;
+    }
+    .stat-label {
+      color: #667;
+      font-size: 14px;
+    }
+    .stat-value {
+      color: #0757b8;
+      font-size: 25px;
+      font-weight: bold;
+      margin-top: 7px;
+    }
+    .earning {
+      border: 1px solid #dbe8f8;
+      border-radius: 14px;
+      padding: 18px;
+      margin-top: 14px;
+      background: #fbfdff;
+    }
+    .earning h3 {
+      margin: 0 0 10px;
+      color: #0757b8;
+    }
+    .earning p {
+      margin: 7px 0;
+    }
+    .status {
+      display: inline-block;
+      padding: 5px 10px;
+      border-radius: 999px;
+      background: #e8f7ee;
+      color: #147a3d;
+      font-size: 13px;
+      font-weight: bold;
+    }
+    .status.pending {
+      background: #fff4d6;
+      color: #9a6700;
+    }
+    .status.paid {
+      background: #e8f7ee;
+      color: #147a3d;
+    }
+    .status.canceled {
+      background: #ffe8e6;
+      color: #b42318;
+    }
+    .message {
+      padding: 12px 15px;
+      border-radius: 10px;
+      margin-top: 15px;
+      display: none;
+    }
+    .message.error {
+      display: block;
+      background: #ffe8e6;
+      color: #b42318;
+    }
+    .empty {
+      text-align: center;
+      padding: 30px 15px;
+      color: #667;
+    }
+    .loading {
+      text-align: center;
+      padding: 25px;
+      color: #0757b8;
+    }
+    footer {
+      text-align: center;
+      padding: 30px 15px;
+      color: #667;
+      font-size: 14px;
+    }
+  </style>
+</head>
+<body>
+<header>
+  <h1>💙 INDAMORA PLAY</h1>
+  <p>Espace artiste — Mes revenus</p>
+</header>
+<main>
+  <section class="card">
+    <div class="account">
+      <div>
+        <div>Compte artiste connecté</div>
+        <div id="userEmail" class="email">Chargement...</div>
+      </div>
+  <button id="logoutBtn" class="danger">
+    Se déconnecter
+  </button>
+</div>
+<div class="actions">
+  <a href="artist.html" class="button">
+    🎤 Espace artiste
+  </a>
+  <a href="artist-stats.html" class="button secondary">
+    📊 Mes statistiques
+  </a>
+  <button id="refreshBtn" class="secondary">
+    Actualiser
+  </button>
+</div>
+<div id="message" class="message"></div>
+  </section>
+  <section class="card">
+<h2>💰 Résumé</h2>
+<div class="stats">
+  <div class="stat">
+    <div class="stat-label">Artistes</div>
+    <div class="stat-value" id="artistsCount">0</div>
+  </div>
+  <div class="stat">
+    <div class="stat-label">Morceaux</div>
+    <div class="stat-value" id="tracksCount">0</div>
+  </div>
+  <div class="stat">
+    <div class="stat-label">Écoutes</div>
+    <div class="stat-value" id="playsCount">0</div>
+  </div>
+  <div class="stat">
+    <div class="stat-label">Revenus cumulés</div>
+    <div class="stat-value" id="earningsTotal">0 FCFA</div>
+  </div>
+</div>
+  </section>
+  <section class="card">
+<h2>📅 Historique des revenus</h2>
+<div id="earnings">
+  <div class="loading">
+    Chargement de vos revenus...
+  </div>
+</div>
+  </section>
+</main>
+<footer>
+  INDAMORA PLAY — INDAMORA RECORDS 🇨🇫
+</footer>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+  const SUPABASE_URL =
+    "https://adqsdnqkbitplbhbihiv.supabase.co";
+  const SUPABASE_KEY =
+    "sb_publishable_dpjfWOYeNQRmP2nJq5FoMA_8NUuD0HF";
+  const { createClient } = supabase;
+  const db = createClient(
+    SUPABASE_URL,
+    SUPABASE_KEY
+  );
+  const userEmail =
+    document.getElementById("userEmail");
+  const earningsContainer =
+    document.getElementById("earnings");
+  const message =
+    document.getElementById("message");
+  const logoutBtn =
+    document.getElementById("logoutBtn");
+  const refreshBtn =
+    document.getElementById("refreshBtn");
+  function showError(text) {
+    message.textContent = text;
+    message.className =
+      "message error";
+  }
+  function clearMessage() {
+    message.textContent = "";
+    message.className =
+      "message";
+  }
+  function formatAmount(amount, currency) {
+    const value =
+      Number(amount || 0) / 100;
+    const code =
+      (currency || "XAF").toUpperCase();
+    if (code === "XAF") {
+      return new Intl.NumberFormat(
+        "fr-FR"
+      ).format(value) + " FCFA";
+    }
+    return new Intl.NumberFormat(
+      "fr-FR",
+      {
+        style: "currency",
+        currency: code
+      }
+    ).format(value);
+  }
+  function formatDate(value) {
+    if (!value) return "—";
+    const date =
+      new Date(value);
+    if (Number.isNaN(date.getTime()))
+      return "—";
+    return new Intl.DateTimeFormat(
+      "fr-FR",
+      {
+        dateStyle: "medium"
+      }
+    ).format(date);
+  }
+  function statusLabel(status) {
+    const labels = {
+      pending: "En attente",
+      paid: "Payé",
+      canceled: "Annulé",
+      approved: "Validé"
+    };
+    return labels[status] ||
+      status ||
+      "Inconnu";
+  }
+  function statusClass(status) {
+    if (status === "pending")
+      return "status pending";
+    if (status === "canceled")
+      return "status canceled";
+    return "status paid";
+  }
+  async function loadDashboard() {
+    clearMessage();
+    earningsContainer.innerHTML =
+      `<div class="loading">
+        Chargement de vos revenus...
+      </div>`;
+    const {
+      data: { session },
+      error: sessionError
+    } = await db.auth.getSession();
+    if (sessionError) {
+      console.error(sessionError);
+      showError(
+        "Impossible de vérifier la session."
+      );
+      return;
+    }
+    if (!session || !session.user) {
+      window.location.href =
+        "account.html";
+      return;
+    }
+    userEmail.textContent =
+      session.user.email ||
+      "Compte connecté";
+    const {
+      data,
+      error
+    } = await db.functions.invoke(
+      "artist-dashboard",
+      {
+        headers: {
+          Authorization:
+            `Bearer ${session.access_token}`
+        }
+      }
+    );
+    if (error) {
+      console.error(error);
+      showError(
+        "Impossible de charger vos statistiques."
+      );
+      earningsContainer.innerHTML =
+        `<div class="empty">
+          Une erreur est survenue pendant
+          le chargement.
+        </div>`;
+      return;
+    }
+    const dashboard =
+      data || {};
+    const summary =
+      dashboard.summary || {};
+    document.getElementById(
+      "artistsCount"
+    ).textContent =
+      summary.artists || 0;
+    document.getElementById(
+      "tracksCount"
+    ).textContent =
+      summary.tracks || 0;
+    document.getElementById(
+      "playsCount"
+    ).textContent =
+      summary.plays || 0;
+    document.getElementById(
+      "earningsTotal"
+    ).textContent =
+      formatAmount(
+        summary.earnings_cents || 0,
+        summary.currency || "XAF"
+      );
+    const rows =
+      dashboard.earnings || [];
+    if (!rows.length) {
+      earningsContainer.innerHTML = `
+        <div class="empty">
+          <div style="font-size:42px;">
+            💙
+          </div>
+          <h3>
+            Aucun revenu enregistré
+          </h3>
+          <p>
+            Les revenus apparaîtront ici
+            lorsqu'un système de rémunération
+            des artistes sera activé.
+          </p>
+        </div>
+      `;
+      return;
+    }
+    earningsContainer.innerHTML =
+      rows.map(earning => `
+        <article class="earning">
+          <h3>
+            📊 Période de revenus
+          </h3>
+          <p>
+            <strong>Début :</strong>
+            ${formatDate(
+              earning.period_start
+            )}
+          </p>
+          <p>
+            <strong>Fin :</strong>
+            ${formatDate(
+              earning.period_end
+            )}
+          </p>
+          <p>
+            <strong>Écoutes :</strong>
+            ${Number(
+              earning.plays || 0
+            ).toLocaleString("fr-FR")}
+          </p>
+          <p>
+            <strong>Montant :</strong>
+            ${formatAmount(
+              earning.amount_cents || 0,
+              earning.currency || "XAF"
+            )}
+          </p>
+          <p>
+            <strong>Statut :</strong>
+            <span class="${statusClass(
+              earning.status
+            )}">
+              ${statusLabel(
+                earning.status
+              )}
+            </span>
+          </p>
+          <p>
+            <strong>Créé le :</strong>
+            ${formatDate(
+              earning.created_at
+            )}
+          </p>
+        </article>
+      `).join("");
+  }
+  logoutBtn.addEventListener(
+    "click",
+    async () => {
+      await db.auth.signOut();
+      window.location.href =
+        "account.html";
+    }
+  );
+  refreshBtn.addEventListener(
+    "click",
+    () => {
+      loadDashboard();
+    }
+  );
+  db.auth.onAuthStateChange(
+    (event, session) => {
+      if (!session) {
+        window.location.href =
+          "account.html";
+      }
+    }
+  );
+  loadDashboard();
+</script>
+</body>
+</html>
