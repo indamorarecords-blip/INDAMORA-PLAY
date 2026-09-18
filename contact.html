@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact — INDAMORA PLAY</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #f5f9ff;
+      color: #123;
+      line-height: 1.6;
+    }
+    header {
+      background: #0757b8;
+      color: white;
+      text-align: center;
+      padding: 26px 18px;
+    }
+    header h1 {
+      margin: 0;
+      font-size: 28px;
+    }
+    header p {
+      margin: 7px 0 0;
+      opacity: .92;
+    }
+    main {
+      max-width: 900px;
+      margin: 30px auto;
+      padding: 0 18px;
+    }
+    .card {
+      background: white;
+      border-radius: 16px;
+      padding: 24px;
+      margin-bottom: 20px;
+      box-shadow: 0 8px 25px rgba(0, 70, 150, .08);
+    }
+    h2 {
+      color: #0757b8;
+      margin-top: 0;
+    }
+    .info {
+      background: #eef6ff;
+      border-left: 4px solid #0757b8;
+      border-radius: 10px;
+      padding: 16px;
+      margin-top: 15px;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 16px;
+    }
+    .item {
+      background: #f8fbff;
+      border: 1px solid #dbe8f8;
+      border-radius: 14px;
+      padding: 18px;
+    }
+    .item strong {
+      display: block;
+      color: #0757b8;
+      font-size: 18px;
+      margin-bottom: 7px;
+    }
+    form {
+      margin-top: 15px;
+    }
+    label {
+      display: block;
+      font-weight: bold;
+      margin-top: 15px;
+      margin-bottom: 6px;
+    }
+    input,
+    textarea,
+    select {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid #cbd9eb;
+      border-radius: 10px;
+      font: inherit;
+      background: white;
+    }
+    textarea {
+      min-height: 150px;
+      resize: vertical;
+    }
+    button,
+    a.button {
+      display: inline-block;
+      border: 0;
+      border-radius: 10px;
+      padding: 12px 17px;
+      background: #0757b8;
+      color: white;
+      text-decoration: none;
+      cursor: pointer;
+      font-weight: bold;
+    }
+    button.secondary,
+    a.secondary {
+      background: #e8f1ff;
+      color: #0757b8;
+    }
+    .actions {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-top: 20px;
+    }
+    .notice {
+      background: #fff8e6;
+      border-left: 4px solid #c58b00;
+      border-radius: 10px;
+      padding: 15px;
+      color: #654d00;
+    }
+    .message {
+      display: none;
+      margin-top: 15px;
+      padding: 13px 15px;
+      border-radius: 10px;
+    }
+    .message.success {
+      display: block;
+      background: #e8f7ee;
+      color: #147a3d;
+    }
+    .message.error {
+      display: block;
+      background: #ffe8e6;
+      color: #b42318;
+    }
+    footer {
+      text-align: center;
+      padding: 30px 15px;
+      color: #667;
+      font-size: 14px;
+    }
+  </style>
+</head>
+<body>
+<header>
+  <h1>💙 INDAMORA PLAY</h1>
+  <p>Contact et assistance — INDAMORA RECORDS 🇨🇫</p>
+</header>
+<main>
+  <section class="card">
+<h2>📩 Nous contacter</h2>
+<p>
+  Vous avez une question concernant INDAMORA PLAY,
+  un artiste, une musique, un album, un clip, un podcast,
+  un abonnement ou un don ?
+</p>
+<p>
+  Utilisez le formulaire ci-dessous pour préparer votre demande.
+</p>
+<div class="notice">
+  Ce formulaire prépare votre message sur votre appareil.
+  Aucun système d'envoi automatique n'est activé dans cette page.
+</div>
+  </section>
+  <section class="card">
+<h2>🎤 Vous êtes artiste ?</h2>
+<div class="grid">
+  <div class="item">
+    <strong>📝 Créer un compte</strong>
+    Créez votre compte artiste depuis la plateforme.
+  </div>
+  <div class="item">
+    <strong>🎵 Proposer une musique</strong>
+    Utilisez votre espace artiste pour proposer vos contenus.
+  </div>
+  <div class="item">
+    <strong>📊 Statistiques</strong>
+    Consultez vos écoutes et vos statistiques depuis votre espace.
+  </div>
+</div>
+<div class="actions">
+  <a
+    href="register.html"
+    class="button"
+  >
+    📝 Créer un compte
+  </a>
+  <a
+    href="artist.html"
+    class="button secondary"
+  >
+    🎤 Espace artiste
+  </a>
+</div>
+  </section>
+  <section class="card">
+<h2>💙 Abonnements et dons</h2>
+<p>
+  Pour toute question concernant un abonnement ou un don,
+  vous pouvez également consulter votre espace personnel.
+</p>
+<div class="actions">
+  <a
+    href="subscription-account.html"
+    class="button"
+  >
+    💙 Abonnements & dons
+  </a>
+  <a
+    href="support-payments.html"
+    class="button secondary"
+  >
+    📋 Mes paiements
+  </a>
+</div>
+  </section>
+  <section class="card">
+<h2>✉️ Formulaire de contact</h2>
+<form id="contactForm">
+  <label for="name">
+    Nom ou nom d'artiste
+  </label>
+  <input
+    id="name"
+    type="text"
+    placeholder="Votre nom"
+    required
+  >
+  <label for="email">
+    Adresse e-mail
+  </label>
+  <input
+    id="email"
+    type="email"
+    placeholder="vous@example.com"
+    required
+  >
+  <label for="subject">
+    Sujet
+  </label>
+  <select
+    id="subject"
+    required
+  >
+    <option value="">
+      Choisir un sujet
+    </option>
+    <option value="Question générale">
+      Question générale
+    </option>
+    <option value="Artiste">
+      Artiste
+    </option>
+    <option value="Musique">
+      Musique
+    </option>
+    <option value="Abonnement">
+      Abonnement
+    </option>
+    <option value="Don">
+      Don
+    </option>
+    <option value="Problème technique">
+      Problème technique
+    </option>
+    <option value="Autre">
+      Autre
+    </option>
+  </select>
+  <label for="messageText">
+    Message
+  </label>
+  <textarea
+    id="messageText"
+    placeholder="Écrivez votre message..."
+    required
+  ></textarea>
+  <div class="actions">
+    <button
+      type="submit"
+    >
+      📩 Préparer le message
+    </button>
+    <a
+      href="index.html"
+      class="button secondary"
+    >
+      🎧 Retour à INDAMORA PLAY
+    </a>
+  </div>
+</form>
+<div
+  id="result"
+  class="message"
+></div>
+  </section>
+  <section class="card">
+<h2>🌍 INDAMORA RECORDS</h2>
+<p>
+  INDAMORA PLAY est associé à INDAMORA RECORDS,
+  avec pour objectif de valoriser les artistes et les
+  musiques d'Afrique centrale.
+</p>
+<div class="actions">
+  <a
+    href="about.html"
+    class="button secondary"
+  >
+    ℹ️ À propos
+  </a>
+  <a
+    href="index.html"
+    class="button"
+  >
+    🎧 Accueil
+  </a>
+</div>
+  </section>
+</main>
+<footer>
+  INDAMORA PLAY — INDAMORA RECORDS 🇨🇫
+</footer>
+<script>
+  const form =
+    document.getElementById(
+      "contactForm"
+    );
+  const result =
+    document.getElementById(
+      "result"
+    );
+  form.addEventListener(
+    "submit",
+    function(event) {
+      event.preventDefault();
+      const name =
+        document.getElementById(
+          "name"
+        ).value.trim();
+      const email =
+        document.getElementById(
+          "email"
+        ).value.trim();
+      const subject =
+        document.getElementById(
+          "subject"
+        ).value;
+      const message =
+        document.getElementById(
+          "messageText"
+        ).value.trim();
+      if (
+        !name ||
+        !email ||
+        !subject ||
+        !message
+      ) {
+        result.textContent =
+          "Veuillez remplir tous les champs.";
+        result.className =
+          "message error";
+        return;
+      }
+      const body =
+        "Nom : " +
+        name +
+        "\n" +
+        "E-mail : " +
+        email +
+        "\n\n" +
+        message;
+      const mailto =
+        "mailto:" +
+        "?subject=" +
+        encodeURIComponent(
+          subject +
+          " — INDAMORA PLAY"
+        ) +
+        "&body=" +
+        encodeURIComponent(
+          body
+        );
+      result.innerHTML =
+        "Votre message est prêt. " +
+        "<a href='" +
+        mailto +
+        "'>Ouvrir votre messagerie</a>";
+      result.className =
+        "message success";
+    }
+  );
+</script>
+</body>
+</html>
