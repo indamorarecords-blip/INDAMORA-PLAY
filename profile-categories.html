@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Choisir mes catégories — INDAMORA PLAY</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #f5f9ff;
+      color: #123;
+    }
+    header {
+      background: #0757c9;
+      color: white;
+      padding: 18px 20px;
+    }
+    .header-inner {
+      max-width: 1100px;
+      margin: auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 15px;
+      flex-wrap: wrap;
+    }
+    .logo {
+      font-size: 22px;
+      font-weight: bold;
+    }
+    nav a {
+      color: white;
+      text-decoration: none;
+      margin: 0 8px;
+      font-weight: bold;
+    }
+    main {
+      max-width: 1000px;
+      margin: auto;
+      padding: 35px 20px 60px;
+    }
+    .card {
+      background: white;
+      border-radius: 18px;
+      padding: 28px;
+      margin-bottom: 22px;
+      box-shadow: 0 8px 25px rgba(0,0,0,.06);
+    }
+    h1 {
+      margin-top: 0;
+      color: #0757c9;
+    }
+    h2 {
+      color: #0757c9;
+      font-size: 20px;
+    }
+    .notice {
+      background: #eaf3ff;
+      border-left: 5px solid #0757c9;
+      padding: 16px;
+      border-radius: 10px;
+      line-height: 1.5;
+      margin-bottom: 25px;
+    }
+    .search {
+      width: 100%;
+      padding: 14px;
+      border: 1px solid #cbd8ea;
+      border-radius: 10px;
+      font-size: 16px;
+      margin-bottom: 20px;
+    }
+    .categories {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+      gap: 14px;
+    }
+    .category {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 16px;
+      border: 1px solid #dbe6f5;
+      border-radius: 14px;
+      cursor: pointer;
+      transition: .2s;
+      background: white;
+    }
+    .category:hover {
+      border-color: #0757c9;
+      background: #f5f9ff;
+    }
+    .category input {
+      width: 18px;
+      height: 18px;
+      accent-color: #0757c9;
+    }
+    .icon {
+      font-size: 25px;
+    }
+    .category-text strong {
+      display: block;
+      color: #0757c9;
+      margin-bottom: 4px;
+    }
+    .category-text span {
+      font-size: 13px;
+      color: #607086;
+    }
+    .selected {
+      margin-top: 20px;
+      padding: 15px;
+      background: #f5f9ff;
+      border-radius: 12px;
+      border: 1px solid #dbe6f5;
+    }
+    button {
+      margin-top: 20px;
+      padding: 14px 22px;
+      border: 0;
+      border-radius: 10px;
+      background: #0757c9;
+      color: white;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+    button:hover {
+      background: #0648a8;
+    }
+    .back {
+      display: inline-block;
+      margin-top: 12px;
+      color: #0757c9;
+      text-decoration: none;
+      font-weight: bold;
+    }
+    footer {
+      text-align: center;
+      padding: 25px;
+      color: #607086;
+      font-size: 14px;
+    }
+  </style>
+</head>
+<body>
+<header>
+  <div class="header-inner">
+    <div class="logo">INDAMORA PLAY</div>
+<nav>
+  <a href="index.html">Accueil</a>
+  <a href="artists.html">Profils</a>
+  <a href="categories.html">Catégories</a>
+</nav>
+  </div>
+</header>
+<main>
+  <section class="card">
+    <h1>👤 Mes catégories</h1>
+<div class="notice">
+  <strong>Choisissez plusieurs catégories.</strong><br>
+  Un même profil peut avoir plusieurs activités ou domaines.
+  Par exemple : Gospel + Chantre + Créateur de contenu.
+</div>
+<h2>🔎 Rechercher</h2>
+<input
+  id="search"
+  class="search"
+  type="search"
+  placeholder="Rechercher une catégorie..."
+  oninput="filterCategories()"
+>
+<div id="categories" class="categories">
+  <label class="category" data-name="artistes chanteurs">
+    <input type="checkbox" value="Artistes & chanteurs">
+    <div class="icon">🎤</div>
+    <div class="category-text">
+      <strong>Artistes & chanteurs</strong>
+      <span>Musique et créations.</span>
+    </div>
+  </label>
+  <label class="category" data-name="gospel">
+    <input type="checkbox" value="Gospel">
+    <div class="icon">🙏</div>
+    <div class="category-text">
+      <strong>Gospel</strong>
+      <span>Musique gospel et foi.</span>
+    </div>
+  </label>
+  <label class="category" data-name="chantres">
+    <input type="checkbox" value="Chantres">
+    <div class="icon">🎼</div>
+    <div class="category-text">
+      <strong>Chantres</strong>
+      <span>Chant et ministère musical.</span>
+    </div>
+  </label>
+  <label class="category" data-name="serviteurs de dieu">
+    <input type="checkbox" value="Serviteurs de Dieu">
+    <div class="icon">⛪</div>
+    <div class="category-text">
+      <strong>Serviteurs de Dieu</strong>
+      <span>Profils liés au ministère.</span>
+    </div>
+  </label>
+  <label class="category" data-name="predicateurs enseignants">
+    <input type="checkbox" value="Prédicateurs & enseignants">
+    <div class="icon">🎙️</div>
+    <div class="category-text">
+      <strong>Prédicateurs & enseignants</strong>
+      <span>Enseignements et messages.</span>
+    </div>
+  </label>
+  <label class="category" data-name="cinema">
+    <input type="checkbox" value="Cinéma">
+    <div class="icon">🎬</div>
+    <div class="category-text">
+      <strong>Cinéma</strong>
+      <span>Acteurs et productions.</span>
+    </div>
+  </label>
+  <label class="category" data-name="videastes videos">
+    <input type="checkbox" value="Vidéastes & vidéos">
+    <div class="icon">🎥</div>
+    <div class="category-text">
+      <strong>Vidéastes & vidéos</strong>
+      <span>Création audiovisuelle.</span>
+    </div>
+  </label>
+  <label class="category" data-name="humour">
+    <input type="checkbox" value="Humour">
+    <div class="icon">😂</div>
+    <div class="category-text">
+      <strong>Humour</strong>
+      <span>Humoristes et divertissement.</span>
+    </div>
+  </label>
+  <label class="category" data-name="podcasts podcasters">
+    <input type="checkbox" value="Podcasts">
+    <div class="icon">🎧</div>
+    <div class="category-text">
+      <strong>Podcasts</strong>
+      <span>Podcasts et émissions.</span>
+    </div>
+  </label>
+  <label class="category" data-name="createurs contenu">
+    <input type="checkbox" value="Créateurs de contenu">
+    <div class="icon">📱</div>
+    <div class="category-text">
+      <strong>Créateurs de contenu</strong>
+      <span>Création numérique.</span>
+    </div>
+  </label>
+  <label class="category" data-name="influenceurs">
+    <input type="checkbox" value="Influenceurs">
+    <div class="icon">⭐</div>
+    <div class="category-text">
+      <strong>Influenceurs</strong>
+      <span>Personnalités numériques.</span>
+    </div>
+  </label>
+  <label class="category" data-name="producteurs beatmakers">
+    <input type="checkbox" value="Producteurs & beatmakers">
+    <div class="icon">🎼</div>
+    <div class="category-text">
+      <strong>Producteurs & beatmakers</strong>
+      <span>Production musicale.</span>
+    </div>
+  </label>
+  <label class="category" data-name="medias animateurs">
+    <input type="checkbox" value="Médias">
+    <div class="icon">📻</div>
+    <div class="category-text">
+      <strong>Médias</strong>
+      <span>Radios et médias.</span>
+    </div>
+  </label>
+  <label class="category" data-name="labels structures">
+    <input type="checkbox" value="Labels & structures">
+    <div class="icon">🏷️</div>
+    <div class="category-text">
+      <strong>Labels & structures</strong>
+      <span>Labels et collectifs.</span>
+    </div>
+  </label>
+  <label class="category" data-name="associations organisations">
+    <input type="checkbox" value="Associations & organisations">
+    <div class="icon">🌍</div>
+    <div class="category-text">
+      <strong>Associations & organisations</strong>
+      <span>Associations et organisations.</span>
+    </div>
+  </label>
+  <label class="category" data-name="danseurs danse">
+    <input type="checkbox" value="Danseurs">
+    <div class="icon">💃</div>
+    <div class="category-text">
+      <strong>Danseurs</strong>
+      <span>Danse et spectacles.</span>
+    </div>
+  </label>
+  <label class="category" data-name="couturiers couture mode">
+    <input type="checkbox" value="Couturiers">
+    <div class="icon">🧵</div>
+    <div class="category-text">
+      <strong>Couturiers</strong>
+      <span>Couture, mode et création.</span>
+    </div>
+  </label>
+  <label class="category" data-name="agence communication communication">
+    <input type="checkbox" value="Agences de communication">
+    <div class="icon">📣</div>
+    <div class="category-text">
+      <strong>Agences de communication</strong>
+      <span>Communication et marketing.</span>
+    </div>
+  </label>
+  <label class="category" data-name="agence voyage tourisme voyages">
+    <input type="checkbox" value="Agences de voyage">
+    <div class="icon">✈️</div>
+    <div class="category-text">
+      <strong>Agences de voyage</strong>
+      <span>Voyage et tourisme.</span>
+    </div>
+  </label>
+  <label class="category" data-name="conteurs conte narration">
+    <input type="checkbox" value="Conteurs">
+    <div class="icon">📚</div>
+    <div class="category-text">
+      <strong>Conteurs</strong>
+      <span>Contes, récits et narration.</span>
+    </div>
+  </label>
+</div>
+<div class="selected">
+  <strong>Catégories sélectionnées :</strong>
+  <div id="selectedList">Aucune catégorie sélectionnée.</div>
+</div>
+<button type="button" onclick="continueProfile()">
+  Continuer
+</button>
+<br>
+<a class="back" href="categories.html">
+  ← Retour aux catégories
+</a>
+  </section>
+</main>
+<footer>
+  © INDAMORA PLAY — INDAMORA RECORDS
+</footer>
+<script>
+const checkboxes = document.querySelectorAll(
+  '#categories input[type="checkbox"]'
+);
+checkboxes.forEach(box => {
+  box.addEventListener('change', updateSelected);
+});
+function updateSelected() {
+  const selected = Array.from(checkboxes)
+    .filter(box => box.checked)
+    .map(box => box.value);
+  const list = document.getElementById('selectedList');
+  if (selected.length === 0) {
+    list.textContent = 'Aucune catégorie sélectionnée.';
+    return;
+  }
+  list.textContent = selected.join(' • ');
+}
+function filterCategories() {
+  const query = document
+    .getElementById('search')
+    .value
+    .toLowerCase()
+    .trim();
+  document.querySelectorAll('.category').forEach(card => {
+    const name = card.dataset.name.toLowerCase();
+    card.style.display =
+      !query || name.includes(query)
+        ? ''
+        : 'none';
+  });
+}
+function continueProfile() {
+  const selected = Array.from(checkboxes)
+    .filter(box => box.checked)
+    .map(box => box.value);
+  if (selected.length === 0) {
+    alert('Sélectionnez au moins une catégorie.');
+    return;
+  }
+  localStorage.setItem(
+    'indamora_profile_categories',
+    JSON.stringify(selected)
+  );
+  alert(
+    'Catégories enregistrées pour la prochaine étape.'
+  );
+}
+</script>
+</body>
+</html>
