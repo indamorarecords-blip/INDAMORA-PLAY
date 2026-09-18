@@ -4,10 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Album — INDAMORA PLAY</title>
-  <meta
-    name="description"
-    content="Découvrez cet album sur INDAMORA PLAY."
-  >
+  <meta name="description" content="Découvrez cet album sur INDAMORA PLAY.">
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <style>
     :root {
@@ -22,8 +19,8 @@
       --text: #18324a;
       --muted: #6d7f8f;
       --border: #e1edf3;
-      --shadow: 0 12px 32px rgba(25, 90, 125, .09);
-      --radius: 18px;
+      --shadow: 0 18px 45px rgba(22, 89, 125, .10);
+      --radius: 22px;
     }
     * {
       box-sizing: border-box;
@@ -33,11 +30,10 @@
     }
     body {
       margin: 0;
-      font-family:
-        Arial,
-        Helvetica,
-        sans-serif;
-      background: var(--cream);
+      font-family: Arial, Helvetica, sans-serif;
+      background:
+        radial-gradient(circle at top left, #eaf6fc 0, transparent 30%),
+        linear-gradient(180deg, #ffffff 0%, var(--cream) 45%, #ffffff 100%);
       color: var(--text);
       line-height: 1.55;
     }
@@ -45,20 +41,17 @@
       color: inherit;
       text-decoration: none;
     }
-    /* =========================
-       HEADER
-    ========================= */
     header {
       position: sticky;
       top: 0;
       z-index: 100;
       background: rgba(255,255,255,.96);
       border-bottom: 1px solid var(--border);
-      backdrop-filter: blur(12px);
+      backdrop-filter: blur(14px);
     }
     .header-inner {
       max-width: 1180px;
-      min-height: 70px;
+      min-height: 72px;
       margin: auto;
       padding: 12px 20px;
       display: flex;
@@ -70,8 +63,8 @@
       color: var(--blue-dark);
       font-size: 21px;
       font-weight: 900;
+      letter-spacing: .5px;
       white-space: nowrap;
-      letter-spacing: .4px;
     }
     .logo-play {
       color: var(--red);
@@ -80,43 +73,39 @@
       display: block;
       margin-top: 2px;
       color: var(--muted);
-      font-size: 10px;
-      font-weight: 700;
-      letter-spacing: 1px;
+      font-size: 9px;
+      font-weight: 800;
+      letter-spacing: 1.5px;
     }
     .back {
       display: inline-flex;
       align-items: center;
-      gap: 7px;
-      padding: 10px 15px;
+      gap: 8px;
+      padding: 10px 16px;
       border: 1px solid var(--border);
       border-radius: 999px;
-      background: white;
+      background: var(--white);
       color: var(--blue-dark);
       font-size: 13px;
-      font-weight: 800;
+      font-weight: 900;
+      transition: .2s ease;
     }
     .back:hover {
       background: var(--blue-soft);
       border-color: var(--blue);
+      transform: translateY(-1px);
     }
-    /* =========================
-       MAIN
-    ========================= */
     main {
       max-width: 1180px;
       margin: auto;
       padding: 45px 20px 85px;
     }
-    /* =========================
-       ALBUM HERO
-    ========================= */
     .album-card {
       position: relative;
       overflow: hidden;
-      background: white;
+      background: rgba(255,255,255,.96);
       border: 1px solid var(--border);
-      border-radius: 24px;
+      border-radius: 28px;
       box-shadow: var(--shadow);
     }
     .album-card::before {
@@ -125,90 +114,86 @@
       top: 0;
       left: 0;
       right: 0;
-      height: 5px;
-      background:
-        linear-gradient(
-          90deg,
-          var(--green) 0 25%,
-          var(--yellow) 25% 50%,
-          var(--red) 50% 75%,
-          var(--blue) 75% 100%
-        );
+      height: 6px;
+      background: linear-gradient(
+        90deg,
+        var(--green) 0 25%,
+        var(--yellow) 25% 50%,
+        var(--red) 50% 75%,
+        var(--blue) 75% 100%
+      );
     }
     .album-header {
       display: grid;
-      grid-template-columns:
-        minmax(260px, 380px)
-        1fr;
-      gap: 42px;
+      grid-template-columns: minmax(270px, 400px) 1fr;
+      gap: 48px;
       align-items: center;
-      padding: 38px;
+      padding: 42px;
     }
     .cover {
       width: 100%;
       aspect-ratio: 1 / 1;
       display: block;
       object-fit: cover;
-      border-radius: 18px;
+      border-radius: 22px;
       background: var(--blue-soft);
-      box-shadow:
-        0 18px 40px rgba(22, 137, 199, .15);
+      box-shadow: 0 22px 45px rgba(22,137,199,.18);
     }
     .cover-placeholder {
       width: 100%;
       aspect-ratio: 1 / 1;
       display: grid;
       place-items: center;
-      border-radius: 18px;
+      border-radius: 22px;
       background:
-        linear-gradient(
-          145deg,
-          var(--blue-soft),
-          #ffffff
-        );
-      font-size: 70px;
+        linear-gradient(145deg, var(--blue-soft), #ffffff);
+      font-size: 80px;
+      box-shadow: 0 22px 45px rgba(22,137,199,.10);
     }
     .eyebrow {
-      display: inline-block;
-      margin-bottom: 12px;
-      color: var(--red);
-      font-size: 11px;
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      margin-bottom: 15px;
+      padding: 7px 12px;
+      border-radius: 999px;
+      background: var(--blue-soft);
+      color: var(--blue-dark);
+      font-size: 10px;
       font-weight: 900;
-      letter-spacing: 2px;
+      letter-spacing: 1.5px;
       text-transform: uppercase;
     }
     h1 {
-      margin: 0 0 12px;
+      margin: 0 0 14px;
       color: var(--blue-dark);
-      font-size: clamp(35px, 6vw, 62px);
-      line-height: 1;
-      letter-spacing: -2px;
+      font-size: clamp(38px, 6vw, 66px);
+      line-height: .98;
+      letter-spacing: -2.5px;
     }
     .artist {
-      margin-bottom: 18px;
+      margin-bottom: 20px;
       color: var(--muted);
       font-size: 16px;
     }
     .artist a {
       color: var(--blue);
       font-weight: 900;
+      transition: color .2s ease;
     }
     .artist a:hover {
       color: var(--red);
     }
-    /* =========================
-       BADGES
-    ========================= */
     .badges {
       display: flex;
       flex-wrap: wrap;
-      gap: 7px;
-      margin-bottom: 16px;
+      gap: 8px;
+      margin-bottom: 17px;
     }
     .badge {
       display: inline-flex;
       align-items: center;
-      padding: 7px 11px;
+      padding: 7px 12px;
       border-radius: 999px;
       background: var(--blue-soft);
       color: var(--blue-dark);
@@ -236,13 +221,10 @@
       max-width: 650px;
       color: #536b7d;
       font-size: 15px;
-      line-height: 1.75;
+      line-height: 1.8;
     }
-    /* =========================
-       TRACKS
-    ========================= */
     .section {
-      margin-top: 45px;
+      margin-top: 48px;
     }
     .section-heading {
       display: flex;
@@ -254,30 +236,27 @@
     .section-heading h2 {
       margin: 0;
       color: var(--blue-dark);
-      font-size: 27px;
+      font-size: 28px;
       line-height: 1.1;
     }
     .section-heading p {
-      margin: 4px 0 0;
+      margin: 5px 0 0;
       color: var(--muted);
       font-size: 13px;
     }
     .tracks {
       display: grid;
-      gap: 10px;
+      gap: 11px;
     }
     .track {
       display: grid;
-      grid-template-columns:
-        45px
-        1fr
-        auto;
+      grid-template-columns: 46px 1fr auto;
       align-items: center;
       gap: 15px;
-      padding: 15px 17px;
-      background: white;
+      padding: 16px 18px;
+      background: rgba(255,255,255,.97);
       border: 1px solid var(--border);
-      border-radius: 14px;
+      border-radius: 17px;
       transition:
         border-color .2s ease,
         transform .2s ease,
@@ -285,17 +264,15 @@
     }
     .track:hover {
       transform: translateY(-2px);
-      border-color:
-        rgba(22,137,199,.35);
-      box-shadow:
-        0 8px 22px rgba(25,90,125,.07);
+      border-color: rgba(22,137,199,.35);
+      box-shadow: 0 10px 25px rgba(25,90,125,.08);
     }
     .track-number {
-      width: 36px;
-      height: 36px;
+      width: 37px;
+      height: 37px;
       display: grid;
       place-items: center;
-      border-radius: 10px;
+      border-radius: 11px;
       background: var(--blue-soft);
       color: var(--blue-dark);
       font-size: 13px;
@@ -315,45 +292,43 @@
       width: 100%;
       grid-column: 2 / 4;
       height: 40px;
+      accent-color: var(--blue);
     }
-    /* =========================
-       NOTICE
-    ========================= */
     .notice {
       padding: 18px;
       background: var(--blue-soft);
       border: 1px solid #cfe7f3;
-      border-radius: 14px;
+      border-radius: 15px;
       color: #42657a;
       font-size: 14px;
     }
     .error {
-      padding: 45px 25px;
+      padding: 50px 25px;
       background: white;
       border: 1px solid #f0d1d1;
-      border-radius: 18px;
+      border-radius: 20px;
       color: var(--red);
       text-align: center;
       box-shadow: var(--shadow);
     }
     .error a {
       display: inline-flex;
-      margin-top: 15px;
-      padding: 11px 16px;
-      border-radius: 10px;
+      margin-top: 16px;
+      padding: 11px 17px;
+      border-radius: 11px;
       background: var(--blue-dark);
       color: white;
       font-weight: 900;
     }
     .loading {
-      padding: 90px 20px;
+      padding: 95px 20px;
       color: var(--muted);
       text-align: center;
     }
     .loading-dot {
-      width: 42px;
-      height: 42px;
-      margin: 0 auto 15px;
+      width: 44px;
+      height: 44px;
+      margin: 0 auto 16px;
       border: 4px solid #dceef6;
       border-top-color: var(--blue);
       border-radius: 50%;
@@ -364,11 +339,8 @@
         transform: rotate(360deg);
       }
     }
-    /* =========================
-       FOOTER
-    ========================= */
     footer {
-      padding: 38px 20px;
+      padding: 42px 20px;
       background: white;
       border-top: 1px solid var(--border);
       color: var(--muted);
@@ -377,30 +349,26 @@
     }
     footer strong {
       color: var(--blue-dark);
-      font-size: 16px;
+      font-size: 17px;
     }
     .flag-line {
-      width: 90px;
+      width: 100px;
       height: 4px;
-      margin: 14px auto;
+      margin: 15px auto;
       border-radius: 10px;
-      background:
-        linear-gradient(
-          90deg,
-          var(--green) 0 25%,
-          var(--yellow) 25% 50%,
-          var(--red) 50% 75%,
-          var(--blue) 75% 100%
-        );
+      background: linear-gradient(
+        90deg,
+        var(--green) 0 25%,
+        var(--yellow) 25% 50%,
+        var(--red) 50% 75%,
+        var(--blue) 75% 100%
+      );
     }
-    /* =========================
-       MOBILE
-    ========================= */
     @media (max-width: 800px) {
       .album-header {
         grid-template-columns: 1fr;
-        padding: 25px;
-        gap: 25px;
+        padding: 27px;
+        gap: 28px;
       }
       .cover,
       .cover-placeholder {
@@ -408,7 +376,7 @@
         margin: auto;
       }
       h1 {
-        font-size: 40px;
+        font-size: 43px;
       }
     }
     @media (max-width: 600px) {
@@ -429,20 +397,21 @@
       main {
         padding: 25px 15px 60px;
       }
+      .album-card {
+        border-radius: 21px;
+      }
       .album-header {
         padding: 20px;
       }
       h1 {
-        font-size: 35px;
+        font-size: 36px;
         letter-spacing: -1px;
       }
       .description {
         font-size: 14px;
       }
       .track {
-        grid-template-columns:
-          38px
-          1fr;
+        grid-template-columns: 38px 1fr;
         gap: 11px;
         padding: 13px;
       }
@@ -473,87 +442,55 @@
     <a href="index.html" class="logo">
       🎧 INDAMORA
       <span class="logo-play">PLAY</span>
-      <small>
-        INDAMORA RECORDS
-      </small>
+      <small>INDAMORA RECORDS</small>
     </a>
-    <a
-      class="back"
-      href="index.html"
-    >
-      ← Accueil
-    </a>
+<a class="back" href="index.html">
+  ← Accueil
+</a>
   </div>
 </header>
 <main>
-  <div
-    id="loading"
-    class="loading"
-  >
+  <div id="loading" class="loading">
     <div class="loading-dot"></div>
     Chargement de l’album...
   </div>
-  <div
-    id="error"
-    class="error"
-    style="display:none;"
-  ></div>
-  <section
-    id="content"
-    style="display:none;"
-  >
-    <div class="album-card">
-      <div class="album-header">
-        <div id="coverContainer"></div>
-        <div>
-          <span class="eyebrow">
-            INDAMORA PLAY · ALBUM
-          </span>
-          <h1 id="albumTitle"></h1>
-          <div class="artist">
-            Par
-            <a
-              id="artistLink"
-              href="#"
-            ></a>
-          </div>
-          <div
-            id="badges"
-            class="badges"
-          ></div>
-          <div
-            id="releaseDate"
-            class="release"
-          ></div>
-          <div
-            id="description"
-            class="description"
-          ></div>
-        </div>
+  <div id="error" class="error" style="display:none;"></div>
+  <section id="content" style="display:none;">
+<div class="album-card">
+  <div class="album-header">
+    <div id="coverContainer"></div>
+    <div>
+      <span class="eyebrow">
+        INDAMORA PLAY · ALBUM
+      </span>
+      <h1 id="albumTitle"></h1>
+      <div class="artist">
+        Par
+        <a id="artistLink" href="#"></a>
       </div>
+      <div id="badges" class="badges"></div>
+      <div id="releaseDate" class="release"></div>
+      <div id="description" class="description"></div>
     </div>
-    <section class="section">
-      <div class="section-heading">
-        <div>
-          <h2>
-            🎵 Titres de l’album
-          </h2>
-          <p>
-            Écoutez les morceaux disponibles sur INDAMORA PLAY.
-          </p>
-        </div>
-      </div>
-      <div
-        id="tracks"
-        class="tracks"
-      ></div>
-    </section>
+  </div>
+</div>
+<section class="section">
+  <div class="section-heading">
+    <div>
+      <h2>🎵 Titres de l’album</h2>
+      <p>
+        Écoutez les morceaux disponibles sur INDAMORA PLAY.
+      </p>
+    </div>
+  </div>
+  <div id="tracks" class="tracks"></div>
+</section>
   </section>
 </main>
 <footer>
-  <strong>
-    INDAMORA PLAY
-  </strong>
+
+INDAMORA PLAY
+
   <div class="flag-line"></div>
   <p>
     La voix de nos talents.
@@ -593,10 +530,8 @@
       "content"
     );
   function showError(message) {
-    loading.style.display =
-      "none";
-    content.style.display =
-      "none";
+    loading.style.display = "none";
+    content.style.display = "none";
     errorBox.innerHTML = `
       <strong>
         ${escapeHtml(message)}
@@ -606,8 +541,7 @@
         ← Retour à INDAMORA PLAY
       </a>
     `;
-    errorBox.style.display =
-      "block";
+    errorBox.style.display = "block";
   }
   function escapeHtml(value) {
     if (
@@ -617,42 +551,26 @@
       return "";
     }
     return String(value)
-      .replace(
-        /&/g,
-        "&amp;"
-      )
-      .replace(
-        /</g,
-        "&lt;"
-      )
-      .replace(
-        />/g,
-        "&gt;"
-      )
-      .replace(
-        /"/g,
-        "&quot;"
-      )
-      .replace(
-        /'/g,
-        "&#039;"
-      );
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;")
+      .replace(/'/g, "&#039;");
   }
   function formatDate(date) {
     if (!date) {
       return "";
     }
     try {
-      return new Date(
-        date
-      ).toLocaleDateString(
-        "fr-FR",
-        {
-          day: "numeric",
-          month: "long",
-          year: "numeric"
-        }
-      );
+      return new Date(date)
+        .toLocaleDateString(
+          "fr-FR",
+          {
+            day: "numeric",
+            month: "long",
+            year: "numeric"
+          }
+        );
     } catch {
       return date;
     }
@@ -781,15 +699,13 @@
         document.createElement(
           "img"
         );
-      img.className =
-        "cover";
+      img.className = "cover";
       img.src =
         album.cover_url;
       img.alt =
         "Pochette de " +
         album.title;
-      img.loading =
-        "eager";
+      img.loading = "eager";
       img.onerror =
         function() {
           this.style.display =
@@ -899,28 +815,25 @@
         );
     if (error) {
       console.error(error);
-      tracksContainer.innerHTML =
-        `
-          <div class="notice">
-            Impossible de charger les titres.
-          </div>
-        `;
+      tracksContainer.innerHTML = `
+        <div class="notice">
+          Impossible de charger les titres.
+        </div>
+      `;
       return;
     }
     if (
       !tracks ||
       tracks.length === 0
     ) {
-      tracksContainer.innerHTML =
-        `
-          <div class="notice">
-            Aucun titre publié dans cet album pour le moment.
-          </div>
-        `;
+      tracksContainer.innerHTML = `
+        <div class="notice">
+          Aucun titre publié dans cet album pour le moment.
+        </div>
+      `;
       return;
     }
-    tracksContainer.innerHTML =
-      "";
+    tracksContainer.innerHTML = "";
     tracks.forEach(
       (track, index) => {
         const box =
