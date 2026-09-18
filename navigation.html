@@ -3,122 +3,384 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#1689C7">
   <title>INDAMORA PLAY — Navigation</title>
   <style>
+    :root {
+      --blue: #1689C7;
+      --blue-dark: #0757B8;
+      --blue-soft: #EAF6FC;
+      --red: #D92525;
+      --yellow: #F2C230;
+      --green: #168447;
+      --white: #FFFFFF;
+      --cream: #FFFDF8;
+      --text: #18324A;
+      --muted: #6D7F8F;
+      --border: #E1EDF3;
+      --shadow: 0 14px 40px rgba(22, 137, 199, 0.10);
+    }
     * {
       box-sizing: border-box;
     }
+    html {
+      scroll-behavior: smooth;
+    }
     body {
       margin: 0;
-      font-family: Arial, Helvetica, sans-serif;
-      background: #f5f9ff;
-      color: #123;
+      font-family:
+        Inter,
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        Arial,
+        Helvetica,
+        sans-serif;
+      background:
+        radial-gradient(circle at top left, rgba(242,194,48,.15), transparent 28%),
+        radial-gradient(circle at top right, rgba(22,132,71,.10), transparent 24%),
+        var(--cream);
+      color: var(--text);
+      min-height: 100vh;
     }
+    /* HEADER */
     header {
-      background: #0757b8;
-      color: white;
-      padding: 25px 20px;
+      position: relative;
+      overflow: hidden;
+      background:
+        linear-gradient(135deg, #1689C7 0%, #0757B8 58%, #168447 100%);
+      color: var(--white);
+      padding: 42px 20px 48px;
       text-align: center;
+    }
+    header::before,
+    header::after {
+      content: "";
+      position: absolute;
+      border-radius: 50%;
+      pointer-events: none;
+    }
+    header::before {
+      width: 220px;
+      height: 220px;
+      background: rgba(242,194,48,.18);
+      top: -100px;
+      left: -70px;
+    }
+    header::after {
+      width: 260px;
+      height: 260px;
+      background: rgba(217,37,37,.14);
+      right: -100px;
+      bottom: -150px;
+    }
+    .brand {
+      position: relative;
+      z-index: 1;
+    }
+    .logo {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 66px;
+      height: 66px;
+      border-radius: 20px;
+      background: rgba(255,255,255,.18);
+      border: 1px solid rgba(255,255,255,.30);
+      font-size: 30px;
+      margin-bottom: 16px;
+      backdrop-filter: blur(10px);
     }
     header h1 {
       margin: 0;
-      font-size: 30px;
+      font-size: clamp(28px, 6vw, 42px);
+      font-weight: 850;
+      letter-spacing: -1px;
     }
     header p {
-      margin: 8px 0 0;
+      margin: 10px 0 0;
+      color: rgba(255,255,255,.90);
+      font-size: 16px;
     }
+    /* MAIN */
     main {
-      max-width: 1100px;
-      margin: 30px auto;
-      padding: 20px;
+      width: min(1120px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 34px 0 56px;
     }
     .intro {
-      background: white;
-      border-radius: 16px;
-      padding: 25px;
-      margin-bottom: 25px;
+      position: relative;
+      background: rgba(255,255,255,.95);
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      padding: 32px 26px;
+      margin-bottom: 28px;
+      box-shadow: var(--shadow);
       text-align: center;
-      box-shadow: 0 4px 15px rgba(0,0,0,.07);
+      overflow: hidden;
+    }
+    .intro::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      height: 4px;
+      background:
+        linear-gradient(
+          90deg,
+          var(--blue),
+          var(--yellow),
+          var(--green),
+          var(--red)
+        );
     }
     .intro h2 {
-      color: #0757b8;
-      margin-top: 0;
+      margin: 0 0 10px;
+      color: var(--blue-dark);
+      font-size: clamp(24px, 5vw, 32px);
+      letter-spacing: -.5px;
     }
+    .intro p {
+      max-width: 680px;
+      margin: 0 auto;
+      color: var(--muted);
+      line-height: 1.7;
+      font-size: 15px;
+    }
+    /* NAVIGATION CARDS */
     .grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
-      gap: 18px;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 20px;
     }
     .card {
-      background: white;
-      border: 1px solid #d8e5f3;
-      border-radius: 16px;
-      padding: 22px;
-      text-align: center;
-      box-shadow: 0 4px 15px rgba(0,0,0,.06);
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: 22px;
+      padding: 25px;
+      min-height: 275px;
+      box-shadow: 0 8px 28px rgba(24,50,74,.06);
+      overflow: hidden;
+      transition:
+        transform .2s ease,
+        box-shadow .2s ease,
+        border-color .2s ease;
+    }
+    .card::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 5px;
+      height: 100%;
+      background: var(--blue);
+    }
+    .card:nth-child(2)::before {
+      background: var(--blue-dark);
+    }
+    .card:nth-child(3)::before {
+      background: var(--yellow);
+    }
+    .card:nth-child(4)::before {
+      background: var(--green);
+    }
+    .card:nth-child(5)::before {
+      background: var(--red);
+    }
+    .card:nth-child(6)::before {
+      background: var(--blue);
+    }
+    .card:nth-child(7)::before {
+      background: var(--yellow);
+    }
+    .card:nth-child(8)::before {
+      background: var(--red);
+    }
+    .card:nth-child(9)::before {
+      background: var(--green);
+    }
+    .card:nth-child(10)::before {
+      background: var(--blue-dark);
+    }
+    .card:nth-child(11)::before {
+      background: var(--yellow);
+    }
+    .card:nth-child(12)::before {
+      background: var(--red);
+    }
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 18px 42px rgba(24,50,74,.11);
+      border-color: #c9e2ef;
     }
     .icon {
-      font-size: 40px;
-      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 60px;
+      height: 60px;
+      border-radius: 18px;
+      background: var(--blue-soft);
+      font-size: 29px;
+      margin-bottom: 18px;
+    }
+    .card:nth-child(3) .icon,
+    .card:nth-child(7) .icon,
+    .card:nth-child(11) .icon {
+      background: #FFF7D9;
+    }
+    .card:nth-child(4) .icon,
+    .card:nth-child(9) .icon {
+      background: #E7F6ED;
+    }
+    .card:nth-child(5) .icon,
+    .card:nth-child(8) .icon,
+    .card:nth-child(12) .icon {
+      background: #FDEAEA;
     }
     .card h3 {
-      color: #0757b8;
-      margin: 8px 0;
+      margin: 0 0 9px;
+      color: var(--text);
+      font-size: 20px;
+      letter-spacing: -.3px;
     }
     .card p {
-      color: #60758d;
-      line-height: 1.5;
-      min-height: 45px;
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.6;
+      font-size: 14px;
+      flex: 1;
     }
+    /* BUTTONS */
     .button {
-      display: block;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
       width: 100%;
-      padding: 13px;
-      border-radius: 10px;
-      background: #0757b8;
-      color: white;
+      min-height: 48px;
+      padding: 13px 16px;
+      margin-top: 20px;
+      border-radius: 13px;
+      background: var(--blue);
+      color: var(--white);
       text-decoration: none;
-      font-weight: bold;
-      margin-top: 15px;
+      font-size: 14px;
+      font-weight: 800;
+      transition:
+        transform .18s ease,
+        background .18s ease,
+        box-shadow .18s ease;
+      box-shadow: 0 8px 18px rgba(22,137,199,.18);
     }
     .button:hover {
-      background: #064895;
+      background: var(--blue-dark);
+      transform: translateY(-1px);
+      box-shadow: 0 10px 22px rgba(7,87,184,.22);
     }
     .secondary {
-      background: #e8f2ff;
-      color: #0757b8;
+      background: var(--blue-soft);
+      color: var(--blue-dark);
+      border: 1px solid #cde7f3;
+      box-shadow: none;
     }
     .secondary:hover {
-      background: #d8eaff;
+      background: #d9eff9;
+      color: var(--blue-dark);
+      box-shadow: none;
     }
+    /* FOOTER */
     footer {
-      margin-top: 40px;
-      background: #0757b8;
-      color: white;
+      background: var(--white);
+      border-top: 1px solid var(--border);
+      color: var(--muted);
       text-align: center;
-      padding: 30px 20px;
+      padding: 30px 20px 36px;
+    }
+    footer strong {
+      color: var(--blue-dark);
+      font-size: 16px;
+    }
+    footer p {
+      margin: 8px 0;
     }
     footer a {
-      color: white;
-      font-weight: bold;
+      color: var(--blue-dark);
+      font-weight: 750;
       text-decoration: none;
+    }
+    footer a:hover {
+      text-decoration: underline;
+    }
+    /* TABLET */
+    @media (max-width: 900px) {
+      .grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+    /* MOBILE */
+    @media (max-width: 620px) {
+      header {
+        padding: 32px 16px 38px;
+      }
+      .logo {
+        width: 58px;
+        height: 58px;
+        border-radius: 17px;
+        font-size: 27px;
+      }
+      main {
+        width: min(100% - 22px, 600px);
+        padding-top: 22px;
+      }
+      .intro {
+        border-radius: 20px;
+        padding: 25px 19px;
+      }
+      .grid {
+        grid-template-columns: 1fr;
+        gap: 15px;
+      }
+      .card {
+        min-height: 0;
+        border-radius: 20px;
+        padding: 22px;
+      }
+      .button {
+        min-height: 50px;
+      }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      html {
+        scroll-behavior: auto;
+      }
+      .card,
+      .button {
+        transition: none;
+      }
     }
   </style>
 </head>
 <body>
 <header>
-  <h1>🎧 INDAMORA PLAY</h1>
-  <p>Navigation de la plateforme</p>
+  <div class="brand">
+    <div class="logo">🎧</div>
+    <h1>INDAMORA PLAY</h1>
+    <p>Navigation de la plateforme</p>
+  </div>
 </header>
 <main>
-  <div class="intro">
+  <section class="intro">
     <h2>Tout INDAMORA PLAY au même endroit</h2>
     <p>
       Accède directement aux différents espaces et contenus
       de la plateforme.
     </p>
-  </div>
-  <div class="grid">
+  </section>
+  <section class="grid">
 <div class="card">
   <div class="icon">🏠</div>
   <h3>Accueil</h3>
@@ -215,7 +477,7 @@
     Informations légales
   </a>
 </div>
-  </div>
+  </section>
 </main>
 <footer>
   <p>
