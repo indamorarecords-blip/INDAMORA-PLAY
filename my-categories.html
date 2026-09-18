@@ -4,11 +4,8 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Mes catégories — INDAMORA PLAY</title>
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
-*{
-  box-sizing:border-box;
-}
+*{box-sizing:border-box}
 body{
   margin:0;
   font-family:Arial,sans-serif;
@@ -17,7 +14,7 @@ body{
 }
 header{
   background:#0866d6;
-  color:white;
+  color:#fff;
   padding:20px;
   text-align:center;
 }
@@ -34,7 +31,7 @@ main{
   padding:0 18px;
 }
 .card{
-  background:white;
+  background:#fff;
   border-radius:16px;
   padding:25px;
   box-shadow:0 5px 20px rgba(0,70,150,.08);
@@ -54,10 +51,6 @@ h2{
   border:1px solid #c9d8ea;
   border-radius:10px;
   font-size:16px;
-  outline:none;
-}
-.search:focus{
-  border-color:#0866d6;
 }
 .categories{
   display:grid;
@@ -66,12 +59,11 @@ h2{
 }
 .category{
   border:2px solid #dbe7f5;
-  background:white;
+  background:#fff;
   border-radius:12px;
   padding:15px;
   cursor:pointer;
   user-select:none;
-  font-size:15px;
   transition:.15s;
 }
 .category:hover{
@@ -80,18 +72,18 @@ h2{
 }
 .category.selected{
   border-color:#0866d6;
-  background:#eaf3ff;
+  background:#e8f2ff;
   color:#0756ad;
   font-weight:bold;
 }
-.category input{
-  position:absolute;
-  opacity:0;
-  pointer-events:none;
+.count{
+  margin-top:18px;
+  color:#0866d6;
+  font-weight:bold;
 }
-.save{
+button{
   width:100%;
-  margin-top:25px;
+  margin-top:24px;
   padding:15px;
   border:0;
   border-radius:11px;
@@ -101,38 +93,27 @@ h2{
   font-weight:bold;
   cursor:pointer;
 }
-.save:hover{
+button:hover{
   background:#0756ad;
 }
-.save:disabled{
+button:disabled{
   opacity:.6;
-  cursor:not-allowed;
-}
-.count{
-  margin-top:16px;
-  font-weight:bold;
-  color:#0866d6;
 }
 .message{
+  display:none;
   margin-top:18px;
   padding:14px;
   border-radius:10px;
-  display:none;
 }
-.message.success{
+.success{
   display:block;
   background:#eaf8ef;
   color:#176b36;
 }
-.message.error{
+.error{
   display:block;
   background:#fff0f0;
   color:#a32121;
-}
-.loading{
-  text-align:center;
-  color:#52677d;
-  padding:25px;
 }
 </style>
 </head>
@@ -145,7 +126,7 @@ h2{
 <div class="card">
 <h2>Choisis tes catégories</h2>
 <p class="info">
-Sélectionne une ou plusieurs catégories qui correspondent à ton activité.
+Sélectionne une ou plusieurs catégories correspondant à ton activité.
 Tu peux en choisir plusieurs.
 </p>
 
@@ -155,14 +136,12 @@ class=“search”
 type=“search”
 placeholder=“Rechercher une catégorie…”
 
-<div id="categories" class="categories">
-  <div class="loading">Chargement des catégories...</div>
-</div>
+<div id="categories" class="categories"></div>
 <div id="count" class="count">
-  0 catégorie sélectionnée
+0 catégorie sélectionnée
 </div>
-<button id="saveBtn" class="save">
-  Enregistrer mes catégories
+<button id="saveBtn">
+Enregistrer mes catégories
 </button>
 <div id="message" class="message"></div>
 </div>
@@ -172,14 +151,29 @@ const SUPABASE_URL =
 "https://adqsdnqkbitplbhbihiv.supabase.co";
 const SUPABASE_KEY =
 "sb_publishable_dpjfWOYeNQRmP2nJq5FoMA_8NUuD0HF";
-const client =
-window.supabase.createClient(
-  SUPABASE_URL,
-  SUPABASE_KEY
-);
-let categories = [];
-let selectedIds = new Set();
-let artistId = null;
+const categories = [
+["1","🎤","Artistes & chanteurs"],
+["2","🙏","Gospel"],
+["3","🎼","Chantres"],
+["4","⛪","Serviteurs de Dieu"],
+["5","📖","Prédicateurs & enseignants"],
+["6","🎬","Cinéma"],
+["7","🎥","Vidéastes & vidéos"],
+["8","😂","Humour"],
+["9","🎧","Podcasts"],
+["10","📱","Créateurs de contenu"],
+["11","⭐","Influenceurs"],
+["12","🎼","Producteurs & beatmakers"],
+["13","📻","Médias"],
+["14","🏷️","Labels & structures"],
+["15","🌍","Associations & organisations"],
+["16","💃","Danseurs"],
+["17","🧵","Couturiers"],
+["18","📣","Agences de communication"],
+["19","✈️","Agences de voyage"],
+["20","📚","Conteurs"]
+];
+let selected = new Set();
 const categoriesEl =
 document.getElementById("categories");
 const searchEl =
@@ -190,13 +184,13 @@ const saveBtn =
 document.getElementById("saveBtn");
 const messageEl =
 document.getElementById("message");
-function message(text,type){
+function showMessage(text,type){
   messageEl.textContent = text;
   messageEl.className =
     "message " + type;
 }
 function updateCount(){
-  const n = selectedIds.size;
+  const n = selected.size;
   countEl.textContent =
     n +
     (n > 1
@@ -206,120 +200,43 @@ function updateCount(){
 function render(){
   const search =
     searchEl.value
-      .trim()
-      .toLowerCase();
+      .toLowerCase()
+      .trim();
   categoriesEl.innerHTML = "";
-  const filtered =
-    categories.filter(category =>
-      category.name
+  categories
+    .filter(item =>
+      item[2]
         .toLowerCase()
         .includes(search)
-    );
-  if(filtered.length === 0){
-    categoriesEl.innerHTML =
-      "<p>Aucune catégorie trouvée.</p>";
-    return;
-  }
-  filtered.forEach(category => {
-    const div =
-      document.createElement("div");
-    div.className =
-      "category" +
-      (
-        selectedIds.has(category.id)
-        ? " selected"
-        : ""
-      );
-    div.innerHTML =
-      "<input type='checkbox'>" +
-      "<span>" +
-      (category.icon || "") +
-      " " +
-      category.name +
-      "</span>";
-    div.addEventListener("click",function(){
-      if(selectedIds.has(category.id)){
-        selectedIds.delete(category.id);
-      }else{
-        selectedIds.add(category.id);
-      }
-      render();
-    });
-    categoriesEl.appendChild(div);
-  });
-  updateCount();
-}
-async function getArtist(){
-  const result =
-    await client.auth.getUser();
-  const user =
-    result.data.user;
-  if(!user){
-    message(
-      "Connecte-toi d'abord à ton compte artiste.",
-      "error"
-    );
-    saveBtn.disabled = true;
-    return false;
-  }
-  const resultArtist =
-    await client
-      .from("artists")
-      .select("id")
-      .eq("owner_id",user.id)
-      .maybeSingle();
-  if(resultArtist.error){
-    console.error(resultArtist.error);
-    message(
-      "Impossible de récupérer ton profil artiste.",
-      "error"
-    );
-    return false;
-  }
-  if(!resultArtist.data){
-    message(
-      "Aucun profil artiste n'est encore associé à ce compte.",
-      "error"
-    );
-    saveBtn.disabled = true;
-    return false;
-  }
-  artistId =
-    resultArtist.data.id;
-  return true;
-}
-async function loadCategories(){
-  const result =
-    await client
-      .from("categories")
-      .select("id,slug,name,icon")
-      .eq("active",true)
-      .order("name");
-  if(result.error){
-    console.error(result.error);
-    message(
-      "Impossible de charger les catégories.",
-      "error"
-    );
-    return;
-  }
-  categories =
-    result.data || [];
-  if(artistId){
-    const selected =
-      await client
-        .from("artist_categories")
-        .select("category_id")
-        .eq("artist_id",artistId);
-    if(!selected.error){
-      selected.data.forEach(row => {
-        selectedIds.add(
-          row.category_id
+    )
+    .forEach(item => {
+      const div =
+        document.createElement("div");
+      div.className =
+        "category" +
+        (
+          selected.has(item[0])
+          ? " selected"
+          : ""
         );
-      });
-    }
-  }
-  render();
+      div.innerHTML =
+        item[1] +
+        " " +
+        item[2];
+      div.addEventListener(
+        "click",
+        function(){
+          if(selected.has(item[0])){
+            selected.delete(item[0]);
+          }else{
+            selected.add(item[0]);
+          }
+          render();
+        }
+      );
+      categoriesEl.appendChild(div);
+    });
+  updateCount();
 }
 searchEl.addEventListener(
   "input",
@@ -328,63 +245,13 @@ searchEl.addEventListener(
 saveBtn.addEventListener(
   "click",
   async function(){
-    if(!artistId){
-      message(
-        "Profil artiste introuvable.",
-        "error"
-      );
-      return;
-    }
-    saveBtn.disabled = true;
-    saveBtn.textContent =
-      "Enregistrement...";
-    try{
-      const remove =
-        await client
-          .from("artist_categories")
-          .delete()
-          .eq("artist_id",artistId);
-      if(remove.error){
-        throw remove.error;
-      }
-      if(selectedIds.size > 0){
-        const rows =
-          Array.from(selectedIds)
-            .map(categoryId => ({
-              artist_id:artistId,
-              category_id:categoryId
-            }));
-        const insert =
-          await client
-            .from("artist_categories")
-            .insert(rows);
-        if(insert.error){
-          throw insert.error;
-        }
-      }
-      message(
-        "Tes catégories ont bien été enregistrées.",
-        "success"
-      );
-    }catch(error){
-      console.error(error);
-      message(
-        "Erreur pendant l'enregistrement des catégories.",
-        "error"
-      );
-    }
-    saveBtn.disabled = false;
-    saveBtn.textContent =
-      "Enregistrer mes catégories";
+    showMessage(
+      "Pour enregistrer tes catégories, connecte-toi à ton compte artiste.",
+      "error"
+    );
   }
 );
-(async function(){
-  const artistOk =
-    await getArtist();
-  if(artistOk){
-    await loadCategories();
-  }
-})();
+render();
 </script>
 </body>
 </html>
