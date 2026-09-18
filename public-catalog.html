@@ -6,153 +6,592 @@
   <title>Catalogue — INDAMORA PLAY</title>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <style>
+    :root {
+      --blue: #1689C7;
+      --blue-dark: #0757B8;
+      --blue-soft: #EAF6FC;
+      --red: #D92525;
+      --yellow: #F2C230;
+      --green: #168447;
+      --white: #FFFFFF;
+      --cream: #FFFDF8;
+      --text: #18324A;
+      --muted: #6D7F8F;
+      --border: #E1EDF3;
+      --shadow: 0 12px 35px rgba(22, 137, 199, 0.10);
+      --shadow-hover: 0 18px 45px rgba(22, 137, 199, 0.16);
+      --radius: 22px;
+    }
     * {
       box-sizing: border-box;
     }
+    html {
+      scroll-behavior: smooth;
+    }
     body {
       margin: 0;
-      font-family: Arial, Helvetica, sans-serif;
-      background: #f5f9ff;
-      color: #102a43;
+      font-family:
+        Inter,
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        Arial,
+        Helvetica,
+        sans-serif;
+      background:
+        linear-gradient(
+          180deg,
+          var(--cream) 0%,
+          var(--white) 38%,
+          var(--blue-soft) 100%
+        );
+      color: var(--text);
+      min-height: 100vh;
     }
+    a {
+      color: inherit;
+    }
+    /* =========================
+       HEADER
+    ========================= */
     header {
-      background: #0757b8;
-      color: white;
-      padding: 16px 20px;
       position: sticky;
       top: 0;
-      z-index: 10;
+      z-index: 50;
+      background: rgba(255, 255, 255, 0.94);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--border);
     }
     .header-inner {
-      max-width: 1100px;
-      margin: auto;
+      max-width: 1180px;
+      margin: 0 auto;
+      min-height: 76px;
+      padding: 14px 20px;
       display: flex;
-      justify-content: space-between;
       align-items: center;
-      gap: 15px;
+      justify-content: space-between;
+      gap: 20px;
     }
     .logo {
-      font-size: 22px;
-      font-weight: bold;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: var(--blue-dark);
+      font-size: 21px;
+      font-weight: 900;
+      letter-spacing: -0.4px;
+    }
+    .logo-mark {
+      width: 38px;
+      height: 38px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background:
+        linear-gradient(
+          135deg,
+          var(--blue),
+          var(--blue-dark)
+        );
+      color: white;
+      box-shadow: 0 8px 20px rgba(22, 137, 199, 0.20);
     }
     .back {
-      color: white;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--blue-dark);
       text-decoration: none;
-      font-weight: bold;
+      font-size: 14px;
+      font-weight: 800;
+      padding: 10px 14px;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      background: var(--white);
+      transition:
+        transform 0.2s ease,
+        border-color 0.2s ease,
+        background 0.2s ease;
     }
+    .back:hover {
+      transform: translateY(-2px);
+      border-color: #B9DDEC;
+      background: var(--blue-soft);
+    }
+    /* =========================
+       MAIN
+    ========================= */
     main {
-      max-width: 1100px;
-      margin: 30px auto;
-      padding: 0 18px;
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 52px 20px 30px;
+    }
+    .hero {
+      position: relative;
+      overflow: hidden;
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: 30px;
+      padding: 42px 38px;
+      box-shadow: var(--shadow);
+      margin-bottom: 48px;
+    }
+    .hero::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 5px;
+      background:
+        linear-gradient(
+          90deg,
+          var(--blue) 0%,
+          var(--blue) 35%,
+          var(--red) 35%,
+          var(--red) 55%,
+          var(--yellow) 55%,
+          var(--yellow) 75%,
+          var(--green) 75%,
+          var(--green) 100%
+        );
+    }
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      color: var(--blue-dark);
+      background: var(--blue-soft);
+      border: 1px solid #CDE8F4;
+      border-radius: 999px;
+      padding: 8px 13px;
+      font-size: 12px;
+      font-weight: 900;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      margin-bottom: 18px;
     }
     h1 {
-      color: #073b7a;
-      margin-bottom: 8px;
+      margin: 0 0 12px;
+      color: var(--text);
+      font-size: clamp(32px, 5vw, 54px);
+      line-height: 1.02;
+      letter-spacing: -1.8px;
+    }
+    .hero-title-accent {
+      color: var(--blue-dark);
     }
     .intro {
-      color: #627d98;
-      margin-bottom: 30px;
+      max-width: 720px;
+      margin: 0;
+      color: var(--muted);
+      font-size: 17px;
+      line-height: 1.7;
     }
+    /* =========================
+       SECTIONS
+    ========================= */
     .section {
-      margin-bottom: 40px;
+      margin-bottom: 54px;
+    }
+    .section-header {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 15px;
+      margin-bottom: 20px;
+    }
+    .section-heading-wrap {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .section-icon {
+      width: 44px;
+      height: 44px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 14px;
+      background: var(--blue-soft);
+      border: 1px solid #CDE8F4;
+      font-size: 22px;
     }
     .section-title {
-      color: #073b7a;
-      font-size: 28px;
-      margin-bottom: 16px;
+      margin: 0;
+      color: var(--text);
+      font-size: clamp(24px, 3vw, 32px);
+      line-height: 1.1;
+      letter-spacing: -0.8px;
     }
+    .section-line {
+      height: 4px;
+      width: 54px;
+      margin-top: 9px;
+      border-radius: 999px;
+      background:
+        linear-gradient(
+          90deg,
+          var(--blue),
+          var(--red),
+          var(--yellow),
+          var(--green)
+        );
+    }
+    /* =========================
+       GRID
+    ========================= */
     .grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-      gap: 18px;
+      grid-template-columns:
+        repeat(
+          auto-fill,
+          minmax(230px, 1fr)
+        );
+      gap: 22px;
     }
+    /* =========================
+       CARDS
+    ========================= */
     .card {
-      background: white;
-      border-radius: 16px;
+      position: relative;
       overflow: hidden;
-      box-shadow: 0 4px 16px rgba(0, 70, 140, 0.08);
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      transition:
+        transform 0.25s ease,
+        box-shadow 0.25s ease,
+        border-color 0.25s ease;
     }
-    .image {
-      width: 100%;
-      aspect-ratio: 1 / 1;
-      object-fit: cover;
-      background: #e7f0fb;
+    .card:hover {
+      transform: translateY(-6px);
+      box-shadow: var(--shadow-hover);
+      border-color: #C7E2EE;
     }
+    .card::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      height: 3px;
+      background:
+        linear-gradient(
+          90deg,
+          var(--blue),
+          var(--red),
+          var(--yellow),
+          var(--green)
+        );
+      opacity: 0;
+      transition: opacity 0.25s ease;
+    }
+    .card:hover::after {
+      opacity: 1;
+    }
+    .image,
     .placeholder {
       width: 100%;
       aspect-ratio: 1 / 1;
-      background: #e7f0fb;
+      display: block;
+    }
+    .image {
+      object-fit: cover;
+      background: var(--blue-soft);
+      transition:
+        transform 0.4s ease;
+    }
+    .card:hover .image {
+      transform: scale(1.035);
+    }
+    .placeholder {
       display: flex;
-      justify-content: center;
       align-items: center;
-      font-size: 60px;
+      justify-content: center;
+      background:
+        linear-gradient(
+          135deg,
+          var(--blue-soft),
+          #F9FDFF
+        );
+      font-size: 58px;
     }
     .card-body {
-      padding: 16px;
+      padding: 18px;
     }
     .card-title {
-      color: #073b7a;
-      font-weight: bold;
+      color: var(--text);
       font-size: 18px;
-      margin-bottom: 8px;
+      font-weight: 900;
+      line-height: 1.25;
+      margin-bottom: 9px;
     }
     .meta {
-      color: #627d98;
-      font-size: 14px;
-      line-height: 1.5;
-      margin-bottom: 12px;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.55;
+      margin-bottom: 13px;
     }
+    .verified {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      color: var(--green);
+      font-size: 13px;
+      font-weight: 800;
+      margin-bottom: 14px;
+    }
+    .verified-dot {
+      width: 18px;
+      height: 18px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      background: #E8F7EF;
+      border: 1px solid #C5E9D5;
+    }
+    /* =========================
+       BUTTONS
+    ========================= */
     .button {
-      display: inline-block;
-      background: #0757b8;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 7px;
+      min-height: 42px;
+      background:
+        linear-gradient(
+          135deg,
+          var(--blue),
+          var(--blue-dark)
+        );
       color: white;
       text-decoration: none;
-      padding: 9px 13px;
-      border-radius: 9px;
-      font-weight: bold;
-      font-size: 14px;
+      padding: 10px 15px;
+      border-radius: 12px;
+      font-size: 13px;
+      font-weight: 900;
+      box-shadow:
+        0 8px 18px rgba(7, 87, 184, 0.16);
+      transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
     }
+    .button:hover {
+      transform: translateY(-2px);
+      box-shadow:
+        0 12px 24px rgba(7, 87, 184, 0.22);
+    }
+    /* =========================
+       NOTICE
+    ========================= */
     .notice {
-      background: white;
-      border-radius: 14px;
-      padding: 18px;
-      color: #627d98;
-    }
-    footer {
+      grid-column: 1 / -1;
+      background: var(--white);
+      border: 1px dashed #BFDCE9;
+      border-radius: 18px;
+      padding: 24px;
+      color: var(--muted);
       text-align: center;
-      color: #627d98;
-      padding: 40px 20px;
+      line-height: 1.6;
+      box-shadow:
+        0 8px 25px rgba(22, 137, 199, 0.06);
+    }
+    /* =========================
+       FOOTER
+    ========================= */
+    footer {
+      margin-top: 40px;
+      padding: 38px 20px 48px;
+      text-align: center;
+      background: var(--white);
+      border-top: 1px solid var(--border);
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.7;
+    }
+    footer strong {
+      color: var(--blue-dark);
+      font-size: 16px;
+      font-weight: 900;
+    }
+    .footer-accent {
+      width: 90px;
+      height: 4px;
+      margin: 12px auto 14px;
+      border-radius: 999px;
+      background:
+        linear-gradient(
+          90deg,
+          var(--blue),
+          var(--red),
+          var(--yellow),
+          var(--green)
+        );
+    }
+    /* =========================
+       MOBILE
+    ========================= */
+    @media (max-width: 700px) {
+      .header-inner {
+        min-height: 68px;
+        padding: 12px 14px;
+      }
+      .logo {
+        font-size: 17px;
+      }
+      .logo-mark {
+        width: 34px;
+        height: 34px;
+        border-radius: 10px;
+      }
+      .back {
+        padding: 9px 11px;
+        font-size: 12px;
+      }
+      main {
+        padding:
+          28px 14px 20px;
+      }
+      .hero {
+        padding: 34px 22px;
+        border-radius: 24px;
+        margin-bottom: 36px;
+      }
+      h1 {
+        font-size: 36px;
+      }
+      .intro {
+        font-size: 15px;
+      }
+      .section {
+        margin-bottom: 42px;
+      }
+      .section-title {
+        font-size: 25px;
+      }
+      .grid {
+        grid-template-columns:
+          repeat(
+            2,
+            minmax(0, 1fr)
+          );
+        gap: 13px;
+      }
+      .card {
+        border-radius: 17px;
+      }
+      .card-body {
+        padding: 13px;
+      }
+      .card-title {
+        font-size: 15px;
+      }
+      .meta {
+        font-size: 12px;
+      }
+      .button {
+        width: 100%;
+        min-height: 40px;
+        padding: 9px 10px;
+        font-size: 12px;
+      }
+      .section-header {
+        align-items: flex-start;
+      }
+    }
+    @media (max-width: 420px) {
+      .grid {
+        grid-template-columns: 1fr;
+      }
+      .card-title {
+        font-size: 17px;
+      }
+      .button {
+        width: auto;
+      }
     }
   </style>
 </head>
 <body>
 <header>
   <div class="header-inner">
-    <div class="logo">🎧 INDAMORA PLAY</div>
-    <a class="back" href="index.html">← Accueil</a>
+    <div class="logo">
+      <div class="logo-mark">🎧</div>
+      <span>INDAMORA PLAY</span>
+    </div>
+    <a class="back" href="index.html">
+      ← Accueil
+    </a>
   </div>
 </header>
 <main>
-  <h1>Catalogue public</h1>
-  <div class="intro">
-    Découvrez les artistes et albums publiés sur INDAMORA PLAY.
-  </div>
+  <section class="hero">
+    <div class="hero-badge">
+      🇨🇫 Plateforme musicale d’Afrique centrale
+    </div>
+    <h1>
+      Catalogue
+      <span class="hero-title-accent">
+        public
+      </span>
+    </h1>
+    <p class="intro">
+      Découvrez les artistes et albums publiés sur
+      INDAMORA PLAY.
+    </p>
+  </section>
   <section class="section">
-    <h2 class="section-title">🎤 Artistes</h2>
+    <div class="section-header">
+      <div class="section-heading-wrap">
+        <div class="section-icon">
+          🎤
+        </div>
+        <div>
+          <h2 class="section-title">
+            Artistes
+          </h2>
+          <div class="section-line"></div>
+        </div>
+      </div>
+    </div>
     <div id="artists" class="grid">
-      <div class="notice">Chargement des artistes...</div>
+      <div class="notice">
+        Chargement des artistes...
+      </div>
     </div>
   </section>
   <section class="section">
-    <h2 class="section-title">💿 Albums</h2>
+    <div class="section-header">
+      <div class="section-heading-wrap">
+        <div class="section-icon">
+          💿
+        </div>
+        <div>
+          <h2 class="section-title">
+            Albums
+          </h2>
+          <div class="section-line"></div>
+        </div>
+      </div>
+    </div>
     <div id="albums" class="grid">
-      <div class="notice">Chargement des albums...</div>
+      <div class="notice">
+        Chargement des albums...
+      </div>
     </div>
   </section>
 </main>
 <footer>
-  <strong>INDAMORA PLAY</strong><br>
-  INDAMORA RECORDS — Musique d’Afrique centrale 🇨🇫
+  <strong>INDAMORA PLAY</strong>
+  <div class="footer-accent"></div>
+  INDAMORA RECORDS —
+  Musique d’Afrique centrale 🇨🇫
 </footer>
 <script>
   const SUPABASE_URL =
@@ -210,7 +649,8 @@
       } else {
         const placeholder =
           document.createElement("div");
-        placeholder.className = "placeholder";
+        placeholder.className =
+          "placeholder";
         placeholder.textContent = "🎤";
         card.appendChild(placeholder);
       }
@@ -227,24 +667,36 @@
         document.createElement("div");
       meta.className = "meta";
       const parts = [];
-      if (artist.city) parts.push(artist.city);
-      if (artist.region) parts.push(artist.region);
-      if (artist.genre) parts.push(artist.genre);
-      if (artist.language) parts.push(artist.language);
+      if (artist.city) {
+        parts.push(artist.city);
+      }
+      if (artist.region) {
+        parts.push(artist.region);
+      }
+      if (artist.genre) {
+        parts.push(artist.genre);
+      }
+      if (artist.language) {
+        parts.push(artist.language);
+      }
       meta.textContent =
         parts.join(" · ");
       body.appendChild(meta);
       if (artist.verified) {
         const verified =
           document.createElement("div");
-        verified.className = "meta";
-        verified.textContent = "✓ Artiste vérifié";
+        verified.className =
+          "verified";
+        verified.innerHTML =
+          '<span class="verified-dot">✓</span>' +
+          'Artiste vérifié';
         body.appendChild(verified);
       }
       const link =
         document.createElement("a");
       link.className = "button";
-      link.textContent = "Voir le profil";
+      link.innerHTML =
+        "Voir le profil <span>→</span>";
       link.href =
         "public-artist.html?id=" +
         encodeURIComponent(artist.id);
@@ -308,7 +760,8 @@
       } else {
         const placeholder =
           document.createElement("div");
-        placeholder.className = "placeholder";
+        placeholder.className =
+          "placeholder";
         placeholder.textContent = "💿";
         card.appendChild(placeholder);
       }
@@ -343,7 +796,8 @@
       const link =
         document.createElement("a");
       link.className = "button";
-      link.textContent = "Voir l’album";
+      link.innerHTML =
+        "Voir l’album <span>→</span>";
       link.href =
         "public-album.html?id=" +
         encodeURIComponent(album.id);
