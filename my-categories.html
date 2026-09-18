@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Mes catégories — INDAMORA PLAY</title>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <style>
     * {
       box-sizing: border-box;
@@ -96,11 +97,18 @@
     button:hover {
       background: #084f9f;
     }
+    button:disabled {
+      opacity: 0.6;
+      cursor: wait;
+    }
     #message {
       margin-top: 15px;
       text-align: center;
       font-weight: bold;
       color: #0b63ce;
+    }
+    .error {
+      color: #c62828 !important;
     }
   </style>
 </head>
@@ -122,83 +130,83 @@ id=“search”
 placeholder=“Rechercher une catégorie…”
 
   <div class="categories" id="categories">
-<div class="category" data-name="Artistes & chanteurs">
+<div class="category" data-slug="artistes-chanteurs" data-name="Artistes & chanteurs">
   <span class="icon">🎤</span>
   Artistes & chanteurs
 </div>
-<div class="category" data-name="Gospel">
+<div class="category" data-slug="gospel" data-name="Gospel">
   <span class="icon">🙏</span>
   Gospel
 </div>
-<div class="category" data-name="Chantres">
+<div class="category" data-slug="chantres" data-name="Chantres">
   <span class="icon">🎼</span>
   Chantres
 </div>
-<div class="category" data-name="Serviteurs de Dieu">
+<div class="category" data-slug="serviteurs-de-dieu" data-name="Serviteurs de Dieu">
   <span class="icon">⛪</span>
   Serviteurs de Dieu
 </div>
-<div class="category" data-name="Prédicateurs & enseignants">
+<div class="category" data-slug="predicateurs-enseignants" data-name="Prédicateurs & enseignants">
   <span class="icon">📖</span>
   Prédicateurs & enseignants
 </div>
-<div class="category" data-name="Cinéma">
+<div class="category" data-slug="cinema" data-name="Cinéma">
   <span class="icon">🎬</span>
   Cinéma
 </div>
-<div class="category" data-name="Vidéastes & vidéos">
+<div class="category" data-slug="videastes-videos" data-name="Vidéastes & vidéos">
   <span class="icon">🎥</span>
   Vidéastes & vidéos
 </div>
-<div class="category" data-name="Humour">
+<div class="category" data-slug="humour" data-name="Humour">
   <span class="icon">😂</span>
   Humour
 </div>
-<div class="category" data-name="Podcasts">
+<div class="category" data-slug="podcasts" data-name="Podcasts">
   <span class="icon">🎧</span>
   Podcasts
 </div>
-<div class="category" data-name="Créateurs de contenu">
+<div class="category" data-slug="createurs-de-contenu" data-name="Créateurs de contenu">
   <span class="icon">📱</span>
   Créateurs de contenu
 </div>
-<div class="category" data-name="Influenceurs">
+<div class="category" data-slug="influenceurs" data-name="Influenceurs">
   <span class="icon">⭐</span>
   Influenceurs
 </div>
-<div class="category" data-name="Producteurs & beatmakers">
+<div class="category" data-slug="producteurs-beatmakers" data-name="Producteurs & beatmakers">
   <span class="icon">🎼</span>
   Producteurs & beatmakers
 </div>
-<div class="category" data-name="Médias">
+<div class="category" data-slug="medias" data-name="Médias">
   <span class="icon">📻</span>
   Médias
 </div>
-<div class="category" data-name="Labels & structures">
+<div class="category" data-slug="labels-structures" data-name="Labels & structures">
   <span class="icon">🏷️</span>
   Labels & structures
 </div>
-<div class="category" data-name="Associations & organisations">
+<div class="category" data-slug="associations-organisations" data-name="Associations & organisations">
   <span class="icon">🌍</span>
   Associations & organisations
 </div>
-<div class="category" data-name="Danseurs">
+<div class="category" data-slug="danseurs" data-name="Danseurs">
   <span class="icon">💃</span>
   Danseurs
 </div>
-<div class="category" data-name="Couturiers">
+<div class="category" data-slug="couturiers" data-name="Couturiers">
   <span class="icon">🧵</span>
   Couturiers
 </div>
-<div class="category" data-name="Agences de communication">
+<div class="category" data-slug="agences-communication" data-name="Agences de communication">
   <span class="icon">📣</span>
   Agences de communication
 </div>
-<div class="category" data-name="Agences de voyage">
+<div class="category" data-slug="agences-voyage" data-name="Agences de voyage">
   <span class="icon">✈️</span>
   Agences de voyage
 </div>
-<div class="category" data-name="Conteurs">
+<div class="category" data-slug="conteurs" data-name="Conteurs">
   <span class="icon">📚</span>
   Conteurs
 </div>
@@ -211,10 +219,29 @@ placeholder=“Rechercher une catégorie…”
   </div>
 </main>
 <script>
+  const SUPABASE_URL = "https://adqsdnqkbitplbhbihiv.supabase.co";
+  const SUPABASE_KEY = "sb_publishable_dpjfWOYeNQRmP2nJq5FoMA_8NUuD0HF";
+  const supabase = window.supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_KEY
+  );
   const categories = document.querySelectorAll(".category");
   const search = document.getElementById("search");
   const save = document.getElementById("save");
   const message = document.getElementById("message");
+  let artistId = null;
+  let categoryRows = [];
+  function showMessage(text, error = false) {
+    message.textContent = text;
+    message.className = error ? "error" : "";
+  }
+  function selectCategory(element, selected) {
+    if (selected) {
+      element.classList.add("selected");
+    } else {
+      element.classList.remove("selected");
+    }
+  }
   categories.forEach(category => {
     category.addEventListener("click", () => {
       category.classList.toggle("selected");
@@ -228,12 +255,140 @@ placeholder=“Rechercher une catégorie…”
         name.includes(value) ? "block" : "none";
     });
   });
-  save.addEventListener("click", () => {
-    const selected = document.querySelectorAll(".category.selected");
-    message.textContent =
-      selected.length +
-      " catégorie(s) sélectionnée(s).";
+  async function loadArtist() {
+    const {
+      data: { user },
+      error: userError
+    } = await supabase.auth.getUser();
+    if (userError || !user) {
+      showMessage(
+        "Connecte-toi à ton compte artiste avant d'enregistrer tes catégories.",
+        true
+      );
+      return false;
+    }
+    const { data: artist, error: artistError } = await supabase
+      .from("artists")
+      .select("id")
+      .eq("owner_id", user.id)
+      .limit(1)
+      .maybeSingle();
+    if (artistError) {
+      console.error(artistError);
+      showMessage(
+        "Impossible de récupérer ton profil artiste.",
+        true
+      );
+      return false;
+    }
+    if (!artist) {
+      showMessage(
+        "Aucun profil artiste n'est associé à ce compte.",
+        true
+      );
+      return false;
+    }
+    artistId = artist.id;
+    return true;
+  }
+  async function loadExistingCategories() {
+    if (!artistId) return;
+    const { data, error } = await supabase
+      .from("artist_categories")
+      .select("category_id")
+      .eq("artist_id", artistId);
+    if (error) {
+      console.error(error);
+      return;
+    }
+    const selectedIds = new Set(
+      (data || []).map(row => row.category_id)
+    );
+    categoryRows.forEach(row => {
+      const element = document.querySelector(
+        '.category[data-slug="' + row.slug + '"]'
+      );
+      if (element && selectedIds.has(row.id)) {
+        selectCategory(element, true);
+      }
+    });
+  }
+  async function loadCategoryIds() {
+    const { data, error } = await supabase
+      .from("categories")
+      .select("id, slug")
+      .eq("active", true);
+    if (error) {
+      console.error(error);
+      showMessage(
+        "Impossible de charger les catégories depuis Supabase.",
+        true
+      );
+      return;
+    }
+    categoryRows = data || [];
+  }
+  save.addEventListener("click", async () => {
+    save.disabled = true;
+    showMessage("Enregistrement en cours...");
+    if (!artistId) {
+      const ok = await loadArtist();
+      if (!ok) {
+        save.disabled = false;
+        return;
+      }
+    }
+    const selectedElements =
+      document.querySelectorAll(".category.selected");
+    const selectedSlugs = Array.from(selectedElements)
+      .map(element => element.dataset.slug);
+    const selectedRows = categoryRows.filter(row =>
+      selectedSlugs.includes(row.slug)
+    );
+    const { error: deleteError } = await supabase
+      .from("artist_categories")
+      .delete()
+      .eq("artist_id", artistId);
+    if (deleteError) {
+      console.error(deleteError);
+      showMessage(
+        "Impossible de supprimer les anciennes catégories.",
+        true
+      );
+      save.disabled = false;
+      return;
+    }
+    if (selectedRows.length > 0) {
+      const rowsToInsert = selectedRows.map(row => ({
+        artist_id: artistId,
+        category_id: row.id
+      }));
+      const { error: insertError } = await supabase
+        .from("artist_categories")
+        .insert(rowsToInsert);
+      if (insertError) {
+        console.error(insertError);
+        showMessage(
+          "Les catégories n'ont pas pu être enregistrées.",
+          true
+        );
+        save.disabled = false;
+        return;
+      }
+    }
+    showMessage(
+      selectedRows.length +
+      " catégorie(s) enregistrée(s) avec succès."
+    );
+    save.disabled = false;
   });
+  async function initialize() {
+    const ok = await loadArtist();
+    if (!ok) return;
+    await loadCategoryIds();
+    await loadExistingCategories();
+  }
+  initialize();
 </script>
 </body>
 </html>
