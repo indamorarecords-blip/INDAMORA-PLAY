@@ -1,157 +1,449 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>INDAMORA PLAY — Abonnements</title>
-<style>
-body{
-  margin:0;
-  font-family:Arial,sans-serif;
-  background:#f5f9ff;
-  color:#123;
-}
-header{
-  background:#0b63ce;
-  color:white;
-  padding:18px;
-  text-align:center;
-}
-header h1{
-  color:white;
-}
-main{
-  max-width:900px;
-  margin:30px auto;
-  padding:20px;
-}
-.card{
-  background:white;
-  border-radius:16px;
-  padding:25px;
-  margin-bottom:20px;
-  box-shadow:0 4px 18px rgba(0,0,0,.08);
-}
-h2{
-  color:#0b63ce;
-}
-.price{
-  font-size:30px;
-  font-weight:bold;
-  color:#0b63ce;
-}
-button{
-  width:100%;
-  padding:14px;
-  border:0;
-  border-radius:10px;
-  background:#0b63ce;
-  color:white;
-  font-size:16px;
-  cursor:pointer;
-}
-button:hover{
-  background:#084f9f;
-}
-.account-button{
-  display:block;
-  width:auto;
-  text-align:center;
-  background:white;
-  color:#0b63ce;
-  border:2px solid #0b63ce;
-  text-decoration:none;
-  padding:14px 20px;
-  border-radius:10px;
-  font-weight:bold;
-}
-.account-button:hover{
-  background:#eef6ff;
-}
-.notice{
-  background:#eef6ff;
-  border-left:5px solid #0b63ce;
-  padding:15px;
-  border-radius:8px;
-}
-a{
-  color:#0b63ce;
-  text-decoration:none;
-  font-weight:bold;
-}
-.center{
-  text-align:center;
-}
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>INDAMORA PLAY — Créer un compte artiste</title>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #f5f9ff;
+      color: #123;
+    }
+    header {
+      background: #0b63ce;
+      color: white;
+      padding: 22px 18px;
+      text-align: center;
+    }
+    header h1 {
+      margin: 0;
+      font-size: 26px;
+    }
+    header p {
+      margin: 7px 0 0;
+    }
+    main {
+      max-width: 650px;
+      margin: 30px auto;
+      padding: 20px;
+    }
+    .card {
+      background: white;
+      padding: 28px;
+      border-radius: 16px;
+      box-shadow: 0 4px 18px rgba(0,0,0,.08);
+    }
+    h2 {
+      color: #0b63ce;
+      text-align: center;
+      margin-top: 0;
+    }
+    .intro {
+      text-align: center;
+      color: #555;
+      line-height: 1.5;
+      margin-bottom: 25px;
+    }
+    label {
+      display: block;
+      margin-top: 15px;
+      margin-bottom: 7px;
+      font-weight: bold;
+    }
+    input,
+    textarea {
+      width: 100%;
+      padding: 13px;
+      border: 1px solid #cbd8e8;
+      border-radius: 9px;
+      font-size: 16px;
+      font-family: Arial, sans-serif;
+    }
+    textarea {
+      min-height: 120px;
+      resize: vertical;
+    }
+    button {
+      width: 100%;
+      padding: 14px;
+      margin-top: 22px;
+      border: 0;
+      border-radius: 10px;
+      background: #0b63ce;
+      color: white;
+      font-size: 17px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+    button:hover {
+      background: #084f9f;
+    }
+    button:disabled {
+      opacity: .6;
+      cursor: wait;
+    }
+    .secondary {
+      background: #e8f2ff;
+      color: #0b63ce;
+    }
+    .secondary:hover {
+      background: #dcecff;
+    }
+    .message {
+      display: none;
+      margin-top: 18px;
+      padding: 14px;
+      border-radius: 10px;
+      line-height: 1.5;
+    }
+    .success {
+      display: block;
+      background: #eaf8ee;
+      color: #176b2c;
+    }
+    .error {
+      display: block;
+      background: #ffecec;
+      color: #a40000;
+    }
+    .links {
+      text-align: center;
+      margin-top: 24px;
+      line-height: 2;
+    }
+    a {
+      color: #0b63ce;
+      text-decoration: none;
+      font-weight: bold;
+    }
+    .required {
+      color: #c62828;
+    }
+  </style>
 </head>
 <body>
 <header>
   <h1>🎧 INDAMORA PLAY</h1>
   <p>INDAMORA RECORDS</p>
-  <strong>ABONNEMENTS & SOUTIEN</strong>
 </header>
 <main>
-  <div class="card center">
-    <h2>👤 Votre espace INDAMORA PLAY</h2>
-<p>
-  Créez votre compte gratuitement pour disposer de votre espace
-  et soutenir INDAMORA PLAY avec un abonnement.
-</p>
-<a class="account-button" href="register.html">
-  📝 Créer mon compte
-</a>
-<br>
-<p>
-  Vous avez déjà un compte ?
-</p>
-<a href="artist.html">
-  → Accéder à mon espace
-</a>
-  </div>
   <div class="card">
-    <h2>Abonnement Afrique</h2>
-<div class="price">500 FCFA / mois</div>
-<p>
-  Soutenez le développement de la plateforme depuis l'Afrique.
-</p>
-<button onclick="window.location.href='https://buy.stripe.com/bJe8wQ3s76Fi92Gcdt0sU02'">
-  S’abonner — 500 FCFA / mois
+<h2>🎤 Créer mon compte artiste</h2>
+<div class="intro">
+  Crée gratuitement ton compte et crée ton profil
+  artiste sur INDAMORA PLAY.
+</div>
+<label for="email">
+  Adresse e-mail <span class="required">*</span>
+</label>
+<input
+  id="email"
+  type="email"
+  placeholder="votre@email.com"
+  autocomplete="email"
+>
+<label for="password">
+  Mot de passe <span class="required">*</span>
+</label>
+<input
+  id="password"
+  type="password"
+  placeholder="Minimum 6 caractères"
+  autocomplete="new-password"
+>
+<label for="name">
+  Nom d'artiste <span class="required">*</span>
+</label>
+<input
+  id="name"
+  type="text"
+  placeholder="Exemple : Artiste INDAMORA"
+>
+<label for="city">
+  Ville
+</label>
+<input
+  id="city"
+  type="text"
+  placeholder="Exemple : Bangui"
+>
+<label for="region">
+  Région / pays
+</label>
+<input
+  id="region"
+  type="text"
+  placeholder="Exemple : République centrafricaine"
+>
+<label for="language">
+  Langue
+</label>
+<input
+  id="language"
+  type="text"
+  placeholder="Exemple : Français"
+>
+<label for="genre">
+  Genre / domaine
+</label>
+<input
+  id="genre"
+  type="text"
+  placeholder="Exemple : Gospel, Rap, Afro..."
+>
+<label for="bio">
+  Présentation
+</label>
+<textarea
+  id="bio"
+  placeholder="Présente-toi et présente ton activité..."
+></textarea>
+<button id="createBtn">
+  📝 Créer mon compte artiste
 </button>
-  </div>
-  <div class="card">
-    <h2>Abonnement hors Afrique</h2>
-<div class="price">5 € / mois</div>
-<p>
-  Soutenez le développement d’INDAMORA PLAY depuis l’étranger.
-</p>
-<button onclick="window.location.href='https://buy.stripe.com/aFa9AU5Af2p2diW91h0sU00'">
-  S’abonner — 5 € / mois
+<button
+  id="loginBtn"
+  class="secondary"
+  type="button"
+>
+  🔐 J'ai déjà un compte — Se connecter
 </button>
-  </div>
-  <div class="card">
-    <h2>❤️ Faire un don</h2>
-<p>
-  Un don libre permet de soutenir l'association, la plateforme
-  et de préparer plus tard des gestes de soutien aux artistes
-  qui publient sur INDAMORA PLAY.
-</p>
-<button onclick="window.location.href='https://donate.stripe.com/3cIfZi1jZ2p21Ae91h0sU01'">
-  Faire un don ❤️
-</button>
-  </div>
-  <div class="card">
-    <div class="notice">
-      <strong>💳 Paiement sécurisé</strong><br><br>
-  Les paiements sont traités par Stripe.
-  Les abonnements permettent de soutenir le développement
-  d’INDAMORA PLAY et de l’association.
-  Les dons servent également à soutenir la plateforme
-  et à préparer des gestes de soutien aux artistes publiés.
+<div id="message" class="message"></div>
+<div class="links">
+  <a href="artist.html">
+    🎤 Accéder à l'espace artiste
+  </a>
+  <br>
+  <a href="index.html">
+    ← Retour à INDAMORA PLAY
+  </a>
 </div>
   </div>
-  <p>
-    <a href="index.html">← Retour à INDAMORA PLAY</a>
-  </p>
 </main>
+<script>
+  const SUPABASE_URL =
+    "https://adqsdnqkbitplbhbihiv.supabase.co";
+  const SUPABASE_KEY =
+    "sb_publishable_dpjfWOYeNQRmP2nJq5FoMA_8NUuD0HF";
+  const db =
+    window.supabase.createClient(
+      SUPABASE_URL,
+      SUPABASE_KEY
+    );
+  const emailInput =
+    document.getElementById("email");
+  const passwordInput =
+    document.getElementById("password");
+  const nameInput =
+    document.getElementById("name");
+  const cityInput =
+    document.getElementById("city");
+  const regionInput =
+    document.getElementById("region");
+  const languageInput =
+    document.getElementById("language");
+  const genreInput =
+    document.getElementById("genre");
+  const bioInput =
+    document.getElementById("bio");
+  const createBtn =
+    document.getElementById("createBtn");
+  const loginBtn =
+    document.getElementById("loginBtn");
+  const message =
+    document.getElementById("message");
+  function showMessage(text, type) {
+    message.textContent = text;
+    message.className =
+      "message " + type;
+  }
+  createBtn.addEventListener(
+    "click",
+    async () => {
+      message.style.display = "none";
+      const email =
+        emailInput.value.trim();
+      const password =
+        passwordInput.value;
+      const name =
+        nameInput.value.trim();
+      const city =
+        cityInput.value.trim();
+      const region =
+        regionInput.value.trim();
+      const language =
+        languageInput.value.trim();
+      const genre =
+        genreInput.value.trim();
+      const bio =
+        bioInput.value.trim();
+      if (!email) {
+        showMessage(
+          "Veuillez saisir votre adresse e-mail.",
+          "error"
+        );
+        return;
+      }
+      if (password.length < 6) {
+        showMessage(
+          "Le mot de passe doit contenir au moins 6 caractères.",
+          "error"
+        );
+        return;
+      }
+      if (!name) {
+        showMessage(
+          "Veuillez saisir votre nom d'artiste.",
+          "error"
+        );
+        return;
+      }
+      createBtn.disabled = true;
+      createBtn.textContent =
+        "Création du compte...";
+      const {
+        data,
+        error
+      } = await db.auth.signUp({
+        email: email,
+        password: password,
+        options: {
+          data: {
+            display_name: name,
+            role: "artist",
+            artist_name: name,
+            city: city,
+            region: region,
+            language: language,
+            genre: genre,
+            bio: bio
+          }
+        }
+      });
+      if (error) {
+        createBtn.disabled = false;
+        createBtn.textContent =
+          "📝 Créer mon compte artiste";
+        showMessage(
+          error.message,
+          "error"
+        );
+        return;
+      }
+      if (!data.user) {
+        createBtn.disabled = false;
+        createBtn.textContent =
+          "📝 Créer mon compte artiste";
+        showMessage(
+          "Le compte n'a pas pu être créé.",
+          "error"
+        );
+        return;
+      }
+      if (!data.session) {
+        createBtn.disabled = false;
+        createBtn.textContent =
+          "📝 Créer mon compte artiste";
+        showMessage(
+          "Compte créé. Vérifie ton e-mail pour confirmer ton adresse, puis connecte-toi.",
+          "success"
+        );
+        return;
+      }
+      const {
+        data: profileData,
+        error: profileError
+      } = await db.rpc(
+        "submit_artist_profile",
+        {
+          p_name: name,
+          p_bio: bio,
+          p_city: city,
+          p_region: region,
+          p_language: language,
+          p_genre: genre,
+          p_avatar_url: null
+        }
+      );
+      if (profileError) {
+        console.error(profileError);
+        showMessage(
+          "Ton compte a été créé, mais le profil artiste doit encore être finalisé.",
+          "success"
+        );
+        createBtn.disabled = false;
+        createBtn.textContent =
+          "📝 Créer mon compte artiste";
+        return;
+      }
+      showMessage(
+        "Compte et profil artiste créés avec succès ! Redirection vers ton espace artiste...",
+        "success"
+      );
+      setTimeout(
+        () => {
+          window.location.href =
+            "artist.html";
+        },
+        1200
+      );
+    }
+  );
+  loginBtn.addEventListener(
+    "click",
+    async () => {
+      const email =
+        emailInput.value.trim();
+      const password =
+        passwordInput.value;
+      if (!email || !password) {
+        showMessage(
+          "Saisis ton e-mail et ton mot de passe pour te connecter.",
+          "error"
+        );
+        return;
+      }
+      loginBtn.disabled = true;
+      loginBtn.textContent =
+        "Connexion...";
+      const {
+        data,
+        error
+      } = await db.auth.signInWithPassword({
+        email: email,
+        password: password
+      });
+      loginBtn.disabled = false;
+      loginBtn.textContent =
+        "🔐 J'ai déjà un compte — Se connecter";
+      if (error) {
+        showMessage(
+          error.message,
+          "error"
+        );
+        return;
+      }
+      if (data.session) {
+        showMessage(
+          "Connexion réussie. Redirection...",
+          "success"
+        );
+        setTimeout(
+          () => {
+            window.location.href =
+              "artist.html";
+          },
+          800
+        );
+      }
+    }
+  );
+</script>
 </body>
 </html>
