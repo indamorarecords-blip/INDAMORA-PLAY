@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Soutien aux artistes — INDAMORA PLAY</title>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #f5f9ff;
+      color: #123;
+    }
+    header {
+      background: #0757b8;
+      color: white;
+      padding: 22px 18px;
+      text-align: center;
+    }
+    header h1 {
+      margin: 0;
+      font-size: 25px;
+    }
+    header p {
+      margin: 7px 0 0;
+      opacity: .92;
+    }
+    main {
+      max-width: 950px;
+      margin: 30px auto;
+      padding: 0 18px;
+    }
+    .card {
+      background: white;
+      border-radius: 16px;
+      padding: 22px;
+      margin-bottom: 20px;
+      box-shadow: 0 8px 25px rgba(0,70,150,.08);
+    }
+    .hero {
+      text-align: center;
+    }
+    .hero-icon {
+      font-size: 52px;
+    }
+    .hero h2 {
+      color: #0757b8;
+      margin-bottom: 10px;
+    }
+    .hero p {
+      line-height: 1.6;
+      color: #556;
+    }
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+      gap: 15px;
+      margin-top: 20px;
+    }
+    .stat {
+      background: #f7fbff;
+      border: 1px solid #dbe8f8;
+      border-radius: 14px;
+      padding: 18px;
+      text-align: center;
+    }
+    .stat-label {
+      color: #667;
+      font-size: 14px;
+    }
+    .stat-value {
+      margin-top: 8px;
+      color: #0757b8;
+      font-size: 25px;
+      font-weight: bold;
+    }
+    .artist {
+      border: 1px solid #dbe8f8;
+      border-radius: 14px;
+      padding: 18px;
+      margin-top: 14px;
+      background: #fbfdff;
+    }
+    .artist h3 {
+      margin: 0 0 8px;
+      color: #0757b8;
+    }
+    .artist p {
+      margin: 6px 0;
+    }
+    .badge {
+      display: inline-block;
+      padding: 5px 10px;
+      border-radius: 999px;
+      background: #e8f7ee;
+      color: #147a3d;
+      font-size: 13px;
+      font-weight: bold;
+    }
+    .actions {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-top: 16px;
+    }
+    a.button,
+    button {
+      display: inline-block;
+      border: 0;
+      border-radius: 10px;
+      padding: 11px 16px;
+      background: #0757b8;
+      color: white;
+      text-decoration: none;
+      cursor: pointer;
+      font-weight: bold;
+    }
+    a.secondary,
+    button.secondary {
+      background: #e8f1ff;
+      color: #0757b8;
+    }
+    .info {
+      background: #eef6ff;
+      border-left: 4px solid #0757b8;
+      border-radius: 10px;
+      padding: 15px;
+      line-height: 1.6;
+      color: #345;
+    }
+    .loading {
+      text-align: center;
+      padding: 25px;
+      color: #0757b8;
+    }
+    .empty {
+      text-align: center;
+      padding: 30px 15px;
+      color: #667;
+    }
+    .message {
+      display: none;
+      padding: 12px 15px;
+      border-radius: 10px;
+      margin-top: 15px;
+      background: #ffe8e6;
+      color: #b42318;
+    }
+    footer {
+      text-align: center;
+      padding: 30px 15px;
+      color: #667;
+      font-size: 14px;
+    }
+  </style>
+</head>
+<body>
+<header>
+  <h1>💙 INDAMORA PLAY</h1>
+  <p>Soutien aux artistes</p>
+</header>
+<main>
+  <section class="card hero">
+    <div class="hero-icon">💙</div>
+<h2>Encourager les artistes</h2>
+<p>
+  Les dons permettent à INDAMORA PLAY de développer la plateforme
+  et de réaliser progressivement des gestes d'encouragement envers
+  les artistes dont les œuvres sont publiées.
+</p>
+<div class="info">
+  Les sommes destinées à l'encouragement des artistes seront
+  utilisées selon les ressources disponibles de l'association.
+  Cette page ne constitue pas une promesse de rémunération automatique.
+</div>
+<div class="actions" style="justify-content:center;">
+  <a href="subscription-account.html" class="button">
+    💙 Faire un don
+  </a>
+  <a href="index.html" class="button secondary">
+    Retour à INDAMORA PLAY
+  </a>
+</div>
+  </section>
+  <section class="card">
+<h2>📊 Artistes publiés</h2>
+<div id="artists">
+  <div class="loading">
+    Chargement des artistes...
+  </div>
+</div>
+  </section>
+</main>
+<footer>
+  INDAMORA PLAY — INDAMORA RECORDS 🇨🇫
+</footer>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+  const SUPABASE_URL =
+    "https://adqsdnqkbitplbhbihiv.supabase.co";
+  const SUPABASE_KEY =
+    "sb_publishable_dpjfWOYeNQRmP2nJq5FoMA_8NUuD0HF";
+  const { createClient } = supabase;
+  const db = createClient(
+    SUPABASE_URL,
+    SUPABASE_KEY
+  );
+  const artistsContainer =
+    document.getElementById("artists");
+  function escapeHtml(value) {
+    return String(value ?? "")
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;")
+      .replace(/'/g, "&#039;");
+  }
+  async function loadArtists() {
+    const { data, error } = await db
+      .from("artists")
+      .select(`
+        id,
+        name,
+        slug,
+        city,
+        region,
+        genre,
+        language,
+        verified,
+        status
+      `)
+      .eq("status", "published")
+      .order("name");
+    if (error) {
+      console.error(error);
+      artistsContainer.innerHTML = `
+        <div class="empty">
+          Impossible de charger les artistes.
+        </div>
+      `;
+      return;
+    }
+    if (!data || data.length === 0) {
+      artistsContainer.innerHTML = `
+        <div class="empty">
+          <div style="font-size:42px;">🎤</div>
+          <h3>
+            Aucun artiste publié pour le moment
+          </h3>
+          <p>
+            Les artistes publiés apparaîtront automatiquement ici.
+          </p>
+        </div>
+      `;
+      return;
+    }
+    artistsContainer.innerHTML =
+      data.map(artist => `
+        <article class="artist">
+          <h3>
+            ${escapeHtml(artist.name)}
+          </h3>
+          <p>
+            ${escapeHtml(artist.city || "")}
+            ${artist.region ? " · " + escapeHtml(artist.region) : ""}
+          </p>
+          <p>
+            ${artist.genre ? escapeHtml(artist.genre) : "Genre non renseigné"}
+            ${artist.language ? " · " + escapeHtml(artist.language) : ""}
+          </p>
+          ${
+            artist.verified
+              ? `<span class="badge">✓ Artiste vérifié</span>`
+              : ""
+          }
+          <div class="actions">
+            <a
+              class="button secondary"
+              href="public-artist.html?id=${encodeURIComponent(artist.id)}"
+            >
+              Voir le profil
+            </a>
+          </div>
+        </article>
+      `).join("");
+  }
+  loadArtists();
+</script>
+</body>
+</html>
