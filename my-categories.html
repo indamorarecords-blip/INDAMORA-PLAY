@@ -6,9 +6,7 @@
   <title>Mes catégories — INDAMORA PLAY</title>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <style>
-    * {
-      box-sizing: border-box;
-    }
+    * { box-sizing: border-box; }
     body {
       margin: 0;
       font-family: Arial, sans-serif;
@@ -41,6 +39,27 @@
     .intro p {
       color: #555;
       margin-top: 0;
+    }
+    .login-box {
+      background: #e8f2ff;
+      border: 1px solid #c7ddf5;
+      border-radius: 12px;
+      padding: 18px;
+      text-align: center;
+      margin-bottom: 22px;
+    }
+    .login-box a {
+      display: inline-block;
+      margin-top: 10px;
+      background: #0b63ce;
+      color: white;
+      text-decoration: none;
+      padding: 12px 22px;
+      border-radius: 9px;
+      font-weight: bold;
+    }
+    .login-box a:hover {
+      background: #084f9f;
     }
     #search {
       width: 100%;
@@ -110,6 +129,9 @@
     .error {
       color: #c62828 !important;
     }
+    #loginBox {
+      display: none;
+    }
   </style>
 </head>
 <body>
@@ -122,6 +144,13 @@
     <p>
       Sélectionne les catégories qui correspondent à ton profil.
     </p>
+  </div>
+  <div class="login-box" id="loginBox">
+    <strong>Tu dois être connecté à ton compte artiste pour enregistrer tes catégories.</strong>
+    <br>
+    <a href="artist.html">
+      🔐 Se connecter à l'espace artiste
+    </a>
   </div>
 
 <input
@@ -229,6 +258,7 @@ placeholder=“Rechercher une catégorie…”
   const search = document.getElementById("search");
   const save = document.getElementById("save");
   const message = document.getElementById("message");
+  const loginBox = document.getElementById("loginBox");
   let artistId = null;
   let categoryRows = [];
   function showMessage(text, error = false) {
@@ -261,12 +291,14 @@ placeholder=“Rechercher une catégorie…”
       error: userError
     } = await supabase.auth.getUser();
     if (userError || !user) {
+      loginBox.style.display = "block";
       showMessage(
-        "Connecte-toi à ton compte artiste avant d'enregistrer tes catégories.",
+        "Connecte-toi pour enregistrer tes catégories.",
         true
       );
       return false;
     }
+    loginBox.style.display = "none";
     const { data: artist, error: artistError } = await supabase
       .from("artists")
       .select("id")
