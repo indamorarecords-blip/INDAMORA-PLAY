@@ -30,6 +30,7 @@
     }
     body {
       margin: 0;
+      min-height: 100vh;
       font-family:
         Inter,
         -apple-system,
@@ -38,15 +39,14 @@
         Arial,
         Helvetica,
         sans-serif;
+      color: var(--text);
       background:
         linear-gradient(
           180deg,
           var(--cream) 0%,
-          var(--white) 40%,
+          var(--white) 48%,
           var(--blue-soft) 100%
         );
-      color: var(--text);
-      min-height: 100vh;
     }
     /* =========================
        HEADER
@@ -55,15 +55,15 @@
       position: sticky;
       top: 0;
       z-index: 50;
-      background: rgba(255, 255, 255, 0.95);
+      background: rgba(255, 255, 255, 0.96);
+      border-bottom: 1px solid var(--border);
       backdrop-filter: blur(14px);
       -webkit-backdrop-filter: blur(14px);
-      border-bottom: 1px solid var(--border);
     }
     .header-inner {
       max-width: 1180px;
-      margin: auto;
       min-height: 76px;
+      margin: auto;
       padding: 14px 20px;
       display: flex;
       align-items: center;
@@ -80,19 +80,18 @@
       letter-spacing: -0.4px;
     }
     .logo-mark {
-      width: 39px;
-      height: 39px;
+      width: 40px;
+      height: 40px;
       display: flex;
       align-items: center;
       justify-content: center;
-      border-radius: 12px;
-      background:
-        linear-gradient(
-          135deg,
-          var(--blue),
-          var(--blue-dark)
-        );
-      color: white;
+      border-radius: 13px;
+      background: linear-gradient(
+        135deg,
+        var(--blue),
+        var(--blue-dark)
+      );
+      color: var(--white);
       box-shadow:
         0 8px 20px rgba(22, 137, 199, 0.20);
     }
@@ -100,14 +99,14 @@
       display: inline-flex;
       align-items: center;
       gap: 8px;
+      padding: 10px 15px;
+      border: 1px solid var(--border);
+      border-radius: 13px;
+      background: var(--white);
       color: var(--blue-dark);
       text-decoration: none;
       font-size: 14px;
-      font-weight: 800;
-      padding: 10px 14px;
-      background: var(--white);
-      border: 1px solid var(--border);
-      border-radius: 12px;
+      font-weight: 900;
       transition:
         transform 0.2s ease,
         background 0.2s ease,
@@ -124,18 +123,17 @@
     main {
       max-width: 1180px;
       margin: auto;
-      padding:
-        48px 20px 35px;
+      padding: 48px 20px 40px;
     }
     .hero {
       position: relative;
       overflow: hidden;
-      background: var(--white);
+      margin-bottom: 34px;
+      padding: 42px 38px;
       border: 1px solid var(--border);
       border-radius: 30px;
-      padding: 42px 38px;
+      background: var(--white);
       box-shadow: var(--shadow);
-      margin-bottom: 34px;
     }
     .hero::before {
       content: "";
@@ -144,39 +142,37 @@
       left: 0;
       width: 100%;
       height: 5px;
-      background:
-        linear-gradient(
-          90deg,
-          var(--blue) 0%,
-          var(--blue) 35%,
-          var(--red) 35%,
-          var(--red) 55%,
-          var(--yellow) 55%,
-          var(--yellow) 75%,
-          var(--green) 75%,
-          var(--green) 100%
-        );
+      background: linear-gradient(
+        90deg,
+        var(--blue) 0%,
+        var(--blue) 35%,
+        var(--red) 35%,
+        var(--red) 55%,
+        var(--yellow) 55%,
+        var(--yellow) 75%,
+        var(--green) 75%,
+        var(--green) 100%
+      );
     }
     .hero-badge {
       display: inline-flex;
       align-items: center;
       gap: 7px;
+      margin-bottom: 17px;
       padding: 8px 13px;
+      border: 1px solid #CDE8F4;
       border-radius: 999px;
       background: var(--blue-soft);
-      border: 1px solid #CDE8F4;
       color: var(--blue-dark);
       font-size: 12px;
       font-weight: 900;
       text-transform: uppercase;
       letter-spacing: 0.4px;
-      margin-bottom: 17px;
     }
     h1 {
       margin: 0 0 13px;
       color: var(--text);
-      font-size:
-        clamp(30px, 5vw, 52px);
+      font-size: clamp(30px, 5vw, 52px);
       line-height: 1.05;
       letter-spacing: -1.7px;
     }
@@ -201,11 +197,10 @@
     }
     .filter {
       border: 1px solid var(--border);
+      border-radius: 999px;
+      padding: 11px 17px;
       background: var(--white);
       color: var(--blue-dark);
-      border-radius: 999px;
-      padding:
-        11px 17px;
       font-size: 13px;
       font-weight: 900;
       cursor: pointer;
@@ -226,14 +221,13 @@
         0 8px 20px rgba(22, 137, 199, 0.10);
     }
     .filter.active {
-      background:
-        linear-gradient(
-          135deg,
-          var(--blue),
-          var(--blue-dark)
-        );
       border-color: var(--blue-dark);
-      color: white;
+      background: linear-gradient(
+        135deg,
+        var(--blue),
+        var(--blue-dark)
+      );
+      color: var(--white);
       box-shadow:
         0 8px 20px rgba(7, 87, 184, 0.18);
     }
@@ -255,9 +249,9 @@
     .card {
       position: relative;
       overflow: hidden;
-      background: var(--white);
       border: 1px solid var(--border);
       border-radius: var(--radius);
+      background: var(--white);
       box-shadow: var(--shadow);
       transition:
         transform 0.25s ease,
@@ -266,8 +260,8 @@
     }
     .card:hover {
       transform: translateY(-6px);
-      box-shadow: var(--shadow-hover);
       border-color: #C7E2EE;
+      box-shadow: var(--shadow-hover);
     }
     .card::after {
       content: "";
@@ -276,17 +270,15 @@
       right: 0;
       bottom: 0;
       height: 3px;
-      background:
-        linear-gradient(
-          90deg,
-          var(--blue),
-          var(--red),
-          var(--yellow),
-          var(--green)
-        );
+      background: linear-gradient(
+        90deg,
+        var(--blue),
+        var(--red),
+        var(--yellow),
+        var(--green)
+      );
       opacity: 0;
-      transition:
-        opacity 0.25s ease;
+      transition: opacity 0.25s ease;
     }
     .card:hover::after {
       opacity: 1;
@@ -295,38 +287,35 @@
        VISUAL
     ========================= */
     .visual {
+      position: relative;
       width: 100%;
       aspect-ratio: 16 / 9;
-      background:
-        linear-gradient(
-          135deg,
-          var(--blue-soft),
-          #F9FDFF
-        );
+      overflow: hidden;
       display: flex;
       align-items: center;
       justify-content: center;
-      overflow: hidden;
-      position: relative;
+      background: linear-gradient(
+        135deg,
+        var(--blue-soft),
+        #F9FDFF
+      );
     }
     .visual::after {
       content: "";
       position: absolute;
       inset: 0;
       pointer-events: none;
-      background:
-        linear-gradient(
-          180deg,
-          rgba(255,255,255,0) 55%,
-          rgba(7,87,184,0.08) 100%
-        );
+      background: linear-gradient(
+        180deg,
+        rgba(255, 255, 255, 0) 55%,
+        rgba(7, 87, 184, 0.08) 100%
+      );
     }
     .visual img {
       width: 100%;
       height: 100%;
       object-fit: cover;
-      transition:
-        transform 0.4s ease;
+      transition: transform 0.4s ease;
     }
     .card:hover .visual img {
       transform: scale(1.035);
@@ -347,4 +336,408 @@
     /* =========================
        CARD BODY
     ========================= */
-    .card-body
+    .card-body {
+      padding: 20px;
+    }
+    .type {
+      display: inline-flex;
+      align-items: center;
+      margin-bottom: 11px;
+      padding: 6px 10px;
+      border: 1px solid #CDE8F4;
+      border-radius: 999px;
+      background: var(--blue-soft);
+      color: var(--blue-dark);
+      font-size: 11px;
+      font-weight: 900;
+      letter-spacing: 0.3px;
+    }
+    .title {
+      margin-bottom: 8px;
+      color: var(--text);
+      font-size: 19px;
+      font-weight: 900;
+      line-height: 1.3;
+    }
+    .artist {
+      margin-bottom: 10px;
+      color: var(--blue-dark);
+      font-size: 14px;
+      font-weight: 800;
+    }
+    .description {
+      margin-bottom: 16px;
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.65;
+    }
+    .button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 42px;
+      padding: 10px 15px;
+      border-radius: 12px;
+      background: linear-gradient(
+        135deg,
+        var(--blue),
+        var(--blue-dark)
+      );
+      color: var(--white);
+      text-decoration: none;
+      font-size: 13px;
+      font-weight: 900;
+      box-shadow:
+        0 7px 18px rgba(7, 87, 184, 0.15);
+      transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
+    }
+    .button:hover {
+      transform: translateY(-2px);
+      box-shadow:
+        0 10px 24px rgba(7, 87, 184, 0.22);
+    }
+    /* =========================
+       NOTICE
+    ========================= */
+    .notice {
+      grid-column: 1 / -1;
+      padding: 24px;
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      background: var(--white);
+      color: var(--muted);
+      text-align: center;
+      box-shadow: var(--shadow);
+    }
+    /* =========================
+       FOOTER
+    ========================= */
+    footer {
+      margin-top: 20px;
+      padding: 42px 20px;
+      border-top: 1px solid var(--border);
+      background: rgba(255, 255, 255, 0.80);
+      color: var(--muted);
+      text-align: center;
+      line-height: 1.7;
+    }
+    footer strong {
+      color: var(--blue-dark);
+    }
+    /* =========================
+       MOBILE
+    ========================= */
+    @media (max-width: 700px) {
+      .header-inner {
+        min-height: 68px;
+        padding: 12px 15px;
+      }
+      .logo {
+        font-size: 17px;
+      }
+      .logo-mark {
+        width: 35px;
+        height: 35px;
+        border-radius: 11px;
+      }
+      .back {
+        padding: 9px 12px;
+        font-size: 13px;
+      }
+      main {
+        padding:
+          28px 14px 30px;
+      }
+      .hero {
+        padding: 31px 22px;
+        border-radius: 24px;
+      }
+      h1 {
+        font-size: 34px;
+      }
+      .intro {
+        font-size: 15px;
+      }
+      .filters {
+        gap: 8px;
+      }
+      .filter {
+        padding: 10px 13px;
+        font-size: 12px;
+      }
+      .grid {
+        grid-template-columns: 1fr;
+        gap: 18px;
+      }
+      .card-body {
+        padding: 18px;
+      }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      *,
+      *::before,
+      *::after {
+        scroll-behavior: auto !important;
+        transition: none !important;
+      }
+    }
+  </style>
+</head>
+<body>
+<header>
+  <div class="header-inner">
+    <div class="logo">
+      <span class="logo-mark">♪</span>
+      <span>INDAMORA PLAY</span>
+    </div>
+<a class="back" href="index.html">
+  ← Accueil
+</a>
+  </div>
+</header>
+<main>
+  <section class="hero">
+    <div class="hero-badge">
+      🎬 INDAMORA PLAY
+    </div>
+<h1>
+  Clips, Podcasts
+  <span class="hero-accent">& Radios</span>
+</h1>
+<div class="intro">
+  Retrouvez les contenus vidéo et audio publiés par les artistes
+  sur INDAMORA PLAY.
+</div>
+  </section>
+  <div class="filters">
+<button class="filter active" data-type="all">
+  Tous
+</button>
+<button class="filter" data-type="clip">
+  🎬 Clips
+</button>
+<button class="filter" data-type="podcast">
+  🎙️ Podcasts
+</button>
+<button class="filter" data-type="radio">
+  📻 Radios
+</button>
+  </div>
+  <div id="mediaGrid" class="grid">
+<div class="notice">
+  Chargement des contenus...
+</div>
+  </div>
+</main>
+<footer>
+  <strong>INDAMORA PLAY</strong><br>
+  INDAMORA RECORDS — Musique d’Afrique centrale 🇨🇫
+</footer>
+<script>
+  const SUPABASE_URL =
+    "https://adqsdnqkbitplbhbihiv.supabase.co";
+  const SUPABASE_KEY =
+    "sb_publishable_dpjfWOYeNQRmP2nJq5FoMA_8NUuD0HF";
+  const db = window.supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_KEY
+  );
+  let allMedia = [];
+  let currentType = "all";
+  const mediaGrid =
+    document.getElementById("mediaGrid");
+  function typeLabel(type) {
+    if (type === "clip") return "🎬 CLIP";
+    if (type === "podcast") return "🎙️ PODCAST";
+    if (type === "radio") return "📻 RADIO";
+    return "🎬 MEDIA";
+  }
+  function iconForType(type) {
+    if (type === "clip") return "🎬";
+    if (type === "podcast") return "🎙️";
+    if (type === "radio") return "📻";
+    return "🎧";
+  }
+  function renderMedia() {
+    const filtered =
+      currentType === "all"
+        ? allMedia
+        : allMedia.filter(
+            item => item.type === currentType
+          );
+    mediaGrid.innerHTML = "";
+    if (filtered.length === 0) {
+      const notice =
+        document.createElement("div");
+      notice.className = "notice";
+      notice.textContent =
+        currentType === "all"
+          ? "Aucun contenu publié pour le moment."
+          : "Aucun contenu de ce type n’est publié pour le moment.";
+      mediaGrid.appendChild(notice);
+      return;
+    }
+    filtered.forEach(item => {
+      const card =
+        document.createElement("article");
+      card.className = "card";
+      const visual =
+        document.createElement("div");
+      visual.className = "visual";
+      if (item.media_url) {
+        const lower =
+          item.media_url.toLowerCase();
+        const isImage =
+          /\.(jpg|jpeg|png|webp|gif)$/i.test(lower);
+        if (isImage) {
+          const img =
+            document.createElement("img");
+          img.src = item.media_url;
+          img.alt =
+            item.title || "Media";
+          visual.appendChild(img);
+        } else {
+          const iframe =
+            document.createElement("iframe");
+          iframe.src =
+            item.media_url;
+          iframe.width = "100%";
+          iframe.height = "100%";
+          iframe.style.border = "0";
+          iframe.allow =
+            "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share";
+          iframe.allowFullscreen = true;
+          visual.appendChild(iframe);
+        }
+      } else {
+        const icon =
+          document.createElement("div");
+        icon.className =
+          "visual-icon";
+        icon.textContent =
+          iconForType(item.type);
+        visual.appendChild(icon);
+      }
+      card.appendChild(visual);
+      const body =
+        document.createElement("div");
+      body.className =
+        "card-body";
+      const type =
+        document.createElement("div");
+      type.className =
+        "type";
+      type.textContent =
+        typeLabel(item.type);
+      body.appendChild(type);
+      const title =
+        document.createElement("div");
+      title.className =
+        "title";
+      title.textContent =
+        item.title || "Sans titre";
+      body.appendChild(title);
+      if (item.artists?.name) {
+        const artist =
+          document.createElement("div");
+        artist.className =
+          "artist";
+        artist.textContent =
+          "Par " + item.artists.name;
+        body.appendChild(artist);
+      }
+      if (item.description) {
+        const description =
+          document.createElement("div");
+        description.className =
+          "description";
+        description.textContent =
+          item.description;
+        body.appendChild(description);
+      }
+      if (item.media_url) {
+        const link =
+          document.createElement("a");
+        link.className =
+          "button";
+        link.href =
+          item.media_url;
+        link.target =
+          "_blank";
+        link.rel =
+          "noopener noreferrer";
+        link.textContent =
+          item.type === "clip"
+            ? "▶ Voir le clip"
+            : item.type === "podcast"
+              ? "▶ Écouter"
+              : "▶ Ouvrir la radio";
+        body.appendChild(link);
+      } else {
+        const notice =
+          document.createElement("div");
+        notice.className =
+          "description";
+        notice.textContent =
+          "Contenu en préparation.";
+        body.appendChild(notice);
+      }
+      card.appendChild(body);
+      mediaGrid.appendChild(card);
+    });
+  }
+  async function loadMedia() {
+    const { data, error } =
+      await db
+        .from("media")
+        .select(`
+          id,
+          title,
+          type,
+          media_url,
+          description,
+          artist_id,
+          artists (
+            id,
+            name,
+            status
+          )
+        `)
+        .eq("status", "published")
+        .order("created_at", {
+          ascending: false
+        });
+    if (error) {
+      console.error(error);
+      mediaGrid.innerHTML =
+        '<div class="notice">Impossible de charger les contenus.</div>';
+      return;
+    }
+    allMedia =
+      (data || []).filter(item =>
+        item.artists &&
+        item.artists.status === "published"
+      );
+    renderMedia();
+  }
+  document
+    .querySelectorAll(".filter")
+    .forEach(button => {
+      button.addEventListener("click", () => {
+        document
+          .querySelectorAll(".filter")
+          .forEach(btn =>
+            btn.classList.remove("active")
+          );
+        button.classList.add("active");
+        currentType =
+          button.dataset.type;
+        renderMedia();
+      });
+    });
+  loadMedia();
+</script>
+</body>
+</html>
