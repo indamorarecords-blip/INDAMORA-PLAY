@@ -17,250 +17,177 @@
     header {
       background: #0757b8;
       color: white;
-      padding: 25px 20px;
+      padding: 22px 20px;
       text-align: center;
     }
     header h1 {
       margin: 0;
-      font-size: 30px;
+      font-size: 28px;
     }
     header p {
-      margin: 8px 0 0;
+      margin: 7px 0 0;
+      opacity: .95;
     }
     main {
-      max-width: 1100px;
+      max-width: 850px;
       margin: 30px auto;
-      padding: 20px;
+      padding: 0 18px;
     }
     .intro {
-      background: white;
-      padding: 25px;
-      border-radius: 16px;
-      box-shadow: 0 4px 16px rgba(0,0,0,.07);
       text-align: center;
       margin-bottom: 25px;
     }
     .intro h2 {
       color: #0757b8;
-      margin-top: 0;
+      margin-bottom: 8px;
     }
     .intro p {
-      line-height: 1.6;
       color: #60758d;
+      margin: 0;
     }
-    .grid {
+    .spaces {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
-      gap: 18px;
+      gap: 16px;
     }
-    .card {
+    .space {
       background: white;
       border: 1px solid #d8e5f3;
       border-radius: 16px;
-      padding: 24px;
-      text-align: center;
-      box-shadow: 0 4px 15px rgba(0,0,0,.06);
+      padding: 22px;
+      box-shadow: 0 3px 12px rgba(0,0,0,.05);
     }
-    .icon {
-      font-size: 42px;
-      margin-bottom: 10px;
-    }
-    .card h3 {
+    .space h3 {
+      margin: 0 0 8px;
       color: #0757b8;
-      margin: 8px 0;
+      font-size: 21px;
     }
-    .card p {
+    .space p {
+      margin: 0 0 16px;
       color: #60758d;
       line-height: 1.5;
-      min-height: 50px;
     }
-    .button {
-      display: block;
-      width: 100%;
-      padding: 13px;
-      margin-top: 15px;
-      border-radius: 10px;
-      background: #0757b8;
-      color: white;
-      text-decoration: none;
-      font-weight: bold;
+    .links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 9px;
     }
-    .button:hover {
-      background: #064895;
-    }
-    .secondary {
+    .links a {
+      display: inline-block;
+      padding: 10px 14px;
+      border-radius: 9px;
       background: #e8f2ff;
       color: #0757b8;
-    }
-    .secondary:hover {
-      background: #d8eaff;
-    }
-    .back {
-      margin-top: 25px;
-      text-align: center;
-    }
-    .back a {
-      color: #0757b8;
-      font-weight: bold;
       text-decoration: none;
+      font-weight: bold;
+      font-size: 14px;
+    }
+    .links a.primary {
+      background: #0757b8;
+      color: white;
+    }
+    .links a:hover {
+      opacity: .88;
+    }
+    .bottom {
+      text-align: center;
+      margin: 28px 0;
+    }
+    .bottom a {
+      color: #0757b8;
+      text-decoration: none;
+      font-weight: bold;
     }
     footer {
-      margin-top: 40px;
+      margin-top: 35px;
       background: #0757b8;
       color: white;
       text-align: center;
-      padding: 30px 20px;
+      padding: 22px;
+    }
+    footer p {
+      margin: 5px 0;
     }
   </style>
 </head>
 <body>
 <header>
   <h1>🎧 INDAMORA PLAY</h1>
-  <p>Espaces de la plateforme</p>
+  <p>Choisis ton espace</p>
 </header>
 <main>
   <div class="intro">
-    <h2>Choisis ton espace</h2>
-<p>
-  Accède directement aux différents espaces et services
-  disponibles sur INDAMORA PLAY.
-</p>
+    <h2>Les espaces INDAMORA PLAY</h2>
+    <p>Une plateforme simple pour découvrir, créer et partager.</p>
   </div>
-  <div class="grid">
-<div class="card">
-  <div class="icon">🎤</div>
-  <h3>Espace artiste</h3>
+  <div class="spaces">
+<!-- ESPACE MUSIQUE & CRÉATEURS -->
+<section class="space">
+  <h3>🎤 Espace Musique & Créateurs</h3>
   <p>
-    Gérer ton profil, ajouter tes contenus et suivre ton activité.
+    Artistes, chanteurs, gospel, chantres, serviteurs de Dieu,
+    producteurs, beatmakers, créateurs de contenu et autres profils
+    créatifs.
   </p>
-  <a class="button" href="artist.html">
-    Ouvrir l'espace artiste
-  </a>
-</div>
-<div class="card">
-  <div class="icon">📝</div>
-  <h3>Créer un compte artiste</h3>
-  <p>
-    Créer gratuitement ton compte et ton profil artiste.
-  </p>
-  <a class="button" href="register.html">
-    Créer mon compte
-  </a>
-</div>
-<div class="card">
-  <div class="icon">🔐</div>
-  <h3>Mon compte</h3>
-  <p>
-    Créer un compte, se connecter ou gérer sa session.
-  </p>
-  <a class="button" href="account.html">
-    Ouvrir mon compte
-  </a>
-</div>
-<div class="card">
-  <div class="icon">🏷️</div>
-  <h3>Mes catégories</h3>
-  <p>
-    Sélectionner plusieurs catégories correspondant à ton activité.
-  </p>
-  <a class="button" href="my-categories.html">
-    Gérer mes catégories
-  </a>
-</div>
-<div class="card">
-  <div class="icon">👥</div>
-  <h3>Artistes & créateurs</h3>
-  <p>
-    Découvrir les profils publiés sur INDAMORA PLAY.
-  </p>
-  <a class="button secondary" href="artists.html">
-    Découvrir
-  </a>
-</div>
-<div class="card">
-  <div class="icon">🎧</div>
-  <h3>Catalogue</h3>
-  <p>
-    Découvrir et écouter les morceaux publiés.
-  </p>
-  <a class="button secondary" href="public-catalog.html">
-    Ouvrir le catalogue
-  </a>
-</div>
-<div class="card">
-  <div class="icon">💿</div>
-  <h3>Albums</h3>
-  <p>
-    Découvrir les albums et projets publiés.
-  </p>
-  <a class="button secondary" href="public-album.html">
-    Voir les albums
-  </a>
-</div>
-<div class="card">
-  <div class="icon">🎬</div>
-  <h3>Clips & médias</h3>
-  <p>
-    Découvrir les clips, podcasts et autres médias.
-  </p>
-  <a class="button secondary" href="public-media.html">
-    Voir les médias
-  </a>
-</div>
-<div class="card">
-  <div class="icon">💙</div>
-  <h3>Soutenir INDAMORA</h3>
-  <p>
-    Accéder aux possibilités de soutien de la plateforme.
-  </p>
-  <a class="button secondary" href="support.html">
-    Soutenir
-  </a>
-</div>
-<div class="card">
-  <div class="icon">❓</div>
-  <h3>Aide</h3>
-  <p>
-    Trouver les informations et l'aide nécessaires.
-  </p>
-  <a class="button secondary" href="help.html">
-    Ouvrir l'aide
-  </a>
-</div>
-<div class="card">
-  <div class="icon">📖</div>
-  <h3>FAQ</h3>
-  <p>
-    Consulter les questions fréquentes.
-  </p>
-  <a class="button secondary" href="faq.html">
-    Ouvrir la FAQ
-  </a>
-</div>
-<div class="card">
-  <div class="icon">📊</div>
-  <h3>Statut de la plateforme</h3>
-  <p>
-    Consulter l'état général des services.
-  </p>
-  <a class="button secondary" href="status.html">
-    Voir le statut
-  </a>
-</div>
+  <div class="links">
+    <a class="primary" href="artists.html">Découvrir les profils</a>
+    <a href="artist.html">Espace artiste</a>
+    <a href="register.html">Créer un compte artiste</a>
+    <a href="my-categories.html">Mes catégories</a>
   </div>
-  <div class="back">
-    <a href="index.html">
-      ← Retour à INDAMORA PLAY
-    </a>
+</section>
+<!-- ESPACE CINÉMA -->
+<section class="space">
+  <h3>🎬 Espace Cinéma</h3>
+  <p>
+    Cinéma, réalisateurs, vidéastes, acteurs et contenus audiovisuels.
+  </p>
+  <div class="links">
+    <a class="primary" href="public-media.html">Découvrir les médias</a>
+    <a href="artists.html">Voir les créateurs</a>
+  </div>
+</section>
+<!-- ESPACE HUMOUR -->
+<section class="space">
+  <h3>😂 Espace Humour</h3>
+  <p>
+    Humoristes, comédiens et créateurs de contenus humoristiques.
+  </p>
+  <div class="links">
+    <a class="primary" href="artists.html">Découvrir les profils</a>
+    <a href="public-media.html">Voir les contenus</a>
+  </div>
+</section>
+<!-- ESPACE PODCASTS & MÉDIAS -->
+<section class="space">
+  <h3>🎙️ Espace Podcasts & Médias</h3>
+  <p>
+    Podcasts, radios, médias, émissions et créateurs de contenus.
+  </p>
+  <div class="links">
+    <a class="primary" href="public-media.html">Découvrir</a>
+    <a href="public-catalog.html">Catalogue musical</a>
+  </div>
+</section>
+<!-- COMPTE -->
+<section class="space">
+  <h3>🔐 Mon compte</h3>
+  <p>
+    Créer un compte, se connecter ou gérer son espace personnel.
+  </p>
+  <div class="links">
+    <a class="primary" href="account.html">Ouvrir mon compte</a>
+    <a href="support.html">Soutenir INDAMORA</a>
+    <a href="help.html">Aide</a>
+  </div>
+</section>
+  </div>
+  <div class="bottom">
+    <a href="index.html">← Retour à INDAMORA PLAY</a>
   </div>
 </main>
 <footer>
-  <p>
-    <strong>INDAMORA PLAY</strong>
-  </p>
-  <p>
-    INDAMORA RECORDS
-  </p>
+  <p><strong>INDAMORA PLAY</strong></p>
+  <p>INDAMORA RECORDS</p>
 </footer>
 </body>
 </html>
