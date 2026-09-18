@@ -5,393 +5,252 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Catégories — INDAMORA PLAY</title>
   <style>
-    :root{
-      --blue:#0b5ed7;
-      --blue-dark:#084298;
-      --blue-light:#eaf3ff;
-      --background:#f7fbff;
-      --white:#ffffff;
-      --text:#17324d;
-      --muted:#64748b;
-      --border:#dbe7f5;
-    }
-    *{
-      box-sizing:border-box;
-    }
-    body{
-      margin:0;
-      font-family:Arial,Helvetica,sans-serif;
-      background:var(--background);
-      color:var(--text);
-      line-height:1.6;
-    }
-    header{
-      background:var(--blue);
-      color:white;
-      padding:18px 20px;
-      position:sticky;
-      top:0;
-      z-index:10;
-      box-shadow:0 3px 12px rgba(0,0,0,.08);
-    }
-    .header-inner{
-      max-width:1150px;
-      margin:auto;
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:20px;
-    }
-    .logo{
-      color:white;
-      text-decoration:none;
-      font-size:20px;
-      font-weight:800;
-    }
-    .logo small{
-      display:block;
-      font-size:12px;
-      opacity:.9;
-    }
-    nav{
-      display:flex;
-      flex-wrap:wrap;
-      gap:14px;
-    }
-    nav a{
-      color:white;
-      text-decoration:none;
-      font-size:14px;
-    }
-    nav a:hover{
-      text-decoration:underline;
-    }
-    main{
-      max-width:1150px;
-      margin:35px auto;
-      padding:0 20px;
-    }
-    .hero{
-      background:linear-gradient(135deg,#ffffff,#eaf3ff);
-      border:1px solid var(--border);
-      border-radius:20px;
-      padding:40px 25px;
-      text-align:center;
-      margin-bottom:25px;
-    }
-    h1{
-      margin:0 0 12px;
-      color:var(--blue-dark);
-      font-size:36px;
-    }
-    .hero p{
-      max-width:850px;
-      margin:auto;
-      color:#4b637b;
-      font-size:17px;
-    }
-    .search{
-      background:white;
-      border:1px solid var(--border);
-      border-radius:16px;
-      padding:20px;
-      margin-bottom:25px;
-    }
-    input{
-      width:100%;
-      padding:13px;
-      border:1px solid #cbd8e8;
-      border-radius:9px;
-      font-size:15px;
-      outline:none;
-    }
-    input:focus{
-      border-color:var(--blue);
-      box-shadow:0 0 0 3px rgba(11,94,215,.1);
-    }
-    .grid{
-      display:grid;
-      grid-template-columns:repeat(3,1fr);
-      gap:20px;
-    }
-    .category{
-      background:white;
-      border:1px solid var(--border);
-      border-radius:17px;
-      padding:25px;
-      box-shadow:0 4px 15px rgba(30,80,130,.05);
-      transition:.15s ease;
-    }
-    .category:hover{
-      transform:translateY(-3px);
-      box-shadow:0 7px 22px rgba(30,80,130,.10);
-    }
-    .icon{
-      font-size:40px;
-      margin-bottom:12px;
-    }
-    .category h2{
-      margin:0;
-      color:var(--blue-dark);
-      font-size:21px;
-    }
-    .category p{
-      color:var(--muted);
-      font-size:14px;
-      min-height:48px;
-    }
-    .button{
-      display:inline-block;
-      margin-top:10px;
-      padding:10px 14px;
-      border-radius:9px;
-      background:var(--blue);
-      color:white;
-      text-decoration:none;
-      font-weight:700;
-      font-size:14px;
-    }
-    .button:hover{
-      background:var(--blue-dark);
-    }
-    .notice{
-      background:var(--blue-light);
-      border-left:4px solid var(--blue);
-      border-radius:10px;
-      padding:18px;
-      margin-top:25px;
-      color:#40566d;
-    }
-    footer{
-      margin-top:50px;
-      padding:30px 20px;
-      background:var(--blue-light);
-      text-align:center;
-      color:var(--muted);
-      font-size:14px;
-    }
-    @media(max-width:950px){
-      .grid{
-        grid-template-columns:repeat(2,1fr);
-      }
-    }
-    @media(max-width:650px){
-      .header-inner{
-        flex-direction:column;
-        align-items:flex-start;
-      }
-      .grid{
-        grid-template-columns:1fr;
-      }
-      h1{
-        font-size:29px;
-      }
-    }
+    * { box-sizing: border-box; }
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #f5f9ff;
+  color: #123;
+}
+header {
+  background: #0757c9;
+  color: white;
+  padding: 18px 20px;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+.header-inner {
+  max-width: 1100px;
+  margin: auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 15px;
+  flex-wrap: wrap;
+}
+.logo {
+  font-size: 22px;
+  font-weight: bold;
+}
+nav a {
+  color: white;
+  text-decoration: none;
+  margin: 0 8px;
+  font-weight: bold;
+}
+main {
+  max-width: 1100px;
+  margin: auto;
+  padding: 35px 20px 60px;
+}
+.hero {
+  background: white;
+  border-radius: 18px;
+  padding: 30px;
+  box-shadow: 0 8px 25px rgba(0,0,0,.06);
+  margin-bottom: 25px;
+}
+h1 {
+  color: #0757c9;
+  margin-top: 0;
+}
+.search {
+  width: 100%;
+  padding: 14px;
+  border: 1px solid #cbd8ea;
+  border-radius: 10px;
+  font-size: 16px;
+  margin-top: 15px;
+}
+.categories {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 15px;
+}
+.category {
+  background: white;
+  border: 1px solid #dbe6f5;
+  border-radius: 16px;
+  padding: 20px;
+  text-decoration: none;
+  color: #123;
+  transition: .2s;
+  box-shadow: 0 5px 18px rgba(0,0,0,.04);
+}
+.category:hover {
+  transform: translateY(-3px);
+  border-color: #0757c9;
+  box-shadow: 0 10px 25px rgba(7,87,201,.12);
+}
+.icon {
+  font-size: 30px;
+  margin-bottom: 10px;
+}
+.category strong {
+  display: block;
+  color: #0757c9;
+  font-size: 18px;
+  margin-bottom: 6px;
+}
+.category span {
+  color: #607086;
+  font-size: 14px;
+}
+.info {
+  margin-top: 30px;
+  background: #eaf3ff;
+  border-left: 5px solid #0757c9;
+  padding: 20px;
+  border-radius: 12px;
+}
+footer {
+  text-align: center;
+  padding: 25px;
+  color: #607086;
+  font-size: 14px;
+}
+@media (max-width: 600px) {
+  nav a {
+    margin: 4px;
+    display: inline-block;
+  }
+}
   </style>
 </head>
 <body>
 <header>
   <div class="header-inner">
-<a class="logo" href="index.html">
-  🎧 INDAMORA PLAY
-  <small>INDAMORA RECORDS</small>
-</a>
-<nav>
-  <a href="index.html">Accueil</a>
-  <a href="artists.html">Profils</a>
-  <a href="public-catalog.html">Catalogue</a>
-  <a href="community.html">Communauté</a>
-  <a href="press.html">Presse</a>
-</nav>
+    <div class="logo">INDAMORA PLAY</div>
+    <nav>
+      <a href="index.html">Accueil</a>
+      <a href="artists.html">Profils</a>
+      <a href="public-catalog.html">Catalogue</a>
+    </nav>
   </div>
 </header>
 <main>
   <section class="hero">
-<h1>🌍 Catégories INDAMORA PLAY</h1>
-<p>
-  Découvrez les différents univers et profils qui peuvent
-  participer à l'écosystème INDAMORA PLAY.
-</p>
-  </section>
-  <section class="search">
+    <h1>🌍 Découvrir par catégorie</h1>
+    <p>
+      INDAMORA PLAY accueille progressivement différents profils,
+      artistes, créateurs, médias, structures et acteurs culturels.
+    </p>
 <input
   id="search"
+  class="search"
   type="search"
   placeholder="Rechercher une catégorie..."
-  autocomplete="off"
+  oninput="filterCategories()"
 >
   </section>
-  <section id="categories" class="grid"></section>
-  <div class="notice">
-    <strong>ℹ️ À savoir</strong><br>
-    Les catégories présentées ici préparent l'organisation de
-    l'écosystème INDAMORA PLAY. Les catégories officielles des profils
-    seront intégrées progressivement dans le système sans modifier
-    les contenus déjà publiés.
-  </div>
-  <section style="text-align:center;margin-top:25px;">
-<a class="button" href="artists.html">
-  🎤 Voir les profils
+  <section id="categories" class="categories">
+<a class="category" href="artists.html" data-name="artistes chanteurs">
+  <div class="icon">🎤</div>
+  <strong>Artistes & chanteurs</strong>
+  <span>Musique, singles, albums et créations.</span>
 </a>
-<a class="button" href="register.html">
-  📝 Créer un compte
+<a class="category" href="artists.html" data-name="gospel">
+  <div class="icon">🙏</div>
+  <strong>Gospel</strong>
+  <span>Musique gospel et contenus de foi.</span>
 </a>
-<a class="button" href="index.html">
-  ← Accueil
+<a class="category" href="artists.html" data-name="chantres">
+  <div class="icon">🎼</div>
+  <strong>Chantres</strong>
+  <span>Chantres et ministères musicaux.</span>
+</a>
+<a class="category" href="artists.html" data-name="serviteurs de dieu">
+  <div class="icon">⛪</div>
+  <strong>Serviteurs de Dieu</strong>
+  <span>Profils et contenus liés au ministère.</span>
+</a>
+<a class="category" href="artists.html" data-name="pasteurs">
+  <div class="icon">📖</div>
+  <strong>Pasteurs</strong>
+  <span>Profils, enseignements et contenus.</span>
+</a>
+<a class="category" href="artists.html" data-name="predicateurs enseignants">
+  <div class="icon">🎙️</div>
+  <strong>Prédicateurs & enseignants</strong>
+  <span>Messages, enseignements et podcasts.</span>
+</a>
+<a class="category" href="artists.html" data-name="cinema">
+  <div class="icon">🎬</div>
+  <strong>Cinéma</strong>
+  <span>Acteurs, réalisateurs et productions.</span>
+</a>
+<a class="category" href="artists.html" data-name="videastes videos">
+  <div class="icon">🎥</div>
+  <strong>Vidéastes & vidéos</strong>
+  <span>Création audiovisuelle et vidéo.</span>
+</a>
+<a class="category" href="artists.html" data-name="humour comedians">
+  <div class="icon">😂</div>
+  <strong>Humour</strong>
+  <span>Humoristes et créateurs de divertissement.</span>
+</a>
+<a class="category" href="artists.html" data-name="podcasts podcasters">
+  <div class="icon">🎧</div>
+  <strong>Podcasts</strong>
+  <span>Podcasteurs, émissions et discussions.</span>
+</a>
+<a class="category" href="artists.html" data-name="createurs contenu">
+  <div class="icon">📱</div>
+  <strong>Créateurs de contenu</strong>
+  <span>Créateurs numériques et contenus originaux.</span>
+</a>
+<a class="category" href="artists.html" data-name="influenceurs">
+  <div class="icon">⭐</div>
+  <strong>Influenceurs</strong>
+  <span>Personnalités et créateurs numériques.</span>
+</a>
+<a class="category" href="artists.html" data-name="producteurs beatmakers">
+  <div class="icon">🎼</div>
+  <strong>Producteurs & beatmakers</strong>
+  <span>Production musicale et création sonore.</span>
+</a>
+<a class="category" href="artists.html" data-name="medias animateurs">
+  <div class="icon">📻</div>
+  <strong>Médias</strong>
+  <span>Animateurs, radios et médias.</span>
+</a>
+<a class="category" href="artists.html" data-name="labels structures">
+  <div class="icon">🏷️</div>
+  <strong>Labels & structures</strong>
+  <span>Labels, collectifs et structures culturelles.</span>
+</a>
+<a class="category" href="artists.html" data-name="associations organisations">
+  <div class="icon">🌍</div>
+  <strong>Associations & organisations</strong>
+  <span>Associations et organisations partenaires.</span>
 </a>
   </section>
+  <div class="info">
+    <strong>ℹ️ Mise en place progressive</strong>
+    <p>
+      Les catégories sont préparées ici sans modifier les contenus
+      déjà publiés ni les fonctionnalités existantes.
+      L'étape suivante permettra de relier progressivement les profils
+      à une ou plusieurs catégories.
+    </p>
+  </div>
 </main>
 <footer>
-  © 2026 INDAMORA PLAY — INDAMORA RECORDS
+  © INDAMORA PLAY — INDAMORA RECORDS
 </footer>
 <script>
-  const categories = [
-    {
-      icon:"🎤",
-      name:"Artistes & chanteurs",
-      description:"Chanteurs, groupes et artistes musicaux."
-    },
-    {
-      icon:"🙏",
-      name:"Gospel",
-      description:"Artistes et créateurs spécialisés dans le gospel."
-    },
-    {
-      icon:"🎼",
-      name:"Chantres",
-      description:"Chantres et ministères musicaux."
-    },
-    {
-      icon:"⛪",
-      name:"Serviteurs de Dieu",
-      description:"Profils liés au service chrétien et à la foi."
-    },
-    {
-      icon:"📖",
-      name:"Pasteurs",
-      description:"Pasteurs et responsables de communautés."
-    },
-    {
-      icon:"🎙️",
-      name:"Prédicateurs",
-      description:"Prédicateurs, enseignants et orateurs."
-    },
-    {
-      icon:"🎬",
-      name:"Cinéma",
-      description:"Acteurs, réalisateurs et professionnels du cinéma."
-    },
-    {
-      icon:"🎥",
-      name:"Vidéastes",
-      description:"Créateurs de vidéos et productions audiovisuelles."
-    },
-    {
-      icon:"😂",
-      name:"Humour",
-      description:"Humoristes et créateurs de contenus humoristiques."
-    },
-    {
-      icon:"🎧",
-      name:"Podcasts",
-      description:"Podcasteurs, intervieweurs et créateurs d'émissions."
-    },
-    {
-      icon:"📱",
-      name:"Créateurs de contenu",
-      description:"Créateurs numériques et personnalités créatives."
-    },
-    {
-      icon:"⭐",
-      name:"Influenceurs",
-      description:"Influenceurs et personnalités présentes sur les réseaux."
-    },
-    {
-      icon:"🎼",
-      name:"Producteurs",
-      description:"Producteurs, beatmakers et professionnels de la musique."
-    },
-    {
-      icon:"📻",
-      name:"Médias",
-      description:"Radios, médias et acteurs de la communication."
-    },
-    {
-      icon:"🏷️",
-      name:"Labels & structures",
-      description:"Labels, studios et structures culturelles."
-    },
-    {
-      icon:"🌍",
-      name:"Associations",
-      description:"Associations et organisations partenaires."
-    }
-  ];
-  const container =
-    document.getElementById("categories");
-  const search =
-    document.getElementById("search");
-  function escapeHtml(value){
-    return String(value ?? "")
-      .replace(/&/g,"&amp;")
-      .replace(/</g,"&lt;")
-      .replace(/>/g,"&gt;")
-      .replace(/"/g,"&quot;")
-      .replace(/'/g,"&#039;");
-  }
-  function render(){
-    const query =
-      search.value
-        .trim()
-        .toLowerCase();
-    const filtered =
-      categories.filter(category => {
-        const text =
-          (
-            category.name +
-            " " +
-            category.description
-          ).toLowerCase();
-        return !query || text.includes(query);
-      });
-    if(!filtered.length){
-      container.innerHTML = `
-        <div class="category">
-          <div class="icon">🔎</div>
-          <h2>Aucune catégorie</h2>
-          <p>
-            Aucune catégorie ne correspond à votre recherche.
-          </p>
-        </div>
-      `;
-      return;
-    }
-    container.innerHTML =
-      filtered.map(category => `
-        <article class="category">
-          <div class="icon">
-            ${category.icon}
-          </div>
-          <h2>
-            ${escapeHtml(category.name)}
-          </h2>
-          <p>
-            ${escapeHtml(category.description)}
-          </p>
-          <a
-            class="button"
-            href="artists.html"
-          >
-            Voir les profils
-          </a>
-        </article>
-      `).join("");
-  }
-  search.addEventListener(
-    "input",
-    render
-  );
-  render();
+function filterCategories() {
+  const query = document
+    .getElementById("search")
+    .value
+    .toLowerCase()
+    .trim();
+  document.querySelectorAll(".category").forEach(card => {
+    const name = card.dataset.name.toLowerCase();
+    card.style.display = !query || name.includes(query) ? "" : "none";
+  });
+}
 </script>
 </body>
 </html>
