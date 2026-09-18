@@ -3,325 +3,266 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Artistes & créateurs — INDAMORA PLAY</title>
+  <title>Nos artistes — INDAMORA PLAY</title>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <style>
-    :root{
-      --blue:#0b5ed7;
-      --blue-dark:#084298;
-      --blue-light:#eaf3ff;
-      --background:#f7fbff;
-      --white:#ffffff;
-      --text:#17324d;
-      --muted:#64748b;
-      --border:#dbe7f5;
-      --green:#198754;
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
     }
-    *{
-      box-sizing:border-box;
+    :root {
+      --black: #090909;
+      --dark: #111111;
+      --card: #181818;
+      --white: #ffffff;
+      --muted: #b8b8b8;
+      --red: #d92525;
+      --yellow: #f2c230;
+      --green: #168447;
+      --blue: #1689c7;
     }
-    body{
-      margin:0;
-      font-family:Arial,Helvetica,sans-serif;
-      background:var(--background);
-      color:var(--text);
-      line-height:1.6;
+    body {
+      background: var(--black);
+      color: var(--white);
+      font-family: Arial, Helvetica, sans-serif;
+      min-height: 100vh;
     }
-    header{
-      background:var(--blue);
-      color:white;
-      padding:18px 20px;
-      position:sticky;
-      top:0;
-      z-index:20;
-      box-shadow:0 3px 12px rgba(0,0,0,.08);
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      background: rgba(9,9,9,.96);
+      border-bottom: 1px solid #292929;
+      backdrop-filter: blur(12px);
     }
-    .header-inner{
-      max-width:1150px;
-      margin:auto;
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:20px;
+    .header-inner {
+      max-width: 1200px;
+      margin: auto;
+      min-height: 70px;
+      padding: 12px 18px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 15px;
     }
-    .logo{
-      color:white;
-      text-decoration:none;
-      font-size:20px;
-      font-weight:800;
+    .logo {
+      color: var(--white);
+      text-decoration: none;
+      font-weight: 900;
+      font-size: 21px;
+      white-space: nowrap;
     }
-    .logo small{
-      display:block;
-      font-size:12px;
-      opacity:.9;
-      margin-top:2px;
+    .logo small {
+      display: block;
+      color: var(--yellow);
+      font-size: 9px;
+      letter-spacing: 1px;
+      margin-top: 3px;
     }
-    nav{
-      display:flex;
-      flex-wrap:wrap;
-      gap:14px;
+    nav {
+      display: flex;
+      gap: 5px;
+      overflow-x: auto;
     }
-    nav a{
-      color:white;
-      text-decoration:none;
-      font-size:14px;
+    nav a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 13px;
+      font-weight: 700;
+      padding: 9px 11px;
+      border-radius: 8px;
+      white-space: nowrap;
     }
-    nav a:hover{
-      text-decoration:underline;
+    nav a:hover {
+      color: var(--white);
+      background: #222;
     }
-    main{
-      max-width:1150px;
-      margin:35px auto;
-      padding:0 20px;
+    .main {
+      max-width: 1200px;
+      margin: auto;
+      padding: 45px 18px 80px;
     }
-    .hero{
-      background:linear-gradient(135deg,#ffffff,#eaf3ff);
-      border:1px solid var(--border);
-      border-radius:20px;
-      padding:40px 25px;
-      text-align:center;
-      margin-bottom:25px;
+    .hero {
+      position: relative;
+      overflow: hidden;
+      border-radius: 20px;
+      padding: 55px 30px;
+      margin-bottom: 35px;
+      background:
+        radial-gradient(circle at 85% 20%, rgba(22,137,199,.35), transparent 30%),
+        radial-gradient(circle at 15% 80%, rgba(217,37,37,.32), transparent 35%),
+        linear-gradient(135deg, #111111, #191919);
+      border: 1px solid #2c2c2c;
     }
-    h1{
-      margin:0 0 12px;
-      color:var(--blue-dark);
-      font-size:36px;
+    .hero-badge {
+      display: inline-block;
+      color: var(--yellow);
+      background: rgba(242,194,48,.10);
+      border: 1px solid rgba(242,194,48,.35);
+      border-radius: 999px;
+      padding: 7px 12px;
+      font-size: 11px;
+      font-weight: 800;
+      margin-bottom: 15px;
     }
-    .hero p{
-      max-width:850px;
-      margin:auto;
-      color:#4b637b;
-      font-size:17px;
+    .hero h1 {
+      font-size: clamp(38px, 7vw, 68px);
+      line-height: 1;
+      margin-bottom: 15px;
     }
-    .categories{
-      display:flex;
-      flex-wrap:wrap;
-      gap:9px;
-      justify-content:center;
-      margin-top:25px;
+    .hero h1 span {
+      color: var(--red);
     }
-    .category{
-      background:white;
-      border:1px solid #cfe1f8;
-      color:var(--blue-dark);
-      padding:8px 12px;
-      border-radius:20px;
-      font-size:13px;
-      font-weight:700;
+    .hero p {
+      color: var(--muted);
+      max-width: 650px;
+      font-size: 17px;
+      line-height: 1.6;
     }
-    .search-box{
-      background:white;
-      border:1px solid var(--border);
-      border-radius:16px;
-      padding:20px;
-      margin-bottom:20px;
-      box-shadow:0 4px 15px rgba(30,80,130,.05);
+    .tools {
+      background: var(--dark);
+      border: 1px solid #292929;
+      border-radius: 15px;
+      padding: 16px;
+      margin-bottom: 30px;
     }
-    .search-row{
-      display:grid;
-      grid-template-columns:2fr 1fr 1fr 1fr auto;
-      gap:10px;
+    .search {
+      margin-bottom: 12px;
     }
     input,
-    select{
-      width:100%;
-      padding:12px 13px;
-      border:1px solid #cbd8e8;
-      border-radius:9px;
-      background:white;
-      color:var(--text);
-      font-size:14px;
-      outline:none;
+    select {
+      width: 100%;
+      background: var(--card);
+      color: var(--white);
+      border: 1px solid #333;
+      border-radius: 9px;
+      padding: 13px 14px;
+      font-size: 14px;
+      outline: none;
+    }
+    input::placeholder {
+      color: #777;
     }
     input:focus,
-    select:focus{
-      border-color:var(--blue);
-      box-shadow:0 0 0 3px rgba(11,94,215,.1);
+    select:focus {
+      border-color: var(--blue);
     }
-    button{
-      border:0;
-      border-radius:9px;
-      padding:12px 18px;
-      background:var(--blue);
-      color:white;
-      font-weight:700;
-      cursor:pointer;
+    .filters {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
     }
-    button:hover{
-      background:var(--blue-dark);
+    .status {
+      margin-bottom: 22px;
+      color: var(--muted);
+      font-size: 14px;
     }
-    .result-info{
-      color:var(--muted);
-      margin:15px 0;
-      font-size:14px;
+    .artists {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+      gap: 18px;
     }
-    .grid{
-      display:grid;
-      grid-template-columns:repeat(3,1fr);
-      gap:20px;
+    .artist {
+      background: var(--card);
+      border: 1px solid #292929;
+      border-radius: 16px;
+      overflow: hidden;
+      transition: transform .15s ease, border-color .15s ease;
     }
-    .card{
-      background:white;
-      border:1px solid var(--border);
-      border-radius:17px;
-      overflow:hidden;
-      box-shadow:0 4px 15px rgba(30,80,130,.05);
-      transition:transform .15s ease,box-shadow .15s ease;
+    .artist:hover {
+      transform: translateY(-3px);
+      border-color: #444;
     }
-    .card:hover{
-      transform:translateY(-2px);
-      box-shadow:0 7px 22px rgba(30,80,130,.10);
+    .artist-image {
+      width: 100%;
+      aspect-ratio: 1 / 1;
+      object-fit: cover;
+      display: block;
+      background: #222;
     }
-    .visual{
-      height:175px;
-      background:var(--blue-light);
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      overflow:hidden;
+    .artist-body {
+      padding: 15px;
     }
-    .visual img{
-      width:100%;
-      height:100%;
-      object-fit:cover;
+    .artist-name {
+      font-size: 18px;
+      margin-bottom: 8px;
     }
-    .placeholder{
-      width:90px;
-      height:90px;
-      border-radius:50%;
-      background:white;
-      border:2px solid #cfe1f8;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      font-size:40px;
+    .verified {
+      color: var(--green);
+      font-size: 12px;
+      font-weight: 800;
     }
-    .body{
-      padding:20px;
+    .meta {
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.7;
+      margin-bottom: 13px;
     }
-    .name{
-      margin:0;
-      color:var(--blue-dark);
-      font-size:21px;
+    .discover {
+      display: block;
+      width: 100%;
+      text-align: center;
+      background: var(--red);
+      color: white;
+      text-decoration: none;
+      padding: 11px;
+      border-radius: 9px;
+      font-weight: 800;
+      font-size: 13px;
     }
-    .verified{
-      color:var(--green);
-      font-size:13px;
-      margin-left:6px;
-      font-weight:700;
+    .discover:hover {
+      background: #b91f1f;
     }
-    .meta{
-      margin-top:8px;
-      color:var(--muted);
-      font-size:14px;
+    .empty {
+      border: 1px dashed #3a3a3a;
+      background: var(--dark);
+      border-radius: 14px;
+      padding: 30px;
+      text-align: center;
+      color: var(--muted);
     }
-    .bio{
-      margin-top:12px;
-      color:#526a82;
-      font-size:14px;
-      min-height:45px;
+    footer {
+      border-top: 1px solid #292929;
+      background: var(--dark);
+      text-align: center;
+      padding: 35px 18px;
+      color: var(--muted);
     }
-    .tags{
-      display:flex;
-      flex-wrap:wrap;
-      gap:7px;
-      margin-top:14px;
+    footer strong {
+      color: var(--white);
     }
-    .tag{
-      background:var(--blue-light);
-      color:var(--blue-dark);
-      border-radius:20px;
-      padding:5px 9px;
-      font-size:12px;
-      font-weight:600;
-    }
-    .button{
-      display:inline-block;
-      margin-top:17px;
-      padding:10px 14px;
-      border-radius:9px;
-      background:var(--blue);
-      color:white;
-      text-decoration:none;
-      font-weight:700;
-      font-size:14px;
-    }
-    .button:hover{
-      background:var(--blue-dark);
-    }
-    .info{
-      background:white;
-      border:1px solid var(--border);
-      border-radius:16px;
-      padding:25px;
-      margin-top:25px;
-    }
-    .info h2{
-      color:var(--blue-dark);
-      margin-top:0;
-    }
-    .info-grid{
-      display:grid;
-      grid-template-columns:repeat(3,1fr);
-      gap:15px;
-    }
-    .info-item{
-      background:var(--blue-light);
-      border-radius:12px;
-      padding:16px;
-    }
-    .info-item strong{
-      display:block;
-      color:var(--blue-dark);
-      margin-bottom:5px;
-    }
-    .empty,
-    .loading,
-    .error{
-      background:white;
-      border:1px solid var(--border);
-      border-radius:15px;
-      padding:30px;
-      text-align:center;
-      color:var(--muted);
-    }
-    .error{
-      color:#a33a3a;
-    }
-    footer{
-      margin-top:50px;
-      padding:30px 20px;
-      background:var(--blue-light);
-      text-align:center;
-      color:var(--muted);
-      font-size:14px;
-    }
-    @media(max-width:1000px){
-      .search-row{
-        grid-template-columns:1fr 1fr;
+    @media (max-width: 700px) {
+      .header-inner {
+        flex-direction: column;
+        align-items: flex-start;
       }
-      .grid{
-        grid-template-columns:repeat(2,1fr);
+      nav {
+        width: 100%;
       }
-      .info-grid{
-        grid-template-columns:1fr 1fr;
+      .hero {
+        padding: 40px 22px;
+        border-radius: 15px;
       }
-    }
-    @media(max-width:650px){
-      .header-inner{
-        flex-direction:column;
-        align-items:flex-start;
+      .filters {
+        grid-template-columns: 1fr;
       }
-      .grid{
-        grid-template-columns:1fr;
+      .artists {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 10px;
       }
-      .search-row{
-        grid-template-columns:1fr;
+      .artist-body {
+        padding: 11px;
       }
-      .info-grid{
-        grid-template-columns:1fr;
+      .artist-name {
+        font-size: 15px;
       }
-      h1{
-        font-size:29px;
+      .meta {
+        font-size: 11px;
+      }
+      .discover {
+        padding: 10px 7px;
+        font-size: 11px;
       }
     }
   </style>
@@ -331,311 +272,280 @@
   <div class="header-inner">
 <a class="logo" href="index.html">
   🎧 INDAMORA PLAY
-  <small>INDAMORA RECORDS</small>
+  <small>LA VOIX DE NOS TALENTS.</small>
 </a>
 <nav>
   <a href="index.html">Accueil</a>
-  <a href="public-catalog.html">Catalogue</a>
-  <a href="community.html">Communauté</a>
-  <a href="partners.html">Partenaires</a>
-  <a href="press.html">Presse</a>
+  <a href="index.html#musiques">Musique</a>
+  <a href="index.html#medias">Vidéos</a>
+  <a href="artists.html">Artistes</a>
+  <a href="subscription-account.html">Premium</a>
+  <a href="support.html">Soutenir</a>
+  <a href="account.html">Compte</a>
 </nav>
   </div>
 </header>
-<main>
+<main class="main">
   <section class="hero">
-<h1>🎤 Artistes & créateurs</h1>
-<p>
-  Découvrez les talents présents sur INDAMORA PLAY :
-  musique, gospel, création audiovisuelle, humour, podcasts,
-  cinéma, création de contenu et bien plus encore.
-</p>
-<div class="categories">
-  <span class="category">🎤 Artistes</span>
-  <span class="category">🙏 Gospel</span>
-  <span class="category">🎼 Chantres</span>
-  <span class="category">⛪ Serviteurs de Dieu</span>
-  <span class="category">📖 Pasteurs</span>
-  <span class="category">🎙️ Prédicateurs</span>
-  <span class="category">🎬 Cinéma</span>
-  <span class="category">🎥 Vidéos</span>
-  <span class="category">😂 Humour</span>
-  <span class="category">🎧 Podcasts</span>
-  <span class="category">📱 Créateurs de contenu</span>
-  <span class="category">⭐ Influenceurs</span>
-  <span class="category">🎼 Producteurs</span>
-  <span class="category">📻 Médias</span>
+<div class="hero-badge">
+  🇨🇫 AFRIQUE • TALENTS • MUSIQUE • CULTURE
 </div>
+<h1>
+  NOS <span>ARTISTES</span>
+</h1>
+<p>
+  Découvrez les artistes qui font vivre INDAMORA PLAY
+  et explorez leurs univers musicaux.
+</p>
   </section>
-  <section class="search-box">
-<div class="search-row">
+  <section class="tools">
+<div class="search">
   <input
     id="search"
     type="search"
-    placeholder="Rechercher un profil..."
-    autocomplete="off"
+    placeholder="Rechercher un artiste..."
   >
-  <select id="city">
-    <option value="">Toutes les villes</option>
-  </select>
+</div>
+<div class="filters">
   <select id="region">
-    <option value="">Toutes les régions</option>
+    <option value="">Toutes les régions / pays</option>
   </select>
   <select id="genre">
     <option value="">Tous les genres</option>
   </select>
-  <button id="resetBtn" type="button">
-    Réinitialiser
-  </button>
 </div>
   </section>
-  <div id="resultInfo" class="result-info">
-    Chargement des profils...
+  <div
+    id="status"
+    class="status"
+  >
+    Chargement des artistes...
   </div>
-  <div id="content">
-<div class="loading">
-  Chargement des profils publiés...
-</div>
-  </div>
-  <section class="info">
-<h2>🌍 Un espace pour différents talents</h2>
-<div class="info-grid">
-  <div class="info-item">
-    <strong>🎵 Musique</strong>
-    Artistes, chanteurs, groupes, gospel, chantres et producteurs.
-  </div>
-  <div class="info-item">
-    <strong>🙏 Foi & gospel</strong>
-    Chantres, pasteurs, prédicateurs et serviteurs de Dieu.
-  </div>
-  <div class="info-item">
-    <strong>🎬 Audiovisuel</strong>
-    Cinéma, acteurs, vidéastes et créateurs de vidéos.
-  </div>
-  <div class="info-item">
-    <strong>😂 Divertissement</strong>
-    Humoristes et créateurs de contenus divertissants.
-  </div>
-  <div class="info-item">
-    <strong>🎧 Podcasts</strong>
-    Podcasteurs, intervieweurs et créateurs d'émissions.
-  </div>
-  <div class="info-item">
-    <strong>📱 Créateurs</strong>
-    Créateurs de contenu, influenceurs et personnalités numériques.
-  </div>
-</div>
-  </section>
-  <section style="text-align:center;margin-top:25px;">
-<a class="button" href="register.html">
-  📝 Créer mon profil
-</a>
-<a class="button" href="index.html">
-  ← Retour à l'accueil
-</a>
-  </section>
+  <section
+    id="artists"
+    class="artists"
+  ></section>
 </main>
 <footer>
-  © 2026 INDAMORA PLAY — INDAMORA RECORDS
+  <p>
+    <strong>🎧 INDAMORA PLAY</strong>
+  </p>
+  <p>
+    La voix de nos talents.
+  </p>
+  <p>
+    © INDAMORA RECORDS
+  </p>
 </footer>
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
-  const SUPABASE_URL =
-    "https://adqsdnqkbitplbhbihiv.supabase.co";
-  const SUPABASE_KEY =
-    "sb_publishable_dpjfWOYeNQRmP2nJq5FoMA_8NUuD0HF";
-  const db =
-    window.supabase.createClient(
-      SUPABASE_URL,
-      SUPABASE_KEY
-    );
-  let artists = [];
-  const searchInput =
-    document.getElementById("search");
-  const citySelect =
-    document.getElementById("city");
-  const regionSelect =
-    document.getElementById("region");
-  const genreSelect =
-    document.getElementById("genre");
-  const resetBtn =
-    document.getElementById("resetBtn");
-  const content =
-    document.getElementById("content");
-  const resultInfo =
-    document.getElementById("resultInfo");
-  function escapeHtml(value){
-    return String(value ?? "")
-      .replace(/&/g,"&amp;")
-      .replace(/</g,"&lt;")
-      .replace(/>/g,"&gt;")
-      .replace(/"/g,"&quot;")
-      .replace(/'/g,"&#039;");
+const SUPABASE_URL =
+  "https://adqsdnqkbitplbhbihiv.supabase.co";
+const SUPABASE_PUBLISHABLE_KEY =
+  "sb_publishable_dpjfWOYeNQRmP2nJq5FoMA_8NUuD0HF";
+const { createClient } =
+  supabase;
+const db =
+  createClient(
+    SUPABASE_URL,
+    SUPABASE_PUBLISHABLE_KEY
+  );
+const artistsContainer =
+  document.getElementById("artists");
+const status =
+  document.getElementById("status");
+const searchInput =
+  document.getElementById("search");
+const regionFilter =
+  document.getElementById("region");
+const genreFilter =
+  document.getElementById("genre");
+let artists = [];
+function escapeHtml(value) {
+  if (
+    value === null ||
+    value === undefined
+  ) {
+    return "";
   }
-  function uniqueSorted(values){
-    return [...new Set(
-      values
-        .filter(Boolean)
-        .map(value => String(value).trim())
-        .filter(Boolean)
-    )].sort(
-      (a,b) =>
-        a.localeCompare(
-          b,
-          "fr",
-          {sensitivity:"base"}
-        )
-    );
+  return String(value)
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#039;");
+}
+function image(url) {
+  if (url) {
+    return url;
   }
-  function populateFilters(){
-    citySelect.innerHTML =
-      '<option value="">Toutes les villes</option>';
-    regionSelect.innerHTML =
-      '<option value="">Toutes les régions</option>';
-    genreSelect.innerHTML =
-      '<option value="">Tous les genres</option>';
-    uniqueSorted(
-      artists.map(a => a.city)
-    ).forEach(city => {
-      const option =
-        document.createElement("option");
-      option.value = city;
-      option.textContent = city;
-      citySelect.appendChild(option);
-    });
-    uniqueSorted(
-      artists.map(a => a.region)
-    ).forEach(region => {
-      const option =
-        document.createElement("option");
-      option.value = region;
-      option.textContent = region;
-      regionSelect.appendChild(option);
-    });
-    uniqueSorted(
-      artists.map(a => a.genre)
-    ).forEach(genre => {
-      const option =
-        document.createElement("option");
-      option.value = genre;
-      option.textContent = genre;
-      genreSelect.appendChild(option);
-    });
+  return "data:image/svg+xml;charset=UTF-8," +
+    encodeURIComponent(`
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="600"
+        height="600"
+        viewBox="0 0 600 600"
+      >
+        <rect
+          width="600"
+          height="600"
+          fill="#181818"
+        />
+        <text
+          x="300"
+          y="320"
+          text-anchor="middle"
+          font-family="Arial"
+          font-size="85"
+          fill="#f2c230"
+        >
+          🎤
+        </text>
+      </svg>
+    `);
+}
+async function loadArtists() {
+  status.textContent =
+    "Chargement des artistes...";
+  const {
+    data,
+    error
+  } = await db
+    .from("artists")
+    .select("*")
+    .eq("status", "published")
+    .order("name");
+  if (error) {
+    console.error(error);
+    status.textContent =
+      "Impossible de charger les artistes.";
+    artistsContainer.innerHTML =
+      `
+        <div class="empty">
+          Une erreur est survenue lors du chargement.
+        </div>
+      `;
+    return;
   }
-  function renderArtists(){
-    const search =
-      searchInput.value
-        .trim()
-        .toLowerCase();
-    const city =
-      citySelect.value
-        .trim()
-        .toLowerCase();
-    const region =
-      regionSelect.value
-        .trim()
-        .toLowerCase();
-    const genre =
-      genreSelect.value
-        .trim()
-        .toLowerCase();
-    const filtered =
-      artists.filter(artist => {
-        const haystack = [
-          artist.name,
-          artist.bio,
-          artist.city,
-          artist.region,
-          artist.language,
-          artist.genre
-        ]
-        .filter(Boolean)
-        .join(" ")
-        .toLowerCase();
+  artists =
+    data || [];
+  populateFilters();
+  render();
+}
+function populateFilters() {
+  const regions =
+    [
+      ...new Set(
+        artists
+          .map(
+            artist =>
+              artist.region
+          )
+          .filter(Boolean)
+      )
+    ]
+    .sort();
+  const genres =
+    [
+      ...new Set(
+        artists
+          .map(
+            artist =>
+              artist.genre
+          )
+          .filter(Boolean)
+      )
+    ]
+    .sort();
+  regionFilter.innerHTML =
+    '<option value="">Toutes les régions / pays</option>' +
+    regions
+      .map(
+        region =>
+          `<option value="${escapeHtml(region)}">${escapeHtml(region)}</option>`
+      )
+      .join("");
+  genreFilter.innerHTML =
+    '<option value="">Tous les genres</option>' +
+    genres
+      .map(
+        genre =>
+          `<option value="${escapeHtml(genre)}">${escapeHtml(genre)}</option>`
+      )
+      .join("");
+}
+function render() {
+  const search =
+    searchInput.value
+      .trim()
+      .toLowerCase();
+  const region =
+    regionFilter.value;
+  const genre =
+    genreFilter.value;
+  const filtered =
+    artists.filter(
+      artist => {
+        const name =
+          String(
+            artist.name || ""
+          ).toLowerCase();
+        const bio =
+          String(
+            artist.bio || ""
+          ).toLowerCase();
         const matchesSearch =
           !search ||
-          haystack.includes(search);
-        const matchesCity =
-          !city ||
-          String(
-            artist.city ?? ""
-          ).toLowerCase() === city;
+          name.includes(search) ||
+          bio.includes(search);
         const matchesRegion =
           !region ||
-          String(
-            artist.region ?? ""
-          ).toLowerCase() === region;
+          artist.region === region;
         const matchesGenre =
           !genre ||
-          String(
-            artist.genre ?? ""
-          ).toLowerCase() === genre;
+          artist.genre === genre;
         return (
           matchesSearch &&
-          matchesCity &&
           matchesRegion &&
           matchesGenre
         );
-      });
-    resultInfo.textContent =
-      filtered.length +
-      " profil" +
-      (filtered.length > 1 ? "s" : "") +
-      " publié" +
-      (filtered.length > 1 ? "s" : "");
-    if(!filtered.length){
-      content.innerHTML = `
+      }
+    );
+  status.textContent =
+    filtered.length +
+    (
+      filtered.length > 1
+        ? " artistes"
+        : " artiste"
+    );
+  if (!filtered.length) {
+    artistsContainer.innerHTML =
+      `
         <div class="empty">
-          Aucun profil ne correspond à votre recherche.
+          Aucun artiste disponible pour le moment.
         </div>
       `;
-      return;
-    }
-    content.innerHTML = `
-      <section class="grid">
-        ${filtered.map(artist => {
-          const avatar =
-            artist.avatar_url
-              ? `
-                <img
-                  src="${escapeHtml(
-                    artist.avatar_url
-                  )}"
-                  alt="Profil de ${escapeHtml(
-                    artist.name
-                  )}"
-                  loading="lazy"
-                >
-              `
-              : `
-                <div class="placeholder">
-                  🎤
-                </div>
-              `;
-          const location = [
-            artist.city,
-            artist.region
-          ]
-          .filter(Boolean)
-          .join(" · ");
-          const tags = [
-            artist.genre,
-            artist.language
-          ]
-          .filter(Boolean)
-          .map(tag => `
-            <span class="tag">
-              ${escapeHtml(tag)}
-            </span>
-          `)
-          .join("");
+    return;
+  }
+  artistsContainer.innerHTML =
+    filtered
+      .map(
+        artist => {
           return `
-            <article class="card">
-              <div class="visual">
-                ${avatar}
-              </div>
-              <div class="body">
-                <h2 class="name">
+            <article class="artist">
+              <img
+                class="artist-image"
+                src="${escapeHtml(
+                  image(
+                    artist.avatar_url
+                  )
+                )}"
+                alt="${escapeHtml(
+                  artist.name
+                )}"
+              >
+              <div class="artist-body">
+                <h2 class="artist-name">
                   ${escapeHtml(
                     artist.name
                   )}
@@ -649,130 +559,62 @@
                       : ""
                   }
                 </h2>
-                ${
-                  location
-                    ? `
-                      <div class="meta">
-                        📍 ${escapeHtml(
-                          location
-                        )}
-                      </div>
-                    `
-                    : ""
-                }
-                <div class="bio">
+                <div class="meta">
                   ${
-                    artist.bio
-                      ? escapeHtml(
-                          artist.bio.length > 140
-                            ? artist.bio.substring(
-                                0,
-                                140
-                              ) + "..."
-                            : artist.bio
+                    artist.region
+                      ? "🌍 " +
+                        escapeHtml(
+                          artist.region
+                        ) +
+                        "<br>"
+                      : ""
+                  }
+                  ${
+                    artist.city
+                      ? "📍 " +
+                        escapeHtml(
+                          artist.city
+                        ) +
+                        "<br>"
+                      : ""
+                  }
+                  ${
+                    artist.genre
+                      ? "🎵 " +
+                        escapeHtml(
+                          artist.genre
                         )
-                      : `
-                        Profil publié sur
-                        INDAMORA PLAY.
-                      `
+                      : ""
                   }
                 </div>
-                ${
-                  tags
-                    ? `
-                      <div class="tags">
-                        ${tags}
-                      </div>
-                    `
-                    : ""
-                }
                 <a
-                  class="button"
+                  class="discover"
                   href="public-artist.html?id=${encodeURIComponent(
                     artist.id
                   )}"
                 >
-                  Voir le profil
+                  DÉCOUVRIR
                 </a>
               </div>
             </article>
           `;
-        }).join("")}
-      </section>
-    `;
-  }
-  async function loadArtists(){
-    content.innerHTML = `
-      <div class="loading">
-        Chargement des profils publiés...
-      </div>
-    `;
-    const { data, error } =
-      await db
-        .from("artists")
-        .select(`
-          id,
-          name,
-          slug,
-          bio,
-          city,
-          region,
-          language,
-          genre,
-          avatar_url,
-          verified,
-          status
-        `)
-        .eq(
-          "status",
-          "published"
-        )
-        .order(
-          "name",
-          {ascending:true}
-        );
-    if(error){
-      console.error(error);
-      resultInfo.textContent = "";
-      content.innerHTML = `
-        <div class="error">
-          Impossible de charger les profils
-          pour le moment.
-        </div>
-      `;
-      return;
-    }
-    artists = data ?? [];
-    populateFilters();
-    renderArtists();
-  }
-  searchInput.addEventListener(
-    "input",
-    renderArtists
-  );
-  citySelect.addEventListener(
-    "change",
-    renderArtists
-  );
-  regionSelect.addEventListener(
-    "change",
-    renderArtists
-  );
-  genreSelect.addEventListener(
-    "change",
-    renderArtists
-  );
-  resetBtn.addEventListener(
-    "click",
-    () => {
-      searchInput.value = "";
-      citySelect.value = "";
-      regionSelect.value = "";
-      genreSelect.value = "";
-      renderArtists();
-    }
-  );
-  loadArtists();
+        }
+      )
+      .join("");
+}
+searchInput.addEventListener(
+  "input",
+  render
+);
+regionFilter.addEventListener(
+  "change",
+  render
+);
+genreFilter.addEventListener(
+  "change",
+  render
+);
+loadArtists();
 </script>
 </body>
 </html>
