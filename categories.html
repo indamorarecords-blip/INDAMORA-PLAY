@@ -5,137 +5,142 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Catégories — INDAMORA PLAY</title>
   <style>
-    * { box-sizing: border-box; }
-body {
-  margin: 0;
-  font-family: Arial, sans-serif;
-  background: #f5f9ff;
-  color: #123;
-}
-header {
-  background: #0757c9;
-  color: white;
-  padding: 18px 20px;
-  position: sticky;
-  top: 0;
-  z-index: 10;
-}
-.header-inner {
-  max-width: 1100px;
-  margin: auto;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 15px;
-  flex-wrap: wrap;
-}
-.logo {
-  font-size: 22px;
-  font-weight: bold;
-}
-nav a {
-  color: white;
-  text-decoration: none;
-  margin: 0 8px;
-  font-weight: bold;
-}
-main {
-  max-width: 1100px;
-  margin: auto;
-  padding: 35px 20px 60px;
-}
-.hero {
-  background: white;
-  border-radius: 18px;
-  padding: 30px;
-  box-shadow: 0 8px 25px rgba(0,0,0,.06);
-  margin-bottom: 25px;
-}
-h1 {
-  color: #0757c9;
-  margin-top: 0;
-}
-.search {
-  width: 100%;
-  padding: 14px;
-  border: 1px solid #cbd8ea;
-  border-radius: 10px;
-  font-size: 16px;
-  margin-top: 15px;
-}
-.categories {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: 15px;
-}
-.category {
-  background: white;
-  border: 1px solid #dbe6f5;
-  border-radius: 16px;
-  padding: 20px;
-  text-decoration: none;
-  color: #123;
-  transition: .2s;
-  box-shadow: 0 5px 18px rgba(0,0,0,.04);
-}
-.category:hover {
-  transform: translateY(-3px);
-  border-color: #0757c9;
-  box-shadow: 0 10px 25px rgba(7,87,201,.12);
-}
-.icon {
-  font-size: 30px;
-  margin-bottom: 10px;
-}
-.category strong {
-  display: block;
-  color: #0757c9;
-  font-size: 18px;
-  margin-bottom: 6px;
-}
-.category span {
-  color: #607086;
-  font-size: 14px;
-}
-.info {
-  margin-top: 30px;
-  background: #eaf3ff;
-  border-left: 5px solid #0757c9;
-  padding: 20px;
-  border-radius: 12px;
-}
-footer {
-  text-align: center;
-  padding: 25px;
-  color: #607086;
-  font-size: 14px;
-}
-@media (max-width: 600px) {
-  nav a {
-    margin: 4px;
-    display: inline-block;
-  }
-}
+    * {
+      box-sizing: border-box;
+    }
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #f5f9ff;
+      color: #123;
+    }
+    header {
+      background: #0757c9;
+      color: white;
+      padding: 18px 20px;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+    .header-inner {
+      max-width: 1100px;
+      margin: auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 15px;
+      flex-wrap: wrap;
+    }
+    .logo {
+      font-size: 22px;
+      font-weight: bold;
+    }
+    nav a {
+      color: white;
+      text-decoration: none;
+      margin: 0 8px;
+      font-weight: bold;
+    }
+    main {
+      max-width: 1100px;
+      margin: auto;
+      padding: 35px 20px 60px;
+    }
+    .hero {
+      background: white;
+      border-radius: 18px;
+      padding: 30px;
+      box-shadow: 0 8px 25px rgba(0,0,0,.06);
+      margin-bottom: 25px;
+    }
+    h1 {
+      color: #0757c9;
+      margin-top: 0;
+    }
+    .search {
+      width: 100%;
+      padding: 14px;
+      border: 1px solid #cbd8ea;
+      border-radius: 10px;
+      font-size: 16px;
+      margin-top: 15px;
+    }
+    .categories {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 15px;
+    }
+    .category {
+      background: white;
+      border: 1px solid #dbe6f5;
+      border-radius: 16px;
+      padding: 20px;
+      text-decoration: none;
+      color: #123;
+      transition: .2s;
+      box-shadow: 0 5px 18px rgba(0,0,0,.04);
+    }
+    .category:hover {
+      transform: translateY(-3px);
+      border-color: #0757c9;
+      box-shadow: 0 10px 25px rgba(7,87,201,.12);
+    }
+    .icon {
+      font-size: 30px;
+      margin-bottom: 10px;
+    }
+    .category strong {
+      display: block;
+      color: #0757c9;
+      font-size: 18px;
+      margin-bottom: 6px;
+    }
+    .category span {
+      color: #607086;
+      font-size: 14px;
+      line-height: 1.5;
+    }
+    .info {
+      margin-top: 30px;
+      background: #eaf3ff;
+      border-left: 5px solid #0757c9;
+      padding: 20px;
+      border-radius: 12px;
+      line-height: 1.6;
+    }
+    footer {
+      text-align: center;
+      padding: 25px;
+      color: #607086;
+      font-size: 14px;
+    }
+    @media (max-width: 600px) {
+      nav a {
+        margin: 4px;
+        display: inline-block;
+      }
+    }
   </style>
 </head>
 <body>
 <header>
   <div class="header-inner">
     <div class="logo">INDAMORA PLAY</div>
-    <nav>
-      <a href="index.html">Accueil</a>
-      <a href="artists.html">Profils</a>
-      <a href="public-catalog.html">Catalogue</a>
-    </nav>
+<nav>
+  <a href="index.html">Accueil</a>
+  <a href="artists.html">Profils</a>
+  <a href="public-catalog.html">Catalogue</a>
+</nav>
   </div>
 </header>
 <main>
   <section class="hero">
     <h1>🌍 Découvrir par catégorie</h1>
-    <p>
-      INDAMORA PLAY accueille progressivement différents profils,
-      artistes, créateurs, médias, structures et acteurs culturels.
-    </p>
+<p>
+  INDAMORA PLAY rassemble progressivement différents profils,
+  artistes, créateurs, professionnels, médias, structures
+  et acteurs culturels.
+</p>
 <input
   id="search"
   class="search"
@@ -168,7 +173,7 @@ footer {
 <a class="category" href="artists.html" data-name="predicateurs enseignants">
   <div class="icon">🎙️</div>
   <strong>Prédicateurs & enseignants</strong>
-  <span>Messages, enseignements et podcasts.</span>
+  <span>Messages, enseignements et contenus audio.</span>
 </a>
 <a class="category" href="artists.html" data-name="cinema">
   <div class="icon">🎬</div>
@@ -247,13 +252,18 @@ footer {
 </a>
   </section>
   <div class="info">
-    <strong>ℹ️ Mise en place progressive</strong>
-    <p>
-      Les catégories sont préparées ici sans modifier les contenus
-      déjà publiés ni les fonctionnalités existantes.
-      L'étape suivante permettra de relier progressivement les profils
-      à une ou plusieurs catégories.
-    </p>
+    <strong>ℹ️ Catégories multiples</strong>
+<p>
+  Un même profil pourra appartenir à plusieurs catégories.
+  Par exemple, une personne pourra être à la fois
+  <strong>Chantre</strong>, <strong>Gospel</strong> et
+  <strong>Créateur de contenu</strong>.
+</p>
+<p>
+  Cette page prépare cette organisation sans modifier
+  les profils, les contenus publiés ou les fonctionnalités
+  déjà opérationnelles.
+</p>
   </div>
 </main>
 <footer>
@@ -268,7 +278,10 @@ function filterCategories() {
     .trim();
   document.querySelectorAll(".category").forEach(card => {
     const name = card.dataset.name.toLowerCase();
-    card.style.display = !query || name.includes(query) ? "" : "none";
+    card.style.display =
+      !query || name.includes(query)
+        ? ""
+        : "none";
   });
 }
 </script>
