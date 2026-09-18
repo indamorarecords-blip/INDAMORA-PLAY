@@ -18,9 +18,9 @@
       --text: #18324A;
       --muted: #6D7F8F;
       --border: #E1EDF3;
-      --shadow: 0 12px 35px rgba(22, 137, 199, 0.10);
-      --shadow-hover: 0 18px 45px rgba(22, 137, 199, 0.16);
-      --radius: 22px;
+      --shadow: 0 14px 40px rgba(22, 137, 199, 0.09);
+      --shadow-hover: 0 22px 50px rgba(22, 137, 199, 0.15);
+      --radius: 24px;
     }
     * {
       box-sizing: border-box;
@@ -38,15 +38,25 @@
         Arial,
         Helvetica,
         sans-serif;
+      color: var(--text);
+      min-height: 100vh;
       background:
+        radial-gradient(
+          circle at 0% 0%,
+          rgba(242, 194, 48, 0.14),
+          transparent 27%
+        ),
+        radial-gradient(
+          circle at 100% 8%,
+          rgba(22, 132, 71, 0.09),
+          transparent 25%
+        ),
         linear-gradient(
           180deg,
           var(--cream) 0%,
-          var(--white) 38%,
-          var(--blue-soft) 100%
+          var(--white) 45%,
+          #F4FBFE 100%
         );
-      color: var(--text);
-      min-height: 100vh;
     }
     a {
       color: inherit;
@@ -59,131 +69,147 @@
       top: 0;
       z-index: 50;
       background: rgba(255, 255, 255, 0.94);
-      backdrop-filter: blur(14px);
-      -webkit-backdrop-filter: blur(14px);
       border-bottom: 1px solid var(--border);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
     }
     .header-inner {
-      max-width: 1180px;
+      width: min(1180px, calc(100% - 32px));
+      min-height: 74px;
       margin: 0 auto;
-      min-height: 76px;
-      padding: 14px 20px;
+      padding: 13px 0;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 20px;
+      gap: 18px;
     }
     .logo {
       display: flex;
       align-items: center;
       gap: 10px;
       color: var(--blue-dark);
-      font-size: 21px;
+      font-size: 20px;
       font-weight: 900;
-      letter-spacing: -0.4px;
+      letter-spacing: -0.5px;
     }
     .logo-mark {
-      width: 38px;
-      height: 38px;
-      border-radius: 12px;
+      width: 42px;
+      height: 42px;
       display: flex;
       align-items: center;
       justify-content: center;
+      border-radius: 14px;
       background:
         linear-gradient(
           135deg,
           var(--blue),
           var(--blue-dark)
         );
-      color: white;
-      box-shadow: 0 8px 20px rgba(22, 137, 199, 0.20);
+      color: var(--white);
+      box-shadow:
+        0 8px 20px rgba(22, 137, 199, 0.20);
     }
     .back {
       display: inline-flex;
       align-items: center;
       gap: 8px;
+      padding: 10px 15px;
+      border: 1px solid var(--border);
+      border-radius: 13px;
+      background: var(--white);
       color: var(--blue-dark);
       text-decoration: none;
-      font-size: 14px;
-      font-weight: 800;
-      padding: 10px 14px;
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      background: var(--white);
+      font-size: 13px;
+      font-weight: 850;
       transition:
-        transform 0.2s ease,
-        border-color 0.2s ease,
-        background 0.2s ease;
+        transform .2s ease,
+        background .2s ease,
+        border-color .2s ease;
     }
     .back:hover {
       transform: translateY(-2px);
-      border-color: #B9DDEC;
       background: var(--blue-soft);
+      border-color: #B9DDEC;
     }
     /* =========================
        MAIN
     ========================= */
     main {
-      max-width: 1180px;
+      width: min(1180px, calc(100% - 32px));
       margin: 0 auto;
-      padding: 52px 20px 30px;
+      padding: 48px 0 30px;
     }
     .hero {
       position: relative;
       overflow: hidden;
-      background: var(--white);
+      margin-bottom: 48px;
+      padding: 48px 42px;
       border: 1px solid var(--border);
       border-radius: 30px;
-      padding: 42px 38px;
+      background:
+        linear-gradient(
+          135deg,
+          rgba(255,255,255,.98),
+          rgba(234,246,252,.92)
+        );
       box-shadow: var(--shadow);
-      margin-bottom: 48px;
     }
     .hero::before {
       content: "";
       position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
+      inset: 0 0 auto 0;
       height: 5px;
       background:
         linear-gradient(
           90deg,
-          var(--blue) 0%,
-          var(--blue) 35%,
-          var(--red) 35%,
-          var(--red) 55%,
-          var(--yellow) 55%,
-          var(--yellow) 75%,
-          var(--green) 75%,
-          var(--green) 100%
+          var(--blue) 0 35%,
+          var(--red) 35% 55%,
+          var(--yellow) 55% 75%,
+          var(--green) 75% 100%
         );
     }
+    .hero::after {
+      content: "♪";
+      position: absolute;
+      right: 36px;
+      bottom: -30px;
+      color: rgba(22, 137, 199, 0.08);
+      font-size: 190px;
+      line-height: 1;
+      pointer-events: none;
+    }
     .hero-badge {
+      position: relative;
+      z-index: 1;
       display: inline-flex;
       align-items: center;
       gap: 7px;
-      color: var(--blue-dark);
-      background: var(--blue-soft);
+      margin-bottom: 18px;
+      padding: 8px 14px;
       border: 1px solid #CDE8F4;
       border-radius: 999px;
-      padding: 8px 13px;
+      background: var(--white);
+      color: var(--blue-dark);
       font-size: 12px;
       font-weight: 900;
-      letter-spacing: 0.5px;
+      letter-spacing: .4px;
       text-transform: uppercase;
-      margin-bottom: 18px;
     }
     h1 {
-      margin: 0 0 12px;
+      position: relative;
+      z-index: 1;
+      margin: 0 0 14px;
       color: var(--text);
-      font-size: clamp(32px, 5vw, 54px);
-      line-height: 1.02;
-      letter-spacing: -1.8px;
+      font-size: clamp(34px, 5vw, 56px);
+      line-height: 1;
+      letter-spacing: -2px;
     }
     .hero-title-accent {
       color: var(--blue-dark);
     }
     .intro {
+      position: relative;
+      z-index: 1;
       max-width: 720px;
       margin: 0;
       color: var(--muted);
@@ -194,41 +220,41 @@
        SECTIONS
     ========================= */
     .section {
-      margin-bottom: 54px;
+      margin-bottom: 56px;
     }
     .section-header {
       display: flex;
-      align-items: flex-end;
+      align-items: center;
       justify-content: space-between;
-      gap: 15px;
-      margin-bottom: 20px;
+      gap: 18px;
+      margin-bottom: 22px;
     }
     .section-heading-wrap {
       display: flex;
       align-items: center;
-      gap: 12px;
+      gap: 13px;
     }
     .section-icon {
-      width: 44px;
-      height: 44px;
+      width: 48px;
+      height: 48px;
       display: flex;
       align-items: center;
       justify-content: center;
-      border-radius: 14px;
+      border-radius: 15px;
       background: var(--blue-soft);
       border: 1px solid #CDE8F4;
-      font-size: 22px;
+      font-size: 23px;
     }
     .section-title {
       margin: 0;
       color: var(--text);
-      font-size: clamp(24px, 3vw, 32px);
+      font-size: clamp(25px, 3vw, 33px);
       line-height: 1.1;
-      letter-spacing: -0.8px;
+      letter-spacing: -.9px;
     }
     .section-line {
+      width: 58px;
       height: 4px;
-      width: 54px;
       margin-top: 9px;
       border-radius: 999px;
       background:
@@ -248,7 +274,7 @@
       grid-template-columns:
         repeat(
           auto-fill,
-          minmax(230px, 1fr)
+          minmax(225px, 1fr)
         );
       gap: 22px;
     }
@@ -258,19 +284,19 @@
     .card {
       position: relative;
       overflow: hidden;
-      background: var(--white);
       border: 1px solid var(--border);
       border-radius: var(--radius);
+      background: var(--white);
       box-shadow: var(--shadow);
       transition:
-        transform 0.25s ease,
-        box-shadow 0.25s ease,
-        border-color 0.25s ease;
+        transform .25s ease,
+        box-shadow .25s ease,
+        border-color .25s ease;
     }
     .card:hover {
       transform: translateY(-6px);
+      border-color: #C5E1ED;
       box-shadow: var(--shadow-hover);
-      border-color: #C7E2EE;
     }
     .card::after {
       content: "";
@@ -278,7 +304,7 @@
       left: 0;
       right: 0;
       bottom: 0;
-      height: 3px;
+      height: 4px;
       background:
         linear-gradient(
           90deg,
@@ -288,7 +314,7 @@
           var(--green)
         );
       opacity: 0;
-      transition: opacity 0.25s ease;
+      transition: opacity .25s ease;
     }
     .card:hover::after {
       opacity: 1;
@@ -302,8 +328,7 @@
     .image {
       object-fit: cover;
       background: var(--blue-soft);
-      transition:
-        transform 0.4s ease;
+      transition: transform .4s ease;
     }
     .card:hover .image {
       transform: scale(1.035);
@@ -313,47 +338,57 @@
       align-items: center;
       justify-content: center;
       background:
+        radial-gradient(
+          circle at 30% 20%,
+          rgba(242,194,48,.20),
+          transparent 25%
+        ),
         linear-gradient(
           135deg,
           var(--blue-soft),
           #F9FDFF
         );
+      color: var(--blue-dark);
       font-size: 58px;
     }
     .card-body {
-      padding: 18px;
+      padding: 19px;
     }
     .card-title {
+      margin-bottom: 9px;
       color: var(--text);
       font-size: 18px;
       font-weight: 900;
-      line-height: 1.25;
-      margin-bottom: 9px;
+      line-height: 1.3;
     }
     .meta {
+      margin-bottom: 14px;
       color: var(--muted);
       font-size: 13px;
       line-height: 1.55;
-      margin-bottom: 13px;
     }
+    /* =========================
+       VERIFIED
+    ========================= */
     .verified {
       display: inline-flex;
       align-items: center;
-      gap: 6px;
+      gap: 7px;
+      margin-bottom: 14px;
       color: var(--green);
       font-size: 13px;
-      font-weight: 800;
-      margin-bottom: 14px;
+      font-weight: 850;
     }
     .verified-dot {
-      width: 18px;
-      height: 18px;
+      width: 19px;
+      height: 19px;
       display: inline-flex;
       align-items: center;
       justify-content: center;
       border-radius: 50%;
       background: #E8F7EF;
       border: 1px solid #C5E9D5;
+      font-size: 11px;
     }
     /* =========================
        BUTTONS
@@ -363,67 +398,68 @@
       align-items: center;
       justify-content: center;
       gap: 7px;
-      min-height: 42px;
+      width: 100%;
+      min-height: 44px;
+      padding: 11px 15px;
+      border-radius: 13px;
       background:
         linear-gradient(
           135deg,
           var(--blue),
           var(--blue-dark)
         );
-      color: white;
+      color: var(--white);
       text-decoration: none;
-      padding: 10px 15px;
-      border-radius: 12px;
       font-size: 13px;
       font-weight: 900;
       box-shadow:
-        0 8px 18px rgba(7, 87, 184, 0.16);
+        0 8px 18px rgba(7,87,184,.16);
       transition:
-        transform 0.2s ease,
-        box-shadow 0.2s ease;
+        transform .2s ease,
+        box-shadow .2s ease;
     }
     .button:hover {
       transform: translateY(-2px);
       box-shadow:
-        0 12px 24px rgba(7, 87, 184, 0.22);
+        0 12px 25px rgba(7,87,184,.22);
     }
     /* =========================
        NOTICE
     ========================= */
     .notice {
       grid-column: 1 / -1;
-      background: var(--white);
+      padding: 25px;
       border: 1px dashed #BFDCE9;
       border-radius: 18px;
-      padding: 24px;
+      background: rgba(255,255,255,.88);
       color: var(--muted);
       text-align: center;
-      line-height: 1.6;
+      line-height: 1.65;
       box-shadow:
-        0 8px 25px rgba(22, 137, 199, 0.06);
+        0 8px 25px rgba(22,137,199,.05);
     }
     /* =========================
        FOOTER
     ========================= */
     footer {
-      margin-top: 40px;
-      padding: 38px 20px 48px;
-      text-align: center;
-      background: var(--white);
+      margin-top: 35px;
+      padding: 40px 20px 48px;
       border-top: 1px solid var(--border);
+      background: var(--white);
       color: var(--muted);
+      text-align: center;
       font-size: 13px;
       line-height: 1.7;
     }
     footer strong {
       color: var(--blue-dark);
-      font-size: 16px;
+      font-size: 17px;
       font-weight: 900;
     }
     .footer-accent {
       width: 90px;
       height: 4px;
-      margin: 12px auto 14px;
+      margin: 13px auto 15px;
       border-radius: 999px;
       background:
         linear-gradient(
@@ -439,41 +475,50 @@
     ========================= */
     @media (max-width: 700px) {
       .header-inner {
-        min-height: 68px;
-        padding: 12px 14px;
+        width: min(100% - 22px, 600px);
+        min-height: 66px;
       }
       .logo {
         font-size: 17px;
       }
       .logo-mark {
-        width: 34px;
-        height: 34px;
-        border-radius: 10px;
+        width: 36px;
+        height: 36px;
+        border-radius: 11px;
       }
       .back {
         padding: 9px 11px;
         font-size: 12px;
       }
       main {
-        padding:
-          28px 14px 20px;
+        width: min(100% - 22px, 600px);
+        padding-top: 25px;
       }
       .hero {
-        padding: 34px 22px;
+        padding: 35px 22px;
         border-radius: 24px;
-        margin-bottom: 36px;
+        margin-bottom: 38px;
       }
       h1 {
-        font-size: 36px;
+        font-size: 37px;
       }
       .intro {
         font-size: 15px;
       }
+      .hero::after {
+        right: 8px;
+        font-size: 130px;
+      }
       .section {
-        margin-bottom: 42px;
+        margin-bottom: 44px;
       }
       .section-title {
-        font-size: 25px;
+        font-size: 26px;
+      }
+      .section-icon {
+        width: 44px;
+        height: 44px;
+        border-radius: 13px;
       }
       .grid {
         grid-template-columns:
@@ -484,10 +529,10 @@
         gap: 13px;
       }
       .card {
-        border-radius: 17px;
+        border-radius: 18px;
       }
       .card-body {
-        padding: 13px;
+        padding: 14px;
       }
       .card-title {
         font-size: 15px;
@@ -496,13 +541,9 @@
         font-size: 12px;
       }
       .button {
-        width: 100%;
-        min-height: 40px;
-        padding: 9px 10px;
+        min-height: 42px;
+        padding: 10px;
         font-size: 12px;
-      }
-      .section-header {
-        align-items: flex-start;
       }
     }
     @media (max-width: 420px) {
@@ -514,6 +555,20 @@
       }
       .button {
         width: auto;
+        padding-left: 14px;
+        padding-right: 14px;
+      }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      html {
+        scroll-behavior: auto;
+      }
+      .card,
+      .image,
+      .button,
+      .back,
+      .card::after {
+        transition: none;
       }
     }
   </style>
@@ -521,77 +576,81 @@
 <body>
 <header>
   <div class="header-inner">
-    <div class="logo">
-      <div class="logo-mark">🎧</div>
-      <span>INDAMORA PLAY</span>
-    </div>
-    <a class="back" href="index.html">
-      ← Accueil
-    </a>
+<div class="logo">
+  <div class="logo-mark">🎧</div>
+  <span>INDAMORA PLAY</span>
+</div>
+<a class="back" href="index.html">
+  ← Accueil
+</a>
   </div>
 </header>
 <main>
   <section class="hero">
-    <div class="hero-badge">
-      🇨🇫 Plateforme musicale d’Afrique centrale
-    </div>
-    <h1>
-      Catalogue
-      <span class="hero-title-accent">
-        public
-      </span>
-    </h1>
-    <p class="intro">
-      Découvrez les artistes et albums publiés sur
-      INDAMORA PLAY.
-    </p>
+<div class="hero-badge">
+  🇨🇫 Plateforme musicale d’Afrique centrale
+</div>
+<h1>
+  Catalogue
+  <span class="hero-title-accent">
+    public
+  </span>
+</h1>
+<p class="intro">
+  Découvrez les artistes et albums publiés sur
+  INDAMORA PLAY.
+</p>
   </section>
   <section class="section">
-    <div class="section-header">
-      <div class="section-heading-wrap">
-        <div class="section-icon">
-          🎤
-        </div>
-        <div>
-          <h2 class="section-title">
-            Artistes
-          </h2>
-          <div class="section-line"></div>
-        </div>
-      </div>
+<div class="section-header">
+  <div class="section-heading-wrap">
+    <div class="section-icon">
+      🎤
     </div>
-    <div id="artists" class="grid">
-      <div class="notice">
-        Chargement des artistes...
-      </div>
+    <div>
+      <h2 class="section-title">
+        Artistes
+      </h2>
+      <div class="section-line"></div>
     </div>
+  </div>
+</div>
+<div id="artists" class="grid">
+  <div class="notice">
+    Chargement des artistes...
+  </div>
+</div>
   </section>
   <section class="section">
-    <div class="section-header">
-      <div class="section-heading-wrap">
-        <div class="section-icon">
-          💿
-        </div>
-        <div>
-          <h2 class="section-title">
-            Albums
-          </h2>
-          <div class="section-line"></div>
-        </div>
-      </div>
+<div class="section-header">
+  <div class="section-heading-wrap">
+    <div class="section-icon">
+      💿
     </div>
-    <div id="albums" class="grid">
-      <div class="notice">
-        Chargement des albums...
-      </div>
+    <div>
+      <h2 class="section-title">
+        Albums
+      </h2>
+      <div class="section-line"></div>
     </div>
+  </div>
+</div>
+<div id="albums" class="grid">
+  <div class="notice">
+    Chargement des albums...
+  </div>
+</div>
   </section>
 </main>
 <footer>
-  <strong>INDAMORA PLAY</strong>
+
+INDAMORA PLAY
+
   <div class="footer-accent"></div>
-  INDAMORA RECORDS —
-  Musique d’Afrique centrale 🇨🇫
+
+INDAMORA RECORDS —
+Musique d’Afrique centrale 🇨🇫
+
 </footer>
 <script>
   const SUPABASE_URL =
