@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Communauté — INDAMORA PLAY</title>
+  <style>
+    :root{
+      --blue:#0b5ed7;
+      --blue-dark:#084298;
+      --blue-light:#eaf3ff;
+      --white:#ffffff;
+      --text:#17324d;
+      --muted:#64748b;
+      --border:#dbe7f5;
+      --background:#f7fbff;
+    }
+    *{
+      box-sizing:border-box;
+    }
+    body{
+      margin:0;
+      font-family:Arial,Helvetica,sans-serif;
+      background:var(--background);
+      color:var(--text);
+      line-height:1.7;
+    }
+    header{
+      background:var(--blue);
+      color:white;
+      padding:18px 20px;
+      position:sticky;
+      top:0;
+      z-index:10;
+      box-shadow:0 3px 12px rgba(0,0,0,.08);
+    }
+    .header-inner{
+      max-width:1100px;
+      margin:auto;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:20px;
+    }
+    .logo{
+      font-size:20px;
+      font-weight:800;
+    }
+    .logo small{
+      display:block;
+      font-size:12px;
+      opacity:.9;
+      margin-top:2px;
+    }
+    nav a{
+      color:white;
+      text-decoration:none;
+      margin-left:16px;
+      font-size:14px;
+    }
+    nav a:hover{
+      text-decoration:underline;
+    }
+    main{
+      max-width:1100px;
+      margin:45px auto;
+      padding:0 20px;
+    }
+    .hero{
+      background:linear-gradient(135deg,#ffffff,#eaf3ff);
+      border:1px solid var(--border);
+      border-radius:20px;
+      padding:40px;
+      margin-bottom:25px;
+      text-align:center;
+    }
+    h1{
+      margin-top:0;
+      color:var(--blue-dark);
+      font-size:36px;
+    }
+    h2{
+      margin-top:0;
+      color:var(--blue-dark);
+      font-size:23px;
+    }
+    .intro{
+      max-width:800px;
+      margin:auto;
+      font-size:17px;
+      color:#40566d;
+    }
+    .grid{
+      display:grid;
+      grid-template-columns:repeat(2,1fr);
+      gap:20px;
+    }
+    .card{
+      background:var(--white);
+      border:1px solid var(--border);
+      border-radius:16px;
+      padding:26px;
+      box-shadow:0 4px 15px rgba(30,80,130,.05);
+    }
+    .icon{
+      font-size:34px;
+      margin-bottom:12px;
+    }
+    .card p:last-child{
+      margin-bottom:0;
+    }
+    .highlight{
+      background:var(--blue-light);
+      border-left:4px solid var(--blue);
+      border-radius:8px;
+      padding:18px;
+      margin-top:25px;
+    }
+    .community-list{
+      padding-left:20px;
+    }
+    .community-list li{
+      margin-bottom:9px;
+    }
+    .button{
+      display:inline-block;
+      background:var(--blue);
+      color:white;
+      padding:11px 17px;
+      border-radius:9px;
+      text-decoration:none;
+      font-weight:700;
+      margin-top:14px;
+    }
+    .button:hover{
+      background:var(--blue-dark);
+    }
+    .links{
+      margin-top:25px;
+      display:flex;
+      flex-wrap:wrap;
+      gap:12px;
+    }
+    footer{
+      margin-top:50px;
+      padding:30px 20px;
+      background:var(--blue-light);
+      text-align:center;
+      color:var(--muted);
+      font-size:14px;
+    }
+    @media(max-width:750px){
+      .header-inner{
+        flex-direction:column;
+        align-items:flex-start;
+      }
+      nav a{
+        margin-left:0;
+        margin-right:12px;
+      }
+      .grid{
+        grid-template-columns:1fr;
+      }
+      .hero{
+        padding:25px 20px;
+      }
+      h1{
+        font-size:29px;
+      }
+    }
+  </style>
+</head>
+<body>
+<header>
+  <div class="header-inner">
+<div class="logo">
+  🎧 INDAMORA PLAY
+  <small>INDAMORA RECORDS</small>
+</div>
+<nav>
+  <a href="index.html">Accueil</a>
+  <a href="help.html">Aide</a>
+  <a href="faq.html">FAQ</a>
+  <a href="contact.html">Contact</a>
+</nav>
+  </div>
+</header>
+<main>
+  <section class="hero">
+<h1>🌍 La communauté INDAMORA PLAY</h1>
+<p class="intro">
+  INDAMORA PLAY rassemble les artistes, les auditeurs, les créateurs,
+  les producteurs et toutes les personnes qui souhaitent contribuer
+  à la découverte et à la valorisation de la musique d'Afrique centrale.
+</p>
+<div class="highlight">
+  <strong>Une plateforme construite autour de la musique et de la communauté.</strong>
+  <br>
+  Chaque artiste publié et chaque auditeur contribue à faire vivre
+  l'écosystème musical.
+</div>
+  </section>
+  <section class="grid">
+<div class="card">
+  <div class="icon">🎤</div>
+  <h2>Artistes</h2>
+  <p>
+    Les artistes disposent d'un espace dédié pour présenter leur
+    univers musical et proposer leurs contenus à la plateforme.
+  </p>
+  <p>
+    Les profils et contenus validés peuvent ensuite être présentés
+    au public dans le catalogue INDAMORA PLAY.
+  </p>
+  <a class="button" href="register.html">
+    Créer un compte artiste
+  </a>
+</div>
+<div class="card">
+  <div class="icon">🎧</div>
+  <h2>Auditeurs</h2>
+  <p>
+    Les auditeurs peuvent découvrir des artistes, écouter les contenus
+    disponibles, consulter les albums et suivre les classements.
+  </p>
+  <a class="button" href="public-catalog.html">
+    Découvrir le catalogue
+  </a>
+</div>
+<div class="card">
+  <div class="icon">🎛️</div>
+  <h2>Producteurs</h2>
+  <p>
+    Les producteurs font partie de l'écosystème musical et peuvent
+    contribuer au développement des projets et des artistes.
+  </p>
+  <p>
+    INDAMORA PLAY a vocation à rapprocher les différents acteurs
+    de la création musicale.
+  </p>
+</div>
+<div class="card">
+  <div class="icon">🎬</div>
+  <h2>Créateurs</h2>
+  <p>
+    Clips, podcasts et autres contenus audiovisuels permettent
+    d'accompagner la musique et de donner davantage de visibilité
+    aux artistes.
+  </p>
+  <a class="button" href="public-media.html">
+    Voir les médias
+  </a>
+</div>
+<div class="card">
+  <div class="icon">🤝</div>
+  <h2>Partenaires</h2>
+  <p>
+    Associations, structures culturelles, organisateurs et acteurs
+    de la musique peuvent contribuer au développement de l'écosystème.
+  </p>
+  <p>
+    Les collaborations peuvent évoluer avec le développement
+    de la plateforme.
+  </p>
+</div>
+<div class="card">
+  <div class="icon">❤️</div>
+  <h2>Soutenir le projet</h2>
+  <p>
+    Les abonnements et les dons peuvent contribuer au fonctionnement
+    et au développement d'INDAMORA PLAY.
+  </p>
+  <p>
+    Les dons peuvent également permettre à l'association de réaliser
+    des gestes de soutien et d'encouragement envers les artistes publiés.
+  </p>
+  <a class="button" href="subscription-account.html">
+    Soutenir INDAMORA PLAY
+  </a>
+</div>
+  </section>
+  <section class="card" style="margin-top:25px;">
+<h2>🎯 Notre objectif</h2>
+<p>
+  INDAMORA PLAY souhaite contribuer à créer un espace où la musique
+  d'Afrique centrale peut être découverte, écoutée et valorisée.
+</p>
+<ul class="community-list">
+  <li>Mettre les artistes en visibilité.</li>
+  <li>Faciliter la découverte de nouveaux talents.</li>
+  <li>Valoriser les différents styles et langues.</li>
+  <li>Créer des liens entre les acteurs de la musique.</li>
+  <li>Encourager les artistes dont les contenus sont publiés.</li>
+  <li>Développer progressivement un véritable écosystème musical.</li>
+</ul>
+  </section>
+  <section class="card" style="margin-top:20px;">
+<h2>🚀 Rejoindre la communauté</h2>
+<p>
+  Que vous soyez artiste, auditeur, producteur, créateur ou simplement
+  passionné de musique, vous pouvez participer au développement
+  d'INDAMORA PLAY.
+</p>
+<div class="links">
+  <a class="button" href="register.html">
+    Créer un compte
+  </a>
+  <a class="button" href="artist.html">
+    Espace artiste
+  </a>
+  <a class="button" href="public-catalog.html">
+    Catalogue
+  </a>
+  <a class="button" href="contact.html">
+    Nous contacter
+  </a>
+  <a class="button" href="index.html">
+    ← Retour à l'accueil
+  </a>
+</div>
+  </section>
+</main>
+<footer>
+  © 2026 INDAMORA PLAY — INDAMORA RECORDS
+</footer>
+</body>
+</html>
