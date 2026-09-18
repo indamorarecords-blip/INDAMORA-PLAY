@@ -1,0 +1,685 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gestion des dons — INDAMORA PLAY</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #f5f9ff;
+      color: #123;
+    }
+    header {
+      background: #0757b8;
+      color: white;
+      padding: 22px 18px;
+      text-align: center;
+    }
+    header h1 {
+      margin: 0;
+      font-size: 25px;
+    }
+    header p {
+      margin: 7px 0 0;
+      opacity: .92;
+    }
+    main {
+      max-width: 1100px;
+      margin: 30px auto;
+      padding: 0 18px;
+    }
+    .card {
+      background: white;
+      border-radius: 16px;
+      padding: 22px;
+      margin-bottom: 20px;
+      box-shadow: 0 8px 25px rgba(0, 70, 150, .08);
+    }
+    .account {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 15px;
+      flex-wrap: wrap;
+    }
+    .email {
+      color: #0757b8;
+      font-weight: bold;
+      margin-top: 5px;
+      word-break: break-word;
+    }
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+      gap: 15px;
+    }
+    .stat {
+      background: #f7fbff;
+      border: 1px solid #dbe8f8;
+      border-radius: 14px;
+      padding: 18px;
+    }
+    .stat-label {
+      color: #667;
+      font-size: 14px;
+    }
+    .stat-value {
+      color: #0757b8;
+      font-size: 25px;
+      font-weight: bold;
+      margin-top: 8px;
+    }
+    .actions {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-top: 16px;
+    }
+    a.button,
+    button {
+      display: inline-block;
+      border: 0;
+      border-radius: 10px;
+      padding: 11px 16px;
+      background: #0757b8;
+      color: white;
+      text-decoration: none;
+      cursor: pointer;
+      font-weight: bold;
+    }
+    a.secondary,
+    button.secondary {
+      background: #e8f1ff;
+      color: #0757b8;
+    }
+    button.danger {
+      background: #d93025;
+    }
+    .payment {
+      border: 1px solid #dbe8f8;
+      border-radius: 14px;
+      padding: 18px;
+      margin-top: 14px;
+      background: #fbfdff;
+    }
+    .payment h3 {
+      margin: 0 0 10px;
+      color: #0757b8;
+    }
+    .payment p {
+      margin: 7px 0;
+    }
+    .badge {
+      display: inline-block;
+      padding: 5px 10px;
+      border-radius: 999px;
+      background: #e8f7ee;
+      color: #147a3d;
+      font-size: 13px;
+      font-weight: bold;
+    }
+    .badge.pending {
+      background: #fff4d6;
+      color: #9a6700;
+    }
+    .badge.canceled {
+      background: #ffe8e6;
+      color: #b42318;
+    }
+    .loading {
+      text-align: center;
+      padding: 25px;
+      color: #0757b8;
+    }
+    .empty {
+      text-align: center;
+      padding: 30px 15px;
+      color: #667;
+    }
+    .message {
+      display: none;
+      padding: 12px 15px;
+      border-radius: 10px;
+      margin-top: 15px;
+    }
+    .message.error {
+      display: block;
+      background: #ffe8e6;
+      color: #b42318;
+    }
+    .message.success {
+      display: block;
+      background: #e8f7ee;
+      color: #147a3d;
+    }
+    .notice {
+      background: #eef6ff;
+      border-left: 4px solid #0757b8;
+      border-radius: 10px;
+      padding: 15px;
+      line-height: 1.6;
+      color: #345;
+    }
+    footer {
+      text-align: center;
+      padding: 30px 15px;
+      color: #667;
+      font-size: 14px;
+    }
+  </style>
+</head>
+<body>
+<header>
+  <h1>💙 INDAMORA PLAY</h1>
+  <p>Administration — dons et soutien</p>
+</header>
+<main>
+  <section class="card">
+<div class="account">
+  <div>
+    <div>Administrateur connecté</div>
+    <div
+      id="userEmail"
+      class="email"
+    >
+      Vérification...
+    </div>
+  </div>
+  <button
+    id="logoutBtn"
+    class="danger"
+  >
+    Se déconnecter
+  </button>
+</div>
+<div class="actions">
+  <a
+    href="admin.html"
+    class="button"
+  >
+    ⚙️ Administration
+  </a>
+  <a
+    href="index.html"
+    class="button secondary"
+  >
+    Retour à INDAMORA PLAY
+  </a>
+  <button
+    id="refreshBtn"
+    class="secondary"
+  >
+    Actualiser
+  </button>
+</div>
+<div
+  id="message"
+  class="message"
+></div>
+  </section>
+  <section class="card">
+<h2>💙 Résumé des dons</h2>
+<div class="stats">
+  <div class="stat">
+    <div class="stat-label">
+      Nombre de dons
+    </div>
+    <div
+      id="donationsCount"
+      class="stat-value"
+    >
+      0
+    </div>
+  </div>
+  <div class="stat">
+    <div class="stat-label">
+      Dons payés
+    </div>
+    <div
+      id="paidCount"
+      class="stat-value"
+    >
+      0
+    </div>
+  </div>
+  <div class="stat">
+    <div class="stat-label">
+      Total EUR
+    </div>
+    <div
+      id="eurTotal"
+      class="stat-value"
+    >
+      0 €
+    </div>
+  </div>
+  <div class="stat">
+    <div class="stat-label">
+      Total FCFA
+    </div>
+    <div
+      id="xafTotal"
+      class="stat-value"
+    >
+      0 FCFA
+    </div>
+  </div>
+</div>
+  </section>
+  <section class="card">
+<h2>📋 Historique des dons</h2>
+<div class="notice">
+  Cette page affiche uniquement les dons enregistrés
+  dans la base INDAMORA PLAY. Elle ne modifie aucun
+  paiement Stripe.
+</div>
+<div
+  id="payments"
+  style="margin-top:15px;"
+>
+  <div class="loading">
+    Chargement des dons...
+  </div>
+</div>
+  </section>
+</main>
+<footer>
+  INDAMORA PLAY — INDAMORA RECORDS 🇨🇫
+</footer>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+  const SUPABASE_URL =
+    "https://adqsdnqkbitplbhbihiv.supabase.co";
+  const SUPABASE_KEY =
+    "sb_publishable_dpjfWOYeNQRmP2nJq5FoMA_8NUuD0HF";
+  const { createClient } =
+    supabase;
+  const db =
+    createClient(
+      SUPABASE_URL,
+      SUPABASE_KEY
+    );
+  const userEmail =
+    document.getElementById(
+      "userEmail"
+    );
+  const paymentsContainer =
+    document.getElementById(
+      "payments"
+    );
+  const message =
+    document.getElementById(
+      "message"
+    );
+  function showMessage(
+    text,
+    type = "error"
+  ) {
+    message.textContent =
+      text;
+    message.className =
+      "message " + type;
+  }
+  function clearMessage() {
+    message.textContent =
+      "";
+    message.className =
+      "message";
+  }
+  function formatAmount(
+    amount,
+    currency
+  ) {
+    const value =
+      Number(amount || 0) / 100;
+    const code =
+      (
+        currency ||
+        "EUR"
+      ).toUpperCase();
+    if (code === "XAF") {
+      return (
+        new Intl.NumberFormat(
+          "fr-FR"
+        ).format(value)
+        + " FCFA"
+      );
+    }
+    if (code === "EUR") {
+      return new Intl.NumberFormat(
+        "fr-FR",
+        {
+          style: "currency",
+          currency: "EUR"
+        }
+      ).format(value);
+    }
+    return (
+      new Intl.NumberFormat(
+        "fr-FR",
+        {
+          minimumFractionDigits: 2,
+          maximumFractionDigits: 2
+        }
+      ).format(value)
+      + " "
+      + code
+    );
+  }
+  function formatDate(
+    value
+  ) {
+    if (!value)
+      return "—";
+    const date =
+      new Date(value);
+    if (
+      Number.isNaN(
+        date.getTime()
+      )
+    ) {
+      return "—";
+    }
+    return new Intl.DateTimeFormat(
+      "fr-FR",
+      {
+        dateStyle: "medium",
+        timeStyle: "short"
+      }
+    ).format(date);
+  }
+  function statusLabel(
+    status
+  ) {
+    const labels = {
+      paid: "Payé",
+      active: "Actif",
+      pending: "En attente",
+      canceled: "Annulé",
+      past_due:
+        "Paiement en retard",
+      unpaid:
+        "Impayé"
+    };
+    return (
+      labels[status] ||
+      status ||
+      "Inconnu"
+    );
+  }
+  function statusClass(
+    status
+  ) {
+    if (
+      status ===
+        "canceled"
+    ) {
+      return "badge canceled";
+    }
+    if (
+      status ===
+        "pending" ||
+      status ===
+        "past_due" ||
+      status ===
+        "unpaid"
+    ) {
+      return "badge pending";
+    }
+    return "badge";
+  }
+  async function loadDonations() {
+    clearMessage();
+    paymentsContainer.innerHTML =
+      `<div class="loading">
+        Chargement des dons...
+      </div>`;
+    const {
+      data: {
+        session
+      },
+      error:
+        sessionError
+    } =
+      await db.auth.getSession();
+    if (sessionError) {
+      console.error(
+        sessionError
+      );
+      showMessage(
+        "Impossible de vérifier la session."
+      );
+      return;
+    }
+    if (
+      !session ||
+      !session.user
+    ) {
+      window.location.href =
+        "account.html";
+      return;
+    }
+    userEmail.textContent =
+      session.user.email ||
+      "Compte connecté";
+    /*
+      La sécurité admin est assurée
+      par les politiques Supabase.
+      On demande uniquement les dons.
+    */
+    const {
+      data,
+      error
+    } =
+      await db
+        .from("support_payments")
+        .select(`
+          id,
+          user_id,
+          kind,
+          plan_code,
+          stripe_checkout_session_id,
+          stripe_customer_id,
+          stripe_subscription_id,
+          amount_total,
+          currency,
+          status,
+          current_period_start,
+          current_period_end,
+          created_at,
+          updated_at
+        `)
+        .eq(
+          "kind",
+          "donation"
+        )
+        .order(
+          "created_at",
+          {
+            ascending: false
+          }
+        );
+    if (error) {
+      console.error(
+        error
+      );
+      showMessage(
+        "Accès refusé ou impossible de charger les dons."
+      );
+      paymentsContainer.innerHTML =
+        `<div class="empty">
+          Les dons ne peuvent pas être affichés avec
+          les permissions actuelles.
+        </div>`;
+      return;
+    }
+    const rows =
+      data || [];
+    const paid =
+      rows.filter(
+        item =>
+          item.status ===
+          "paid"
+      );
+    let eurTotal = 0;
+    let xafTotal = 0;
+    paid.forEach(
+      item => {
+        const amount =
+          Number(
+            item.amount_total ||
+            0
+          );
+        const currency =
+          (
+            item.currency ||
+            ""
+          ).toUpperCase();
+        if (
+          currency ===
+          "EUR"
+        ) {
+          eurTotal +=
+            amount;
+        }
+        if (
+          currency ===
+          "XAF"
+        ) {
+          xafTotal +=
+            amount;
+        }
+      }
+    );
+    document.getElementById(
+      "donationsCount"
+    ).textContent =
+      rows.length;
+    document.getElementById(
+      "paidCount"
+    ).textContent =
+      paid.length;
+    document.getElementById(
+      "eurTotal"
+    ).textContent =
+      formatAmount(
+        eurTotal,
+        "EUR"
+      );
+    document.getElementById(
+      "xafTotal"
+    ).textContent =
+      formatAmount(
+        xafTotal,
+        "XAF"
+      );
+    if (
+      rows.length === 0
+    ) {
+      paymentsContainer.innerHTML =
+        `<div class="empty">
+          <div
+            style="font-size:42px;"
+          >
+            💙
+          </div>
+          <h3>
+            Aucun don enregistré
+          </h3>
+          <p>
+            Les nouveaux dons apparaîtront
+            automatiquement ici.
+          </p>
+        </div>`;
+      return;
+    }
+    paymentsContainer.innerHTML =
+      rows.map(
+        payment => `
+          <article class="payment">
+            <h3>
+              💙 Don INDAMORA PLAY
+            </h3>
+            <p>
+              <strong>Montant :</strong>
+              ${formatAmount(
+                payment.amount_total,
+                payment.currency
+              )}
+            </p>
+            <p>
+              <strong>Statut :</strong>
+              <span
+                class="${statusClass(
+                  payment.status
+                )}"
+              >
+                ${statusLabel(
+                  payment.status
+                )}
+              </span>
+            </p>
+            <p>
+              <strong>Date :</strong>
+              ${formatDate(
+                payment.created_at
+              )}
+            </p>
+            <p>
+              <strong>Session Stripe :</strong>
+              ${payment.stripe_checkout_session_id
+                ? payment.stripe_checkout_session_id
+                : "—"}
+            </p>
+            ${
+              payment.user_id
+                ? `<p>
+                    <strong>Compte associé :</strong>
+                    ${payment.user_id}
+                   </p>`
+                : ""
+            }
+          </article>
+        `
+      ).join("");
+  }
+  document
+    .getElementById(
+      "refreshBtn"
+    )
+    .addEventListener(
+      "click",
+      loadDonations
+    );
+  document
+    .getElementById(
+      "logoutBtn"
+    )
+    .addEventListener(
+      "click",
+      async () => {
+        await db.auth.signOut();
+        window.location.href =
+          "account.html";
+      }
+    );
+  db.auth.onAuthStateChange(
+    (
+      event,
+      session
+    ) => {
+      if (!session) {
+        window.location.href =
+          "account.html";
+      }
+    }
+  );
+  loadDonations();
+</script>
+</body>
+</html>
