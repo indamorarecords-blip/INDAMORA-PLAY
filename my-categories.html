@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mes catégories — INDAMORA PLAY</title>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #f5f9ff;
+      color: #123;
+    }
+    header {
+      background: #0b63ce;
+      color: white;
+      padding: 18px 20px;
+      text-align: center;
+    }
+    header h1 {
+      margin: 0;
+      font-size: 24px;
+    }
+    header p {
+      margin: 7px 0 0;
+      opacity: .9;
+    }
+    main {
+      max-width: 900px;
+      margin: 30px auto;
+      padding: 0 18px 50px;
+    }
+    .card {
+      background: white;
+      border-radius: 14px;
+      padding: 24px;
+      margin-bottom: 20px;
+      box-shadow: 0 4px 18px rgba(0, 0, 0, .08);
+    }
+    h2 {
+      color: #0b63ce;
+      margin-top: 0;
+    }
+    .intro {
+      line-height: 1.6;
+      color: #456;
+    }
+    .status {
+      padding: 12px 15px;
+      border-radius: 10px;
+      background: #eef6ff;
+      color: #15579d;
+      margin-bottom: 20px;
+    }
+    .search {
+      width: 100%;
+      padding: 13px 15px;
+      border: 1px solid #c8d8ec;
+      border-radius: 10px;
+      font-size: 16px;
+      margin-bottom: 20px;
+      outline: none;
+    }
+    .search:focus {
+      border-color: #0b63ce;
+    }
+    .categories {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+      gap: 12px;
+    }
+    .category {
+      border: 1px solid #d4e2f3;
+      border-radius: 12px;
+      padding: 15px;
+      background: #f8fbff;
+      transition: .2s;
+    }
+    .category:hover {
+      border-color: #0b63ce;
+      background: #eef6ff;
+    }
+    .category label {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      cursor: pointer;
+      font-weight: 600;
+      line-height: 1.4;
+    }
+    .category input {
+      width: 18px;
+      height: 18px;
+      accent-color: #0b63ce;
+      flex-shrink: 0;
+    }
+    .selected {
+      margin-top: 22px;
+      padding: 16px;
+      border-radius: 10px;
+      background: #eef6ff;
+      border: 1px solid #c8ddf7;
+      line-height: 1.7;
+    }
+    .selected strong {
+      color: #0b63ce;
+    }
+    button {
+      width: 100%;
+      margin-top: 20px;
+      padding: 14px;
+      border: 0;
+      border-radius: 10px;
+      background: #0b63ce;
+      color: white;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+    button:hover {
+      background: #084f9f;
+    }
+    button:disabled {
+      opacity: .6;
+      cursor: not-allowed;
+    }
+    .message {
+      display: none;
+      margin-top: 15px;
+      padding: 13px;
+      border-radius: 10px;
+      line-height: 1.5;
+    }
+    .success {
+      display: block;
+      background: #e9f8ef;
+      color: #176b3a;
+    }
+    .error {
+      display: block;
+      background: #fff0f0;
+      color: #a32121;
+    }
+    footer {
+      text-align: center;
+      color: #678;
+      padding: 25px;
+      font-size: 14px;
+    }
+  </style>
+</head>
+<body>
+<header>
+  <h1>INDAMORA PLAY</h1>
+  <p>Mes catégories</p>
+</header>
+<main>
+  <div class="card">
+<h2>Catégories de mon profil</h2>
+<p class="intro">
+  Sélectionnez toutes les catégories qui correspondent à vos activités.
+  Vous pouvez en sélectionner plusieurs.
+</p>
+<div id="status" class="status">
+  Chargement de votre profil...
+</div>
+<input
+  id="search"
+  class="search"
+  type="search"
+  placeholder="Rechercher une catégorie..."
+  oninput="filterCategories()"
+>
+<div id="categories" class="categories">
+  Chargement des catégories...
+</div>
+<div class="selected">
+  <strong>Mes catégories :</strong>
+  <div id="selectedList">
+    Aucune catégorie sélectionnée.
+  </div>
+</div>
+<button id="saveButton" onclick="saveCategories()" disabled>
+  Enregistrer mes catégories
+</button>
+<div id="message" class="message"></div>
+  </div>
+</main>
+<footer>
+  © INDAMORA PLAY — INDAMORA RECORDS
+</footer>
+<script>
+  const SUPABASE_URL =
+    "https://adqsdnqkbitplbhbihiv.supabase.co";
+  const SUPABASE_PUBLISHABLE_KEY =
+    "sb_publishable_dpjfWOYeNQRmP2nJq5FoMA_8NUuD0HF";
+  const supabaseClient =
+    window.supabase.createClient(
+      SUPABASE_URL,
+      SUPABASE_PUBLISHABLE_KEY
+    );
+  let artistId = null;
+  let categories = [];
+  let selectedIds = new Set();
+  function showMessage(text, type) {
+    const box = document.getElementById("message");
+    box.textContent = text;
+    box.className = "message " + type;
+  }
+  async function getCurrentArtist() {
+    const {
+      data: { user },
+      error: userError
+    } = await supabaseClient.auth.getUser();
+    if (userError || !user) {
+      throw new Error(
+        "Vous devez être connecté pour gérer vos catégories."
+      );
+    }
+    const { data: artist, error } =
+      await supabaseClient
+        .from("artists")
+        .select("id,name,status")
+        .eq("owner_id", user.id)
+        .maybeSingle();
+    if (error) {
+      throw error;
+    }
+    if (!artist) {
+      throw new Error(
+        "Aucun profil artiste n'a été trouvé pour ce compte."
+      );
+    }
+    artistId = artist.id;
+    document.getElementById("status").textContent =
+      "Profil : " + artist.name;
+  }
+  async function loadCategories() {
+    const { data, error } =
+      await supabaseClient
+        .from("categories")
+        .select("id,slug,name,icon")
+        .eq("active", true)
+        .order("name");
+    if (error) {
+      throw error;
+    }
+    categories = data || [];
+  }
+  async function loadArtistCategories() {
+    const { data, error } =
+      await supabaseClient
+        .from("artist_categories")
+        .select("category_id")
+        .eq("artist_id", artistId);
+    if (error) {
+      throw error;
+    }
+    selectedIds = new Set(
+      (data || []).map(row => row.category_id)
+    );
+  }
+  function renderCategories(filter = "") {
+    const container =
+      document.getElementById("categories");
+    const value =
+      filter.trim().toLowerCase();
+    const filtered =
+      categories.filter(category =>
+        category.name
+          .toLowerCase()
+          .includes(value)
+      );
+    if (!filtered.length) {
+      container.innerHTML =
+        "<p>Aucune catégorie trouvée.</p>";
+      updateSelected();
+      return;
+    }
+    container.innerHTML = "";
+    filtered.forEach(category => {
+      const div =
+        document.createElement("div");
+      div.className = "category";
+      const label =
+        document.createElement("label");
+      const checkbox =
+        document.createElement("input");
+      checkbox.type = "checkbox";
+      checkbox.value = category.id;
+      checkbox.checked =
+        selectedIds.has(category.id);
+      checkbox.addEventListener(
+        "change",
+        () => {
+          if (checkbox.checked) {
+            selectedIds.add(category.id);
+          } else {
+            selectedIds.delete(category.id);
+          }
+          updateSelected();
+        }
+      );
+      const icon =
+        document.createElement("span");
+      icon.textContent =
+        category.icon || "";
+      const name =
+        document.createElement("span");
+      name.textContent =
+        category.name;
+      label.appendChild(checkbox);
+      label.appendChild(icon);
+      label.appendChild(name);
+      div.appendChild(label);
+      container.appendChild(div);
+    });
+    updateSelected();
+  }
+  function updateSelected() {
+    const list =
+      document.getElementById("selectedList");
+    const selected =
+      categories
+        .filter(category =>
+          selectedIds.has(category.id)
+        )
+        .map(category =>
+          `${category.icon || ""} ${category.name}`.trim()
+        );
+    if (!selected.length) {
+      list.textContent =
+        "Aucune catégorie sélectionnée.";
+      return;
+    }
+    list.textContent =
+      selected.join(" • ");
+  }
+  function filterCategories() {
+    const value =
+      document.getElementById("search").value;
+    renderCategories(value);
+  }
+  async function saveCategories() {
+    const button =
+      document.getElementById("saveButton");
+    button.disabled = true;
+    button.textContent =
+      "Enregistrement...";
+    try {
+      const { error: deleteError } =
+        await supabaseClient
+          .from("artist_categories")
+          .delete()
+          .eq("artist_id", artistId);
+      if (deleteError) {
+        throw deleteError;
+      }
+      const rows =
+        Array.from(selectedIds).map(
+          categoryId => ({
+            artist_id: artistId,
+            category_id: categoryId
+          })
+        );
+      if (rows.length > 0) {
+        const { error: insertError } =
+          await supabaseClient
+            .from("artist_categories")
+            .insert(rows);
+        if (insertError) {
+          throw insertError;
+        }
+      }
+      showMessage(
+        "Vos catégories ont été enregistrées avec succès.",
+        "success"
+      );
+    } catch (error) {
+      console.error(error);
+      showMessage(
+        "Impossible d'enregistrer les catégories.",
+        "error"
+      );
+    } finally {
+      button.disabled = false;
+      button.textContent =
+        "Enregistrer mes catégories";
+    }
+  }
+  async function init() {
+    try {
+      await getCurrentArtist();
+      await loadCategories();
+      await loadArtistCategories();
+      renderCategories();
+      document.getElementById(
+        "saveButton"
+      ).disabled = false;
+    } catch (error) {
+      console.error(error);
+      document.getElementById(
+        "categories"
+      ).textContent =
+        error.message ||
+        "Une erreur est survenue.";
+      document.getElementById(
+        "status"
+      ).textContent =
+        "Connexion requise.";
+      showMessage(
+        error.message ||
+        "Une erreur est survenue.",
+        "error"
+      );
+    }
+  }
+  init();
+</script>
+</body>
+</html>
