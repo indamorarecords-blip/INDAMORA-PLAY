@@ -7,27 +7,49 @@
   <meta name="description" content="Découvrez les artistes qui font vivre INDAMORA PLAY.">
   <style>
     :root {
-      --black: #090909;
-      --dark: #111111;
-      --card: #181818;
-      --white: #ffffff;
-      --muted: #b8b8b8;
+      --blue: #1689c7;
+      --blue-dark: #0757b8;
+      --blue-soft: #eaf6fc;
       --red: #d92525;
       --yellow: #f2c230;
       --green: #168447;
-      --blue: #1689c7;
-      --border: rgba(255,255,255,.09);
+      --white: #ffffff;
+      --cream: #fffdf8;
+      --text: #18324a;
+      --muted: #6d7f8f;
+      --border: #e1edf3;
+      --card: #ffffff;
+      --shadow: 0 12px 35px rgba(22, 137, 199, 0.10);
+      --shadow-hover: 0 18px 45px rgba(22, 137, 199, 0.17);
+      --radius: 22px;
     }
     * {
       box-sizing: border-box;
       margin: 0;
       padding: 0;
     }
+    html {
+      scroll-behavior: smooth;
+    }
     body {
-      font-family: Arial, Helvetica, sans-serif;
-      background: var(--black);
-      color: var(--white);
+      font-family:
+        Inter,
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        Arial,
+        Helvetica,
+        sans-serif;
+      background:
+        linear-gradient(
+          180deg,
+          var(--cream) 0%,
+          var(--white) 42%,
+          var(--blue-soft) 100%
+        );
+      color: var(--text);
       line-height: 1.5;
+      min-height: 100vh;
     }
     a {
       color: inherit;
@@ -38,18 +60,23 @@
     select {
       font: inherit;
     }
+    /* =========================
+       HEADER
+    ========================= */
     header {
       position: sticky;
       top: 0;
       z-index: 1000;
-      background: rgba(9,9,9,.96);
+      background:
+        rgba(255, 255, 255, 0.95);
       border-bottom: 1px solid var(--border);
-      backdrop-filter: blur(12px);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
     }
     .nav {
       max-width: 1200px;
       margin: auto;
-      min-height: 70px;
+      min-height: 74px;
       padding: 12px 20px;
       display: flex;
       align-items: center;
@@ -57,10 +84,32 @@
       gap: 20px;
     }
     .logo {
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      color: var(--blue-dark);
       font-size: 20px;
       font-weight: 900;
-      letter-spacing: .5px;
+      letter-spacing: 0.2px;
       white-space: nowrap;
+    }
+    .logo::before {
+      content: "🎧";
+      width: 38px;
+      height: 38px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 12px;
+      background:
+        linear-gradient(
+          135deg,
+          var(--blue),
+          var(--blue-dark)
+        );
+      color: white;
+      box-shadow:
+        0 8px 20px rgba(22, 137, 199, 0.20);
     }
     .logo span {
       color: var(--red);
@@ -71,9 +120,15 @@
       gap: 18px;
       color: var(--muted);
       font-size: 14px;
+      font-weight: 700;
+    }
+    .nav-links a {
+      padding: 8px 3px;
+      transition:
+        color 0.2s ease;
     }
     .nav-links a:hover {
-      color: var(--white);
+      color: var(--blue-dark);
     }
     .nav-buttons {
       display: flex;
@@ -81,230 +136,481 @@
       gap: 8px;
     }
     .nav-btn {
-      padding: 9px 13px;
-      border: 1px solid var(--border);
+      padding:
+        9px 14px;
+      border:
+        1px solid var(--border);
       border-radius: 999px;
+      color: var(--blue-dark);
+      background: var(--white);
       font-size: 13px;
+      font-weight: 800;
+      transition:
+        transform 0.2s ease,
+        background 0.2s ease,
+        border-color 0.2s ease;
+    }
+    .nav-btn:hover {
+      transform: translateY(-2px);
+      background: var(--blue-soft);
+      border-color: #bfdfea;
     }
     .nav-btn.primary {
-      background: var(--red);
-      border-color: var(--red);
+      background:
+        linear-gradient(
+          135deg,
+          var(--blue),
+          var(--blue-dark)
+        );
+      border-color: var(--blue-dark);
       color: white;
     }
+    .nav-btn.primary:hover {
+      background:
+        linear-gradient(
+          135deg,
+          var(--blue-dark),
+          var(--blue)
+        );
+    }
+    /* =========================
+       HERO
+    ========================= */
     .hero {
       max-width: 1200px;
       margin: auto;
-      padding: 70px 20px 45px;
+      padding:
+        68px 20px 45px;
     }
     .hero-label {
-      display: inline-block;
-      margin-bottom: 14px;
-      color: var(--yellow);
+      display: inline-flex;
+      align-items: center;
+      margin-bottom: 16px;
+      padding:
+        8px 13px;
+      border-radius: 999px;
+      background: var(--blue-soft);
+      border:
+        1px solid #cde8f4;
+      color: var(--blue-dark);
       font-size: 12px;
-      font-weight: 800;
-      letter-spacing: 2px;
+      font-weight: 900;
+      letter-spacing: 1.5px;
       text-transform: uppercase;
     }
     h1 {
-      font-size: clamp(42px, 7vw, 78px);
-      line-height: .95;
+      color: var(--text);
+      font-size:
+        clamp(44px, 7vw, 78px);
+      line-height: 0.95;
       letter-spacing: -3px;
-      margin-bottom: 20px;
+      margin-bottom: 21px;
     }
     .hero p {
-      max-width: 650px;
+      max-width: 680px;
       color: var(--muted);
       font-size: 17px;
+      line-height: 1.7;
     }
     .hero-line {
-      width: 80px;
-      height: 4px;
-      margin-top: 25px;
-      background: linear-gradient(
-        90deg,
-        var(--red) 0 25%,
-        var(--yellow) 25% 50%,
-        var(--green) 50% 75%,
-        var(--blue) 75% 100%
-      );
-      border-radius: 5px;
+      width: 90px;
+      height: 5px;
+      margin-top: 26px;
+      border-radius: 999px;
+      background:
+        linear-gradient(
+          90deg,
+          var(--blue) 0 25%,
+          var(--red) 25% 50%,
+          var(--yellow) 50% 75%,
+          var(--green) 75% 100%
+        );
     }
+    /* =========================
+       CONTENT
+    ========================= */
     .content {
       max-width: 1200px;
       margin: auto;
-      padding: 0 20px 80px;
+      padding:
+        0 20px 80px;
     }
+    /* =========================
+       FILTERS
+    ========================= */
     .filters {
       display: grid;
-      grid-template-columns: 2fr 1fr 1fr;
+      grid-template-columns:
+        2fr 1fr 1fr;
       gap: 12px;
       margin-bottom: 35px;
     }
     .field {
       width: 100%;
-      background: var(--card);
-      border: 1px solid var(--border);
-      color: var(--white);
-      border-radius: 12px;
-      padding: 14px 15px;
+      min-height: 50px;
+      background: var(--white);
+      border:
+        1px solid var(--border);
+      color: var(--text);
+      border-radius: 14px;
+      padding:
+        14px 15px;
       outline: none;
+      box-shadow:
+        0 6px 18px rgba(22, 137, 199, 0.06);
+      transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease,
+        transform 0.2s ease;
     }
     .field::placeholder {
-      color: #777;
+      color: #8a9aa7;
     }
     .field:focus {
       border-color: var(--blue);
+      box-shadow:
+        0 0 0 4px rgba(22, 137, 199, 0.10);
+    }
+    select.field {
+      cursor: pointer;
     }
     select.field option {
-      background: var(--dark);
-      color: white;
+      background: var(--white);
+      color: var(--text);
     }
+    /* =========================
+       SECTION TITLE
+    ========================= */
     .section-title {
       display: flex;
-      align-items: end;
+      align-items: flex-end;
       justify-content: space-between;
       gap: 20px;
-      margin-bottom: 18px;
+      margin-bottom: 20px;
+      padding-bottom: 13px;
+      border-bottom:
+        1px solid var(--border);
     }
     .section-title h2 {
-      font-size: 25px;
+      color: var(--text);
+      font-size: 27px;
+      letter-spacing: -0.7px;
+    }
+    .section-title h2::before {
+      content: "🎤";
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 38px;
+      height: 38px;
+      margin-right: 9px;
+      border-radius: 12px;
+      background: var(--blue-soft);
+      border:
+        1px solid #cde8f4;
+      font-size: 19px;
+      vertical-align: middle;
     }
     .section-title span {
       color: var(--muted);
       font-size: 13px;
+      font-weight: 700;
     }
+    /* =========================
+       ARTISTS GRID
+    ========================= */
     .artists-grid {
       display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 18px;
+      grid-template-columns:
+        repeat(4, 1fr);
+      gap: 20px;
     }
+    /* =========================
+       ARTIST CARD
+    ========================= */
     .artist-card {
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: 16px;
+      position: relative;
       overflow: hidden;
-      transition: transform .2s ease, border-color .2s ease;
+      background: var(--card);
+      border:
+        1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      transition:
+        transform 0.25s ease,
+        border-color 0.25s ease,
+        box-shadow 0.25s ease;
     }
     .artist-card:hover {
-      transform: translateY(-4px);
-      border-color: rgba(217,37,37,.55);
+      transform: translateY(-6px);
+      border-color: #bfdfea;
+      box-shadow: var(--shadow-hover);
     }
+    .artist-card::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      height: 4px;
+      background:
+        linear-gradient(
+          90deg,
+          var(--blue),
+          var(--red),
+          var(--yellow),
+          var(--green)
+        );
+      opacity: 0;
+      transition:
+        opacity 0.25s ease;
+    }
+    .artist-card:hover::after {
+      opacity: 1;
+    }
+    /* =========================
+       ARTIST IMAGE
+    ========================= */
     .artist-image {
       width: 100%;
       aspect-ratio: 1 / 1;
-      background: var(--dark);
+      background:
+        linear-gradient(
+          135deg,
+          var(--blue-soft),
+          #f9fdff
+        );
       overflow: hidden;
+      position: relative;
+    }
+    .artist-image::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      background:
+        linear-gradient(
+          180deg,
+          rgba(255,255,255,0) 60%,
+          rgba(7,87,184,0.10) 100%
+        );
     }
     .artist-image img {
       width: 100%;
       height: 100%;
       object-fit: cover;
       display: block;
+      transition:
+        transform 0.4s ease;
+    }
+    .artist-card:hover .artist-image img {
+      transform: scale(1.04);
     }
     .artist-placeholder {
       width: 100%;
       height: 100%;
       display: grid;
       place-items: center;
-      font-size: 52px;
+      color: var(--blue-dark);
+      font-size: 54px;
       font-weight: 900;
-      color: #444;
+      background:
+        radial-gradient(
+          circle at center,
+          #ffffff 0%,
+          var(--blue-soft) 75%
+        );
     }
+    /* =========================
+       ARTIST INFO
+    ========================= */
     .artist-info {
-      padding: 16px;
+      padding: 18px;
     }
     .artist-name {
+      color: var(--text);
       font-size: 18px;
-      font-weight: 800;
-      margin-bottom: 5px;
+      font-weight: 900;
+      line-height: 1.25;
+      margin-bottom: 7px;
     }
     .artist-meta {
       color: var(--muted);
       font-size: 13px;
       min-height: 40px;
+      line-height: 1.5;
     }
+    /* =========================
+       GENRE
+    ========================= */
     .genre {
-      display: inline-block;
-      margin-top: 10px;
-      padding: 5px 9px;
+      display: inline-flex;
+      align-items: center;
+      margin-top: 11px;
+      padding:
+        6px 10px;
       border-radius: 999px;
-      background: rgba(22,132,71,.15);
-      color: #55c987;
+      background: #eaf7f0;
+      border:
+        1px solid #cce9d9;
+      color: var(--green);
       font-size: 11px;
-      font-weight: 700;
+      font-weight: 900;
     }
+    /* =========================
+       DISCOVER
+    ========================= */
     .discover {
-      display: block;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       width: 100%;
+      min-height: 43px;
       margin-top: 15px;
-      padding: 11px 13px;
+      padding:
+        11px 13px;
       text-align: center;
-      border-radius: 10px;
-      background: var(--white);
-      color: var(--black);
-      font-weight: 800;
+      border-radius: 12px;
+      background:
+        linear-gradient(
+          135deg,
+          var(--blue),
+          var(--blue-dark)
+        );
+      color: white;
+      font-weight: 900;
       font-size: 13px;
+      box-shadow:
+        0 8px 18px rgba(7, 87, 184, 0.14);
+      transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
+    }
+    .discover::after {
+      content: " →";
+      margin-left: 4px;
     }
     .discover:hover {
-      background: var(--yellow);
+      transform: translateY(-2px);
+      box-shadow:
+        0 12px 25px rgba(7, 87, 184, 0.22);
     }
+    /* =========================
+       EMPTY
+    ========================= */
     .empty {
       display: none;
-      padding: 50px 20px;
+      padding:
+        55px 20px;
       text-align: center;
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: 16px;
+      background: var(--white);
+      border:
+        1px dashed #bfdce9;
+      border-radius: 20px;
       color: var(--muted);
+      font-size: 15px;
+      box-shadow:
+        0 8px 25px rgba(22, 137, 199, 0.06);
     }
+    /* =========================
+       FOOTER
+    ========================= */
     footer {
-      border-top: 1px solid var(--border);
-      background: var(--dark);
-      padding: 35px 20px;
+      border-top:
+        1px solid var(--border);
+      background: var(--white);
+      padding:
+        40px 20px 50px;
       color: var(--muted);
       text-align: center;
       font-size: 13px;
+      line-height: 1.7;
     }
     footer strong {
-      color: white;
+      color: var(--blue-dark);
+      font-size: 17px;
+      font-weight: 900;
     }
-    @media (max-width: 900px) {
+    /* =========================
+       RESPONSIVE
+    ========================= */
+    @media (max-width: 1000px) {
       .nav-links {
         display: none;
       }
       .artists-grid {
-        grid-template-columns: repeat(2, 1fr);
+        grid-template-columns:
+          repeat(3, 1fr);
       }
       .filters {
-        grid-template-columns: 1fr;
+        grid-template-columns:
+          1fr 1fr;
+      }
+      .filters .field:first-child {
+        grid-column: 1 / -1;
       }
     }
-    @media (max-width: 560px) {
+    @media (max-width: 720px) {
       .nav {
-        min-height: 62px;
-        padding: 10px 15px;
+        min-height: 66px;
+        padding:
+          10px 15px;
       }
       .nav-buttons {
         display: none;
       }
+      .logo {
+        font-size: 17px;
+      }
+      .logo::before {
+        width: 34px;
+        height: 34px;
+        border-radius: 10px;
+      }
       .hero {
-        padding: 55px 15px 35px;
+        padding:
+          50px 15px 35px;
       }
       .content {
-        padding: 0 15px 60px;
+        padding:
+          0 15px 60px;
       }
       h1 {
-        font-size: 48px;
+        font-size: 50px;
+        letter-spacing: -2px;
       }
       .hero p {
         font-size: 15px;
       }
-      .artists-grid {
-        grid-template-columns: 1fr 1fr;
+      .filters {
+        grid-template-columns: 1fr;
         gap: 10px;
+        margin-bottom: 28px;
+      }
+      .filters .field:first-child {
+        grid-column: auto;
+      }
+      .section-title {
+        align-items: center;
+      }
+      .section-title h2 {
+        font-size: 23px;
+      }
+      .section-title h2::before {
+        width: 34px;
+        height: 34px;
+        font-size: 17px;
+      }
+      .artists-grid {
+        grid-template-columns:
+          repeat(2, 1fr);
+        gap: 13px;
+      }
+      .artist-card {
+        border-radius: 18px;
       }
       .artist-info {
-        padding: 12px;
+        padding: 13px;
       }
       .artist-name {
         font-size: 15px;
@@ -312,9 +618,34 @@
       .artist-meta {
         font-size: 11px;
       }
+      .genre {
+        font-size: 10px;
+        padding:
+          5px 8px;
+      }
       .discover {
+        min-height: 40px;
+        padding:
+          9px 7px;
         font-size: 11px;
-        padding: 10px 6px;
+      }
+    }
+    @media (max-width: 430px) {
+      .artists-grid {
+        gap: 10px;
+      }
+      .artist-info {
+        padding: 11px;
+      }
+      .artist-name {
+        font-size: 14px;
+      }
+      .artist-meta {
+        min-height: 34px;
+        font-size: 10px;
+      }
+      .discover {
+        font-size: 10px;
       }
     }
   </style>
@@ -333,15 +664,24 @@
       <a href="spaces-menu.html">Espaces</a>
     </div>
     <div class="nav-buttons">
-      <a href="account.html" class="nav-btn">Connexion</a>
-      <a href="register.html" class="nav-btn primary">Créer un compte</a>
+      <a href="account.html" class="nav-btn">
+        Connexion
+      </a>
+      <a href="register.html" class="nav-btn primary">
+        Créer un compte
+      </a>
     </div>
   </nav>
 </header>
 <main>
   <section class="hero">
-    <span class="hero-label">INDAMORA PLAY</span>
-    <h1>NOS<br>ARTISTES</h1>
+    <span class="hero-label">
+      INDAMORA PLAY
+    </span>
+    <h1>
+      NOS<br>
+      ARTISTES
+    </h1>
     <p>
       Découvrez les artistes qui font vivre INDAMORA PLAY,
       leurs univers, leurs créations et leurs histoires.
@@ -358,57 +698,117 @@
         autocomplete="off"
       >
       <select id="region" class="field">
-        <option value="">Toutes les régions</option>
-        <option value="afrique">Afrique</option>
-        <option value="centrafrique">Centrafrique</option>
-        <option value="europe">Europe</option>
-        <option value="international">International</option>
+        <option value="">
+          Toutes les régions
+        </option>
+        <option value="afrique">
+          Afrique
+        </option>
+        <option value="centrafrique">
+          Centrafrique
+        </option>
+        <option value="europe">
+          Europe
+        </option>
+        <option value="international">
+          International
+        </option>
       </select>
       <select id="genre" class="field">
-        <option value="">Tous les genres</option>
-        <option value="afrobeat">Afrobeat</option>
-        <option value="afropop">Afropop</option>
-        <option value="gospel">Gospel</option>
-        <option value="r&b">R&B</option>
-        <option value="hip-hop">Hip-Hop</option>
-        <option value="rap">Rap</option>
-        <option value="reggae">Reggae</option>
-        <option value="dancehall">Dancehall</option>
-        <option value="jazz">Jazz</option>
-        <option value="traditionnelle">Musique traditionnelle</option>
-        <option value="centrafricaine">Musique centrafricaine</option>
-        <option value="monde">Musiques du monde</option>
+        <option value="">
+          Tous les genres
+        </option>
+        <option value="afrobeat">
+          Afrobeat
+        </option>
+        <option value="afropop">
+          Afropop
+        </option>
+        <option value="gospel">
+          Gospel
+        </option>
+        <option value="r&b">
+          R&B
+        </option>
+        <option value="hip-hop">
+          Hip-Hop
+        </option>
+        <option value="rap">
+          Rap
+        </option>
+        <option value="reggae">
+          Reggae
+        </option>
+        <option value="dancehall">
+          Dancehall
+        </option>
+        <option value="jazz">
+          Jazz
+        </option>
+        <option value="traditionnelle">
+          Musique traditionnelle
+        </option>
+        <option value="centrafricaine">
+          Musique centrafricaine
+        </option>
+        <option value="monde">
+          Musiques du monde
+        </option>
       </select>
     </div>
     <div class="section-title">
-      <h2>Artistes publiés</h2>
-      <span id="count">Chargement...</span>
+      <h2>
+        Artistes publiés
+      </h2>
+      <span id="count">
+        Chargement...
+      </span>
     </div>
-    <div id="artistsGrid" class="artists-grid"></div>
-    <div id="empty" class="empty">
+    <div
+      id="artistsGrid"
+      class="artists-grid"
+    ></div>
+    <div
+      id="empty"
+      class="empty"
+    >
       Aucun artiste ne correspond à votre recherche.
     </div>
   </section>
 </main>
 <footer>
-  <strong>INDAMORA PLAY</strong><br>
-  La voix de nos talents.<br><br>
-  © 2026 INDAMORA RECORDS — Tous droits réservés.
+  <strong>
+    INDAMORA PLAY
+  </strong>
+  <br>
+  La voix de nos talents.
+  <br><br>
+  © 2026 INDAMORA RECORDS —
+  Tous droits réservés.
 </footer>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
-  const SUPABASE_URL = "https://adqsdnqkbitplbhbihiv.supabase.co";
-  const SUPABASE_KEY = "sb_publishable_dpjfWOYeNQRmP2nJq5FoMA_8NUuD0HF";
-  const supabaseClient = window.supabase.createClient(
-    SUPABASE_URL,
-    SUPABASE_KEY
-  );
-  const grid = document.getElementById("artistsGrid");
-  const empty = document.getElementById("empty");
-  const count = document.getElementById("count");
-  const searchInput = document.getElementById("search");
-  const regionSelect = document.getElementById("region");
-  const genreSelect = document.getElementById("genre");
+  const SUPABASE_URL =
+    "https://adqsdnqkbitplbhbihiv.supabase.co";
+  const SUPABASE_KEY =
+    "sb_publishable_dpjfWOYeNQRmP2nJq5FoMA_8NUuD0HF";
+  const supabaseClient =
+    window.supabase.createClient(
+      SUPABASE_URL,
+      SUPABASE_KEY
+    );
+  const grid =
+    document.getElementById("artistsGrid");
+  const empty =
+    document.getElementById("empty");
+  const count =
+    document.getElementById("count");
+  const searchInput =
+    document.getElementById("search");
+  const regionSelect =
+    document.getElementById("region");
+  const genreSelect =
+    document.getElementById("genre");
   let artists = [];
   function escapeHtml(value) {
     return String(value ?? "")
@@ -425,38 +825,68 @@
       .replace(/[\u0300-\u036f]/g, "");
   }
   function artistCard(artist) {
-    const name = escapeHtml(artist.name || "Artiste");
-    const city = escapeHtml(artist.city || "");
-    const region = escapeHtml(artist.region || "");
-    const genre = escapeHtml(artist.genre || "");
-    const avatar = escapeHtml(artist.avatar_url || "");
-    const location = [city, region]
-      .filter(Boolean)
-      .join(" • ");
-    const image = avatar
-      ? `
-        <img
-          src="${avatar}"
-          alt="${name}"
-          loading="lazy"
-          onerror="this.style.display='none'; this.nextElementSibling.style.display='grid';"
-        >
-        <div class="artist-placeholder" style="display:none;">
-          ${escapeHtml((artist.name || "A").charAt(0).toUpperCase())}
-        </div>
-      `
-      : `
-        <div class="artist-placeholder">
-          ${escapeHtml((artist.name || "A").charAt(0).toUpperCase())}
-        </div>
-      `;
+    const name =
+      escapeHtml(
+        artist.name || "Artiste"
+      );
+    const city =
+      escapeHtml(
+        artist.city || ""
+      );
+    const region =
+      escapeHtml(
+        artist.region || ""
+      );
+    const genre =
+      escapeHtml(
+        artist.genre || ""
+      );
+    const avatar =
+      escapeHtml(
+        artist.avatar_url || ""
+      );
+    const location =
+      [city, region]
+        .filter(Boolean)
+        .join(" • ");
+    const image =
+      avatar
+        ? `
+          <img
+            src="${avatar}"
+            alt="${name}"
+            loading="lazy"
+            onerror="this.style.display='none'; this.nextElementSibling.style.display='grid';"
+          >
+          <div
+            class="artist-placeholder"
+            style="display:none;"
+          >
+            ${escapeHtml(
+              (artist.name || "A")
+                .charAt(0)
+                .toUpperCase()
+            )}
+          </div>
+        `
+        : `
+          <div class="artist-placeholder">
+            ${escapeHtml(
+              (artist.name || "A")
+                .charAt(0)
+                .toUpperCase()
+            )}
+          </div>
+        `;
     return `
       <article class="artist-card">
         <div class="artist-image">
           ${image}
         </div>
         <div class="artist-info">
-          <div class="artist-name">${name}</div>
+          <div class="artist-name">
+            ${name}
+          </div>
           <div class="artist-meta">
             ${location || "Afrique et monde"}
           </div>
@@ -476,104 +906,154 @@
     `;
   }
   function render() {
-    const search = normalize(searchInput.value);
-    const region = normalize(regionSelect.value);
-    const genre = normalize(genreSelect.value);
-    const filtered = artists.filter(artist => {
-      const text = normalize(
-        [
-          artist.name,
-          artist.city,
-          artist.region,
-          artist.genre,
-          artist.language
-        ].join(" ")
+    const search =
+      normalize(
+        searchInput.value
       );
-      const artistRegion = normalize(
-        `${artist.region || ""} ${artist.city || ""} ${artist.country || ""}`
+    const region =
+      normalize(
+        regionSelect.value
       );
-      const artistGenre = normalize(artist.genre || "");
-      const matchesSearch =
-        !search || text.includes(search);
-      let matchesRegion = true;
-      if (region) {
-        if (region === "afrique") {
-          matchesRegion =
-            artistRegion.includes("afrique") ||
-            artistRegion.includes("centrafrique") ||
-            artistRegion.includes("rca") ||
-            artistRegion.includes("central") ||
-            artistRegion.includes("bangui") ||
-            artistRegion.includes("cameroun") ||
-            artistRegion.includes("congo");
-        } else if (region === "centrafrique") {
-          matchesRegion =
-            artistRegion.includes("centrafrique") ||
-            artistRegion.includes("rca") ||
-            artistRegion.includes("bangui") ||
-            artistRegion.includes("central african");
-        } else if (region === "europe") {
-          matchesRegion =
-            artistRegion.includes("europe") ||
-            artistRegion.includes("france") ||
-            artistRegion.includes("belgique") ||
-            artistRegion.includes("suisse") ||
-            artistRegion.includes("allemagne") ||
-            artistRegion.includes("italie");
-        } else if (region === "international") {
-          matchesRegion =
-            !artistRegion.includes("afrique") &&
-            !artistRegion.includes("europe");
+    const genre =
+      normalize(
+        genreSelect.value
+      );
+    const filtered =
+      artists.filter(artist => {
+        const text =
+          normalize(
+            [
+              artist.name,
+              artist.city,
+              artist.region,
+              artist.genre,
+              artist.language
+            ].join(" ")
+          );
+        const artistRegion =
+          normalize(
+            `${artist.region || ""} ${artist.city || ""} ${artist.country || ""}`
+          );
+        const artistGenre =
+          normalize(
+            artist.genre || ""
+          );
+        const matchesSearch =
+          !search ||
+          text.includes(search);
+        let matchesRegion =
+          true;
+        if (region) {
+          if (region === "afrique") {
+            matchesRegion =
+              artistRegion.includes("afrique") ||
+              artistRegion.includes("centrafrique") ||
+              artistRegion.includes("rca") ||
+              artistRegion.includes("central") ||
+              artistRegion.includes("bangui") ||
+              artistRegion.includes("cameroun") ||
+              artistRegion.includes("congo");
+          } else if (
+            region === "centrafrique"
+          ) {
+            matchesRegion =
+              artistRegion.includes("centrafrique") ||
+              artistRegion.includes("rca") ||
+              artistRegion.includes("bangui") ||
+              artistRegion.includes("central african");
+          } else if (
+            region === "europe"
+          ) {
+            matchesRegion =
+              artistRegion.includes("europe") ||
+              artistRegion.includes("france") ||
+              artistRegion.includes("belgique") ||
+              artistRegion.includes("suisse") ||
+              artistRegion.includes("allemagne") ||
+              artistRegion.includes("italie");
+          } else if (
+            region === "international"
+          ) {
+            matchesRegion =
+              !artistRegion.includes("afrique") &&
+              !artistRegion.includes("europe");
+          }
         }
-      }
-      const matchesGenre =
-        !genre || artistGenre.includes(genre);
-      return (
-        matchesSearch &&
-        matchesRegion &&
-        matchesGenre
-      );
-    });
-    grid.innerHTML = filtered.map(artistCard).join("");
+        const matchesGenre =
+          !genre ||
+          artistGenre.includes(genre);
+        return (
+          matchesSearch &&
+          matchesRegion &&
+          matchesGenre
+        );
+      });
+    grid.innerHTML =
+      filtered
+        .map(artistCard)
+        .join("");
     count.textContent =
       `${filtered.length} artiste${filtered.length > 1 ? "s" : ""}`;
     empty.style.display =
-      filtered.length ? "none" : "block";
+      filtered.length
+        ? "none"
+        : "block";
   }
   async function loadArtists() {
-    count.textContent = "Chargement...";
-    const { data, error } = await supabaseClient
-      .from("artists")
-      .select(`
-        id,
-        name,
-        city,
-        region,
-        language,
-        genre,
-        avatar_url,
-        country,
-        verified,
-        status
-      `)
-      .eq("status", "published")
-      .order("name", { ascending: true });
+    count.textContent =
+      "Chargement...";
+    const { data, error } =
+      await supabaseClient
+        .from("artists")
+        .select(`
+          id,
+          name,
+          city,
+          region,
+          language,
+          genre,
+          avatar_url,
+          country,
+          verified,
+          status
+        `)
+        .eq("status", "published")
+        .order(
+          "name",
+          {
+            ascending: true
+          }
+        );
     if (error) {
       console.error(error);
       grid.innerHTML = `
-        <div class="empty" style="display:block; grid-column:1/-1;">
+        <div
+          class="empty"
+          style="display:block; grid-column:1/-1;"
+        >
           Impossible de charger les artistes pour le moment.
         </div>
       `;
-      count.textContent = "";
+      count.textContent =
+        "";
       return;
     }
-    artists = data || [];
+    artists =
+      data || [];
     render();
   }
-  searchInput.addEventListener("input", render);
-  regionSelect.addEventListener("change", render);
-  genreSelect.addEventListener("change", render);
+  searchInput.addEventListener(
+    "input",
+    render
+  );
+  regionSelect.addEventListener(
+    "change",
+    render
+  );
+  genreSelect.addEventListener(
+    "change",
+    render
+  );
   loadArtists();
 </script>
 </body>
