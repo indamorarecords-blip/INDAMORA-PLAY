@@ -445,10 +445,10 @@
         .maybeSingle();
       if (artistError || !artistData?.id) {
         console.error(artistError);
-        showMessage(
-          "Ton compte et ton profil ont été créés, mais la catégorie n'a pas pu être enregistrée.",
-          "success"
-        );
+showMessage(
+  "✅ Inscription réussie ! Consulte ta boîte e-mail et clique sur le lien de confirmation reçu pour valider ton inscription. Après validation, reviens ici et connecte-toi à ton espace artiste.",
+  "success"
+);
         createBtn.disabled = false;
         createBtn.textContent =
           "📝 Créer mon compte artiste";
