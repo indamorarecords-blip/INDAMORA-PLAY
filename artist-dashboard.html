@@ -1,0 +1,905 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tableau de bord artiste — INDAMORA PLAY</title>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <style>
+    :root {
+      --blue: #0757B8;
+      --blue-light: #EAF6FC;
+      --blue-soft: #F4FAFE;
+      --red: #D92525;
+      --yellow: #F2C230;
+      --green: #168447;
+      --text: #18324A;
+      --muted: #6D7F8F;
+      --border: #E1EDF3;
+      --white: #FFFFFF;
+      --cream: #FFFDF8;
+    }
+    * {
+      box-sizing: border-box;
+    }
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      background: var(--cream);
+      color: var(--text);
+    }
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+    header {
+      background: var(--white);
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      z-index: 20;
+    }
+    .header-inner {
+      max-width: 1200px;
+      margin: auto;
+      padding: 15px 18px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 15px;
+    }
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: var(--blue);
+      font-weight: 800;
+      font-size: 20px;
+    }
+    .brand span {
+      color: var(--text);
+    }
+    .header-actions {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+    }
+    button,
+    .button {
+      border: 0;
+      border-radius: 10px;
+      padding: 10px 14px;
+      font-weight: 700;
+      cursor: pointer;
+      font-size: 14px;
+    }
+    .button-primary {
+      background: var(--blue);
+      color: white;
+    }
+    .button-secondary {
+      background: var(--blue-light);
+      color: var(--blue);
+    }
+    .button-danger {
+      background: #FFF0EF;
+      color: var(--red);
+    }
+    main {
+      max-width: 1200px;
+      margin: 30px auto;
+      padding: 0 18px 50px;
+    }
+    .welcome {
+      background: linear-gradient(135deg, #EAF6FC, #FFFFFF);
+      border: 1px solid var(--border);
+      border-radius: 22px;
+      padding: 28px;
+      margin-bottom: 22px;
+    }
+    .welcome h1 {
+      margin: 0 0 8px;
+      color: var(--blue);
+      font-size: 30px;
+    }
+    .welcome p {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+    .status {
+      display: none;
+      padding: 13px 16px;
+      border-radius: 12px;
+      margin-bottom: 20px;
+      line-height: 1.5;
+    }
+    .status.error {
+      display: block;
+      background: #FFF0EF;
+      color: #A40000;
+      border: 1px solid #F2C7C4;
+    }
+    .status.success {
+      display: block;
+      background: #EEF9F2;
+      color: var(--green);
+      border: 1px solid #CDEBD7;
+    }
+    .dashboard-grid {
+      display: grid;
+      grid-template-columns: 250px 1fr;
+      gap: 22px;
+    }
+    .sidebar,
+    .content-card {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      box-shadow: 0 5px 20px rgba(7, 87, 184, .05);
+    }
+    .sidebar {
+      padding: 14px;
+      height: fit-content;
+      position: sticky;
+      top: 92px;
+    }
+    .sidebar-title {
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 800;
+      text-transform: uppercase;
+      padding: 8px 12px 12px;
+    }
+    .side-link {
+      display: block;
+      padding: 12px;
+      border-radius: 10px;
+      color: var(--text);
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+    .side-link:hover,
+    .side-link.active {
+      background: var(--blue-light);
+      color: var(--blue);
+    }
+    .content {
+      min-width: 0;
+    }
+    .content-card {
+      padding: 22px;
+      margin-bottom: 20px;
+    }
+    .content-card h2 {
+      margin: 0 0 6px;
+      color: var(--blue);
+      font-size: 22px;
+    }
+    .content-card > p {
+      margin-top: 0;
+      color: var(--muted);
+    }
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 14px;
+    }
+    .stat {
+      background: var(--blue-soft);
+      border: 1px solid var(--border);
+      border-radius: 15px;
+      padding: 18px;
+    }
+    .stat-label {
+      color: var(--muted);
+      font-size: 13px;
+      margin-bottom: 8px;
+    }
+    .stat-value {
+      color: var(--blue);
+      font-size: 28px;
+      font-weight: 800;
+    }
+    .artist-box {
+      background: var(--blue-soft);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 17px;
+      margin-top: 12px;
+    }
+    .artist-name {
+      font-size: 20px;
+      font-weight: 800;
+      color: var(--blue);
+    }
+    .artist-details {
+      color: var(--muted);
+      margin-top: 6px;
+      line-height: 1.5;
+    }
+    .verified {
+      display: inline-block;
+      margin-top: 8px;
+      background: #EEF9F2;
+      color: var(--green);
+      border-radius: 999px;
+      padding: 5px 10px;
+      font-size: 12px;
+      font-weight: 800;
+    }
+    .table-wrap {
+      overflow-x: auto;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 550px;
+    }
+    th,
+    td {
+      padding: 12px 9px;
+      border-bottom: 1px solid var(--border);
+      text-align: left;
+    }
+    th {
+      color: var(--blue);
+      font-size: 13px;
+    }
+    td {
+      color: var(--text);
+      font-size: 14px;
+    }
+    .empty {
+      padding: 25px 10px;
+      text-align: center;
+      color: var(--muted);
+    }
+    .quick-actions {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin-top: 15px;
+    }
+    .quick {
+      display: block;
+      padding: 16px;
+      border-radius: 14px;
+      background: var(--blue-soft);
+      border: 1px solid var(--border);
+      font-weight: 800;
+      color: var(--blue);
+    }
+    .quick:hover {
+      background: var(--blue-light);
+    }
+    .account-box {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+    .info-box {
+      background: var(--blue-soft);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 14px;
+    }
+    .info-label {
+      font-size: 12px;
+      color: var(--muted);
+      margin-bottom: 5px;
+    }
+    .info-value {
+      font-weight: 700;
+      word-break: break-word;
+    }
+    footer {
+      text-align: center;
+      padding: 25px 18px 40px;
+      color: var(--muted);
+      font-size: 13px;
+    }
+    @media (max-width: 900px) {
+      .dashboard-grid {
+        grid-template-columns: 1fr;
+      }
+      .sidebar {
+        position: static;
+      }
+      .stats {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      .quick-actions {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+    @media (max-width: 600px) {
+      .header-inner {
+        padding: 12px 14px;
+      }
+      .brand {
+        font-size: 17px;
+      }
+      .header-actions .button-secondary {
+        display: none;
+      }
+      main {
+        margin-top: 18px;
+        padding-left: 12px;
+        padding-right: 12px;
+      }
+      .welcome {
+        padding: 21px;
+      }
+      .welcome h1 {
+        font-size: 25px;
+      }
+      .stats {
+        grid-template-columns: 1fr 1fr;
+      }
+      .quick-actions {
+        grid-template-columns: 1fr;
+      }
+      .account-box {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+<header>
+  <div class="header-inner">
+<a class="brand" href="index.html">
+  🎧 <span>INDAMORA PLAY</span>
+</a>
+<div class="header-actions">
+  <a class="button button-secondary" href="index.html">
+    Accueil
+  </a>
+  <button id="refreshBtn" class="button button-primary">
+    ↻ Actualiser
+  </button>
+  <button id="logoutBtn" class="button button-danger">
+    Déconnexion
+  </button>
+</div>
+  </div>
+</header>
+<main>
+  <section class="welcome">
+    <h1>🎤 Tableau de bord artiste</h1>
+    <p>
+      Gérez votre espace artiste, vos œuvres, vos statistiques
+      et votre présence sur INDAMORA PLAY.
+    </p>
+  </section>
+  <div id="status" class="status"></div>
+  <div class="dashboard-grid">
+<aside class="sidebar">
+  <div class="sidebar-title">
+    Mon espace
+  </div>
+  <a href="#dashboard" class="side-link active">
+    🏠 Tableau de bord
+  </a>
+  <a href="#profil" class="side-link">
+    👤 Mon profil
+  </a>
+  <a href="#musiques" class="side-link">
+    🎵 Mes musiques
+  </a>
+  <a href="#albums" class="side-link">
+    💿 Mes albums
+  </a>
+  <a href="#medias" class="side-link">
+    🎬 Mes médias
+  </a>
+  <a href="artist-stats.html" class="side-link">
+    📊 Mes statistiques
+  </a>
+  <a href="artist-earnings.html" class="side-link">
+    💰 Mes revenus
+  </a>
+  <a href="my-categories.html" class="side-link">
+    🏷️ Mes catégories
+  </a>
+  <a href="#compte" class="side-link">
+    🔐 Mon compte
+  </a>
+</aside>
+<section class="content">
+  <section id="dashboard" class="content-card">
+    <h2>🏠 Tableau de bord</h2>
+    <p>
+      Vue générale de votre activité sur INDAMORA PLAY.
+    </p>
+    <div class="stats">
+      <div class="stat">
+        <div class="stat-label">Artistes associés</div>
+        <div id="artistsCount" class="stat-value">0</div>
+      </div>
+      <div class="stat">
+        <div class="stat-label">Musiques</div>
+        <div id="tracksCount" class="stat-value">0</div>
+      </div>
+      <div class="stat">
+        <div class="stat-label">Albums</div>
+        <div id="albumsCount" class="stat-value">0</div>
+      </div>
+      <div class="stat">
+        <div class="stat-label">Écoutes</div>
+        <div id="playsCount" class="stat-value">0</div>
+      </div>
+    </div>
+    <div class="quick-actions">
+      <a class="quick" href="artist-stats.html">
+        📊 Voir mes statistiques
+      </a>
+      <a class="quick" href="artist-earnings.html">
+        💰 Voir mes revenus
+      </a>
+      <a class="quick" href="my-categories.html">
+        🏷️ Gérer mes catégories
+      </a>
+    </div>
+  </section>
+  <section id="profil" class="content-card">
+    <h2>👤 Mon profil</h2>
+    <p>
+      Informations de votre profil artiste.
+    </p>
+    <div id="artistsContainer">
+      <div class="empty">
+        Chargement du profil...
+      </div>
+    </div>
+  </section>
+  <section id="musiques" class="content-card">
+    <h2>🎵 Mes musiques</h2>
+    <p>
+      Les morceaux associés à votre compte.
+    </p>
+    <div id="tracksContainer">
+      <div class="empty">
+        Chargement des musiques...
+      </div>
+    </div>
+  </section>
+  <section id="albums" class="content-card">
+    <h2>💿 Mes albums</h2>
+    <p>
+      Vos albums, EP et singles.
+    </p>
+    <div id="albumsContainer">
+      <div class="empty">
+        Chargement des albums...
+      </div>
+    </div>
+  </section>
+  <section id="medias" class="content-card">
+    <h2>🎬 Mes médias</h2>
+    <p>
+      Les clips, podcasts et autres médias liés à vos œuvres.
+    </p>
+    <div class="empty">
+      Les médias associés à votre compte seront affichés ici.
+    </div>
+    <div class="quick-actions">
+      <a class="quick" href="public-media.html">
+        🎬 Voir les médias publiés
+      </a>
+      <a class="quick" href="public-catalog.html">
+        🎵 Voir le catalogue
+      </a>
+    </div>
+  </section>
+  <section id="compte" class="content-card">
+    <h2>🔐 Mon compte</h2>
+    <p>
+      Compte actuellement connecté.
+    </p>
+    <div class="account-box">
+      <div class="info-box">
+        <div class="info-label">
+          Adresse e-mail
+        </div>
+        <div id="userEmail" class="info-value">
+          —
+        </div>
+      </div>
+      <div class="info-box">
+        <div class="info-label">
+          Rôle
+        </div>
+        <div id="userRole" class="info-value">
+          Artiste
+        </div>
+      </div>
+    </div>
+  </section>
+</section>
+  </div>
+</main>
+<footer>
+  INDAMORA PLAY — INDAMORA RECORDS 🇨🇫
+</footer>
+<script>
+  const SUPABASE_URL =
+    "https://adqsdnqkbitplbhbihiv.supabase.co";
+  const SUPABASE_KEY =
+    "sb_publishable_dpjfWOYeNQRmP2nJq5FoMA_8NUuD0HF";
+  const db =
+    window.supabase.createClient(
+      SUPABASE_URL,
+      SUPABASE_KEY
+    );
+  const statusBox =
+    document.getElementById("status");
+  function showError(message) {
+    statusBox.className = "status error";
+    statusBox.textContent = message;
+  }
+  function showSuccess(message) {
+    statusBox.className = "status success";
+    statusBox.textContent = message;
+  }
+  function escapeHtml(value) {
+    return String(value ?? "")
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;")
+      .replace(/'/g, "&#039;");
+  }
+  function formatNumber(value) {
+    return Number(value || 0)
+      .toLocaleString("fr-FR");
+  }
+  async function loadDashboard() {
+    statusBox.className = "status";
+    statusBox.textContent =
+      "Chargement de votre espace artiste...";
+    const {
+      data: sessionData,
+      error: sessionError
+    } = await db.auth.getSession();
+    if (sessionError) {
+      showError(
+        "Impossible de vérifier votre session."
+      );
+      return;
+    }
+    const session =
+      sessionData?.session;
+    if (!session) {
+      showError(
+        "Vous devez être connecté pour accéder à l'espace artiste."
+      );
+      setTimeout(() => {
+        window.location.href =
+          "account.html";
+      }, 1500);
+      return;
+    }
+    document.getElementById(
+      "userEmail"
+    ).textContent =
+      session.user.email ||
+      "Compte connecté";
+    const response =
+      await fetch(
+        SUPABASE_URL +
+        "/functions/v1/artist-dashboard",
+        {
+          method: "GET",
+          headers: {
+            "Authorization":
+              "Bearer " +
+              session.access_token,
+            "apikey":
+              SUPABASE_KEY
+          }
+        }
+      );
+    let data = {};
+    try {
+      data = await response.json();
+    } catch {
+      data = {};
+    }
+    if (!response.ok) {
+      console.error(data);
+      showError(
+        data.error ||
+        "Impossible de charger votre espace artiste."
+      );
+      return;
+    }
+    renderDashboard(data);
+    showSuccess(
+      "✓ Espace artiste chargé."
+    );
+  }
+  function renderDashboard(data) {
+    const summary =
+      data.summary || {};
+    document.getElementById(
+      "artistsCount"
+    ).textContent =
+      formatNumber(summary.artists);
+    document.getElementById(
+      "tracksCount"
+    ).textContent =
+      formatNumber(summary.tracks);
+    document.getElementById(
+      "albumsCount"
+    ).textContent =
+      formatNumber(summary.albums);
+    document.getElementById(
+      "playsCount"
+    ).textContent =
+      formatNumber(summary.plays);
+    const profile =
+      data.profile || {};
+    if (profile.role) {
+      document.getElementById(
+        "userRole"
+      ).textContent =
+        profile.role === "artist"
+          ? "Artiste"
+          : profile.role === "admin"
+            ? "Administrateur"
+            : profile.role;
+    }
+    renderArtists(
+      data.artists || []
+    );
+    renderTracks(
+      data.tracks || []
+    );
+    renderAlbums(
+      data.albums || []
+    );
+  }
+  function renderArtists(artists) {
+    const container =
+      document.getElementById(
+        "artistsContainer"
+      );
+    if (!artists.length) {
+      container.innerHTML = `
+        <div class="empty">
+          Aucun profil artiste associé à ce compte.
+        </div>
+      `;
+      return;
+    }
+    container.innerHTML =
+      artists.map(artist => {
+        const location =
+          [
+            artist.city,
+            artist.region
+          ]
+            .filter(Boolean)
+            .join(" · ");
+        return `
+          <article class="artist-box">
+            <div class="artist-name">
+              ${escapeHtml(
+                artist.name ||
+                "Artiste"
+              )}
+            </div>
+            <div class="artist-details">
+              ${escapeHtml(
+                location ||
+                "Localisation non renseignée"
+              )}
+              ${
+                artist.genre
+                  ? " · " +
+                    escapeHtml(
+                      artist.genre
+                    )
+                  : ""
+              }
+              ${
+                artist.language
+                  ? " · " +
+                    escapeHtml(
+                      artist.language
+                    )
+                  : ""
+              }
+            </div>
+            ${
+              artist.verified
+                ? `
+                  <div class="verified">
+                    ✓ Artiste vérifié
+                  </div>
+                `
+                : ""
+            }
+            <div style="margin-top:14px;">
+              <a
+                class="button button-secondary"
+                href="public-artist.html?id=${encodeURIComponent(
+                  artist.id
+                )}"
+              >
+                Voir mon profil public
+              </a>
+            </div>
+          </article>
+        `;
+      }).join("");
+  }
+  function renderTracks(tracks) {
+    const container =
+      document.getElementById(
+        "tracksContainer"
+      );
+    if (!tracks.length) {
+      container.innerHTML = `
+        <div class="empty">
+          Aucune musique associée à ce compte.
+        </div>
+      `;
+      return;
+    }
+    const table =
+      document.createElement(
+        "table"
+      );
+    table.innerHTML = `
+      <thead>
+        <tr>
+          <th>Titre</th>
+          <th>Genre</th>
+          <th>Statut</th>
+          <th>Écoutes</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    `;
+    const tbody =
+      table.querySelector(
+        "tbody"
+      );
+    tracks.forEach(track => {
+      const row =
+        document.createElement(
+          "tr"
+        );
+      row.innerHTML = `
+        <td>
+          ${escapeHtml(
+            track.title ||
+            "Sans titre"
+          )}
+        </td>
+        <td>
+          ${escapeHtml(
+            track.genre ||
+            "—"
+          )}
+        </td>
+        <td>
+          ${escapeHtml(
+            track.status ||
+            "—"
+          )}
+        </td>
+        <td>
+          ${formatNumber(
+            track.play_count
+          )}
+        </td>
+      `;
+      tbody.appendChild(row);
+    });
+    container.innerHTML = "";
+    container.appendChild(table);
+  }
+  function renderAlbums(albums) {
+    const container =
+      document.getElementById(
+        "albumsContainer"
+      );
+    if (!albums.length) {
+      container.innerHTML = `
+        <div class="empty">
+          Aucun album, EP ou single associé à ce compte.
+        </div>
+      `;
+      return;
+    }
+    const table =
+      document.createElement(
+        "table"
+      );
+    table.innerHTML = `
+      <thead>
+        <tr>
+          <th>Titre</th>
+          <th>Type</th>
+          <th>Sortie</th>
+          <th>Statut</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    `;
+    const tbody =
+      table.querySelector(
+        "tbody"
+      );
+    albums.forEach(album => {
+      const row =
+        document.createElement(
+          "tr"
+        );
+      row.innerHTML = `
+        <td>
+          ${escapeHtml(
+            album.title ||
+            "Sans titre"
+          )}
+        </td>
+        <td>
+          ${escapeHtml(
+            album.type ||
+            "—"
+          )}
+        </td>
+        <td>
+          ${escapeHtml(
+            album.release_date ||
+            "—"
+          )}
+        </td>
+        <td>
+          ${escapeHtml(
+            album.status ||
+            "—"
+          )}
+        </td>
+      `;
+      tbody.appendChild(row);
+    });
+    container.innerHTML = "";
+    container.appendChild(table);
+  }
+  document
+    .getElementById(
+      "refreshBtn"
+    )
+    .addEventListener(
+      "click",
+      loadDashboard
+    );
+  document
+    .getElementById(
+      "logoutBtn"
+    )
+    .addEventListener(
+      "click",
+      async () => {
+        await db.auth.signOut();
+        window.location.href =
+          "account.html";
+      }
+    );
+  db.auth.onAuthStateChange(
+    (event, session) => {
+      if (!session) {
+        window.location.href =
+          "account.html";
+      }
+    }
+  );
+  loadDashboard();
+</script>
+</body>
+</html>
