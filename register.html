@@ -57,13 +57,15 @@
       font-weight: bold;
     }
     input,
-    textarea {
+    textarea,
+    select {
       width: 100%;
       padding: 13px;
       border: 1px solid #cbd8e8;
       border-radius: 9px;
       font-size: 16px;
       font-family: Arial, sans-serif;
+      background: white;
     }
     textarea {
       min-height: 120px;
@@ -134,96 +136,102 @@
 </header>
 <main>
   <div class="card">
-    <h2>🎤 Créer mon compte artiste</h2>
-    <div class="intro">
-      Crée gratuitement ton compte et crée ton profil
-      artiste sur INDAMORA PLAY.
-    </div>
-    <label for="email">
-      Adresse e-mail <span class="required">*</span>
-    </label>
-    <input
-      id="email"
-      type="email"
-      placeholder="votre@email.com"
-      autocomplete="email"
-    >
-    <label for="password">
-      Mot de passe <span class="required">*</span>
-    </label>
-    <input
-      id="password"
-      type="password"
-      placeholder="Minimum 6 caractères"
-      autocomplete="new-password"
-    >
-    <label for="name">
-      Nom d'artiste <span class="required">*</span>
-    </label>
-    <input
-      id="name"
-      type="text"
-      placeholder="Exemple : Artiste INDAMORA"
-    >
-    <label for="city">
-      Ville
-    </label>
-    <input
-      id="city"
-      type="text"
-      placeholder="Exemple : Bangui"
-    >
-    <label for="region">
-      Région / pays
-    </label>
-    <input
-      id="region"
-      type="text"
-      placeholder="Exemple : République centrafricaine"
-    >
-    <label for="language">
-      Langue
-    </label>
-    <input
-      id="language"
-      type="text"
-      placeholder="Exemple : Français"
-    >
-    <label for="genre">
-      Genre / domaine
-    </label>
-    <input
-      id="genre"
-      type="text"
-      placeholder="Exemple : Gospel, Rap, Afro..."
-    >
-    <label for="bio">
-      Présentation
-    </label>
-    <textarea
-      id="bio"
-      placeholder="Présente-toi et présente ton activité..."
-    ></textarea>
-    <button id="createBtn">
-      📝 Créer mon compte artiste
-    </button>
-    <button
-      id="loginBtn"
-      class="secondary"
-      type="button"
-    >
-      🔐 J'ai déjà un compte — Se connecter
-    </button>
-    <div id="message" class="message"></div>
-    <div class="links">
-      <a href="artist.html">
-        🎤 Accéder à l'espace artiste
-      </a>
-      <br>
-      <a href="index.html">
-        ← Retour à INDAMORA PLAY
-      </a>
-    </div>
+<h2>🎤 Créer mon compte artiste</h2>
+<div class="intro">
+  Crée gratuitement ton compte et crée ton profil
+  artiste sur INDAMORA PLAY.
+</div>
+<label for="email">
+  Adresse e-mail <span class="required">*</span>
+</label>
+<input
+  id="email"
+  type="email"
+  placeholder="votre@email.com"
+  autocomplete="email"
+>
+<label for="password">
+  Mot de passe <span class="required">*</span>
+</label>
+<input
+  id="password"
+  type="password"
+  placeholder="Minimum 6 caractères"
+  autocomplete="new-password"
+>
+<label for="name">
+  Nom d'artiste <span class="required">*</span>
+</label>
+<input
+  id="name"
+  type="text"
+  placeholder="Exemple : Artiste INDAMORA"
+>
+<label for="city">
+  Ville
+</label>
+<input
+  id="city"
+  type="text"
+  placeholder="Exemple : Bangui"
+>
+<label for="region">
+  Région / pays
+</label>
+<input
+  id="region"
+  type="text"
+  placeholder="Exemple : République centrafricaine"
+>
+<label for="language">
+  Langue
+</label>
+<input
+  id="language"
+  type="text"
+  placeholder="Exemple : Français"
+>
+<label for="genre">
+  Genre / domaine
+</label>
+<input
+  id="genre"
+  type="text"
+  placeholder="Exemple : Gospel, Rap, Afro..."
+>
+<label for="category">
+  Catégorie <span class="required">*</span>
+</label>
+<select id="category" required>
+  <option value="">Chargement des catégories...</option>
+</select>
+<label for="bio">
+  Présentation
+</label>
+<textarea
+  id="bio"
+  placeholder="Présente-toi et présente ton activité..."
+></textarea>
+<button id="createBtn">
+  📝 Créer mon compte artiste
+</button>
+<button
+  id="loginBtn"
+  class="secondary"
+  type="button"
+>
+  🔐 J'ai déjà un compte — Se connecter
+</button>
+<div id="message" class="message"></div>
+<div class="links">
+  <a href="artist.html">
+    🎤 Accéder à l'espace artiste
+  </a>
+  <br>
+  <a href="index.html">
+    ← Retour à INDAMORA PLAY
+  </a>
+</div>
   </div>
 </main>
 <script>
@@ -250,6 +258,8 @@
     document.getElementById("language");
   const genreInput =
     document.getElementById("genre");
+  const categoryInput =
+    document.getElementById("category");
   const bioInput =
     document.getElementById("bio");
   const createBtn =
@@ -263,6 +273,34 @@
     message.className =
       "message " + type;
   }
+  async function loadCategories() {
+    const {
+      data,
+      error
+    } = await db
+      .from("categories")
+      .select("id,slug,name")
+      .eq("active", true)
+      .order("name");
+    if (error) {
+      console.error(error);
+      categoryInput.innerHTML =
+        '<option value="">Impossible de charger les catégories</option>';
+      return;
+    }
+    categoryInput.innerHTML =
+      '<option value="">Choisir une catégorie</option>' +
+      (data || []).map(category =>
+        '<option value="' +
+        category.slug.replace(/"/g, "&quot;") +
+        '">' +
+        category.name
+          .replace(/</g, "&lt;")
+          .replace(/>/g, "&gt;") +
+        '</option>'
+      ).join("");
+  }
+  loadCategories();
   createBtn.addEventListener(
     "click",
     async () => {
@@ -281,6 +319,8 @@
         languageInput.value.trim();
       const genre =
         genreInput.value.trim();
+      const category =
+        categoryInput.value.trim();
       const bio =
         bioInput.value.trim();
       if (!email) {
@@ -300,6 +340,13 @@
       if (!name) {
         showMessage(
           "Veuillez saisir votre nom d'artiste.",
+          "error"
+        );
+        return;
+      }
+      if (!category) {
+        showMessage(
+          "Veuillez choisir une catégorie.",
           "error"
         );
         return;
@@ -357,7 +404,6 @@
         return;
       }
       const {
-        data: profileData,
         error: profileError
       } = await db.rpc(
         "submit_artist_profile",
@@ -382,8 +428,81 @@
           "📝 Créer mon compte artiste";
         return;
       }
+      const {
+        data: artistData,
+        error: artistError
+      } = await db
+        .from("artists")
+        .select("id")
+        .eq("owner_id", data.user.id)
+        .order(
+          "created_at",
+          {
+            ascending: false
+          }
+        )
+        .limit(1)
+        .maybeSingle();
+      if (artistError || !artistData?.id) {
+        console.error(artistError);
+        showMessage(
+          "Ton compte et ton profil ont été créés, mais la catégorie n'a pas pu être enregistrée.",
+          "success"
+        );
+        createBtn.disabled = false;
+        createBtn.textContent =
+          "📝 Créer mon compte artiste";
+        return;
+      }
+      const {
+        data: categoryData,
+        error: categoryError
+      } = await db
+        .from("categories")
+        .select("id")
+        .eq("slug", category)
+        .eq("active", true)
+        .maybeSingle();
+      if (categoryError || !categoryData?.id) {
+        console.error(categoryError);
+        showMessage(
+          "Ton compte et ton profil ont été créés, mais la catégorie sélectionnée est introuvable.",
+          "success"
+        );
+        createBtn.disabled = false;
+        createBtn.textContent =
+          "📝 Créer mon compte artiste";
+        return;
+      }
+      const {
+        error: linkError
+      } = await db
+        .from("artist_categories")
+        .upsert(
+          {
+            artist_id:
+              artistData.id,
+            category_id:
+              categoryData.id
+          },
+          {
+            onConflict:
+              "artist_id,category_id"
+          }
+        );
+      if (linkError) {
+        console.error(linkError);
+        showMessage(
+          "Ton compte et ton profil ont été créés, mais la catégorie n'a pas pu être enregistrée.",
+          "success"
+        );
+        createBtn.disabled = false;
+        createBtn.textContent =
+          "📝 Créer mon compte artiste";
+        return;
+      }
       showMessage(
-        "Compte et profil artiste créés avec succès ! Redirection vers ton espace artiste...",
+        "Compte, profil et catégorie créés avec succès ! Redirection vers ton espace artiste...",
         "success"
       );
       setTimeout(
